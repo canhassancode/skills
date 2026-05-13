@@ -1,14 +1,10 @@
 # All of my mad agentic skills
 
----
-
 [![skills.sh](https://skills.sh/b/canhassancode/skills)](https://skills.sh/canhassancode/skills)
 
 > **Trying to build things can be hard, and I honestly think AI has made this harder as an Engineer, not easier.**
 
 Before we'd go through the full SDLC cycle, requirements gathering, planning, designs, implementation, QA blah blah. But with AI you can write a prompt, set your claude code to bypass permissions, grab a cuppa, then realise "woah its done everything!"... the issue is what its actually built might look and feel like the real deal, but as it scales, as it hits real world scenarios, it rarely holds up. So here are a list of skills with huge inspiration from the incredible [Matt Pocock](https://github.com/mattpocock), with some of my personal favourite engineering authors, Robert C. Martin, Martin Fowler, Eric Evans, and more. Time to figure out how to remain an engineer in the world of AI.
-
----
 
 # Setup
 
@@ -20,8 +16,6 @@ npx skills@latest add canhassancode/skills
 
 2. Select the skills you want.
 3. Donezo. Enjoy!
-
----
 
 # What's in the box
 
