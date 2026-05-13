@@ -44,3 +44,4 @@ Create a commit following the project's conventional commit format.
 5. Stage the relevant files by name
 6. Create the commit
 7. Run `git status` to verify success
+8. Run `git push` unless otherwise specified

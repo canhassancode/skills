@@ -3,6 +3,7 @@
   "skills": [
     "./skills/challenge",
     "./skills/commit",
+    "./skills/pr",
     "./skills/diagnose",
     "./skills/grill-me",
     "./skills/grill-with-docs",
