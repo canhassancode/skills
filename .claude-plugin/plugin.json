@@ -1,0 +1,17 @@
+{
+  "name": "canhassancode-skills",
+  "skills": [
+    "./skills/challenge",
+    "./skills/commit",
+    "./skills/diagnose",
+    "./skills/grill-me",
+    "./skills/grill-with-docs",
+    "./skills/improve-codebase-architecture",
+    "./skills/obsidian-vault",
+    "./skills/tdd",
+    "./skills/to-issues",
+    "./skills/to-prd",
+    "./skills/triage",
+    "./skills/write-skill"
+  ]
+}
