@@ -19,20 +19,44 @@ npx skills@latest add canhassancode/skills
 
 # What's in the box
 
-Here are the list of skills by category I use. Some more than others, in fact I'll include a daily section for my day-to-day.
+Skills are organised into folders by category. Each folder maps to a section below.
 
-## My day-to-day skills
+## `engineering/` — the core SDLC loop
 
-- grill-me
-- grill-with-docs
-- triage
-- tdd
-- to-issues
-- to-prd
-- commit
+- [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
+- [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
+- [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
+- [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline
+- [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
+- [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
+- [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
+- [to-issues](engineering/to-issues/SKILL.md) — break a plan, spec, or PRD into independently-grabbable issues using tracer-bullet vertical slices
+- [to-prd](engineering/to-prd/SKILL.md) — turn the current conversation into a PRD and publish it to the project issue tracker
+- [triage](engineering/triage/SKILL.md) — triage issues through a state machine driven by triage roles
 
-## Infrequent
+## `productivity/` — meta-skills for working with me and Claude
 
-- challenge
-- obsidian-vault
-- write-a-skill
+- [grill-me](productivity/grill-me/SKILL.md) — interview me relentlessly about a plan until each branch of the decision tree resolves
+- [write-a-skill](productivity/write-a-skill/SKILL.md) — create new agent skills with proper structure and progressive disclosure
+
+## `personal/` — personal workflows
+
+- [obsidian-vault](personal/obsidian-vault/SKILL.md) — search, create, and manage notes in the Obsidian vault with wikilinks and index notes
+
+## `in-progress/` — works in progress, use at your own risk
+
+- [system-map](in-progress/system-map/SKILL.md) — build a layered map of how a flow or domain concept spans multiple repos (UI → API → service → data)
+
+## `deprecated/` — kept for reference, no longer recommended
+
+- [validate](deprecated/validate/SKILL.md) — superseded by per-repo validation hooks
+
+# My day-to-day
+
+The ones I reach for most:
+
+- `grill-me` / `grill-with-docs` before any non-trivial change
+- `tdd` to drive the implementation loop
+- `diagnose` for anything broken
+- `to-prd` → `to-issues` → `triage` for shaping work
+- `commit` and `pr` to ship
