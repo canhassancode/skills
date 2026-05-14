@@ -1,19 +1,18 @@
 {
   "name": "canhassancode-skills",
   "skills": [
-    "./skills/challenge",
-    "./skills/commit",
-    "./skills/diagnose",
-    "./skills/grill-me",
-    "./skills/grill-with-docs",
-    "./skills/improve-codebase-architecture",
-    "./skills/obsidian-vault",
-    "./skills/pr",
-    "./skills/system-map",
-    "./skills/tdd",
-    "./skills/to-issues",
-    "./skills/to-prd",
-    "./skills/triage",
-    "./skills/write-a-skill"
+    "./skills/engineering/challenge",
+    "./skills/engineering/commit",
+    "./skills/engineering/diagnose",
+    "./skills/engineering/grill-with-docs",
+    "./skills/engineering/-codebase-architecture",
+    "./skills/engineering/pr",
+    "./skills/engineering/tdd",
+    "./skills/engineering/to-issues",
+    "./skills/engineering/to-prd",
+    "./skills/engineering/triage",
+    "./skills/personal/obsidian-vault",
+    "./skills/productivity/grill-me",
+    "./skills/productivity/write-a-skill"
   ]
 }
