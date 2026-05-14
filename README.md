@@ -16,6 +16,11 @@ npx skills@latest add canhassancode/skills
 
 2. Select the skills you want.
 3. Donezo. Enjoy!
+4. If you ever need to update the skills, run:
+
+```
+npx skills@latest update
+```
 
 # What's in the box
 
@@ -43,7 +48,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 - [obsidian-vault](personal/obsidian-vault/SKILL.md) — search, create, and manage notes in the Obsidian vault with wikilinks and index notes
 
-## `in-progress/` — works in progress, use at your own risk
+## `in-progress/` — works in progress, not yet released
 
 - [system-map](in-progress/system-map/SKILL.md) — build a layered map of how a flow or domain concept spans multiple repos (UI → API → service → data)
 
