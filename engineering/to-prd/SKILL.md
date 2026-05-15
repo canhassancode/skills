@@ -17,7 +17,14 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-3. Write the PRD using the template below, then publish it to the project issue tracker. Apply the `needs-triage` triage label so it enters the normal triage flow.
+3. Write the PRD using the template below, then publish it to the project issue tracker. Apply the `prd` label — this marks the issue as an epic-style parent document. Do NOT apply `needs-triage`: grilling already triaged it, and a PRD is not a work item that progresses through triage states (its children are).
+
+4. **Decide what's next.** Ask the user whether the PRD is ready to break into tracer bullets now, or whether it needs external input first (stakeholder approval, a spike result, missing context).
+
+   - **Ready** → suggest `/to-issues #<number>` as the next step.
+   - **Not ready** → apply the `needs-info` label to the PRD AND post a one-line comment naming the specific blocker (e.g. "blocked on @cto approval", "waiting on spike #137"). Do NOT run `/to-issues` yet. When the blocker resolves, the maintainer removes `needs-info` manually and runs `/to-issues`.
+
+   The `prd` and `needs-info` labels compose orthogonally: `prd` says "this is an epic-style parent document"; `needs-info` says "waiting on external input". `gh issue list --label prd --label needs-info` surfaces all blocked PRDs.
 
 <prd-template>
 
