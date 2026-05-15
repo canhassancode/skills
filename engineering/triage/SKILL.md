@@ -18,6 +18,39 @@ Every comment or issue posted to the issue tracker during triage **must** start 
 - [AGENT-BRIEF.md](AGENT-BRIEF.md) — how to write durable agent briefs
 - [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md) — how the `.out-of-scope/` knowledge base works
 
+## Status block and Updates section
+
+Every triaged issue carries a `## Status` block at the top of its body. The block is a **pointer to the latest material decision** — it tells readers where the most recent triage reasoning lives, which GitHub's UI doesn't surface. **The body is the canonical pointer; comments are the conversation history.** Anyone who reads only the body should know where to look for the latest state — no scrolling through 47 comments.
+
+Don't duplicate labels in the Status block — GitHub's sidebar already shows them. Duplicating creates a new source of drift for the exact same data. The Status block adds value GitHub doesn't surface (a link to the latest decision), nothing more.
+
+On every state transition, `/triage` does three things:
+
+1. **Post the comment** (agent brief, triage notes, or wontfix explanation as usual).
+2. **Edit the issue body's `## Status` block** to update the date and point to the new comment. Mechanical — no judgement needed.
+3. **For PRDs only** (issues carrying the `prd` label), ask the maintainer: *"Is this change material to the PRD's scope or approach? If so, what's the one-line summary for the `## Updates` section?"* If yes, prepend the entry under `## Updates` with today's date and a link to the triggering comment.
+
+Why: without body maintenance, readers landing on the body don't know that the latest decision lives in a comment 47 entries down. The Status block tells them. Keeping it minimal (one pointer) keeps it cheap to maintain and impossible to misread.
+
+Status block format (universal):
+
+```markdown
+## Status
+
+- **Last update:** <YYYY-MM-DD> — [<one-line summary>](link to comment)
+```
+
+Updates section format (PRDs only):
+
+```markdown
+## Updates
+
+- YYYY-MM-DD — one-line summary ([comment](link))
+- YYYY-MM-DD — earlier entry ([comment](link))
+```
+
+Most recent entry on top.
+
 ## Roles
 
 Two **category** roles:
@@ -87,6 +120,9 @@ Show counts and a one-line summary per issue. Let the maintainer pick.
    - `wontfix` (bug) — polite explanation, then close.
    - `wontfix` (enhancement) — write to `.out-of-scope/`, link to it from a comment, then close ([OUT-OF-SCOPE.md](OUT-OF-SCOPE.md)).
    - `needs-triage` — apply the role. Optional comment if there's partial progress.
+   - **promote-to-PRD** — the issue is too substantial for a single ticket; it deserves its own PRD with full user stories and decisions. Invoke `/to-prd` with the issue body and any grilling notes as context. Once the PRD is published, close the original with a comment: *"Promoted to PRD #N."* The original is preserved as the historical request; the PRD is the active artifact. No persistent label is needed — this is a one-time action.
+
+6. **Maintain the Status block and Updates section** per the [Status block pattern](#status-block-and-updates-section). After any outcome that doesn't close the issue, edit the body's `## Status` block to update the date and link to the new comment. For PRDs, prompt the maintainer about an `## Updates` entry.
 
 ## Quick state override
 

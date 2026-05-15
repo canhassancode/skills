@@ -19,6 +19,8 @@ Check with the user that these modules match their expectations. Check with the 
 
 3. Write the PRD using the template below, then publish it to the project issue tracker. Apply the `prd` label — this marks the issue as an epic-style parent document. Do NOT apply `needs-triage`: grilling already triaged it, and a PRD is not a work item that progresses through triage states (its children are).
 
+   Populate the `## Status` block at the top of the body with the actual labels and today's date. Leave the `## Updates` section as a placeholder; `/triage` will append entries as material decisions land. See the [Status block + Updates pattern](../triage/SKILL.md#status-block-and-updates-section) in the triage skill for the maintenance rules.
+
 4. **Decide what's next.** Ask the user whether the PRD is ready to break into tracer bullets now, or whether it needs external input first (stakeholder approval, a spike result, missing context).
 
    - **Ready** → suggest `/to-issues #<number>` as the next step.
@@ -27,6 +29,18 @@ Check with the user that these modules match their expectations. Check with the 
    The `prd` and `needs-info` labels compose orthogonally: `prd` says "this is an epic-style parent document"; `needs-info` says "waiting on external input". `gh issue list --label prd --label needs-info` surfaces all blocked PRDs.
 
 <prd-template>
+
+## Status
+
+- **Last update:** <YYYY-MM-DD> — newly published, no triage yet
+
+## Updates
+
+_Material decisions get logged here by `/triage` as they happen — one line each, with a link to the triggering comment. The body below stays current; this section is the audit trail of how it got there._
+
+- _No updates yet._
+
+---
 
 ## Problem Statement
 
