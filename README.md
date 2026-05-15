@@ -63,5 +63,6 @@ The ones I reach for most:
 - `grill-me` / `grill-with-docs` before any non-trivial change
 - `tdd` to drive the implementation loop
 - `diagnose` for anything broken
-- `to-prd` → `to-issues` → `triage` for shaping work
+- `grill-with-docs` → `to-prd` → `to-issues` for shaping fresh outbound work
+- `triage` for inbound work (bugs from users, drafts from collaborators, stale tickets)
 - `commit` and `pr` to ship
