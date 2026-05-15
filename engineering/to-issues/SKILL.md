@@ -58,7 +58,13 @@ For each approved slice, publish a new issue to the issue tracker. Use the issue
 
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
 
+Populate the `## Status` block at the top of each body with the actual labels and today's date. `/triage` maintains this block on every state transition — see the [Status block pattern](../triage/SKILL.md#status-block-and-updates-section) in the triage skill.
+
 <issue-template>
+## Status
+
+- **Last update:** <YYYY-MM-DD> — newly created, no triage yet
+
 ## Parent
 
 `#<issue-number>` reference to the parent issue (omit this section if there is no parent). Always use `#<number>` form so the parent reference is greppable.
