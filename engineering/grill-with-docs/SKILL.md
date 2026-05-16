@@ -63,6 +63,28 @@ When domain relationships are being discussed, stress-test them with specific sc
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
 
+## Four-pass discipline — must complete before declaring the plan ready
+
+Conversational grilling alone is not sufficient. Before declaring a plan ready (whether for `/to-prd`, `/to-issues`, `ready-for-human`, or `ready-for-agent`), the grilling agent must complete all four passes below. Skipping any pass and falling back to *"the user said it only touches X"* is the failure mode this discipline exists to prevent.
+
+### 1. Trace, don't list
+
+For every flow the work touches, follow the request path through the code. Enumerate **every branch** encountered (if/else, switch, polymorphic dispatch). Each branch is a candidate surface for the change. In a shallow-module codebase there is no useful module boundary to list — you trace by behaviour, not by directory.
+
+### 2. Consumer search
+
+For every field, type, endpoint, or behavioural contract being changed, grep for reads. Do not trust *"this is only consumed by X"* from the user — verify by search. Record what you found in the brief's `Key interfaces` section.
+
+### 3. CONTEXT.md sketch if missing
+
+If the repo has no `CONTEXT.md` (or no entry in `CONTEXT-MAP.md` for the area being touched), do not proceed blind. Sketch one for the area in scope — the relevant contexts, the relevant terms, the relevant consumers — using [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md). The sketch lives at the root after the session and grows session-over-session.
+
+### 4. Feature-flag / branch awareness
+
+When reading code, explicitly look for feature flags, A/B branches, env-conditional code paths, and config-driven dispatch. These hide parallel implementations that look like a single path on the surface. The classic failure: grilling identifies "one resolver" because the second resolver is gated behind `if (flag)` two lines up.
+
+Each pass produces concrete output in the brief — named surfaces (with branches noted), named consumers (verified by grep), and any new terms added to `CONTEXT.md`. A brief without these is not ready, regardless of how complete the conversation felt.
+
 ### Update CONTEXT.md inline
 
 When a term is resolved, update `CONTEXT.md` right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).

@@ -33,6 +33,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
+- [pickup](engineering/pickup/SKILL.md) — verification pass for a `ready-for-human` ticket; verify the agent brief against current code, then route to `/tdd`, `/diagnose`, or a targeted re-grill
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-issues](engineering/to-issues/SKILL.md) — break a plan, spec, or PRD into independently-grabbable issues using tracer-bullet vertical slices
