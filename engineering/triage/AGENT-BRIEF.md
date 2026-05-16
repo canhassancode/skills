@@ -52,9 +52,17 @@ Be specific about edge cases and error conditions.
 
 **Key interfaces:**
 
+Name the concrete surfaces this work touches and the consumers it affects. This section is what `/pickup` verifies against on `ready-for-human`, so be specific enough that a reader can open or grep what you list:
+
+- **Surfaces touched** — specific functions, endpoints, resolvers, types. Note any feature flag, env gate, or branch that gates each one (these hide parallel paths and must be enumerated).
+- **Consumers affected** — specific reads of the changed field/type, verified by grep at brief-writing time so pickup can re-grep to confirm nothing new has appeared.
+
+Format example:
+
 - `TypeName` — what needs to change and why
 - `functionName()` return type — what it currently returns vs what it should return
-- Config shape — any new configuration options needed
+- Resolver `XyzResolver` (gated behind `featureFlag.foo`) — current behaviour vs desired
+- Consumers grepped at brief time: 3 reads in `ui/`, 1 in `public-api/`
 
 **Acceptance criteria:**
 

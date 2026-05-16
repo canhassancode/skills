@@ -111,7 +111,7 @@ Show counts and a one-line summary per issue. Let the maintainer pick.
 
 3. **Reproduce (bugs only).** Before any grilling, attempt reproduction: read the reporter's steps, trace the relevant code, run tests or commands. Report what happened — successful repro with code path, failed repro, or insufficient detail (a strong `needs-info` signal). A confirmed repro makes a much stronger agent brief.
 
-4. **Grill (if needed).** If the issue needs fleshing out, run a `/grill-with-docs` session.
+4. **Grill (if needed).** If the issue needs fleshing out, run a `/grill-with-docs` session. The four-pass discipline (trace branches, grep consumers, sketch `CONTEXT.md` if missing, check feature-flag/branch gates) is mandatory before declaring `ready-for-anything`. Apply it **more strictly** for `ready-for-agent` than for `ready-for-human` — agents have no judgment to course-correct mid-stream, so the brief must be fully self-contained. Humans get `/pickup` as a verification safety net; agents do not.
 
 5. **Apply the outcome:**
    - `ready-for-agent` — post an agent brief comment ([AGENT-BRIEF.md](AGENT-BRIEF.md)). **Exception:** if the issue body already contains a complete agent brief (e.g. created via `/to-issues`), don't repost it as a comment — flip the label only.
