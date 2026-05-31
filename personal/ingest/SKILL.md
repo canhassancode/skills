@@ -5,7 +5,7 @@ description: Process a source (pasted transcript, clipped article, notes) into t
 
 # Ingest
 
-Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/Library/CLAUDE.md` (the wiki schema) and `~/Obsidian/CONTEXT.md` first.
+Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/Library/CLAUDE.md` (the wiki schema), `~/Obsidian/CONTEXT.md`, and `~/Obsidian/CONVENTIONS.md` (formatting) first.
 
 ## Pipeline
 

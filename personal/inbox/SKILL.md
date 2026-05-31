@@ -5,7 +5,7 @@ description: Triage the Obsidian second-brain Inbox — route each raw capture t
 
 # Inbox (Triage)
 
-Empties `~/Obsidian/Inbox/`. Read `~/Obsidian/CONTEXT.md` first for the domain model.
+Empties `~/Obsidian/Inbox/`. Read `~/Obsidian/CONTEXT.md` (domain model) and `~/Obsidian/CONVENTIONS.md` (formatting — everything leaving Inbox must conform) first.
 
 ## Procedure
 

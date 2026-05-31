@@ -5,7 +5,7 @@ description: Compile today's Morning Brief in the Obsidian second brain — carr
 
 # Morning Brief
 
-Compiles `~/Obsidian/Journal/<YYYY-MM-DD>-brief.md` — the day's cross-domain index of intended work. Read `~/Obsidian/CONTEXT.md` first for the domain model and terms.
+Compiles `~/Obsidian/Journal/<YYYY-MM-DD>-brief.md` — the day's cross-domain index of intended work. Read `~/Obsidian/CONTEXT.md` (domain model) and `~/Obsidian/CONVENTIONS.md` (file formatting) first.
 
 ## When to run
 

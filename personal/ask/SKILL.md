@@ -5,7 +5,7 @@ description: Answer a question from the Obsidian second brain — read the Libra
 
 # Ask
 
-Queries the Library (`~/Obsidian/Library/`) at minimal token cost. Read `~/Obsidian/Library/CLAUDE.md` for the schema.
+Queries the Library (`~/Obsidian/Library/`) at minimal token cost. Read `~/Obsidian/Library/CLAUDE.md` for the schema. If you file an answer back as a page, conform to `~/Obsidian/CONVENTIONS.md`.
 
 ## Procedure
 

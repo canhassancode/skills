@@ -5,7 +5,7 @@ description: Write today's End-of-Day Summary in the Obsidian second brain — r
 
 # EOD Summary
 
-Writes `~/Obsidian/Journal/<YYYY-MM-DD>-summary.md` — the results of the day and the carry-forward signal. Read `~/Obsidian/CONTEXT.md` first for terms.
+Writes `~/Obsidian/Journal/<YYYY-MM-DD>-summary.md` — the results of the day and the carry-forward signal. Read `~/Obsidian/CONTEXT.md` (terms) and `~/Obsidian/CONVENTIONS.md` (formatting) first.
 
 ## When to run
 
