@@ -13,7 +13,10 @@
     "./skills/engineering/to-issues",
     "./skills/engineering/to-prd",
     "./skills/engineering/triage",
+    "./skills/personal/ask",
     "./skills/personal/eod-summary",
+    "./skills/personal/inbox",
+    "./skills/personal/ingest",
     "./skills/personal/morning-brief",
     "./skills/productivity/grill-me",
     "./skills/productivity/write-a-skill"
