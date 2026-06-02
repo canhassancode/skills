@@ -17,7 +17,9 @@
     "./skills/personal/eod-summary",
     "./skills/personal/inbox",
     "./skills/personal/ingest",
+    "./skills/personal/lint",
     "./skills/personal/morning-brief",
+    "./skills/personal/receive",
     "./skills/productivity/grill-me",
     "./skills/productivity/write-a-skill"
   ]
