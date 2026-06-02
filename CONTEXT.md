@@ -14,6 +14,13 @@ The state-machine move that classifies an incoming ticket and prepares it for ex
 The moment a session opens on a ticket that triage has already moved to `ready-for-human`. Distinct from triage (which produced the brief) and from planning (which produced the spec). Pickup verifies, it does not re-grill.
 _Avoid_: "start", "kick off" — those are ambiguous about whether intent is still open.
 
+**Handoff**:
+A continuity doc written by `/handoff` so a fresh session can continue mid-task work. When an Obsidian vault is present it lands in the vault's `Handoffs/`; otherwise a tmp file. Transient — consumed once, then archived.
+
+**Receive**:
+Resuming a **Handoff** (`/receive`) — the *session* analogue of **Pickup** (which resumes a *ticket*). Kept as a distinct verb so Pickup's precise meaning (ticket-brief verification) isn't overloaded.
+_Avoid_: "resume", "continue" — reserved session commands in Claude Code and pi.dev; a skill of either name is shadowed by the built-in.
+
 **Agent brief**:
 The structured comment posted when a ticket reaches `ready-for-anything`. The contract that downstream execution works from. The issue body is context; the brief is canon.
 

@@ -11,10 +11,17 @@ Writes `~/Obsidian/Journal/<YYYY-MM-DD>-summary.md` — the results of the day a
 
 End of the working day, after the day's work is done.
 
+## Open with one question
+
+Ask once: *"Walk the items with me, or have you got a dump I should take it from?"*
+
+- **Chat** (default) — walk each Work Item and **pause for its disposition** (a hard pause per item, not a silent guess from context).
+- **Dump** — the user pastes how the day went; parse dispositions from it, then show the result for a quick confirm. Don't interrogate.
+
 ## Procedure
 
 1. Open today's `~/Obsidian/Journal/<YYYY-MM-DD>-brief.md`.
-2. For **each** Work Item, record a disposition with the user:
+2. For **each** Work Item, record a disposition (per the opening mode — pause per item in chat; parse-then-confirm in dump):
    - `done` — completed.
    - `signed-off (reason)` — deliberately dropped; the reason is **required**.
    - `carried` — untouched or partial; rolls into tomorrow's brief by default.

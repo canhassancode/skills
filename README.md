@@ -31,7 +31,8 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
-- [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline
+- [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline (and captures the session into the Obsidian Library if present)
+- [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pickup](engineering/pickup/SKILL.md) — verification pass for a `ready-for-human` ticket; verify the agent brief against current code, then route to `/tdd`, `/diagnose`, or a targeted re-grill
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
@@ -45,9 +46,17 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [grill-me](productivity/grill-me/SKILL.md) — interview me relentlessly about a plan until each branch of the decision tree resolves
 - [write-a-skill](productivity/write-a-skill/SKILL.md) — create new agent skills with proper structure and progressive disclosure
 
-## `personal/` — personal workflows
+## `personal/` — the Obsidian second brain
 
-- [obsidian-vault](personal/obsidian-vault/SKILL.md) — search, create, and manage notes in the Obsidian vault with wikilinks and index notes
+An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuity) and a read-heavy **Library/Profile** wiki. See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
+
+- [morning-brief](personal/morning-brief/SKILL.md) — compile the day's cross-domain index (carried items, open issues, Inbox, open handoffs, Profile focus); self-heals an unclosed prior day
+- [eod-summary](personal/eod-summary/SKILL.md) — record each Work Item's disposition (done / signed-off / carried) so unfinished work rolls forward
+- [inbox](personal/inbox/SKILL.md) — triage raw captures into a Domain, the Library, a Work Item, or the bin
+- [ingest](personal/ingest/SKILL.md) — process a source (or a grilling session) into the Library wiki
+- [ask](personal/ask/SKILL.md) — answer a question from the brain, index-first (Library for the world, Profile for Hassan)
+- [receive](personal/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it (the session analogue of `pickup`)
+- [lint](personal/lint/SKILL.md) — sweep the vault for conformance to `CONVENTIONS.md` (Class A leaks, frontmatter, naming, archive markers, index reconcile)
 
 ## `in-progress/` — works in progress, not yet released
 
@@ -56,6 +65,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `deprecated/` — kept for reference, no longer recommended
 
 - [validate](deprecated/validate/SKILL.md) — superseded by per-repo validation hooks
+- [obsidian-vault](deprecated/obsidian-vault/SKILL.md) — superseded by the second-brain skills above (`ask`/`ingest`/`inbox` + the Operating Loop)
 
 # My day-to-day
 

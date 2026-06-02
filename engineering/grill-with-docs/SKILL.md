@@ -45,6 +45,15 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 
 Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
+## Second-brain awareness (if `~/Obsidian/` exists)
+
+If `~/Obsidian/CLAUDE.md` is absent, skip this section silently — do not block.
+
+When the vault is present, the grilling compounds with the second brain:
+
+- **Open with a sweep** — run an index-first `/ask` on the session's stated topic to surface prior grillings, ingested articles, and Profile focus that bear on it. One sweep on the topic, plus a targeted re-query when a *specific* concept comes up — never a blanket dump (it adds noise and breaks `/ask`'s retrieval-cost discipline).
+- **Authority order** — the repo's `CONTEXT.md`/ADRs are **canon**; the vault is *supplementary input*. A Library page is a snapshot of what was true when captured, so a vault page that **contradicts current code is a flag to surface** (*"your `Stripe Checkout` concept says webhook-as-truth, but this resolver reads the session — which is right?"*), never a fact to trust over the live code.
+
 ## During the session
 
 ### Challenge against the glossary
@@ -100,3 +109,11 @@ Only offer to create an ADR when all three are true:
 3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
 If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+
+## Capture at close (if `~/Obsidian/` exists)
+
+The repo docs (`CONTEXT.md`/ADRs) are the code-side output. The brain-side output is the synthesis worth retrieving later. At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page).
+
+- These two outputs stay **decoupled**: capture the decisions and rationale; **drop Class A pointers** (file paths, SHAs). Do **not** hard-link the Library page to the repo — a repo path is a code-map (Class A). The brain page stands alone.
+- Never auto-capture — not every session is worth keeping, and the human-in-the-loop offer matches the Employment review gate.
+- Skip silently if the vault is absent.
