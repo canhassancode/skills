@@ -29,6 +29,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `engineering/` — the core SDLC loop
 
 - [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
+- [code-review](engineering/code-review/SKILL.md) — review a GitHub pull request and post inline comments in Hassan's voice, with confirmation before posting
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline (and captures the session into the Obsidian Library if present)
