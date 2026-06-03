@@ -29,7 +29,6 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `engineering/` — the core SDLC loop
 
 - [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
-- [code-review](engineering/code-review/SKILL.md) — review a GitHub pull request and post inline comments in Hassan's voice, with confirmation before posting
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline (and captures the session into the Obsidian Library if present)
@@ -37,6 +36,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pickup](engineering/pickup/SKILL.md) — verification pass for a `ready-for-human` ticket; verify the agent brief against current code, then route to `/tdd`, `/diagnose`, or a targeted re-grill
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
+- [review](engineering/review/SKILL.md) — review code in Hassan's voice: self-review the current branch in the terminal, or check a named PR out locally and post inline comments after confirmation
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-issues](engineering/to-issues/SKILL.md) — break a plan, spec, or PRD into independently-grabbable issues using tracer-bullet vertical slices
 - [to-prd](engineering/to-prd/SKILL.md) — turn the current conversation into a PRD and publish it to the project issue tracker
@@ -77,4 +77,5 @@ The ones I reach for most:
 - `diagnose` for anything broken
 - `grill-with-docs` → `to-prd` → `to-issues` for shaping fresh outbound work
 - `triage` for inbound work (bugs from users, drafts from collaborators, stale tickets)
+- `review` for reviewing my own branch, or other github PRs
 - `commit` and `pr` to ship

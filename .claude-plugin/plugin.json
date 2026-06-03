@@ -2,7 +2,6 @@
   "name": "canhassancode-skills",
   "skills": [
     "./skills/engineering/challenge",
-    "./skills/engineering/code-review",
     "./skills/engineering/commit",
     "./skills/engineering/diagnose",
     "./skills/engineering/grill-with-docs",
@@ -10,6 +9,7 @@
     "./skills/engineering/improve-codebase-architecture",
     "./skills/engineering/pickup",
     "./skills/engineering/pr",
+    "./skills/engineering/review",
     "./skills/engineering/tdd",
     "./skills/engineering/to-issues",
     "./skills/engineering/to-prd",
