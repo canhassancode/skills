@@ -36,6 +36,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pickup](engineering/pickup/SKILL.md) — verification pass for a `ready-for-human` ticket; verify the agent brief against current code, then route to `/tdd`, `/diagnose`, or a targeted re-grill
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
+- [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it (the session analogue of `pickup`)
 - [review](engineering/review/SKILL.md) — review code in Hassan's voice: self-review the current branch in the terminal, or check a named PR out locally and post inline comments after confirmation
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-issues](engineering/to-issues/SKILL.md) — break a plan, spec, or PRD into independently-grabbable issues using tracer-bullet vertical slices
@@ -56,7 +57,6 @@ An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuit
 - [inbox](personal/inbox/SKILL.md) — triage raw captures into a Domain, the Library, a Work Item, or the bin
 - [ingest](personal/ingest/SKILL.md) — process a source (or a grilling session) into the Library wiki
 - [ask](personal/ask/SKILL.md) — answer a question from the brain, index-first (Library for the world, Profile for Hassan)
-- [receive](personal/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it (the session analogue of `pickup`)
 - [lint](personal/lint/SKILL.md) — sweep the vault for conformance to `CONVENTIONS.md` (Class A leaks, frontmatter, naming, archive markers, index reconcile)
 
 ## `in-progress/` — works in progress, not yet released

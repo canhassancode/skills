@@ -9,6 +9,7 @@
     "./skills/engineering/improve-codebase-architecture",
     "./skills/engineering/pickup",
     "./skills/engineering/pr",
+    "./skills/engineering/receive",
     "./skills/engineering/review",
     "./skills/engineering/tdd",
     "./skills/engineering/to-issues",
@@ -20,7 +21,6 @@
     "./skills/personal/ingest",
     "./skills/personal/lint",
     "./skills/personal/morning-brief",
-    "./skills/personal/receive",
     "./skills/productivity/grill-me",
     "./skills/productivity/write-a-skill"
   ]
