@@ -1,11 +1,62 @@
-# Code Review — Reference
+# Review — Reference
+
+API and git commands. Voice rules are in [VOICE.md](VOICE.md).
+
+## Local checkout (Mode B)
+
+The goal is to review with a real working tree — so passes can grep call-sites
+and run tests — **without disturbing Hassan's current branch or uncommitted
+work**. Use a throwaway worktree, never `checkout`/`pull` on his live tree.
+
+### 1. Locate the local clone
+
+```bash
+# Are we already inside the target repo?
+gh repo view --json nameWithOwner -q .nameWithOwner   # compare to <owner>/<repo>
+
+# Otherwise probe likely roots for a clone whose origin matches:
+for d in ~/Repos/* ~/repos/* ~/dev/* ; do
+  [ -d "$d/.git" ] && \
+    git -C "$d" remote get-url origin 2>/dev/null | grep -qi "<owner>/<repo>" && echo "$d"
+done
+```
+
+### 2. Add a worktree at the PR head
+
+```bash
+REPO=<local-clone-path>
+WT=$(mktemp -d -t review-<repo>-<number>-XXXX)
+git -C "$REPO" fetch origin <baseRefName> <headRefName>
+git -C "$REPO" worktree add --detach "$WT" <headRefOid>
+# review inside $WT; diff against the base:
+git -C "$WT" diff origin/<baseRefName>...HEAD
+```
+
+### 3. No local clone → shallow temp clone
+
+```bash
+WT=$(mktemp -d -t review-<repo>-<number>-XXXX)
+gh repo clone <owner>/<repo> "$WT" -- --depth 50
+git -C "$WT" fetch origin <headRefName>
+git -C "$WT" checkout <headRefOid>
+```
+
+### 4. Clean up after posting
+
+```bash
+git -C "$REPO" worktree remove --force "$WT"   # worktree case
+rm -rf "$WT"                                    # temp-clone case
+```
+
+If both checkout paths fail, fall back to diff-only review (`gh pr diff` plus
+GitHub file fetches) and tell Hassan context is reduced.
 
 ## GitHub API
 
 ### Fetching PR metadata
 
 ```bash
-gh pr view <number> --repo <owner>/<repo> --json title,headRefOid,baseRefOid,body,files,number
+gh pr view <number> --repo <owner>/<repo> --json title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName
 ```
 
 ### Fetching the diff
@@ -83,13 +134,13 @@ GitHub Review API needs the **file line number**, not the diff position.
 
 ### Short-form resolution
 
-| Input | Resolution |
-|-------|-----------|
-| `brushfeed#4` | Try `hassan/brushfeed`, then `acme-corp/brushfeed` |
-| `api#425` | Try `hassan/api`, then `acme-corp/api`, then current-dir repo |
-| `#12` | Current working directory's repo |
-| Full URL | Parse directly |
-| (nothing) | Current branch diff against `main` |
+| Input         | Resolution                                                      |
+| ------------- | --------------------------------------------------------------- |
+| `brushfeed#4` | Try `hassan/brushfeed`, then `acme-corp/brushfeed`            |
+| `api#425`     | Try `hassan/api`, then `acme-corp/api`, then current-dir repo |
+| `#12`         | Current working directory's repo                                |
+| Full URL      | Parse directly                                                  |
+| (nothing)     | Current branch diff against `main`                              |
 
 Use `gh pr view <number> --repo <owner>/<repo> --json number` to test if the PR
 exists before fetching the full payload. A non-zero exit means try the next
@@ -132,59 +183,7 @@ Post this? Or tweak?
 
 Wait for explicit approval: "send it", "post it", "looks good", "yep", etc.
 
-## Tone examples
-
-### Review body — approved
-
-> Nice, clean change — cron expression is right and the fallback's sensible. Approved 🚀
-
-> Great work on getting these new UI changes in, tested it on my local and it looks superb. Noice — approved 🚀
-
-> Well done 👏 approved 🚀
-
-### Review body — comments
-
-> Nice approach on the multi-code resolver, makes sense. A few things from me — push back on anything that doesn't align.
-
-> Nice work on the tab layout and grouping logic. Few things from me — the render loop and silent error swallow are the ones to look at first. Push back on anything.
-
-> Nice work so far, I like how you handled the pagination and the error boundary. Just a few things from me — feel free to push back on anything that doesn't align.
-
-### Inline comments — blocking
-
-No severity tag. Just say what's wrong and how to fix it.
-
-> this'll pass `[null]` if the join produces nulls. `.filter(Boolean)` before the map should sort it.
-
-> O(n) filter on every render. `useMemo` on `[parts, selectedGroup]` should sort it.
-
-> `fetchKitParts()` in the component body, not a `useEffect`. This'll re-fire every render and loop once state updates downstream.
-
-> silent `catch (e) {}` — the tab'll render empty with no clue why. At least log it.
-
-> no guard on `selectedGroup` being `undefined`. That first call'll hit the server with a broken payload. Block until selection.
-
-### Inline comments — nits
-
-Same tone, just lighter issues.
-
-> `any` return type. Think this is `LabourResult | null`.
-
-> comment says "labor", we're British English in here.
-
-> `z-index: 9999` loses to the modal's 1000. The `--z-dropdown` token should sort it.
-
-> worth adding a null-in-array case here, that's the bug you're about to hit.
-
-### Inline comments — praise
-
-Sprinkle these in when you genuinely like something.
-
-> 👌 clean pattern
-
-> noice, this is exactly what I'd have done
-
-> well done on this 👏
+Voice rules and the curated example set live in [VOICE.md](VOICE.md).
 
 ## Token setup
 
