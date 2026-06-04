@@ -1,6 +1,6 @@
 ---
 name: receive
-description: Resume an agent handoff from the Obsidian vault — read the latest Handoffs/ doc, absorb its context, offer its durable residue to the Library, then archive it. Use when starting a fresh session to continue handed-off work. The session analogue of /pickup (which resumes a tracker ticket).
+description: Resume an agent handoff from the Obsidian vault — read docs in Handoffs/, present to the user a list of handoff docs if present, once user has decided, absorb its context, offer its durable residue to the Library, then archive it. Use when starting a fresh session to continue handed-off work. The session analogue of /pickup (which resumes a tracker ticket).
 ---
 
 # Receive
