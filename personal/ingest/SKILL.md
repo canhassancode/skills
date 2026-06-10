@@ -10,13 +10,13 @@ Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/
 ## Source types
 
 - **Consumed source** (`ingest` verb) — an article, transcript, meeting, notes. Pasted text or a file in `Library/raw/`.
-- **Grilling session** (`grill` verb) — a `/grill-with-docs` or `/grill-me` design conversation, handed in at session close. The "source" is the **live conversation**, summarised in-place (no `raw/` file). Captures Hassan's *own* reasoning, so log it with the `grill` verb for provenance. **No raw, ever** — a grilling transcript is a Class A minefield of paths/SHAs/code.
+- **Grilling session** (`grill` verb) — a `/grill-with-docs` or `/grill-me` design conversation, handed in at session close. The "source" is the **live conversation**, summarised in-place (no `raw/` file). Captures Hassan's *own* reasoning, so log it with the `grill` verb for provenance. **No raw, ever** — a raw transcript risks verbatim proprietary source and secrets (Class A). The derived note keeps paths/SHAs where useful (B-private).
 
 ## Pipeline
 
 1. **Read** the source — a consumed source (pasted text / `Library/raw/` file), or, in **session mode**, the grilling-conversation summary handed in.
 2. **Classify** — domain (Personal/Employment/Ventures) + sensitive?
-3. **Content-class gate** — extract Class B; never write Class A (code, SHAs, PII, secrets).
+3. **Content-class gate** — extract Class B; never write Class A (secrets, credentials, customer PII and financial data, verbatim proprietary source). Paths/SHAs are B-private (keep where useful); pseudonymise customer identity, keep customer feedback.
    - Raw storage: Class B clipped article stays in `raw/`; pasted text is ephemeral unless told to keep; **sensitive source and every grilling session → no raw, ever**.
 4. **Discuss takeaways** with Hassan (stay involved; one source at a time).
 5. **Employment review gate** — Employment-domain derived notes are shown for approval **before** write. Personal/Ventures write through.

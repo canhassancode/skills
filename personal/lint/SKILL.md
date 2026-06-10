@@ -11,7 +11,7 @@ The vault's integrity sweep. `CONVENTIONS.md` is the **rule authority** — lint
 
 Iterate the **Rules (lint checklist)** in `CONVENTIONS.md` (R1–R8). Run roughly in this order:
 
-1. **Class A + clutter (R0/R8)** — scan for secrets, PII, file-paths-with-SHAs, verbatim proprietary source, and stray scaffolds (`Untitled.*`). Highest priority; a leak is real harm at any scale. `[confirm]` before removing/editing.
+1. **Class A + clutter (R0/R8)** — scan for secrets, credentials, customer PII and financial data, verbatim proprietary source, and stray scaffolds (`Untitled.*`). Highest priority; a leak is real harm at any scale. Note: file paths + commit SHAs are **not** Class A (B-private — leave them); also check customer *identity* is pseudonymised. `[confirm]` before removing/editing.
 2. **Frontmatter & type (R1, R2)** — every note outside `Inbox/` has required frontmatter; `type` ∈ the vocabulary. `[fix]`.
 3. **Naming (R3) & folders (R4)** — match each type's naming rule; folders Title Case, system files lowercase. `[confirm]` — see rename safety.
 4. **Archive markers (R5)** — files under `Archive/` carry `[[Archive]]` + `archived:`. `[fix]`.

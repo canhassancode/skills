@@ -149,3 +149,7 @@ Capture everything resolved during grilling under "established so far" so the wo
 ## Resuming a previous session
 
 If prior triage notes exist on the issue, read them, check whether the reporter has answered any outstanding questions, and present an updated picture before continuing. Don't re-ask resolved questions.
+
+## Log the triage (if `~/Obsidian/` exists)
+
+Mandatory closing step, not optional: after a triage outcome that changes state, append one line to today's daily log via the `/log` convention — which issue, the state transition, and the *why* (the decision behind `ready-for-agent` / `wontfix` / `needs-info`). Pseudonymise any customer identity; the reasoning is Class B. Skip silently if the vault is absent.

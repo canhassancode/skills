@@ -18,4 +18,4 @@ If `~/Obsidian/CLAUDE.md` is absent, skip this section silently — do not block
 
 ## Capture at close (if `~/Obsidian/` exists)
 
-At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page). Capture decisions and rationale; **never** write Class A (paths, SHAs, secrets). Never auto-capture; skip silently if the vault is absent.
+At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page). Capture decisions and rationale; **never** write Class A (secrets, customer PII, verbatim proprietary source) — paths/SHAs are B-private, fine to keep. Never auto-capture; skip silently if the vault is absent.

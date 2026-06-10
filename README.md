@@ -41,6 +41,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-issues](engineering/to-issues/SKILL.md) — break a plan, spec, or PRD into independently-grabbable issues using tracer-bullet vertical slices
 - [to-prd](engineering/to-prd/SKILL.md) — turn the current conversation into a PRD and publish it to the project issue tracker
+- [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to Notion (the proposal sibling of `to-prd`)
 - [triage](engineering/triage/SKILL.md) — triage issues through a state machine driven by triage roles
 
 ## `productivity/` — meta-skills for working with me and Claude
@@ -53,7 +54,8 @@ Skills are organised into folders by category. Each folder maps to a section bel
 An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuity) and a read-heavy **Library/Profile** wiki. See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
 
 - [morning-brief](personal/morning-brief/SKILL.md) — compile the day's cross-domain index (carried items, open issues, Inbox, open handoffs, Profile focus); self-heals an unclosed prior day
-- [eod-summary](personal/eod-summary/SKILL.md) — record each Work Item's disposition (done / signed-off / carried) so unfinished work rolls forward
+- [log](personal/log/SKILL.md) — append a timestamped entry to today's daily log (the living record between brief and summary); the spine the workflow skills write to on close
+- [eod-summary](personal/eod-summary/SKILL.md) — consolidate the day's log: reconcile each Work Item's disposition (done / signed-off / carried) against what the log records, so unfinished work rolls forward with its reason
 - [inbox](personal/inbox/SKILL.md) — triage raw captures into a Domain, the Library, a Work Item, or the bin
 - [ingest](personal/ingest/SKILL.md) — process a source (or a grilling session) into the Library wiki
 - [ask](personal/ask/SKILL.md) — answer a question from the brain, index-first (Library for the world, Profile for Hassan)
@@ -75,7 +77,8 @@ The ones I reach for most:
 - `grill-me` / `grill-with-docs` before any non-trivial change
 - `tdd` to drive the implementation loop
 - `diagnose` for anything broken
-- `grill-with-docs` → `to-prd` → `to-issues` for shaping fresh outbound work
+- `grill-with-docs` to shape fresh work, then route at close to the right output — `to-prd` → `to-issues` (a build, on GitHub), `to-proposal` (an argued recommendation, on Notion), or straight to `to-issues` for small work
 - `triage` for inbound work (bugs from users, drafts from collaborators, stale tickets)
 - `review` for reviewing my own branch, or other github PRs
 - `commit` and `pr` to ship
+- `morning-brief` → `log` (filled through the day by the workflow skills above) → `eod-summary` as the daily spine

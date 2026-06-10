@@ -8,7 +8,7 @@ Write a handoff document summarising the current conversation so a fresh agent c
 
 ## Where to save
 
-- **If `~/Obsidian/` exists** — write to `~/Obsidian/Handoffs/<YYYY-MM-DD-HHMM>-handoff.md` with frontmatter `type: handoff` + `created:`. This joins the vault graph, so **wikilink the Library/Profile pages the next session will need** (`[[Perivale Apartment - Hoover Building]]`, `[[GymBuddies]]`, …) — a quick `/ask` finds them. Conform to `~/Obsidian/CONVENTIONS.md`. The handoff is **Class B working context** — never write Class A (secrets, PII, file paths + SHAs, verbatim proprietary source).
+- **If `~/Obsidian/` exists** — write to `~/Obsidian/Handoffs/<YYYY-MM-DD-HHMM>-handoff.md` with frontmatter `type: handoff` + `created:`. This joins the vault graph, so **wikilink the Library/Profile pages the next session will need** (`[[Perivale Apartment - Hoover Building]]`, `[[GymBuddies]]`, …) — a quick `/ask` finds them. Conform to `~/Obsidian/CONVENTIONS.md`. The handoff is **Class B working context** — never write Class A (secrets, credentials, customer PII, verbatim proprietary source). File paths + SHAs are fine here (B-private) and often exactly what the next session needs.
 - **If the vault is absent** — fall back to `mktemp -t handoff-XXXXXX.md`.
 
 Read the file before you write to it.
