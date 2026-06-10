@@ -110,10 +110,29 @@ Only offer to create an ADR when all three are true:
 
 If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
 
-## Capture at close (if `~/Obsidian/` exists)
+## At close — route the output
 
-The repo docs (`CONTEXT.md`/ADRs) are the code-side output. The brain-side output is the synthesis worth retrieving later. At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page).
+A grill is a *thinking* artifact; it is **not** automatically a PRD. Forcing every session toward `/to-prd` is the most common way this flow breaks. At the end, **recommend** where this grill should go based on what it actually produced, then let the user choose — never auto-route. Present the menu with a reasoned recommendation:
 
-- These two outputs stay **decoupled**: capture the decisions and rationale; **drop Class A pointers** (file paths, SHAs). Do **not** hard-link the Library page to the repo — a repo path is a code-map (Class A). The brain page stands alone.
+| Route | When it fits | Next step |
+|---|---|---|
+| **PRD** | a build spec for implementers, broken into slices | `/to-prd` → GitHub (then `/to-issues`, `/triage`) |
+| **Proposal** | an argued recommendation for a decision-maker (Pete, a stakeholder) | `/to-proposal` → Notion |
+| **Issues (direct)** | small, well-understood work — skip the PRD ceremony | `/to-issues` |
+| **ADR** | a hard-to-reverse decision worth recording next to the code | write the ADR in-repo |
+| **Library only** | durable reasoning, no outbound work | capture below |
+| **Nothing** | the grill aligned your own head; no artifact needed | — |
+
+Say which you'd pick and why (*"this reads like a proposal for Pete, not a build-spec — I'd route it to a Notion proposal"*), then act on the user's call. `/triage` only enters the picture on the PRD/Issues branches — it's the GitHub-queue step, not a mystery skill.
+
+## Capture into the Library (if `~/Obsidian/` exists)
+
+Orthogonal to the route above — a grill can become a PRD *and* still be worth keeping. The repo docs (`CONTEXT.md`/ADRs) are the code-side output. The brain-side output is the synthesis worth retrieving later. At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page).
+
+- These two outputs stay **decoupled**: capture the decisions and rationale. File paths and SHAs are **B-private** (not Class A) — fine to keep where they aid recall, but the brain page should still **stand alone** rather than depend on repo links that rot, and you must still drop true Class A (verbatim proprietary source, secrets, customer PII; pseudonymise customer identity).
 - Never auto-capture — not every session is worth keeping, and the human-in-the-loop offer matches the Employment review gate.
 - Skip silently if the vault is absent.
+
+## Log the session (if `~/Obsidian/` exists)
+
+Mandatory closing step, not optional: append one line to today's daily log via the `/log` convention — what was grilled, the route chosen at close, the sharpest decision and *why*, and any blocker. This is the densest-decision skill in the set; never let the reasoning evaporate. Skip silently if the vault is absent.

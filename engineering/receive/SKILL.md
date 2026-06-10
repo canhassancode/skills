@@ -26,7 +26,7 @@ At **pickup-complete**, not pickup-start — so a mid-resume re-read still finds
 
 ## Rules
 
-- Never write Class A (secrets, PII, code maps). Handoffs are Class B working context.
+- Never write Class A (secrets, credentials, customer PII, verbatim proprietary source). Handoffs are Class B working context — paths/SHAs are fine (B-private).
 - If `~/Obsidian/` is absent, this skill has nothing to act on — say so and stop.
 
 ## Related

@@ -25,7 +25,7 @@ Empties `~/Obsidian/Inbox/`. Read `~/Obsidian/CONTEXT.md` (domain model) and `~/
 
 ## Rules
 
-- Never write Class A content (code, SHAs, PII, secrets) — see `CONTEXT.md`.
+- Never write Class A content (secrets, credentials, customer PII, verbatim proprietary source) — see `CONTEXT.md`. Paths/SHAs are B-private, not Class A.
 - Link filed notes to their domain/project hub (`[[Brushfeed]]`, `[[Carpata]]`).
 - Batch obvious routes; slow down and ask on anything ambiguous.
 

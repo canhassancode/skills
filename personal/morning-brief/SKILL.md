@@ -58,10 +58,12 @@ date: <YYYY-MM-DD>
 ## Rules
 
 - Link Work Items to their project hub (`[[Brushfeed]]`, `[[Carpata]]`) so the hub's backlinks become a timeline of work.
-- Never write Class A content (code, SHAs, PII, secrets) into the brief — see `CONTEXT.md`.
+- Never write Class A content (secrets, credentials, customer PII, verbatim proprietary source) into the brief — see `CONTEXT.md`. Paths/SHAs are B-private, not Class A.
 - Keep it scannable: the goal is reconstructing "what's open, what to touch today" in under 30 seconds.
+- The brief is the day's **plan**, not a live tracker — write it once and don't babysit the checkboxes. The day's living record is `<YYYY-MM-DD>-log.md` (written by `/log`); `/eod-summary` reconciles the two at close. An unchecked box at EOD is not failure; the log says what actually happened.
 
 ## Related
 
-- `/eod-summary` — closes the day and sets carry-forward.
+- `/log` — the living record the day's work is captured into.
+- `/eod-summary` — consolidates the log and sets carry-forward.
 - `/inbox` — triages captures into Work Items before compiling.
