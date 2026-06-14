@@ -8,7 +8,11 @@ description: Interview the user relentlessly about a plan or design until reachi
 1. Before exploring, ask: "Fan-out via subagents (scout + ask + researcher) or linear?"
    Launch accordingly. If subagents unavailable, proceed linearly.
 
-2. Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+2. If fan-out: wait for subagent results. Read ADRs and CONTEXT.md only —
+   do not explore code or grep files (the subagents cover that). Check
+   subagent status only if a needs_attention signal fires.
+
+3. Synthesise subagent findings. Then interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
 Ask the questions one at a time.
 
