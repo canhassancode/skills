@@ -3,6 +3,12 @@ name: tdd
 description: Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development.
 ---
 
+## Execution mode
+
+Use the context-isolated TDD subagent loop (test-writer → implementer →
+refactorer) per pi/CONTEXT.md. Fall back to linear TDD only if subagents
+are unavailable.
+
 # Test-Driven Development
 
 ## Philosophy
