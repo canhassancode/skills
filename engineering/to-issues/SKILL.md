@@ -7,7 +7,7 @@ description: Break a plan, spec, or PRD into independently-grabbable issues on t
 
 Break a plan into independently-grabbable issues using vertical slices (tracer bullets).
 
-Check the project CLAUDE.md file or skills for reference to issue tracker preferences / triage label vocabulary, otherwise fall back to the global `~/.claude/skills/triage/triage-labels.md` and `~/.claude/skills/triage/issue-tracker-github.md`. This can be overridden by the user upon request.
+Resolve the repo's issue tracker: read a `tracker:` preference from the project CLAUDE.md or skills — `github` (default) or `linear`. Load the matching adapter — `~/.claude/skills/triage/issue-tracker-github.md` or `~/.claude/skills/triage/issue-tracker-linear.md` — together with `~/.claude/skills/triage/triage-labels.md` for the canonical-role vocabulary. Default to GitHub when no preference is declared. This can be overridden by the user upon request.
 
 ## Process
 

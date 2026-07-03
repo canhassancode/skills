@@ -5,7 +5,7 @@ description: Turn the current conversation context into a PRD and publish it to 
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
 
-Check the project CLAUDE.md file or skills for reference to issue tracker preferences / triage label vocabulary, otherwise fall back to the global `~/.claude/skills/triage/triage-labels.md` and `~/.claude/skills/triage/issue-tracker-github.md`. This can be overridden by the user upon request.
+Resolve the repo's issue tracker: read a `tracker:` preference from the project CLAUDE.md or skills — `github` (default) or `linear`. Load the matching adapter — `~/.claude/skills/triage/issue-tracker-github.md` or `~/.claude/skills/triage/issue-tracker-linear.md` — together with `~/.claude/skills/triage/triage-labels.md` for the canonical-role vocabulary. Default to GitHub when no preference is declared. This can be overridden by the user upon request.
 
 ## Process
 
@@ -26,7 +26,7 @@ Check with the user that these modules match their expectations. Check with the 
    - **Ready** → suggest `/to-issues #<number>` as the next step.
    - **Not ready** → apply the `needs-info` label to the PRD AND post a one-line comment naming the specific blocker (e.g. "blocked on @cto approval", "waiting on spike #137"). Do NOT run `/to-issues` yet. When the blocker resolves, the maintainer removes `needs-info` manually and runs `/to-issues`.
 
-   The `prd` and `needs-info` labels compose orthogonally: `prd` says "this is an epic-style parent document"; `needs-info` says "waiting on external input". `gh issue list --label prd --label needs-info` surfaces all blocked PRDs.
+   The `prd` and `needs-info` labels compose orthogonally: `prd` says "this is an epic-style parent document"; `needs-info` says "waiting on external input". On GitHub, `gh issue list --label prd --label needs-info` surfaces all blocked PRDs; on Linear, a PRD is a Project, so filter Projects (or the equivalent state) for blocked ones.
 
 <prd-template>
 

@@ -22,7 +22,7 @@ Before compiling today, check the most recent prior day: if it has a `-brief.md`
 ## Inputs to compile from
 
 1. **Carried-forward items** — yesterday's `<YYYY-MM-DD>-summary.md`: every Work Item not `done` or `signed-off (reason)` rolls forward by default.
-2. **Open tracker issues** — for active repos, `gh issue list --assignee @me --state open` (and any repo-specific queries). Each becomes an issue-backed Work Item.
+2. **Open tracker issues** — for active repos, query the repo's resolved tracker for open issues assigned to you (GitHub: `gh issue list --assignee @me --state open`; Linear: your assigned open issues via the Linear MCP), plus any repo-specific queries. Each becomes an issue-backed Work Item.
 3. **Triaged Inbox** — if `~/Obsidian/Inbox/` is non-empty, note it and offer to run `/inbox` first; promoted captures become Work Items.
 4. **Open handoffs** — if `~/Obsidian/Handoffs/` is non-empty, an agent session was handed off but never resumed. Surface each and offer `/receive` (un-received handoffs are open work, like carried items).
 5. **Profile grounding** — `~/Obsidian/Profile/overview.md` (Active focus) to order and prioritise.
