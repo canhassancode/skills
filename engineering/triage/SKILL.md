@@ -68,7 +68,7 @@ Five **state** roles:
 
 Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
 
-These are canonical role names — the actual label strings used in the issue tracker may differ. Check the project CLAUDE.md file or skills for reference to issue tracker preferences / triage label vocabulary, otherwise fall back to the global `~/.claude/skills/triage/triage-labels.md` and `~/.claude/skills/triage/issue-tracker-github.md`. This can be overridden by the user upon request.
+These are canonical role names — the actual label strings used in the issue tracker may differ. Resolve the repo's issue tracker: read a `tracker:` preference from the project CLAUDE.md or skills — `github` (default) or `linear`. Load the matching adapter — `~/.claude/skills/triage/issue-tracker-github.md` or `~/.claude/skills/triage/issue-tracker-linear.md` — together with `~/.claude/skills/triage/triage-labels.md` for the canonical-role vocabulary. Default to GitHub when no preference is declared. This can be overridden by the user upon request.
 
 State transitions: an unlabeled issue normally goes to `needs-triage` first; from there it moves to `needs-info`, `ready-for-agent`, `ready-for-human`, or `wontfix`. `needs-info` returns to `needs-triage` once the reporter replies. The maintainer can override at any time — flag transitions that look unusual and ask before proceeding.
 
@@ -89,9 +89,9 @@ If the maintainer passes a path to a markdown file (e.g. a ticket dropped in `.s
 1. Read the file. If it has YAML frontmatter, parse it for any pre-existing `category` or `state` hints
 2. Run the same evaluation as for a tracker issue — reproduce (bugs), check `.out-of-scope/`, recommend category and state
 3. Ask the maintainer how to land the outcome:
-   - **Promote to GitHub** — create a real issue via the issue tracker conventions, copy the file's body, apply the resolved labels and agent brief comment, then optionally delete or archive the local file
+   - **Promote to the tracker** — create a real issue via the resolved tracker's conventions, copy the file's body, apply the resolved labels and agent brief comment, then optionally delete or archive the local file
    - **Keep local** — update the markdown file in place: prepend a YAML frontmatter block with `category:`, `state:`, and any agent brief or triage notes inline below
-4. Default recommendation: promote to GitHub unless the maintainer says otherwise — durable tracker state beats local-only files
+4. Default recommendation: promote to the tracker unless the maintainer says otherwise — durable tracker state beats local-only files
 
 ## Show what needs attention
 
