@@ -13,6 +13,7 @@
     "./skills/engineering/pr",
     "./skills/engineering/receive",
     "./skills/engineering/review",
+    "./skills/engineering/setup-tracker",
     "./skills/engineering/tdd",
     "./skills/engineering/to-issues",
     "./skills/engineering/to-prd",
