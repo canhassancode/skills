@@ -2,7 +2,6 @@
 name: commit
 description: Create a git commit with conventional commit message format. TRIGGER when the user asks to commit, stage changes, "get changes in", save work, or any request that involves creating a git commit without pushing or opening a PR.
 argument-hint: [optional message override]
-disable-model-invocation: true
 ---
 
 # Commit
