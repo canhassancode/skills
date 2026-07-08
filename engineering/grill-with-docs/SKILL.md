@@ -5,20 +5,8 @@ description: Grilling session that challenges your plan against the existing dom
 
 ## Procedure
 
-1. Prompt the user: "Fan-out via subagents (scout + ask + researcher) or linear?"
-   - Fan-out: launch three parallel async subagents, then go to step 2
-   - Linear or no answer: go to step 3
-   - Subagents unavailable: go to step 3
-
-2. Wait for subagent results. Read ADRs and CONTEXT.md only — do not explore
-   code or grep files (the subagents cover that). Check subagent status only
-   if a needs_attention signal fires.
-
-3. Synthesise findings (if fan-out) and interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
-
-Ask the questions one at a time, waiting for feedback on each question before continuing.
-
-If a question can be answered by exploring the codebase, explore the codebase instead.
+1. Run `/grilling` for the interview loop, second-brain sweep, and capture-at-close.
+2. Proceed with the domain-specific work below.
 
 ## Domain awareness
 
@@ -55,15 +43,6 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 ```
 
 Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
-
-## Second-brain awareness (if `~/Obsidian/` exists)
-
-If `~/Obsidian/CLAUDE.md` is absent, skip this section silently — do not block.
-
-When the vault is present, the grilling compounds with the second brain:
-
-- **Open with a sweep** — run an index-first `/ask` on the session's stated topic to surface prior grillings, ingested articles, and Profile focus that bear on it. One sweep on the topic, plus a targeted re-query when a *specific* concept comes up — never a blanket dump (it adds noise and breaks `/ask`'s retrieval-cost discipline).
-- **Authority order** — the repo's `CONTEXT.md`/ADRs are **canon**; the vault is *supplementary input*. A Library page is a snapshot of what was true when captured, so a vault page that **contradicts current code is a flag to surface** (*"your `Stripe Checkout` concept says webhook-as-truth, but this resolver reads the session — which is right?"*), never a fact to trust over the live code.
 
 ## During the session
 
@@ -135,14 +114,6 @@ A grill is a *thinking* artifact; it is **not** automatically a PRD. Forcing eve
 | **Nothing** | the grill aligned your own head; no artifact needed | — |
 
 Say which you'd pick and why (*"this reads like a proposal for the manager, not a build-spec — I'd route it to a Notion proposal"*), then act on the user's call. `/triage` only enters the picture on the PRD/Issues branches — it's the GitHub-queue step, not a mystery skill.
-
-## Capture into the Library (if `~/Obsidian/` exists)
-
-Orthogonal to the route above — a grill can become a PRD *and* still be worth keeping. The repo docs (`CONTEXT.md`/ADRs) are the code-side output. The brain-side output is the synthesis worth retrieving later. At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page).
-
-- These two outputs stay **decoupled**: capture the decisions and rationale. File paths and SHAs are **B-private** (not Class A) — fine to keep where they aid recall, but the brain page should still **stand alone** rather than depend on repo links that rot, and you must still drop true Class A (verbatim proprietary source, secrets, customer PII; pseudonymise customer identity).
-- Never auto-capture — not every session is worth keeping, and the human-in-the-loop offer matches the Employment review gate.
-- Skip silently if the vault is absent.
 
 ## Log the session (if `~/Obsidian/` exists)
 
