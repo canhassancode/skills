@@ -49,7 +49,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `productivity/` — meta-skills for working with me and Claude
 
 - [grill-me](productivity/grill-me/SKILL.md) — interview me relentlessly about a plan until each branch of the decision tree resolves
-- [write-a-skill](productivity/write-a-skill/SKILL.md) — create new agent skills with proper structure and progressive disclosure
+- [writing-great-skills](productivity/writing-great-skills/SKILL.md) — vocabulary and principles for predictable skills; companion [GLOSSARY.md](productivity/writing-great-skills/GLOSSARY.md)
 
 ## `personal/` — the Obsidian second brain
 
