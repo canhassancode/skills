@@ -3,12 +3,6 @@ name: tdd
 description: Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development.
 ---
 
-## Execution mode
-
-Use the context-isolated TDD subagent loop (test-writer → implementer →
-refactorer) per pi/CONTEXT.md. Fall back to linear TDD only if subagents
-are unavailable.
-
 # Test-Driven Development
 
 ## Philosophy
@@ -56,8 +50,8 @@ Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
 - [ ] Confirm with user which behaviors to test (prioritize)
-- [ ] Identify opportunities for [deep modules](deep-modules.md) (small interface, deep implementation)
-- [ ] Design interfaces for [testability](interface-design.md)
+- [ ] Identify opportunities for deep modules — see [codebase-design](../codebase-design/SKILL.md)
+- [ ] Design interfaces for testability — see [codebase-design](../codebase-design/SKILL.md)
 - [ ] List the behaviors to test (not implementation steps)
 - [ ] Get user approval on the plan
 
@@ -94,7 +88,7 @@ Rules:
 
 ### 4. Refactor
 
-After all tests pass, look for [refactor candidates](refactoring.md):
+After all tests pass, look for refactor candidates — see [codebase-design](../codebase-design/SKILL.md):
 
 - [ ] Extract duplication
 - [ ] Deepen modules (move complexity behind simple interfaces)

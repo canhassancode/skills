@@ -29,6 +29,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `engineering/` — the core SDLC loop
 
 - [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
+- [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core shared by `grill-me` and `grill-with-docs`
