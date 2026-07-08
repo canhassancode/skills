@@ -47,13 +47,13 @@ date: <YYYY-MM-DD>
 - [ ] [[#142]] <issue-backed — execute> · <one-line context>
 
 ## Ventures
-- [ ] <raw-software — needs grilling> → `/grill-with-docs` then `/to-issues`
+- [ ] <raw-software — needs grilling> → `/grill-with-docs` then `/to-tickets`
 ```
 
 ## Work Item flavours
 
 - **issue-backed** — links a tracker issue (`[[#142]]`); execute directly.
-- **raw-software** — no issue yet; routes through `/grill-with-docs` → `/to-prd` → `/to-issues`.
+- **raw-software** — no issue yet; routes through `/grill-with-docs` → `/to-spec` → `/to-tickets`.
 - **plain task** — non-coding life/admin; just check it off. The Journal is its only tracker.
 
 ## Rules
