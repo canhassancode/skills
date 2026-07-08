@@ -1,6 +1,7 @@
 ---
 name: pickup
 description: Verification pass for a ready-for-human ticket. Open the named surfaces and consumers in the agent brief, confirm they still match current code, then route to /tdd, /diagnose, or a targeted re-grill. Use when picking up a ticket labelled ready-for-human, or when a session opens on an issue already in that state.
+disable-model-invocation: true
 ---
 
 # Pickup
