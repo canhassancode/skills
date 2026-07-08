@@ -9,9 +9,9 @@ disable-model-invocation: true
 Configure how *this* repo's skills talk to its tracker and domain docs. The skills resolve two config surfaces at run time — this skill writes both, so both lanes work:
 
 - **Triage-graph lane** (`triage`, `pickup`, `morning-brief`, `to-proposal`) reads a `tracker:` preference from the repo's `CLAUDE.md` and loads a global adapter (`~/.claude/skills/triage/issue-tracker-<tracker>.md`). GitHub and Linear only.
-- **Planning lane** (`to-spec`, `to-tickets`, `wayfinder`, `code-review`, `implement`) reads per-repo `docs/agents/*.md`. GitHub, GitLab, local-markdown, or a freeform "other".
+- **Planning lane** (`to-spec`, `to-tickets`, `wayfinder`, `code-review`, `implement`) reads per-repo `docs/agents/*.md`. GitHub, Linear, GitLab, local-markdown, or a freeform "other".
 
-**GitHub is where both lanes are fully wired.** If you pick Linear, the triage-graph lane uses the rich Linear adapter but the planning lane falls back to a described workflow. If you pick GitLab / local / other, the planning lane works from its seed template while the triage-graph lane has no adapter — flag this to the user rather than pretending it's configured.
+**GitHub and Linear are fully wired for both lanes.** If you pick GitLab / local / other, the planning lane works from its seed template while the triage-graph lane has no adapter — flag this to the user rather than pretending it's configured.
 
 This is a prompt-driven skill, not a script. Explore, present what you found, confirm, then write.
 
@@ -55,7 +55,7 @@ tracker: github
 
 Seed the per-repo docs from the templates in this folder (let the user edit before writing):
 
-- `docs/agents/issue-tracker.md` — from [issue-tracker-github.md](./issue-tracker-github.md) / [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) / [issue-tracker-local.md](./issue-tracker-local.md). For **Linear**, there's no template — write it from the Linear workflow in `~/.claude/skills/triage/issue-tracker-linear.md`. For **other**, write from the user's description.
+- `docs/agents/issue-tracker.md` — from [issue-tracker-github.md](./issue-tracker-github.md) / [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) / [issue-tracker-linear.md](./issue-tracker-linear.md) / [issue-tracker-local.md](./issue-tracker-local.md). For **other**, write from the user's description.
 - `docs/agents/triage-labels.md` — from [triage-labels.md](./triage-labels.md). Five canonical roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. (No `prd` label — the planning lane publishes `ready-for-agent` by construction.)
 - `docs/agents/domain.md` — from [domain.md](./domain.md). Confirm single-context (`CONTEXT.md` + `docs/adr/`) vs multi-context (`CONTEXT-MAP.md`).
 
