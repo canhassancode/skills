@@ -71,6 +71,7 @@ An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuit
 
 - [validate](deprecated/validate/SKILL.md) — superseded by per-repo validation hooks
 - [obsidian-vault](deprecated/obsidian-vault/SKILL.md) — superseded by the second-brain skills above (`ask`/`ingest`/`inbox` + the Operating Loop)
+- [write-a-skill](deprecated/write-a-skill/SKILL.md) — superseded by [writing-great-skills](productivity/writing-great-skills/SKILL.md)
 
 # My day-to-day
 
