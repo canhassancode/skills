@@ -1,6 +1,7 @@
 ---
 name: inbox
 description: Triage the Obsidian second-brain Inbox — route each raw capture to a domain, the Library, a Work Item, the Profile, or the bin, with your approval. Use when the Inbox has accumulated, or when morning-brief/eod-summary flag pending captures.
+disable-model-invocation: true
 ---
 
 # Inbox (Triage)

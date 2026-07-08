@@ -1,6 +1,7 @@
 ---
 name: receive
 description: Resume an agent handoff from the Obsidian vault — list the docs in Handoffs/ by title only (without absorbing them), let the user pick when there's more than one, then absorb the chosen doc's context, offer its durable residue to the Library, and archive it. Use when starting a fresh session to continue handed-off work. The session analogue of /pickup (which resumes a tracker ticket).
+disable-model-invocation: true
 ---
 
 # Receive

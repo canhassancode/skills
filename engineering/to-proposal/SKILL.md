@@ -1,6 +1,7 @@
 ---
 name: to-proposal
 description: Turn the current conversation (usually a grilling session) into a proposal aimed at a decision-maker, and publish it to Notion. Use when the output is an argued recommendation seeking buy-in — not a build spec. The proposal sibling of /to-prd.
+disable-model-invocation: true
 ---
 
 This skill takes the current conversation context and produces a **proposal** — an argued recommendation for a person to decide on, not a build spec for implementers. That's the line between this and `/to-prd`: a PRD tells an implementer *what to build*; a proposal persuades a decision-maker *what to do and why*. Do NOT interview the user — synthesise what you already know from the grilling.

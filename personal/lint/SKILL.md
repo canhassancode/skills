@@ -1,6 +1,7 @@
 ---
 name: lint
 description: Sweep the Obsidian vault for conformance to CONVENTIONS.md — Class A leaks, missing/invalid frontmatter, naming, archive markers, index reconciliation, overview bloat. Auto-fixes safe rules; proposes destructive ones. Use to tidy the vault or after changing the conventions.
+disable-model-invocation: true
 ---
 
 # Lint
