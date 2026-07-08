@@ -7,8 +7,16 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 **Skill**:
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `grill-me` invokes `/grilling`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
+**Spec**:
+The synthesised destination for a planned piece of work — problem, solution, user stories, implementation and testing decisions — published to the tracker by `/to-spec`. Supersedes the old *PRD*: the document was never product-only, so "spec" is the honest superset (technical, non-technical, or a blend). A spec publishes as `ready-for-agent` by construction; the planning lane does **not** route it through triage.
+_Avoid_: PRD, requirements doc.
+
+**Ticket**:
+A tracer-bullet vertical slice of a spec — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). Produced by `/to-tickets`, as native tracker links or a local `tickets.md`. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
+_Avoid_: issue, story.
+
 **Triage**:
-The state-machine move that classifies an incoming ticket and prepares it for execution. Operates at the issue tracker level — not in the editor.
+The state-machine move that classifies an *inbound* ticket — a user bug, a collaborator draft, a stale issue — and prepares it for execution. Operates at the issue tracker level, not in the editor. Planned work does **not** pass through triage: `/to-spec` and `/to-tickets` publish `ready-for-agent` by construction. Triage is the lane for work that arrives without a grilling behind it.
 
 **Pickup**:
 The moment a session opens on a ticket that triage has already moved to `ready-for-human`. Distinct from triage (which produced the brief) and from planning (which produced the spec). Pickup verifies, it does not re-grill.
@@ -35,6 +43,7 @@ The verification work `/grill-with-docs` must complete before declaring a plan r
 
 ## Relationships
 
+- Two lanes reach `ready-for-agent`: the **planning lane** (grill → **spec** → **ticket**s, triage-free — a grilling stands behind the brief) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance.
 - A **triage** session produces an **agent brief** when it moves a ticket to `ready-for-human` or `ready-for-agent`
 - An **agent brief** names **surfaces** and **consumers** so that **pickup** can verify against current code
 - **Pickup** applies only to `ready-for-human`; agents skip pickup verification but require *stricter* **four-pass discipline** at triage time
