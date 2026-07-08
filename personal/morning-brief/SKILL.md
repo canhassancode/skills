@@ -1,6 +1,7 @@
 ---
 name: morning-brief
 description: Compile today's Morning Brief in the Obsidian second brain — carried-forward items, open tracker issues, triaged Inbox, and Profile grounding, sectioned by domain. Use at the start of the day, or when no brief exists for today.
+disable-model-invocation: true
 ---
 
 # Morning Brief

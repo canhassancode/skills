@@ -1,6 +1,7 @@
 ---
 name: system-map
 description: Build a structured, layered map of how a user journey, entry point, or domain concept flows across multiple repositories in a workspace. Traces UI → API → service → data → external boundaries, records integration contracts, and produces a persistent node-graph artefact using deep-module thinking (interface first, then drill into nodes with progress tracking). Use when the user wants to map a flow end-to-end, trace functionality across repos, understand where a domain concept is referenced, or build domain knowledge before an architectural change.
+disable-model-invocation: true
 ---
 
 # System Map

@@ -1,6 +1,7 @@
 ---
 name: eod-summary
 description: Write today's End-of-Day Summary in the Obsidian second brain — record each Work Item's disposition (done / signed-off with reason / carried) so unfinished work rolls into tomorrow's brief. Use when wrapping up the day.
+disable-model-invocation: true
 ---
 
 # EOD Summary

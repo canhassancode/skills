@@ -7,6 +7,7 @@ description: >
   URLs, short forms like brushfeed#4, or no argument for the current branch. Use
   when the user asks to review a PR, check a pull request, do a code review, or
   mentions /review.
+disable-model-invocation: true
 ---
 
 # Code Review

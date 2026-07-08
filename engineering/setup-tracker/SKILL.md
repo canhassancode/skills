@@ -1,6 +1,7 @@
 ---
 name: setup-tracker
 description: Configure which issue tracker a repo uses (GitHub or Linear) for the triage/to-prd/to-issues/pickup/morning-brief skills. Writes the per-repo `tracker:` preference, the `triage-disclaimer` preference, and, for Linear, scaffolds the canonical-role→team-taxonomy mapping. Use when onboarding a repo to these skills or switching its tracker.
+disable-model-invocation: true
 ---
 
 # Setup tracker
