@@ -16,7 +16,7 @@ Read the file before you write to it.
 
 ## Content
 
-Suggest the skills the next session should use. Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits, diffs) — reference them by path or URL instead.
+Suggest the skills the next session should use. Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs) — reference them by path or URL instead.
 
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
 

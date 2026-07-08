@@ -1,10 +1,10 @@
 ---
 name: to-proposal
-description: Turn the current conversation (usually a grilling session) into a proposal aimed at a decision-maker, and publish it to Notion. Use when the output is an argued recommendation seeking buy-in — not a build spec. The proposal sibling of /to-prd.
+description: Turn the current conversation (usually a grilling session) into a proposal aimed at a decision-maker, and publish it to Notion. Use when the output is an argued recommendation seeking buy-in — not a build spec. The proposal sibling of /to-spec.
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and produces a **proposal** — an argued recommendation for a person to decide on, not a build spec for implementers. That's the line between this and `/to-prd`: a PRD tells an implementer *what to build*; a proposal persuades a decision-maker *what to do and why*. Do NOT interview the user — synthesise what you already know from the grilling.
+This skill takes the current conversation context and produces a **proposal** — an argued recommendation for a person to decide on, not a build spec for implementers. That's the line between this and `/to-spec`: a spec tells an implementer *what to build*; a proposal persuades a decision-maker *what to do and why*. Do NOT interview the user — synthesise what you already know from the grilling.
 
 ## Draft-first, publish-on-confirm
 
@@ -57,5 +57,5 @@ Exactly what you need from the reader: a decision, a sign-off, a resource, a dat
 ## Related
 
 - `/grill-with-docs`, `/grill-me` — the grilling this usually follows; their close-routing offers this skill.
-- `/to-prd` — the sibling for build specs aimed at implementers (GitHub, not Notion).
+- `/to-spec` — the sibling for build specs aimed at implementers (the tracker, not Notion).
 - `/log` — append the proposal and its outstanding ask to today's log.
