@@ -114,9 +114,8 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
 
 ## Review passes
 
-Run two passes with distinct angles, each over the full context bundle. Use
-parallel subagents when available, sequential passes otherwise, or a single
-combined pass for diffs under ~50 lines.
+Run two passes with distinct angles, each over the full context bundle. Use a
+single combined pass for diffs under ~50 lines.
 
 | Angle                          | Focus                                                                                                                                                       |
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
