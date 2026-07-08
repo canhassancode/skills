@@ -5,7 +5,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 ## Language
 
 **Skill**:
-A named, invocable workflow defined by a `SKILL.md` file. Invoked via the Skill tool (e.g. `/grill-me`) and never inlined into other skills' procedures.
+A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `grill-me` invokes `/grilling`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Triage**:
 The state-machine move that classifies an incoming ticket and prepares it for execution. Operates at the issue tracker level — not in the editor.
