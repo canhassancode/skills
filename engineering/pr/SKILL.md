@@ -38,3 +38,4 @@ Body template:
 - Analyse ALL commits on the branch, not just the latest one
 - Never force push
 - Do not push to main/master directly
+-
