@@ -31,3 +31,23 @@ The README is the human-facing catalogue. It mirrors what's in plugin.json but a
 - Every registered skill gets a line in its category section
 - Deprecated skills live in `## deprecated/` — name what superseded each
 - The `## My day-to-day` section is opinionated — update it only when the daily workflow actually changes, not every time a skill is added or retired
+
+## Issue tracker
+
+tracker: github
+
+triage-disclaimer: off
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues (`canhassancode/skills`). External PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Five canonical roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context (`CONTEXT.md` + `docs/adr/`). See `docs/agents/domain.md`.
