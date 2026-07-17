@@ -17,6 +17,6 @@ Use /tdd where possible, at pre-agreed seams.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
-Once done, use /code-review to review the work.
+Once done, use /code-review to review the work. Fix Structure-axis regressions before committing; surface judgement-call findings (missed simplifications, smells) rather than applying them unprompted.
 
 Commit your work to the current branch.

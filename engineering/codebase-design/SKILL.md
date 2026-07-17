@@ -97,4 +97,6 @@ After a TDD cycle (or any change), look for:
 - **Shallow modules** → Combine or deepen
 - **Feature envy** → Move logic to where data lives
 - **Primitive obsession** → Introduce value objects
+- **Eliminable structure** → Remove the whole branch, conditional, or layer rather than polishing it
+- **Feature logic in shared paths** → Move it into the feature that owns it; keep canonical layers generic
 - **Existing code** the new code reveals as problematic

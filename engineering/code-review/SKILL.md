@@ -1,14 +1,15 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along three axes — Standards (does the code follow this repo's documented coding standards?), Spec (does the code match what the originating issue/PRD asked for?), and Structure (does the change regress structure or miss a dramatically simpler shape?). Runs all three reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 ---
 
-Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
+Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 - **Standards** — does the code conform to this repo's documented coding standards?
 - **Spec** — does the code faithfully implement the originating issue / PRD / spec?
+- **Structure** — does the change regress the structure it touches, or leave an obvious path to dramatic simplification unexplored?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+All three axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
 The issue tracker should have been provided to you — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
 
@@ -55,9 +56,27 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
-### 4. Spawn both sub-agents in parallel
+### 4. The structure baseline
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+The Structure axis asks a different question from Standards: not "does the diff follow the rules?" but "did the change miss a dramatically simpler shape, or make the structure worse?" It favours restructurings that preserve behaviour while removing structure outright. Like the smell baseline, it is fixed and applies even when the repo documents nothing:
+
+- **Eliminable structure** — prefer changes that remove entire branches, conditionals, or layers over polishing what's there.
+- **File-size growth** — a file the diff pushes from below to above 1,000 lines needs architectural justification.
+- **Scattered conditionals** — ad-hoc conditionals threaded through unrelated flows are a design problem wanting a dedicated abstraction, not more branches.
+- **Type and boundary clarity** — unnecessary optionality, casts, or loosely-shaped objects where an explicit contract would hold the boundary.
+- **Canonical-layer discipline** — feature logic leaking into shared paths; near-duplicates of utilities that already exist.
+- **Atomic orchestration** — sequential flows where independent work could run in parallel with clearer structure.
+- **The ladder** — every new abstraction, helper, or dependency in the diff must beat each rung above it: an existing in-repo pattern, the standard library, a native platform feature, an already-installed dependency, a one-liner.
+
+Three rules bind it:
+
+- **Diff-confined.** Findings apply only to code the diff touches. Structural opportunities in surrounding code are reported as observations, never prescribed — cleaning up untouched code is out of scope.
+- **Regressions are hard, the rest is judgement.** A structural regression (the diff leaves structure worse than it found it) is a hard finding; a missed simplification is always a judgement call.
+- **The repo overrides.** As with the smell baseline, a documented repo standard wins.
+
+### 5. Spawn all three sub-agents in parallel
+
+Send a single message with three `Agent` tool calls. Use the `general-purpose` subagent for each.
 
 **Standards sub-agent prompt** — include:
 
@@ -71,19 +90,26 @@ Send a single message with two `Agent` tool calls. Use the `general-purpose` sub
 - The path or fetched contents of the spec.
 - The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
 
+**Structure sub-agent prompt** — include:
+
+- The diff command and commit list.
+- **The structure baseline from step 4 pasted in full, including its three binding rules** — the sub-agent has no other access to it.
+- The brief: "Report, structural regressions first, missed simplifications second: every place the diff regresses structure or leaves an obvious path to dramatic simplification unexplored. Name the baseline standard and quote the hunk. Confine findings to code the diff touches; note opportunities in surrounding code as observations only. Distinguish regressions (hard) from simplifications (judgement calls). Under 400 words."
+
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
-### 5. Aggregate
+### 6. Aggregate
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+Present the three reports under `## Standards`, `## Spec`, and `## Structure` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the axes are deliberately separate (see _Why separate axes_).
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
 
-## Why two axes
+## Why separate axes
 
-A change can pass one axis and fail the other:
+A change can pass one axis and fail another:
 
 - Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
 - Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
+- Code that follows every convention and matches the spec, but adds a layer or branching the design didn't need → **Standards pass, Spec pass, Structure fail.**
 
-Reporting them separately stops one axis from masking the other.
+Reporting them separately stops one axis from masking another.

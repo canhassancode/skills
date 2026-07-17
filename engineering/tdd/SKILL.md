@@ -32,5 +32,6 @@ Ask: "What's the public interface, and which seams should we test?"
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
+- **Green climbs the ladder.** "Only enough code" means the lowest rung that passes: an existing in-repo helper or pattern > the standard library > a native platform feature > an already-installed dependency > a one-liner > minimal new code. Write new structure only when every rung above fails.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
