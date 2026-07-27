@@ -34,6 +34,19 @@ The agent needs to know when it's done. Every agent brief must have concrete, te
 
 State what is out of scope. This prevents the agent from gold-plating or making assumptions about adjacent features.
 
+### The two Why fields are mandatory
+
+Every brief opens with both, on **either** ready state — `ready-for-agent` and `ready-for-human`. Plain English, no jargon, one sentence each:
+
+```markdown
+**Why this matters:** <the observable stake, in one sentence>
+**Why this routing:** <why it is yours, or why it is safe to delegate>
+```
+
+Two fields, not one, because they have different lifetimes: the stake outlives the ticket, the routing decision expires the moment the work starts.
+
+`Why this routing` is a **gate that has to be earned**. If you cannot write "safe to delegate because…" without hedging, the ticket is not `ready-for-agent` — send it to `ready-for-human` and say why there instead.
+
 ## Template
 
 ```markdown
@@ -42,8 +55,12 @@ State what is out of scope. This prevents the agent from gold-plating or making 
 **Category:** bug / enhancement
 **Summary:** one-line description of what needs to happen
 
+**Why this matters:** the observable stake, in one sentence
+**Why this routing:** why it is yours, or why it is safe to delegate
+
 **Current behavior:**
-Describe what happens now. For bugs, this is the broken behavior.
+Open with the observable symptom — what a person sees, in the order they see it —
+then the internals that produce it. For bugs, this is the broken behavior.
 For enhancements, this is the status quo the feature builds on.
 
 **Desired behavior:**
@@ -52,10 +69,10 @@ Be specific about edge cases and error conditions.
 
 **Key interfaces:**
 
-Name the concrete surfaces this work touches and the consumers it affects. This section is what `/pickup` verifies against on `ready-for-human`, so be specific enough that a reader can open or grep what you list:
+Name the concrete surfaces this work touches and the consumers it affects. Be specific enough that a reader can open or grep what you list:
 
 - **Surfaces touched** — specific functions, endpoints, resolvers, types. Note any feature flag, env gate, or branch that gates each one (these hide parallel paths and must be enumerated).
-- **Consumers affected** — specific reads of the changed field/type, verified by grep at brief-writing time so pickup can re-grep to confirm nothing new has appeared.
+- **Consumers affected** — specific reads of the changed field/type, found by grep rather than by trusting your mental model.
 
 Format example:
 
@@ -86,10 +103,15 @@ Format example:
 **Category:** bug
 **Summary:** Skill description truncation drops mid-word, producing broken output
 
+**Why this matters:** Long skills read as broken in the picker — the description
+ends mid-word, e.g. "Use when the user wants to confi".
+**Why this routing:** Safe to delegate — pure string handling with an exact
+expected output, and a test can pin every boundary case.
+
 **Current behavior:**
-When a skill description exceeds 1024 characters, it is truncated at exactly
-1024 characters regardless of word boundaries. This produces descriptions
-that end mid-word (e.g. "Use when the user wants to confi").
+Descriptions over the limit end mid-word (e.g. "Use when the user wants to
+confi"). Underneath, a description longer than 1024 characters is truncated at
+exactly 1024 characters regardless of word boundaries.
 
 **Desired behavior:**
 Truncation should break at the last word boundary before 1024 characters
@@ -124,11 +146,15 @@ and append "..." to indicate truncation.
 **Category:** enhancement
 **Summary:** Add `.out-of-scope/` directory support for tracking rejected feature requests
 
+**Why this matters:** The same rejected request keeps coming back, and each time
+the reasoning has to be reconstructed from memory or a closed-issue search.
+**Why this routing:** Safe to delegate — the file format and the matching step
+are both specified below, and nothing here decides what gets rejected.
+
 **Current behavior:**
-When a feature request is rejected, the issue is closed with a `wontfix` label
-and a comment. There is no persistent record of the decision or reasoning.
-Future similar requests require the maintainer to recall or search for the
-prior discussion.
+A rejected request leaves no trace a future triage can find: the issue is closed
+with a `wontfix` label and a comment, so re-litigating it means recalling or
+searching for the prior discussion.
 
 **Desired behavior:**
 Rejected feature requests should be documented in `.out-of-scope/<concept>.md`
@@ -180,6 +206,7 @@ The function around line 150 has the issue.
 This is bad because:
 
 - No category
+- Neither Why field, so nothing says what is at stake or why an agent should have it
 - Vague description ("the triage thing is broken")
 - References file paths and line numbers that will go stale
 - No acceptance criteria

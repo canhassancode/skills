@@ -16,6 +16,7 @@
     "./engineering/prototype",
     "./engineering/receive",
     "./engineering/research",
+    "./engineering/resolving-merge-conflicts",
     "./engineering/review",
     "./engineering/tdd",
     "./engineering/to-proposal",

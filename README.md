@@ -43,6 +43,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
+- [resolving-merge-conflicts](engineering/resolving-merge-conflicts/SKILL.md) — resolve an in-progress git merge or rebase conflict from the primary sources behind each hunk, then run the project's checks
 - [review](engineering/review/SKILL.md) — review code in Hassan's voice: self-review the current branch in the terminal, or check a named PR out locally and post inline comments after confirmation
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to Notion (the proposal sibling of `to-spec`)

@@ -92,13 +92,15 @@ Show counts and a one-line summary per issue. Let the maintainer pick.
 
 ## Triage a specific issue
 
-1. **Gather context.** Read the full issue (body, comments, labels, reporter, dates). Parse any prior triage notes so you don't re-ask resolved questions. Explore the codebase using the project's domain glossary, respecting ADRs in the area. Read `.out-of-scope/*.md` and surface any prior rejection that resembles this issue.
+1. **Gather context.** Read the full issue (body, comments, labels, reporter, dates). Parse any prior triage notes so you don't re-ask resolved questions. Explore the codebase using the project's domain glossary, respecting ADRs in the area. Then run two checks against the codebase:
+   - **Redundancy** — search for an existing implementation of the requested behaviour by **domain concept**, not by the request's wording, and report where you looked. Already implemented is a `wontfix` that points at where the behaviour lives; it does **not** go into `.out-of-scope/`, which is a record of rejections, not of things already built.
+   - **Prior rejection** — read `.out-of-scope/*.md` and surface any that resembles this issue.
 
-2. **Recommend.** Tell the maintainer your category and state recommendation with reasoning, plus a brief codebase summary relevant to the issue. Wait for direction.
+2. **Recommend.** Tell the maintainer your category and state recommendation with reasoning, plus a brief codebase summary relevant to the issue — including whether it is already implemented. Wait for direction.
 
 3. **Reproduce (bugs only).** Before any grilling, attempt reproduction: read the reporter's steps, trace the relevant code, run tests or commands. Report what happened — successful repro with code path, failed repro, or insufficient detail (a strong `needs-info` signal). A confirmed repro makes a much stronger agent brief.
 
-4. **Grill (if needed).** If the issue needs fleshing out, run a `/grill-with-docs` session. The four-pass discipline (trace branches, grep consumers, sketch `CONTEXT.md` if missing, check feature-flag/branch gates) is mandatory before declaring `ready-for-anything`. Apply it **more strictly** for `ready-for-agent` than for `ready-for-human` — agents have no judgment to course-correct mid-stream, so the brief must be fully self-contained. Humans get `/pickup` as a verification safety net; agents do not.
+4. **Grill (if needed).** If the issue needs fleshing out, run a `/grill-with-docs` session. The four-pass discipline (trace branches, grep consumers, sketch `CONTEXT.md` if missing, check feature-flag/branch gates) is mandatory before declaring `ready-for-anything`. Apply it **more strictly** for `ready-for-agent` than for `ready-for-human` — agents have no judgment to course-correct mid-stream, so the brief must be fully self-contained. A human picking up a thin `ready-for-human` brief notices what is missing and asks; an agent works from what it is given.
 
 5. **Apply the outcome:**
    - `ready-for-agent` — post an agent brief comment ([AGENT-BRIEF.md](AGENT-BRIEF.md)). **Exception:** if the issue body already contains a complete agent brief, don't repost it as a comment — flip the label only.

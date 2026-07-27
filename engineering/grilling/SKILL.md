@@ -5,11 +5,11 @@ description: Grilling session — interview relentlessly about a plan or design 
 
 ## Interview loop
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
 Ask the questions one at a time, waiting for feedback on each question before continuing. Asking multiple questions at once is bewildering.
 
-If a *fact* can be found by exploring the codebase, look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
+If a *fact* can be found by exploring the environment (filesystem, tools, etc.), look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
 
 Do not enact the plan until I confirm we've reached a shared understanding.
 
@@ -23,7 +23,3 @@ Open with a sweep — an index-first `/ask` on the session topic to surface prio
 
 - **Repo has `CONTEXT.md` / ADRs** → they are **canon**; the vault is *supplementary*. A Library page that contradicts live code is a flag to surface (*"your `Stripe Checkout` concept says webhook-as-truth, but this resolver reads the session — which is right?"*), never a fact to trust over the code.
 - **No repo to ground against** → the vault is the *only* prior-art source. Weight it accordingly, but still treat any page as a snapshot to sanity-check — it may be stale.
-
-## Capture at close (if `~/Obsidian/` exists)
-
-At the **end** of the session, offer once: *"Capture this grilling into the Library?"* On yes, hand a session summary to `/ingest` (session mode → a `grill`-sourced Library page). Capture decisions and rationale; **never** write Class A (secrets, customer PII, verbatim proprietary source) — paths/SHAs are B-private, fine to keep. Never auto-capture; skip silently if the vault is absent.

@@ -14,7 +14,7 @@ That remote is the whole mechanism. There is no `/sync` skill, no recorded basel
 
 Every skill is one of three. The class governs what a harvest is allowed to do to it.
 
-**Synced** — tracks upstream byte-for-byte: `research`, `wayfinder`, `writing-great-skills`.
+**Synced** — tracks upstream byte-for-byte: `research`, `resolving-merge-conflicts`, `wayfinder`, `writing-great-skills`.
 
 One why-line covers them: they are general-purpose and upstream maintains them better than a fork would. **`wayfinder` is the exception that earns its own line:** it carries one deliberate divergence — upstream's `/setup-matt-pocock-skills` is `/bootstrap` here. Perfect sync is exactly what let that dangling command name sit in the file unnoticed, so it will recur on every harvest unless the divergence is re-applied by hand each time.
 
