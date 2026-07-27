@@ -51,6 +51,12 @@ Editing a **synced** or **adapted** `SKILL.md` means: diff against `upstream/mai
 
 Some upstream skills are installed directly from `mattpocock/skills` and are deliberately **not vendored** into this library — `teach` is the current one. Installed-and-absent-from-the-library is a category with a reason, not drift. Do not re-raise it as a gap, and do not tidy it into `engineering/` or `productivity/`.
 
+## The count
+
+**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+
+Of the 29 registered, **16 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **30 directories, 17 invisible / 13 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+
 ## Deprecating a skill
 
 When a skill is superseded (not just bug-fixed, but replaced by a different skill that does the job better):

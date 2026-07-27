@@ -2,7 +2,7 @@
 
 API and git commands. Voice rules are in [VOICE.md](VOICE.md).
 
-## Local checkout (Mode B)
+## Local checkout
 
 The goal is to review with a real working tree — so passes can grep call-sites
 and run tests — **without disturbing Hassan's current branch or uncommitted

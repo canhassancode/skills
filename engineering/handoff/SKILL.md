@@ -9,7 +9,7 @@ Write a handoff document summarising the current conversation so a fresh agent c
 
 ## Where to save
 
-- **If `~/Obsidian/` exists** — write to `~/Obsidian/Handoffs/<YYYY-MM-DD-HHMM>-handoff.md` with frontmatter `type: handoff` + `created:`. This joins the vault graph, so **wikilink the Library/Profile pages the next session will need** (`[[Perivale Apartment - Hoover Building]]`, `[[GymBuddies]]`, …) — a quick `/ask` finds them. Conform to `~/Obsidian/CONVENTIONS.md`. The handoff is **Class B working context** — never write Class A (secrets, credentials, customer PII, verbatim proprietary source). File paths + SHAs are fine here (B-private) and often exactly what the next session needs.
+- **If `~/Obsidian/` exists** — write to `~/Obsidian/Handoffs/<YYYY-MM-DD-HHMM>-handoff.md`. The vault is the store because it is the only surface constant across every machine; the handoff is transport through it, not a page in it. **Wikilink the pages the next session will need** (`[[Perivale Apartment - Hoover Building]]`, `[[GymBuddies]]`, …) as plain pointers. The handoff is **Class B working context** — never write Class A (secrets, credentials, customer PII, verbatim proprietary source). File paths + SHAs are fine here (B-private) and often exactly what the next session needs.
 - **If the vault is absent** — fall back to `mktemp -t handoff-XXXXXX.md`.
 
 Read the file before you write to it.
@@ -20,6 +20,10 @@ Suggest the skills the next session should use. Do not duplicate content already
 
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
 
+### Discarded as noise
+
+Write the dead ends down: hypotheses ruled out, approaches tried and abandoned, and why each was dropped. This is the section that earns the handoff — it is the one thing `/compact` cannot express, and without it the next session re-walks paths this one already closed.
+
 ## Lifecycle
 
-A handoff is **transient** — consumed once. It lives in `Handoffs/` until `/receive` resumes it, which then offers its durable residue to `/ingest` and moves it to `Archive/Handoffs/`. An un-received handoff is open work.
+A handoff is **transient** — consumed once. It lives in `Handoffs/` until `/receive` resumes it, and `/receive` **deletes** it. There is no archive. An un-received handoff is open work, so `Handoffs/` non-empty always means something real is open.

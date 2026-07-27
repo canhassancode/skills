@@ -26,7 +26,8 @@
     "./engineering/wayfinder",
     "./personal/ask",
     "./personal/ingest",
-    "./personal/log",
+    "./personal/observe",
+    "./personal/retro",
     "./productivity/grill-me",
     "./productivity/writing-great-skills"
   ]

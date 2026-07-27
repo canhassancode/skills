@@ -1,32 +1,42 @@
 ---
 name: ask
-description: Answer a question from the Obsidian second brain — route to the right wiki (Library for the world, Profile for Hassan), read its index, drill into the relevant pages, and synthesise an answer with citations, falling back to raw notes only when needed. Use to query your stored learnings, articles, notes, people, and self-model.
+description: Answer a question from the Obsidian second brain — route by the shape of the question (a named or factual lookup greps for the file; a fuzzy or conceptual question reads the Library index and drills), then synthesise an answer with citations. Use to query stored learnings, articles, notes, people, and self-model.
+disable-model-invocation: true
 ---
 
 # Ask
 
-Queries the read-heavy corpus at minimal token cost. That corpus is **two LLM Wikis** with the same index-first access pattern (see `~/Obsidian/CONTEXT.md`):
+Queries the vault at minimal token cost. Two corpora, but they are **not** what decides the route:
 
-- **Library** (`~/Obsidian/Library/`) — subject = *the world*: consumed content, references, learnings. Schema: `~/Obsidian/Library/CLAUDE.md`.
-- **Profile** (`~/Obsidian/Profile/`) — subject = *Hassan*: self-model, key people, goals, career, health. Schema: `~/Obsidian/Profile/CLAUDE.md`.
+- **Library** (`~/Obsidian/Library/`) — subject = *the world*: consumed sources, references, learnings. It is the LLM Wiki: pre-synthesised, index-first. Schema: `~/Obsidian/Library/CLAUDE.md`.
+- **Profile / Personal** (`~/Obsidian/Profile/`, `~/Obsidian/Personal/`) — subject = *Hassan*: self-model, people, goals, career, health. Hand-edited, no index.
 
 If you file an answer back as a page, conform to `~/Obsidian/CONVENTIONS.md`.
 
-## Procedure
+## Route by query shape
 
-1. **Route.** Question about Hassan, a person, or a contact ("who is X", "what's their email") → **Profile**. Question about consumed content or the outside world → **Library**. If unsure or it spans both, check both indexes — they're cheap.
-2. **Read the index first** (do **not** grep raw notes first):
-   - Library → `index.md`, then drill into `sources/` / `entities/` / `concepts/`.
-   - Profile → `overview.md` for the pointer; people and layer pages are **filename-addressable**, so go straight to `People/<Name>.md`, `goals.md`, `career.md`, etc. when the name is known.
-3. **Fallback only if needed** — when the synthesised page lacks the detail, drill into that wiki's raw layer:
-   - Library → the source's `raw/` transcript.
-   - Profile → the Domain notes it summarises (`Personal/`, `Employment/`, `Ventures/`, `Journal/`) via its down-links. Employment notes are Class B working context — surface to Hassan, never re-export.
-4. Answer with **citations** (links to the pages used).
-5. If the answer is itself worth keeping (a comparison, a synthesis, a discovered connection), offer to file it back as a new page **in the wiki it belongs to** (Library or Profile) so explorations compound.
+The corpus does not decide the route — the **shape of the question** does.
 
-## Why index-first
+- **Named or factual lookup** — "Youssef's email", "which solicitor", "what was the offer price". One fact, and it lives in exactly one file. **`grep -ril` for it first, then `Read` the hit.** Do not read an index; there is nothing to synthesise.
+- **Fuzzy or conceptual discovery** — "have I read anything on agent memory", "what do I know about X". You do not know which file, and the answer is a synthesis across several. **Read `Library/index.md`, then drill** into `sources/` / `entities/` / `concepts/`.
 
-Both wikis are pre-synthesised, so most questions are answered from a couple of dense pages — not by re-reading raw material. That is the minimal-token mechanism. Reach for the raw layer only for long-tail detail.
+When a question is both, do the lookup first — it is cheaper and it usually settles the question.
+
+## The grep discipline
+
+**`grep -ril` — filenames only — before any `Read`.** A bare `grep -r` on a broad term dumps matching lines from dozens of files and grep stops being the cheap step. Get the candidate filenames, pick, then `Read`.
+
+Vary the search term rather than the search path: people are filed by role (`Financial Advisor`), by organisation (`NK Solicitors`) and by personal name interchangeably, so grep the **fact** ("mortgage", "@", "estate agent"), not the assumed filename.
+
+## Surfaces to reach
+
+`Library/` (external sources only) · `Personal/` · `Profile/people/` · `Ventures/Ideas/` · the P5M poster prompt · `Employment/<employer>/` working notes.
+
+Employment notes are Class B working context — surface them to Hassan, never re-export.
+
+## Answer
+
+Answer with **citations** — links to the pages actually used. If the answer is itself worth keeping (a comparison, a synthesis, a discovered connection), offer to file it back as a page in the corpus it belongs to.
 
 ## Related
 `/ingest` — add sources

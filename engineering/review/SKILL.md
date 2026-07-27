@@ -1,29 +1,22 @@
 ---
 name: review
 description: >
-  Review code in Hassan's voice. Two modes: self-review of the current branch
-  (prints to the terminal, never posts), or review a named GitHub PR (checks the
-  branch out locally, drafts inline comments, confirms, then posts). Accepts full
-  URLs, short forms like brushfeed#4, or no argument for the current branch. Use
-  when the user asks to review a PR, check a pull request, do a code review, or
-  mentions /review.
+  Review a named GitHub PR in Hassan's voice — check the branch out locally, run
+  the analysis through /code-review, draft inline comments, confirm, then post.
+  Accepts full URLs or short forms like brushfeed#4. Use when the user asks to
+  review a PR, check a pull request, or mentions /review with a PR reference.
 disable-model-invocation: true
 ---
 
-# Code Review
+Reviews a **named GitHub PR** with real local context and writes the findings in
+Hassan's voice: check the PR branch out locally, run the analysis through
+`/code-review`, draft inline comments, **reconcile with any review Hassan already
+has in flight, confirm, then post**. If Hassan already has a pending review on the
+PR, the skill **merges** its comments into that pending review and submits it as
+one combined review; otherwise it posts a fresh grouped review.
 
-Reviews code with real local context and writes findings in Hassan's voice. The
-output path depends on the mode:
-
-- **Mode A — Self-review** (current branch, or no argument): review `HEAD`
-  against `main` using the working tree on disk. **Print to the terminal. Never
-  post.** This is the pre-PR self-review — there may be no PR to comment on yet.
-- **Mode B — Named PR** (`brushfeed#4`, a URL, `#N` in a repo): check the PR
-  branch out locally, review with full context, draft inline comments in Hassan's
-  voice, **reconcile with any review Hassan already has in flight, confirm, then
-  post**. If Hassan already has a pending review on the PR, the skill **merges**
-  its comments into that pending review and submits it as one combined review;
-  otherwise it posts a fresh grouped review.
+This skill is the **voice and posting layer**. The analysis is not done here —
+`/code-review` owns it, and this skill invokes it.
 
 Voice rules live in [VOICE.md](VOICE.md) — load it before writing any comment.
 API and git commands live in [REFERENCE.md](REFERENCE.md).
@@ -31,21 +24,21 @@ API and git commands live in [REFERENCE.md](REFERENCE.md).
 ## Quick start
 
 ```
-/review                   → Mode A: self-review current branch vs main, terminal only
-/review brushfeed#4       → Mode B: review the PR, draft + confirm + post
+/review brushfeed#4       → review the PR, draft + confirm + post
 /review https://github.com/acme-corp/api/pull/425
 ```
 
 ## Input resolution
 
-1. **No argument** → Mode A. Review `git diff main...HEAD` (or `master...HEAD`)
-   in the current working directory.
-2. **Full GitHub PR URL** → Mode B. Extract owner, repo, number.
-3. **Short form `repo#N`** → Mode B. Resolve the owner:
+1. **Full GitHub PR URL** → extract owner, repo, number.
+2. **Short form `repo#N`** → resolve the owner:
    - Try `gh pr view N --repo hassan/repo` first.
    - Then `gh pr view N --repo acme-corp/repo`.
    - Then the current working-directory repo.
-4. **Bare `#N`** in a repo working directory → Mode B against the current repo.
+3. **Bare `#N`** in a repo working directory → the current repo.
+4. **No argument** → there is nothing to review here. **`/review` no longer
+   self-reviews the current branch** — that is `/code-review` against a fixed
+   point (`/code-review main`). Say so and stop.
 
 Resolution table and existence checks are in [REFERENCE.md](REFERENCE.md).
 
@@ -56,21 +49,7 @@ production migrations, large diffs), defer to `/review ultra` — the cloud
 pipeline — rather than duplicating it here. This skill is the fast local layer
 and the voice/posting layer; it is not a replacement for the cloud pipeline.
 
-## Mode A — Self-review (current branch)
-
-1. **Refresh the base.** `git fetch origin main` so the diff is against the real
-   `origin/main`, not a stale local copy.
-2. **Gather context.** Read `CLAUDE.md` / `AGENTS.md` / `CONTEXT.md` from the
-   repo root. Read enough of each changed file — the working tree is right here,
-   so navigate freely, grep call-sites, and run the test command if one is
-   obvious.
-3. **Review** (see "Review passes" below).
-4. **Print to the terminal.** Lead with the verdict (looks good / things to look
-   at), then findings as `file:line — comment` in Hassan's voice. **Do not post
-   anything.** If Hassan then says "post this on PR #N", switch to Mode B's
-   confirm-and-post step.
-
-## Mode B — Named PR
+## Procedure
 
 1. **Fetch metadata.** `gh pr view <n> --repo <owner>/<repo> --json
 title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
@@ -85,24 +64,27 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
      GitHub file fetches, and note the reduced context to Hassan.
 3. **Gather context.** PR description and linked issues; **existing published
    review threads** (never repeat a point already made — if the author replied
-   "this is intentional because X" or "fixing in follow-up", respect it);
-   `CLAUDE.md` / `AGENTS.md` / `CONTEXT.md`; the changed files in full via the
-   worktree. Also detect **Hassan's own pending review**: check for a `PENDING`
-   review by Hassan on this PR and read its draft inline comments and body
-   (commands in [REFERENCE.md](REFERENCE.md)). This decides the posting path
-   (merge vs fresh) and is one more thing to dedupe against — never re-flag a
-   point Hassan has already drafted.
-4. **Review** (see "Review passes" below). In the worktree you can run tests and
-   grep — use that.
-5. **Draft & decide — independently.** Draft the review body + inline comments in
-   Hassan's voice ([VOICE.md](VOICE.md)) and form the skill's **own** verdict from
-   the skill's findings alone. Hassan's pending draft comments do **not** feed
-   this decision — the skill reaches its conclusion blind to them, so the two can
-   be compared honestly.
+   "this is intentional because X" or "fixing in follow-up", respect it). Also
+   detect **Hassan's own pending review**: check for a `PENDING` review by Hassan
+   on this PR and read its draft inline comments and body (commands in
+   [REFERENCE.md](REFERENCE.md)). This decides the posting path (merge vs fresh)
+   and is one more thing to dedupe against — never re-flag a point Hassan has
+   already drafted.
+4. **Analyse — invoke `/code-review`** against the PR's base ref as the fixed
+   point, from inside the worktree. It runs the Standards, Spec and Structure
+   axes in parallel and hands back its findings. Do not re-derive them here.
+5. **Draft & decide — independently.** Turn `/code-review`'s findings into a
+   review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
+   carrying a file path and line number, and form the skill's **own** verdict from
+   those findings alone. Hassan's pending draft comments do **not** feed this
+   decision — the skill reaches its conclusion blind to them, so the two can be
+   compared honestly.
+   - **No blocking issues** → `APPROVE`.
+   - **Anything worth flagging** → `COMMENT`. Never `REQUEST_CHANGES`.
 6. **Reconcile & confirm.** Present, side by side: the skill's verdict + its new
    inline comments, and Hassan's existing pending comments (plus any pending
-   body). **Call out contradictions explicitly** (e.g. the skill found a blocker
-   on a line Hassan was about to approve). Then **agree the final event and body
+   body). **Call out contradictions explicitly** (e.g. a blocker was found on a
+   line Hassan was about to approve). Then **agree the final event and body
    together** — Hassan may reword, drop findings, override the verdict, or keep
    his own line. Never submit or post without explicit approval.
 7. **Post.**
@@ -113,27 +95,7 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
    Then **clean up** the worktree / temp clone. Merge/submit commands are in
    [REFERENCE.md](REFERENCE.md).
 
-## Review passes
-
-Run two passes with distinct angles, each over the full context bundle. Use a
-single combined pass for diffs under ~50 lines.
-
-| Angle                          | Focus                                                                                                                                                       |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Correctness & security**     | Logic bugs, edge cases, race conditions, null handling, injection, auth gaps, error swallowing — and does the code actually do what the PR description says |
-| **Patterns & maintainability** | TypeScript conventions, alignment with CLAUDE.md/AGENTS.md, codebase consistency, naming, obvious nits, British English                                     |
-
-Passes do not edit code. Each finding carries: file path, line number, and a
-ready-to-post comment in Hassan's voice. Then **synthesise**: deduplicate across
-passes, drop anything an author reply — or one of Hassan's own pending draft
-comments — already settled, and decide the skill's **independent** verdict.
-Hassan's pending comments don't sway this verdict; reconciling the two is the
-confirmation gate's job, not the synthesis step's:
-
-- **No blocking issues** → `APPROVE`.
-- **Anything worth flagging** → `COMMENT`. Never `REQUEST_CHANGES`.
-
-## Reconciliation & confirmation gate (Mode B only)
+## Reconciliation & confirmation gate
 
 Never post or submit without confirmation. Present (format in
 [REFERENCE.md](REFERENCE.md)):

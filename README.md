@@ -41,10 +41,10 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
-- [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it
+- [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
 - [resolving-merge-conflicts](engineering/resolving-merge-conflicts/SKILL.md) — resolve an in-progress git merge or rebase conflict from the primary sources behind each hunk, then run the project's checks
-- [review](engineering/review/SKILL.md) — review code in Hassan's voice: self-review the current branch in the terminal, or check a named PR out locally and post inline comments after confirmation
+- [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `code-review` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `code-review` against a fixed point
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to Notion (the proposal sibling of `to-spec`)
 - [to-spec](engineering/to-spec/SKILL.md) — synthesise the current conversation into a spec and publish it to the tracker as `ready-for-agent` (no triage); the planning lane's entry point
@@ -61,9 +61,10 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 An Obsidian vault in two halves: **Library** for the world (external sources, agent-written) and **Profile/Personal** for Hassan (hand-edited). See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
 
-- [log](personal/log/SKILL.md) — append a timestamped entry to today's daily log; no longer called by any other skill
-- [ingest](personal/ingest/SKILL.md) — process a source (or a grilling session) into the Library wiki
-- [ask](personal/ask/SKILL.md) — answer a question from the brain, index-first (Library for the world, Profile for Hassan)
+- [ask](personal/ask/SKILL.md) — answer a question from the brain, routed by query shape: grep for a named fact, index-first for a conceptual one
+- [ingest](personal/ingest/SKILL.md) — process an article, video, or book chapter into the Library wiki; also drains the top item from `Inbox/`
+- [observe](personal/observe/SKILL.md) — append one timestamped observation to `Profile/observations.md`; called by nothing, drained by `retro`
+- [retro](personal/retro/SKILL.md) — drain the observations file one item at a time, each into a change made in the same sitting
 
 ## `in-progress/` — works in progress, not yet released
 
@@ -91,4 +92,4 @@ The ones I reach for most:
 - `grill-me` / `grill-with-docs` before any non-trivial change
 - **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (Notion) instead.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
-- `diagnose` for anything broken; `review` for reviewing my own branch or other GitHub PRs
+- `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR
