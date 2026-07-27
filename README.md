@@ -29,7 +29,6 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `engineering/` — the core SDLC loop
 
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
-- [challenge](engineering/challenge/SKILL.md) — Socratic coaching for architecture decisions and trade-offs before you commit to an approach
 - [code-review](engineering/code-review/SKILL.md) — two-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
@@ -40,10 +39,9 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
 - [implement](engineering/implement/SKILL.md) — implement a spec or set of tickets: TDD at pre-agreed seams, regular typecheck, then `code-review` before committing
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
-- [pickup](engineering/pickup/SKILL.md) — verification pass for a `ready-for-human` ticket; verify the agent brief against current code, then route to `/tdd`, `/diagnose`, or a targeted re-grill
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
-- [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it (the session analogue of `pickup`)
+- [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then archive it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
 - [review](engineering/review/SKILL.md) — review code in Hassan's voice: self-review the current branch in the terminal, or check a named PR out locally and post inline comments after confirmation
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
@@ -60,15 +58,11 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `personal/` — the Obsidian second brain
 
-An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuity) and a read-heavy **Library/Profile** wiki. See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
+An Obsidian vault in two halves: **Library** for the world (external sources, agent-written) and **Profile/Personal** for Hassan (hand-edited). See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
 
-- [morning-brief](personal/morning-brief/SKILL.md) — compile the day's cross-domain index (carried items, open issues, Inbox, open handoffs, Profile focus); self-heals an unclosed prior day
-- [log](personal/log/SKILL.md) — append a timestamped entry to today's daily log (the living record between brief and summary); the spine the workflow skills write to on close
-- [eod-summary](personal/eod-summary/SKILL.md) — consolidate the day's log: reconcile each Work Item's disposition (done / signed-off / carried) against what the log records, so unfinished work rolls forward with its reason
-- [inbox](personal/inbox/SKILL.md) — triage raw captures into a Domain, the Library, a Work Item, or the bin
+- [log](personal/log/SKILL.md) — append a timestamped entry to today's daily log; no longer called by any other skill
 - [ingest](personal/ingest/SKILL.md) — process a source (or a grilling session) into the Library wiki
 - [ask](personal/ask/SKILL.md) — answer a question from the brain, index-first (Library for the world, Profile for Hassan)
-- [lint](personal/lint/SKILL.md) — sweep the vault for conformance to `CONVENTIONS.md` (Class A leaks, frontmatter, naming, archive markers, index reconcile)
 
 ## `in-progress/` — works in progress, not yet released
 
@@ -77,11 +71,17 @@ An AI-operated Obsidian vault: a write-heavy **Operating Loop** (daily continuit
 ## `deprecated/` — kept for reference, no longer recommended
 
 - [validate](deprecated/validate/SKILL.md) — superseded by per-repo validation hooks
-- [obsidian-vault](deprecated/obsidian-vault/SKILL.md) — superseded by the second-brain skills above (`ask`/`ingest`/`inbox` + the Operating Loop)
+- [obsidian-vault](deprecated/obsidian-vault/SKILL.md) — superseded by the second-brain skills above (`ask`/`ingest`)
 - [write-a-skill](deprecated/write-a-skill/SKILL.md) — superseded by [writing-great-skills](productivity/writing-great-skills/SKILL.md)
 - [to-prd](deprecated/to-prd/SKILL.md) — superseded by [to-spec](engineering/to-spec/SKILL.md); "spec" is the honest superset of PRD
 - [to-issues](deprecated/to-issues/SKILL.md) — superseded by [to-tickets](engineering/to-tickets/SKILL.md); tracker-neutral "ticket", with blocking edges
 - [setup-tracker](deprecated/setup-tracker/SKILL.md) — superseded by [bootstrap](engineering/bootstrap/SKILL.md); configures both lanes, not just the tracker preference
+- [challenge](deprecated/challenge/SKILL.md) — superseded by [grill-me](productivity/grill-me/SKILL.md); the same Socratic pass, with a decision tree that has to resolve
+- [pickup](deprecated/pickup/SKILL.md) — superseded by [implement](engineering/implement/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
+- [inbox](deprecated/inbox/SKILL.md) — superseded by [ingest](personal/ingest/SKILL.md), which drains `Inbox/` as part of its own flow
+- [morning-brief](deprecated/morning-brief/SKILL.md) — retired, not replaced; the daily Operating Loop and its `Journal/` are gone
+- [eod-summary](deprecated/eod-summary/SKILL.md) — retired, not replaced; same reason as `morning-brief`
+- [lint](deprecated/lint/SKILL.md) — retired, not replaced; the vault's surviving files are hand-written and don't generate hygiene debt
 
 # My day-to-day
 
@@ -89,6 +89,5 @@ The ones I reach for most:
 
 - `grill-me` / `grill-with-docs` before any non-trivial change
 - **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (Notion) instead.
-- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `pickup` a `ready-for-human` ticket → `tdd` / `diagnose`.
+- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `review` for reviewing my own branch or other GitHub PRs
-- `morning-brief` → `log` (filled through the day by the workflow skills above) → `eod-summary` as the daily spine

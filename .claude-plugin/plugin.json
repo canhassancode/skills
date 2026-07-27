@@ -2,7 +2,6 @@
   "name": "canhassancode-skills",
   "skills": [
     "./engineering/bootstrap",
-    "./engineering/challenge",
     "./engineering/code-review",
     "./engineering/codebase-design",
     "./engineering/commit",
@@ -13,7 +12,6 @@
     "./engineering/handoff",
     "./engineering/implement",
     "./engineering/improve-codebase-architecture",
-    "./engineering/pickup",
     "./engineering/pr",
     "./engineering/prototype",
     "./engineering/receive",
@@ -26,12 +24,8 @@
     "./engineering/triage",
     "./engineering/wayfinder",
     "./personal/ask",
-    "./personal/eod-summary",
-    "./personal/inbox",
     "./personal/ingest",
-    "./personal/lint",
     "./personal/log",
-    "./personal/morning-brief",
     "./productivity/grill-me",
     "./productivity/writing-great-skills"
   ]

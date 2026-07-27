@@ -137,6 +137,6 @@ Capture everything resolved during grilling under "established so far" so the wo
 
 If prior triage notes exist on the issue, read them, check whether the reporter has answered any outstanding questions, and present an updated picture before continuing. Don't re-ask resolved questions.
 
-## Log the triage (if `~/Obsidian/` exists)
+## Record the decision
 
-Mandatory closing step, not optional: after a triage outcome that changes state, append one line to today's daily log via the `/log` convention — which issue, the state transition, and the *why* (the decision behind `ready-for-agent` / `wontfix` / `needs-info`). Pseudonymise any customer identity; the reasoning is Class B. Skip silently if the vault is absent.
+Mandatory closing step, not optional: a triage outcome that changes state must say *why* on the ticket itself — the state transition and the reasoning behind `ready-for-agent` / `wontfix` / `needs-info`. The agent brief carries it when one is written; a plain comment carries it otherwise. The finding goes in its own artifact, which for triage is the ticket. Pseudonymise any customer identity.

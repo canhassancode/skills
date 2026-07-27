@@ -40,11 +40,8 @@ A grill is a _thinking_ artifact; it is **not** automatically a spec. Forcing ev
 | **Proposal**         | an argued recommendation for a decision-maker (the manager, a stakeholder) | `/to-proposal` → Notion                                        |
 | **Tickets (direct)** | small, well-understood work — skip the spec ceremony                | `/to-tickets`                                                  |
 | **ADR**              | a hard-to-reverse decision worth recording next to the code         | write the ADR in-repo                                          |
-| **Library only**     | durable reasoning, no outbound work                                 | capture below                                                  |
 | **Nothing**          | the grill aligned your own head; no artifact needed                 | —                                                              |
 
 Say which you'd pick and why (_"this reads like a proposal for the manager, not a build-spec — I'd route it to a Notion proposal"_), then act on the user's call. `/to-spec` and `/to-tickets` publish `ready-for-agent` by construction — the planning lane does **not** route through `/triage`, which now handles _inbound_ work only (bugs from users, collaborator drafts, stale tickets).
 
-## Log the session (if `~/Obsidian/` exists)
-
-Mandatory closing step, not optional: append one line to today's daily log via the `/log` convention — what was grilled, the route chosen at close, the sharpest decision and _why_, and any blocker. This is the densest-decision skill in the set; never let the reasoning evaporate. Skip silently if the vault is absent.
+The route **is** the closing step. This is the densest-decision skill in the set, and the artifact the route names — the spec, the proposal, the tickets, the ADR — is where the reasoning has to land. "Nothing" is a real route, not a place to defer to.

@@ -7,4 +7,3 @@ disable-model-invocation: true
 ## Procedure
 
 1. Run `/grilling` for the interview loop, second-brain sweep, and capture-at-close.
-2. At close, run `/log` to record the session.

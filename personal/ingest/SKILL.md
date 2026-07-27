@@ -29,4 +29,4 @@ Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/
 It keeps full Class B fidelity — intent, who-said-it, decisions, reasoning, learnings — and drops **only** Class A artefacts. Never reduce to platitudes.
 
 ## Related
-`/ask` — query what you've ingested · `/inbox` — routes sources here · `/grill-with-docs`, `/grill-me` — hand in a grilling session at close
+`/ask` — query what you've ingested · `/grill-with-docs`, `/grill-me` — hand in a grilling session at close

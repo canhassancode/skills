@@ -22,4 +22,4 @@ If the user passed arguments, treat them as a description of what the next sessi
 
 ## Lifecycle
 
-A handoff is **transient** — consumed once. It lives in `Handoffs/` until `/receive` resumes it, which then offers its durable residue to `/ingest` and moves it to `Archive/Handoffs/`. An un-received handoff is open work that `/morning-brief` surfaces.
+A handoff is **transient** — consumed once. It lives in `Handoffs/` until `/receive` resumes it, which then offers its durable residue to `/ingest` and moves it to `Archive/Handoffs/`. An un-received handoff is open work.

@@ -21,7 +21,7 @@ If `~/Obsidian/` is absent, draft inline and skip step 1.
 2. **Check for a house format.** Read the project/employer CLAUDE.md and any existing Notion proposals for a conventional shape; match it. Otherwise use the template below.
 3. **Write the draft** in the vault (B-private), using the template.
 4. **Confirm, then publish.** Show the cleaned (B-shared) version. On approval, create the Notion page via the MCP. Never publish without explicit approval — same gate as `/ingest`'s Employment review.
-5. **Log it** (if `~/Obsidian/` exists) — append a `/log` line: the proposal, the audience, the recommendation, and the ask outstanding.
+5. **Leave the ask outstanding on the artifact itself** — the vault draft records the recommendation and what is still owed by whom, and the Notion page carries it to the audience. There is no separate log.
 
 ## Proposal template
 
@@ -58,4 +58,3 @@ Exactly what you need from the reader: a decision, a sign-off, a resource, a dat
 
 - `/grill-with-docs`, `/grill-me` — the grilling this usually follows; their close-routing offers this skill.
 - `/to-spec` — the sibling for build specs aimed at implementers (the tracker, not Notion).
-- `/log` — append the proposal and its outstanding ask to today's log.

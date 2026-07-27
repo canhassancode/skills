@@ -153,9 +153,3 @@ submits it.
 If the diff is trivial (typofix, config, dependency bump) with zero findings, say
 so and ask whether to post an `APPROVE` (or, with a pending review, just submit
 his as-is) or skip the review entirely.
-
-## Log the review (if `~/Obsidian/` exists)
-
-Mandatory closing step, not optional: append one line to today's daily log via the
-`/log` convention — what was reviewed, the verdict, and the most significant
-finding or decision. Skip silently if the vault is absent.

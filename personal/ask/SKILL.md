@@ -29,4 +29,4 @@ If you file an answer back as a page, conform to `~/Obsidian/CONVENTIONS.md`.
 Both wikis are pre-synthesised, so most questions are answered from a couple of dense pages — not by re-reading raw material. That is the minimal-token mechanism. Reach for the raw layer only for long-tail detail.
 
 ## Related
-`/ingest` — add sources · `/inbox` — triage captures into the Library
+`/ingest` — add sources
