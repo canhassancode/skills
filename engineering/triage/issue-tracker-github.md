@@ -10,6 +10,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 - **Comment on an issue**: `gh issue comment <number> --body "..."`
 - **Apply / remove labels**: `gh issue edit <number> --add-label "..."` / `--remove-label "..."`
 - **Close**: `gh issue close <number> --comment "..."`
+- **Reference another issue**: write the number bare — `#42`, `Blocked by #42`, `Closes #42`. Never wrap it in backticks. GitHub auto-links a bare `#42`; a backticked one renders as a code span and the link dies. Backticks stay correct for code identifiers.
 
 Infer the repo from `git remote -v` — `gh` does this automatically when run inside a clone.
 

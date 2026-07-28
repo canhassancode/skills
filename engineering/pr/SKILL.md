@@ -33,9 +33,12 @@ Body template:
 - [ ] How to verify the changes work
 ```
 
+When the branch finishes a ticket, add a `Closes #<number>` line under Summary so merging closes it. When it only advances one, reference it without the keyword — `#<number>`.
+
 ## Rules
 
 - Analyse ALL commits on the branch, not just the latest one
+- Issue and PR numbers go in bare — `#42`, `Closes #42` — never backticked. GitHub auto-links a bare number; a backticked one renders as a code span and the link dies
 - Never force push
 - Do not push to main/master directly
 -
