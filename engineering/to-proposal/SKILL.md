@@ -17,7 +17,7 @@ If `~/Obsidian/` is absent, draft inline and skip step 1.
 
 ## Process
 
-1. **Identify the audience and the ask.** Who decides — the manager, a stakeholder, a VP? How hard you argue and how much context you front-load depends on it. State the audience at the top of the draft. If unclear, ask the one question.
+1. **Identify the audience and the ask.** Who decides — your manager, a stakeholder, a VP? How hard you argue and how much context you front-load depends on it. State the audience at the top of the draft. If unclear, ask the one question.
 2. **Check for a house format.** Read the project/employer CLAUDE.md and any existing Notion proposals for a conventional shape; match it. Otherwise use the template below.
 3. **Write the draft** in the vault (B-private), using the template.
 4. **Confirm, then publish.** Show the cleaned (B-shared) version. On approval, create the Notion page via the MCP. Never publish without explicit approval — same gate as `/ingest`'s Employment review.
