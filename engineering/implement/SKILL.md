@@ -14,7 +14,7 @@ Exception: interface-level JSDoc only when the type signature can't express the 
 
 If there's a linked ticket, move it to the In-Progress equivalent at the start of execution, unless told otherwise; adopt-don't-impose; skip silently if no tracker/linked issue.
 
-Use /tdd where possible, at pre-agreed seams.
+Use /tdd where possible (or the project's equivalent TDD skill if /tdd isn't installed), at pre-agreed seams.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
