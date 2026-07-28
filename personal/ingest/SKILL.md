@@ -21,7 +21,11 @@ Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/
 
 ## Drain the Inbox
 
-`/ingest` with no source given: read the **top item in `~/Obsidian/Inbox/`** and either ingest it as one of the three types above, or bin it. One item per invocation — the queue drains by being worked, not by being triaged.
+`/ingest` with no source given: read the **top item in `~/Obsidian/Inbox/`**. One item per invocation — the queue drains by being worked, not by being triaged. Three outcomes:
+
+- **An external source** (article, video, book) — ingest it as one of the three types above.
+- **One of Hassan's own ideas** — **stop. Do not ingest and do not bin.** Hand it to `/wayfinder` (foggy, needs a map) or `/grilling` (settles in one sitting), which file it into `~/Obsidian/Ideas/` and delete the Inbox item themselves. `/ingest` and `/wayfinder` are peer drains on the Inbox, not a pipeline — the capture's kind picks the drain. An idea is not an ingested item: the Library's subject is the world, so the only outcomes available here would be misfiling it or losing it.
+- **Neither** — bin it.
 
 ## Pipeline
 
