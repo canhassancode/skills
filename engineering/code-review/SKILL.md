@@ -1,15 +1,16 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along three axes — Standards (does the code follow this repo's documented coding standards?), Spec (does the code match what the originating issue/PRD asked for?), and Structure (does the change regress structure or miss a dramatically simpler shape?). Runs all three reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along four axes — Standards (does the code follow this repo's documented coding standards?), Spec (does the code match what the originating issue/PRD asked for?), Structure (does the change regress structure or miss a dramatically simpler shape?), and Design (does UI code honour the repo's DESIGN.md and design system?). Runs the reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 ---
 
-Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
+Four-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 - **Standards** — does the code conform to this repo's documented coding standards?
 - **Spec** — does the code faithfully implement the originating issue / PRD / spec?
 - **Structure** — does the change regress the structure it touches, or leave an obvious path to dramatic simplification unexplored?
+- **Design** — does UI code honour the repo's `DESIGN.md` and the design system? Runs only when the diff touches a path with a `DESIGN.md` at or above it.
 
-All three axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+The axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
 The issue tracker should have been provided to you — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
 
@@ -74,9 +75,27 @@ Three rules bind it:
 - **Regressions are hard, the rest is judgement.** A structural regression (the diff leaves structure worse than it found it) is a hard finding; a missed simplification is always a judgement call.
 - **The repo overrides.** As with the smell baseline, a documented repo standard wins.
 
-### 5. Spawn all three sub-agents in parallel
+### 5. The design baseline
 
-Send a single message with three `Agent` tool calls. Use the `general-purpose` subagent for each.
+The Design axis runs **only when the diff touches a path with a `DESIGN.md` at or above it.** The nearest `DESIGN.md` upward governs, and the diff's path selects which surface profile in its `Surfaces` table applies. A backend-only diff skips this axis entirely — note the skip and move on.
+
+When it does run, the baseline is fixed and greppable:
+
+- **Raw values** — a hex code, rgb value, or off-scale spacing anywhere outside the token layer.
+- **Missing states** — an interactive element without all four of default, hover, active/pressed, disabled. Inputs additionally need focus and error-with-message.
+- **Unguarded motion** — any animation without a `prefers-reduced-motion` branch.
+- **Misrouted animation** — GSAP on something a CSS transition covers (hover, press, focus, a simple slide). GSAP earns its place on timelines, staggered entrances and scroll-driven sequences only.
+- **Motif breaches** — code contradicting a motif in `DESIGN.md`, or introducing a look that should have been a motif and wasn't written back.
+- **System breaches** — anything contradicting `design-system/SYSTEM.md`: icon size not matching adjacent line-height, type above the surface's ceiling, a flat scrim over an image, shadows that read as strong, dark-mode depth built from shadows instead of a lighter surface.
+
+Two rules bind it:
+
+- **`DESIGN.md` overrides.** Where the repo's file makes a deliberate exception, it wins over the baseline.
+- **The first four are hard; the last two are judgement.** A raw hex is a violation. "This should have been a motif" is an observation.
+
+### 6. Spawn the sub-agents in parallel
+
+Send a single message with one `Agent` tool call per active axis. Use the `general-purpose` subagent for each.
 
 **Standards sub-agent prompt** — include:
 
@@ -96,11 +115,18 @@ Send a single message with three `Agent` tool calls. Use the `general-purpose` s
 - **The structure baseline from step 4 pasted in full, including its three binding rules** — the sub-agent has no other access to it.
 - The brief: "Report, structural regressions first, missed simplifications second: every place the diff regresses structure or leaves an obvious path to dramatic simplification unexplored. Name the baseline standard and quote the hunk. Confine findings to code the diff touches; note opportunities in surrounding code as observations only. Distinguish regressions (hard) from simplifications (judgement calls). Under 400 words."
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+**Design sub-agent prompt** — include:
 
-### 6. Aggregate
+- The diff command and commit list.
+- The path of the governing `DESIGN.md` and the surface profile the diff falls under.
+- **The design baseline from step 5 pasted in full, including its two binding rules** — the sub-agent has no other access to it.
+- The brief: "Read the `DESIGN.md` at the given path first. Report, hard violations first: every raw value outside the token layer, every interactive element missing a required state, every motion without a reduced-motion branch, every GSAP tween on something CSS covers. Then, as judgement calls: motif breaches and system breaches. Quote the hunk for each finding and name the rule. Under 400 words."
 
-Present the three reports under `## Standards`, `## Spec`, and `## Structure` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the axes are deliberately separate (see _Why separate axes_).
+If the spec is missing, skip the Spec sub-agent and note this in the final report. If no `DESIGN.md` governs the diff, skip the Design sub-agent and note the skip.
+
+### 7. Aggregate
+
+Present the reports under `## Standards`, `## Spec`, `## Structure`, and `## Design` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the axes are deliberately separate (see _Why separate axes_).
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
 
@@ -111,5 +137,6 @@ A change can pass one axis and fail another:
 - Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
 - Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
 - Code that follows every convention and matches the spec, but adds a layer or branching the design didn't need → **Standards pass, Spec pass, Structure fail.**
+- Code that is clean, correct and minimal, but hardcodes a colour and ships a button with no disabled state → **everything else passes, Design fails.**
 
 Reporting them separately stops one axis from masking another.

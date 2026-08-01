@@ -16,6 +16,11 @@ If there's a linked ticket, move it to the In-Progress equivalent at the start o
 
 Use /tdd where possible (or the project's equivalent TDD skill if /tdd isn't installed), at pre-agreed seams.
 
+When the work touches a path with a `DESIGN.md` at or above it, read that file the way you read `CONTEXT.md` — the nearest one upward governs, and the path selects which surface profile applies. Two moves when the design hits a case no rule covers, and improvising is neither:
+
+1. **A rule nearly covers it** — apply the nearest one (the dashboard profile caps at 24px, so the table header is 16px) and carry on. No amendment.
+2. **Nothing covers it** — **stop and ask**, write the answer into `DESIGN.md` under `Amendments`, then implement. The same question is never asked twice.
+
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
 Once done, use /code-review to review the work. Fix Structure-axis regressions before committing; surface judgement-call findings (missed simplifications, smells) rather than applying them unprompted.

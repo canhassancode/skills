@@ -34,6 +34,16 @@ A concrete code location a piece of work claims to touch — a function, endpoin
 **Consumer**:
 A concrete code location that reads a field, type, or behaviour being changed. Found by grep, not by trusting the author's mental model.
 
+**Design system**:
+The split that lets every project look consistent while each keeps its own character. The **system** — spacing scale, mandatory states, type ceilings, motion policy — is invariant, lives in `design-system/SYSTEM.md`, and is never interviewed about. The **flavour** — palette, typeface, radius, density, **Motif**s — is per repo and lives in `DESIGN.md`. The system is agreed upfront because it is numbers; the flavour's motifs are deferred because prose cannot hold them.
+_Avoid_: style guide, brand guidelines.
+
+**DESIGN.md**:
+The visual sibling of `CONTEXT.md` — intent and reasoning for one **brand**, at the highest path governing every surface it covers. Holds no value that also exists in code; the token layer is canon for values, this file for why. One per brand, never one per app: density variation is a row in its `Surfaces` table.
+
+**Motif**:
+A named flavour rule carrying two fields — the rule and its **build route** (CSS, GSAP, off-the-shelf component, or bespoke). Earned by distilling a winning `/prototype` variant, never imagined in an interview. A motif without a build route is unfinished; a motif that cannot be checked against a screen ("flashy") is not a motif.
+
 **Four-pass discipline**:
 The verification work `/grill-with-docs` must complete before declaring a plan ready: (1) trace request paths, don't list modules; (2) grep for consumers; (3) sketch `CONTEXT.md` if missing; (4) check for feature flags / branches that hide parallel surfaces. All four must run; "the agent had judgment" is not a substitute.
 
@@ -51,4 +61,5 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 - Two lanes reach `ready-for-agent`: the **planning lane** (grill → **spec** → **ticket**s, triage-free — a grilling stands behind the brief) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance. Both lanes survive; the inbound one no longer has a verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
 - A **triage** session produces an **agent brief** when it moves a ticket to `ready-for-human` or `ready-for-agent`. `ready-for-human` still partitions what an agent can be trusted to finish alone from what it cannot; it just no longer gates on a separate skill.
 - **Four-pass discipline** is what makes an **agent brief** executable — without it, the brief names nothing that can be opened or grepped. Apply it *more strictly* for `ready-for-agent`, which has no human reading the brief against the branch.
+- A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
 - A skill's relationship to **upstream** — **Synced**, **Adapted**, **Forked** — governs how it is edited. See `## Upstream` in `CLAUDE.md`.
