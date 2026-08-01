@@ -38,7 +38,7 @@ Done when you can name the mode and the exact path the `DESIGN.md` does or will 
 
 Six questions, one at a time. Read [SYSTEM.md](./SYSTEM.md) first; several answers are constrained by it and you should say so as you go.
 
-1. **Stack.** Propose the base stack — Next, Tailwind v4 with a CSS-variable theme, shadcn/ui, GSAP — as a starting point to argue with, not a default to assume. Component libraries turn over every few months, and a design stack is rarely swapped once chosen, so **recording the choice and its reasoning matters more than which one wins**. Tell the user this is hard to reverse and worth an ADR **in that repo**.
+1. **Stack.** Propose the base stack — Vite or Astro with React, Tailwind v4 with a CSS-variable theme, shadcn/ui, GSAP — as a starting point to argue with, not a default to assume. Vite for an app, Astro where the surface is content-led; the rest holds either way. Component libraries turn over every few months, and a design stack is rarely swapped once chosen, so **recording the choice and its reasoning matters more than which one wins**. Tell the user this is hard to reverse and worth an ADR **in that repo**.
 2. **Primary colour.** One brand colour. Lighten it for backgrounds, darken it for text — that is already half a ramp. Semantic colours come from SYSTEM.md, not from taste.
 3. **Typeface.** One UI family. A mono is permitted only when a motif needs it, and no motifs exist yet — so ask again in pass 2 rather than granting it now.
 4. **Radius.** One value, from which the scale derives.

@@ -12,14 +12,14 @@ every value lives in the token layer.
 
 ## Stack
 
-- **Framework** — Next (App Router)
+- **Framework** — Vite + React
 - **Styling** — Tailwind v4, CSS-variable theme
 - **Components** — shadcn/ui
 - **Motion** — GSAP for orchestration, CSS for state transitions
 
 Chosen because {reasoning}. Hard to reverse — see `docs/adr/0003-design-stack.md`.
 
-Tokens: `app/globals.css`. Primitives: `components/ui/`.
+Tokens: `src/styles/tokens.css`. Primitives: `src/components/ui/`.
 
 ## Shared
 
@@ -81,7 +81,7 @@ Tokens: `app/globals.css`. Primitives: `components/ui/`.
 ```
 /
 ├── DESIGN.md
-└── app/
+└── src/
 ```
 
 A second brand earns a second file, listed in `CONTEXT-MAP.md` alongside the contexts so consumers can resolve which one governs a diff. With only one, the map entry is ceremony — the nearest file upward is unambiguous.
