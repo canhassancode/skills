@@ -29,9 +29,10 @@ Skills are organised into folders by category. Each folder maps to a section bel
 ## `engineering/` — the core SDLC loop
 
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
-- [code-review](engineering/code-review/SKILL.md) — two-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec) in parallel sub-agents; called by `implement`, runs alongside `review`
+- [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
+- [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, update CONTEXT.md inline, offer ADRs)
 - [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core shared by `grill-me` and `grill-with-docs`
@@ -91,5 +92,6 @@ The ones I reach for most:
 
 - `grill-me` / `grill-with-docs` before any non-trivial change
 - **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (Notion) instead.
+- **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR

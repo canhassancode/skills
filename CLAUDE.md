@@ -40,6 +40,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `grill-with-docs` | Built around this repo's `CONTEXT.md` / ADR layer and the four-pass discipline. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
+| `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `to-proposal` | No upstream counterpart — the Notion sibling of `to-spec`. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
@@ -53,9 +54,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**31 skill directories live in this library; 30 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 29 registered, **16 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **30 directories, 17 invisible / 13 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 30 registered, **17 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **31 directories, 18 invisible / 13 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 

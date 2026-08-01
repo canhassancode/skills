@@ -5,6 +5,7 @@
     "./engineering/code-review",
     "./engineering/codebase-design",
     "./engineering/commit",
+    "./engineering/design-system",
     "./engineering/diagnose",
     "./engineering/domain-modeling",
     "./engineering/grill-with-docs",

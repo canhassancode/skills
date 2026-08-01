@@ -77,6 +77,10 @@ Then add an `## Agent skills` block to whichever of `CLAUDE.md` / `AGENTS.md` al
 [single-context or multi-context]. See `docs/agents/domain.md`.
 ```
 
-### 5. Confirm
+### 5. Offer the design system
+
+If the repo has a frontend and no `DESIGN.md`, invoke `/design-system` — it interviews the brand knobs and writes `DESIGN.md` plus the token layer. Skip silently for a backend-only repo.
+
+### 6. Confirm
 
 Show the written config back to the user and name which skills now read from it — the triage-graph lane from `## Issue tracker`, the planning lane from `docs/agents/*.md`. Note they can edit `docs/agents/*.md` directly later; re-run this skill only to switch trackers.
