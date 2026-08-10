@@ -14,7 +14,7 @@ Exception: interface-level JSDoc only when the type signature can't express the 
 
 If there's a linked ticket, move it to the In-Progress equivalent at the start of execution, unless told otherwise; adopt-don't-impose; skip silently if no tracker/linked issue.
 
-Use /tdd where possible (or the project's equivalent TDD skill if /tdd isn't installed), at pre-agreed seams.
+Use `/tdd` where possible (or the project's equivalent TDD skill if `/tdd` isn't installed), at pre-agreed seams.
 
 When the work touches a path with a `DESIGN.md` at or above it, read that file the way you read `CONTEXT.md` — the nearest one upward governs, and the path selects which surface profile applies. Two moves when the design hits a case no rule covers, and improvising is neither:
 
@@ -23,6 +23,10 @@ When the work touches a path with a `DESIGN.md` at or above it, read that file t
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
+On every RED GREEN loop, run a `/commit`.
+
 Once done, use /code-review to review the work. Fix Structure-axis regressions before committing; surface judgement-call findings (missed simplifications, smells) rather than applying them unprompted.
 
 Commit your work to the current branch.
+
+Run `/pr` to open a PR once done.
