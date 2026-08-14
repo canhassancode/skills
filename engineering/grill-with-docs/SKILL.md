@@ -37,11 +37,11 @@ A grill is a _thinking_ artifact; it is **not** automatically a spec. Forcing ev
 | Route                | When it fits                                                        | Next step                                                      |
 | -------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------- |
 | **Spec**             | a build spec for implementers, broken into slices                   | `/to-spec` → tracker as `ready-for-agent` (then `/to-tickets`) |
-| **Proposal**         | an argued recommendation for a decision-maker (your manager, a stakeholder) | `/to-proposal` → Notion                                        |
+| **Proposal**         | an argued recommendation for a decision-maker (your manager, a stakeholder) | `/to-proposal` → tracker as `ready-for-human`                  |
 | **Tickets (direct)** | small, well-understood work — skip the spec ceremony                | `/to-tickets`                                                  |
 | **ADR**              | a hard-to-reverse decision worth recording next to the code         | write the ADR in-repo                                          |
 | **Nothing**          | the grill aligned your own head; no artifact needed                 | —                                                              |
 
-Say which you'd pick and why (_"this reads like a proposal for a decision-maker, not a build-spec — I'd route it to a Notion proposal"_), then act on the user's call. `/to-spec` and `/to-tickets` publish `ready-for-agent` by construction — the planning lane does **not** route through `/triage`, which now handles _inbound_ work only (bugs from users, collaborator drafts, stale tickets).
+Say which you'd pick and why (_"this reads like a proposal for a decision-maker, not a build-spec — I'd route it to `/to-proposal`"_), then act on the user's call. `/to-spec` and `/to-tickets` publish `ready-for-agent` by construction — the planning lane does **not** route through `/triage`, which now handles _inbound_ work only (bugs from users, collaborator drafts, stale tickets).
 
 The route **is** the closing step. This is the densest-decision skill in the set, and the artifact the route names — the spec, the proposal, the tickets, the ADR — is where the reasoning has to land. "Nothing" is a real route, not a place to defer to.

@@ -41,7 +41,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
-| `to-proposal` | No upstream counterpart — the Notion sibling of `to-spec`. |
+| `to-proposal` | No upstream counterpart — the decision-doc sibling of `to-spec`, publishing to the tracker as `ready-for-human`. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 ### Edit-time discipline

@@ -47,7 +47,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [resolving-merge-conflicts](engineering/resolving-merge-conflicts/SKILL.md) — resolve an in-progress git merge or rebase conflict from the primary sources behind each hunk, then run the project's checks
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `code-review` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `code-review` against a fixed point
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
-- [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to Notion (the proposal sibling of `to-spec`)
+- [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to the tracker as `ready-for-human` (the proposal sibling of `to-spec`)
 - [to-spec](engineering/to-spec/SKILL.md) — synthesise the current conversation into a spec and publish it to the tracker as `ready-for-agent` (no triage); the planning lane's entry point
 - [to-tickets](engineering/to-tickets/SKILL.md) — break a spec into tracer-bullet tickets with blocking edges, as native tracker links or a local `tickets.md`
 - [triage](engineering/triage/SKILL.md) — triage inbound issues through a state machine driven by triage roles
@@ -91,7 +91,7 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 The ones I reach for most:
 
 - `grill-me` / `grill-with-docs` before any non-trivial change
-- **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (Notion) instead.
+- **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (tracker, as `ready-for-human`) instead.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR

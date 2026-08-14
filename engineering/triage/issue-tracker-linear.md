@@ -10,6 +10,7 @@ Linear is almost always a **shared team workspace**, not a personal tracker. The
 - **Read an issue**: `get_issue` for the body + metadata, `list_comments` for the discussion.
 - **List / query issues**: `list_issues` with `team`, `state`, `label`, `assignee` filters. For "what's assigned to me", filter `assignee: "me"`, open states.
 - **Comment**: `save_comment`.
+- **Create / read a document**: use the Linear MCP's document tool — confirm the exact name against the live tool list before relying on it (`list_documents` / `get_document` for reads; the create/update tool is the `save_*`-family equivalent). A Document attaches to a **Project** or an **Initiative**, or sits at workspace level; place it in the location the calling skill confirmed, never a new one.
 - **Edit description in place**: `save_issue` with the updated `description` field. Linear's activity feed captures the diff natively — do not repost the body as a comment. Accompanying comments carry only the delta and reasoning, never a re-paste of the full body. When the integration token lacks write scope on the description (guest or restricted-role member), `save_issue` will fail; surface this failure rather than silently falling back to a body-reposting comment.
 - **Apply / remove a role**: `save_issue` with the updated `labels` set (roles are labels here — see mapping).
 - **Move delivery state**: `save_issue` with `state` (the native workflow state).
@@ -32,6 +33,7 @@ Canonical roles map onto the **existing** team taxonomy. Roles are carried as **
 | `bug` (category) | label **`Bug`** | Adopt the team's; don't create a lowercase `bug` |
 | `enhancement` (category) | label **`Feature`** | Adopt the team's; `Improvement` for minor changes. Ported `enhancement` is a duplicate to retire |
 | `spec` (document) | native **Project** | See "Specs are Projects" below — a spec is a Project, not a label |
+| `proposal` (document) | native **Document** | See "Proposals are Documents" below — a decision doc, not a labelled issue |
 
 The native workflow states (`Backlog` → `Todo` → `In Progress` → `In Review` → `Done`) are the team's **delivery** pipeline and are orthogonal to the triage-role labels. Don't overload them with triage vocabulary.
 
@@ -44,6 +46,14 @@ A spec is an epic-style parent document — on Linear that is a **native Project
 - **Parent / child** → native **sub-issues** (`save_issue` with a parent), not a `## Parent` text section.
 - **Blocked by** → native **blocking relation**, not a `## Blocked by` text section.
 - **References** → the `CAR-###` identifier (or the issue URL), not `#N`.
+
+## Proposals are Documents, not labelled issues
+
+A proposal (`/to-proposal`) is a decision document for a decision-maker, not a delivery item — on Linear that is a native **Document**, placed in the location the user confirms.
+
+- **`/to-proposal`** → create a Document with the proposal body, attached to the agreed **Initiative** or **Project**. Where the agreed home is a single-decision request rather than a document, publish it instead as an issue labelled `ready-for-human`.
+- **Placement is adopt-don't-impose** — attach to an existing Initiative / Project; never create one to hold the proposal. If no home exists, ask.
+- **The ask stays outstanding on the Document itself** — no separate log. Advance the body's status line (`draft` → `shared` → `decided`) as the decision lands.
 
 ## Disclaimer
 
