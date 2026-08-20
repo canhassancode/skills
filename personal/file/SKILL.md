@@ -43,17 +43,19 @@ The capture's kind picks the drain; these are peers, not a pipeline.
 
 ## The frontmatter spine
 
-A matter note's front matter, and no more:
+A matter note carries the vault's required keys plus a light spine, and no more. `type` stays the vault note-kind (`note`) — the document's own kind rides on `kind`, so the reserved vocabulary is untouched. `created` is the immutable intake date; `issued` is the date on the document.
 
 ```yaml
-type:   <policy | deed | letter | statement | note | …>
-who:    <sender or recipient>
-tags:   []
-date:   YYYY-MM-DD   # when the document was issued
-filed:  YYYY-MM-DD   # intake date — never edited
+type:    note                                   # vault note-kind — see CONVENTIONS
+domain:  personal | employment | ventures
+created: YYYY-MM-DD                             # intake / filed date — immutable
+kind:    policy | deed | letter | statement | … # what the document is
+who:     <sender or recipient>
+issued:  YYYY-MM-DD                             # the date on the document itself
+tags:    []
 ```
 
-Skip archive-serial numbers, storage-path templates, and any field nothing is queried by. A fact needs no spine — provenance and supersession are enough.
+`kind` is what-it-is, kept separate from thematic `tags`. Skip archive-serial numbers, storage-path templates, and any field nothing is queried by. A fact needs no spine — provenance and supersession are enough.
 
 ## Confidentiality
 

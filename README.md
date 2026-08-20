@@ -63,6 +63,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 An Obsidian vault in two halves: **Library** for the world (external sources, agent-written) and **Profile/Personal** for Hassan (hand-edited). See the vault's own `CONTEXT.md`/`CONVENTIONS.md` for the model.
 
 - [ask](personal/ask/SKILL.md) — answer a question from the brain, routed by query shape: grep for a named fact, index-first for a conceptual one
+- [file](personal/file/SKILL.md) — file a personal document or self-fact into a domain folder or `Profile/`: OCR on intake, matter-as-unit with linked raws, supersede-don't-append fact hygiene; also drains the top item from `Inbox/`
 - [ingest](personal/ingest/SKILL.md) — process an article, video, or book chapter into the Library wiki; also drains the top item from `Inbox/`
 - [observe](personal/observe/SKILL.md) — append one timestamped observation to `Profile/observations.md`; called by nothing, drained by `retro`
 - [retro](personal/retro/SKILL.md) — drain the observations file one item at a time, each into a change made in the same sitting
