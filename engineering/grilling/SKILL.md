@@ -11,11 +11,13 @@ Ask the questions one at a time, waiting for feedback on each question before co
 
 If a *fact* can be found by exploring the environment (filesystem, tools, etc.), look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
 
+Before designing failure, retry, or idempotency semantics around an existing function, read *that function's* error handling first — reasoning about it instead invents machinery the reused code already made unnecessary (CAR-833).
+
 Do not enact the plan until I confirm we've reached a shared understanding.
 
 ## Second-brain awareness (if `~/Obsidian/` exists)
 
-If `~/Obsidian/CLAUDE.md` is absent, skip this section silently — do not block.
+Probe for the gate with `ls ~/Obsidian/CLAUDE.md` — **never `test -f`**, which this zsh shadows with a vitest alias, so the probe silently runs the suite and reports failure. If that `ls` fails, skip this section silently — do not block. The gate is this file, not the vault directory, and its absence is never reported as "vault absent".
 
 Open with a sweep — an index-first `/ask` on the session topic to surface prior grillings, ingested material, and Profile focus that bear on it. One topic sweep + targeted re-queries; never a blanket dump.
 
