@@ -54,9 +54,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**31 skill directories live in this library; 30 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 30 registered, **17 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **31 directories, 18 invisible / 13 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 31 registered, **17 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **32 directories, 18 invisible / 14 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 

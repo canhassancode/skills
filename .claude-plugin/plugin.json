@@ -26,6 +26,7 @@
     "./engineering/triage",
     "./engineering/wayfinder",
     "./personal/ask",
+    "./personal/file",
     "./personal/ingest",
     "./personal/observe",
     "./personal/retro",

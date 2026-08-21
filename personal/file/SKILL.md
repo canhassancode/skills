@@ -29,7 +29,7 @@ The capture's kind picks the drain; these are peers, not a pipeline.
 2. **Classify** — which domain (`Personal` / `Employment` / `Ventures`) or `Profile`, and is this a **matter** or a **fact**?
 3. **Content-class gate** — Class A is **third-party** secrets, PII, and financials, plus verbatim proprietary source: drop or pseudonymise. **Your own** sensitive data — your price, MPAN, policy numbers — is B-private and **kept**; the vault is end-to-end encrypted. So a vendor's name and their figures go; yours stay.
    - Raw storage: your own document is kept under the matter's `raw/`. A third-party-sensitive document gets **no raw** — derived note only.
-4. **Reconcile, then judge.** Dedupe against what is already filed. Resolve each **fact** to one of **add / skip / update / retire**: *skip* a reworded duplicate, *retire* a stale fact by stamping it superseded with today's date rather than deleting it. Then **propose** the target page(s), what each gains, and the reconciliation. Hassan judges. This is the throttle — a few high-signal writes, never blind capture.
+4. **Reconcile, then judge.** Dedupe against what is already filed. Resolve each **fact** to one of **add / skip / update / retire**: *skip* a reworded duplicate, *retire* a stale fact by stamping it superseded with today's date rather than deleting it. Then **propose** the target page(s), what each gains, and the reconciliation. The user judges. This is the throttle — a few high-signal writes, never blind capture.
 5. **Gate the consequence, not the effort.** Drafting runs free. **Employment and Profile writes are shown for approval before write**; Personal and Ventures matter notes write through.
 6. **Write** what was agreed:
    - A **matter note** carries the [spine](#the-frontmatter-spine), links its raws, and keeps full B-private fidelity — intent, who, decisions, the values you will look up.
@@ -43,17 +43,19 @@ The capture's kind picks the drain; these are peers, not a pipeline.
 
 ## The frontmatter spine
 
-A matter note's front matter, and no more:
+A matter note carries the vault's required keys plus a light spine, and no more. `type` stays the vault note-kind (`note`) — the document's own kind rides on `kind`, so the reserved vocabulary is untouched. `created` is the immutable intake date; `issued` is the date on the document.
 
 ```yaml
-type:   <policy | deed | letter | statement | note | …>
-who:    <sender or recipient>
-tags:   []
-date:   YYYY-MM-DD   # when the document was issued
-filed:  YYYY-MM-DD   # intake date — never edited
+type:    note                                   # vault note-kind — see CONVENTIONS
+domain:  personal | employment | ventures
+created: YYYY-MM-DD                             # intake / filed date — immutable
+kind:    policy | deed | letter | statement | … # what the document is
+who:     <sender or recipient>
+issued:  YYYY-MM-DD                             # the date on the document itself
+tags:    []
 ```
 
-Skip archive-serial numbers, storage-path templates, and any field nothing is queried by. A fact needs no spine — provenance and supersession are enough.
+`kind` is what-it-is, kept separate from thematic `tags`. Skip archive-serial numbers, storage-path templates, and any field nothing is queried by. A fact needs no spine — provenance and supersession are enough.
 
 ## Confidentiality
 
