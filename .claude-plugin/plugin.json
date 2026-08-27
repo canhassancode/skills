@@ -8,6 +8,7 @@
     "./engineering/design-system",
     "./engineering/diagnose",
     "./engineering/domain-modeling",
+    "./engineering/gauntlet",
     "./engineering/grill-with-docs",
     "./engineering/grilling",
     "./engineering/handoff",

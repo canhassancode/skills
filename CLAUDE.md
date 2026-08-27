@@ -42,6 +42,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `to-proposal` | No upstream counterpart — the decision-doc sibling of `to-spec`, publishing to the tracker as `ready-for-human`. |
+| `gauntlet` | No upstream counterpart. The entry point of the gated build spine that lives in dotfiles (`claude/gauntlet/`, `claude/workflows/gauntlet-run.js`, `claude/agents/gauntlet-*.md`). |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 ### Edit-time discipline
@@ -54,9 +55,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**33 skill directories live in this library; 32 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 31 registered, **17 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **32 directories, 18 invisible / 14 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 32 registered, **18 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **33 directories, 19 invisible / 14 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 
