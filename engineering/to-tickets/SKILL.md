@@ -35,7 +35,7 @@ Break the work into **tracer bullet** tickets.
 
 </vertical-slice-rules>
 
-Write each ticket's **acceptance criteria as scenarios**: *Given* a state, *When* one action, *Then* an observable outcome — something a test can assert from outside the code. A criterion never names a test kind ("covered by integration tests"), a module, or an implementation detail; the tests *are* the criteria. A ticket with no behavioural criterion (a rename, copy, config) is fine — it just is not gauntlet work.
+Write each ticket's **acceptance criteria as scenarios**: *Given* a state, *When* one action, *Then* an observable outcome — something a test can assert from outside the code, at a seam the running system **serves** (the **Edge** the gauntlet's QA stage drives the running system through), not merely a unit boundary. Prefer an outcome reachable at a served Edge over one only assertable in isolation — a criterion the gauntlet cannot drive is a criterion it cannot verify. A criterion never names a test kind ("covered by integration tests"), a module, or an implementation detail; the tests *are* the criteria. A ticket with no behavioural criterion (a rename, copy, config) is **class-A unfit** (no observable behaviour) — route it to `/implement`, not the gauntlet.
 
 Give each ticket its **blocking edges** — the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
 
