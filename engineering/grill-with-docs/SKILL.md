@@ -34,10 +34,10 @@ Each pass produces concrete output in the brief — named surfaces (with branche
 
 When the grill is **build-bound** — heading for `/to-spec`, `/to-tickets`, or `ready-for-agent` — the four passes above have already found the real seams; use them to shape the emerging acceptance criteria so the eventual ticket is gauntlet-fit **by construction**, not repaired later at Preflight. Two checks, both drawn from the trace:
 
-- every criterion names an outcome observable at an **Edge the running system serves** (the surface the gauntlet's QA stage drives), not a unit-only boundary — if the outcome has no served Edge, the shaping act is to **grow one** (a grow-the-seam prep decision), never to lower the seam;
+- every criterion names an outcome observable at an **Edge** the running system serves, not a unit-only boundary — if the outcome has no served Edge, the shaping act is to **grow one** (a grow-the-seam prep decision), never to lower the seam;
 - nothing the ticket must deliver lives entirely in `protectedPaths` (config, test-runner files) — work that does is not gauntlet-drivable and routes to `/implement`.
 
-This shaping applies **only** to build-bound grills. Never force scenario shape onto a grill routing to a **proposal**, an **ADR**, or **nothing** — those are not build work and owe no served Edge. The mechanical check stays out of this skill: `ticket-lint` at Preflight is the backstop; the shaping is the judgement only the trace can supply.
+This shaping applies **only** to build-bound grills — a grill routing to a proposal, an ADR, or nothing owes no served Edge (see *At close*). The mechanical check stays out of this skill: `ticket-lint` at Preflight is the backstop; the shaping is the judgement only the trace can supply.
 
 ## At close — route the output
 

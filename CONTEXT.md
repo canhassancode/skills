@@ -31,6 +31,10 @@ The structured comment posted when a ticket reaches `ready-for-anything`. The co
 **Surface**:
 A concrete code location a piece of work claims to touch — a function, endpoint, resolver, type. Concrete enough to open in an editor. Branches (feature flags, env gates, A/B switches) that gate a surface are part of the surface, not separate from it.
 
+**Edge**:
+The runtime **Surface** the deployed system *serves* — an HTTP endpoint, a lambda handler, a rendered view, an MCP method — the point the gauntlet's QA stage drives the running system through from outside. A narrower sibling of **Surface**: a Surface is any code location a change touches (found by tracing); an Edge is the subset a *running* system exposes to be driven. A criterion is gauntlet-fit when its observable outcome is reachable at an Edge; a real outcome reachable at no served Edge is class-**B** unfitness, remedied by growing one (a **grow-the-seam prep ticket**), never by lowering the seam. Declared per repo in `.gauntlet/config.json` (`serve`).
+_Avoid_: conflating with **Surface** (an Edge is the served subset, not every touched location), or with a **Ticket**'s "blocking edges" (a dependency link in the ticket graph, unrelated).
+
 **Consumer**:
 A concrete code location that reads a field, type, or behaviour being changed. Found by grep, not by trusting the author's mental model.
 
