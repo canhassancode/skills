@@ -32,7 +32,7 @@ The structured comment posted when a ticket reaches `ready-for-anything`. The co
 A concrete code location a piece of work claims to touch — a function, endpoint, resolver, type. Concrete enough to open in an editor. Branches (feature flags, env gates, A/B switches) that gate a surface are part of the surface, not separate from it.
 
 **Edge**:
-The runtime **Surface** the deployed system *serves* — an HTTP endpoint, a lambda handler, a rendered view, an MCP method — the point the gauntlet's QA stage drives the running system through from outside. A narrower sibling of **Surface**: a Surface is any code location a change touches (found by tracing); an Edge is the subset a *running* system exposes to be driven. A criterion is gauntlet-fit when its observable outcome is reachable at an Edge; a real outcome reachable at no served Edge is class-**B** unfitness, remedied by growing one (a **grow-the-seam prep ticket**), never by lowering the seam. Declared per repo in `.gauntlet/config.json` (`serve`).
+The runtime **Surface** the deployed system *serves* and the gauntlet's QA stage drives from outside — an HTTP endpoint, a lambda handler, a rendered view, an MCP method. The served subset of a **Surface**: a criterion is gauntlet-fit when its observable outcome is reachable at an Edge, and an outcome reachable at none is class-**B** unfitness (see *Unfitness class*). Its runner-side mechanics — how QA drives it, the per-repo `serve` declaration — live in dotfiles `CONTEXT.md`.
 _Avoid_: conflating with **Surface** (an Edge is the served subset, not every touched location), or with a **Ticket**'s "blocking edges" (a dependency link in the ticket graph, unrelated).
 
 **Consumer**:
@@ -62,7 +62,7 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ### Gauntlet fitness
 
-The seam vocabulary these terms lean on — **Edge**, **Surface**, `protectedPaths`, **Preflight** — is the gauntlet's, defined in dotfiles `CONTEXT.md`; the fitness concepts here reference it across the context boundary.
+The seam vocabulary these terms lean on — **Edge**, `protectedPaths`, **Preflight** — is the gauntlet's: its runner-side mechanics are defined in dotfiles `CONTEXT.md`, while the lane-facing terms are stated here and reference across the context boundary.
 
 **Gauntlet-fitness**:
 Whether a **Ticket** can be driven through the gauntlet to green — decided by the lane at authoring time, never discovered by the gauntlet at run time.
