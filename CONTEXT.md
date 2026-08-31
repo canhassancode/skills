@@ -56,6 +56,26 @@ A skill that started upstream and carries deliberate local changes on top of a r
 **Forked**:
 A skill that shares a name or an idea with upstream but not a body — or has no upstream counterpart at all. Upstream diffs are not applied; they are read for ideas only.
 
+### Gauntlet fitness
+
+The seam vocabulary these terms lean on — **Edge**, **Surface**, `protectedPaths`, **Preflight** — is the gauntlet's, defined in dotfiles `CONTEXT.md`; the fitness concepts here reference it across the context boundary.
+
+**Gauntlet-fitness**:
+Whether a **Ticket** can be driven through the gauntlet to green — decided by the lane at authoring time, never discovered by the gauntlet at run time.
+_Avoid_: "not gauntlet work" as a run-time verdict — a jam is a lane miss, not a gauntlet limitation.
+
+**Unfitness class**:
+Why a ticket is not gauntlet-fit, one of three — but only **A** is decidable at authoring time. **A** — no externally observable behaviour (rename, pure config, copy): the only irreducible case, a property of the ticket, decided by **ticket-lint** and routed to `/implement`. **B** — a real outcome reachable at no **Edge** the repo serves — is **not** an authoring-time verdict (it needs the repo's served surfaces, which `ticket.json` cannot see); it surfaces later as a **specify-stage escalation** that emits a **grow-the-seam prep ticket**. **C** — the deliverable lives entirely in `protectedPaths` — is the deferred `gauntlet-protected-paths.sh` `PreToolUse` hook's concern, out of the lint's scope. Neither B nor C is ever a `ticket-lint` output.
+
+**Grow-the-seam prep ticket**:
+The make-this-testable ticket a class-**B** miss produces at the **specify stage** — declare an **Edge** / `serve.surfaces` so the original ticket becomes fit. A run-time remedy, not an authoring-time lint route, and never a handoff to the ungated `/implement`.
+
+**Ticket-lint**:
+The deterministic fitness gate (`run.py ticket-lint`) a **stamper** runs before `ready-for-agent`: checks scenario shape and flags class **A** only. **Shape+A, config-independent** — it reads `ticket.json` alone, never `.gauntlet/config.json`, and makes no seam-relative (B/C) judgement, because neither is decidable deterministically from the ticket. Verdict: `{fit, class: "A"|null}` — fit → stamp, A → `/implement`.
+
+**Stamper**:
+A skill that publishes `ready-for-agent` — `/to-spec`, `/to-tickets`, `/triage`. The fitness gate lives at exactly these three points; `/grilling`, `/grill-with-docs` and `/wayfinder` never stamp — they route into a stamper and inherit the gate rather than embed it.
+
 ## Relationships
 
 - Two lanes reach `ready-for-agent`: the **planning lane** (grill → **spec** → **ticket**s, triage-free — a grilling stands behind the brief) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance. Both lanes survive; the inbound one no longer has a verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
@@ -63,3 +83,11 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 - **Four-pass discipline** is what makes an **agent brief** executable — without it, the brief names nothing that can be opened or grepped. Apply it *more strictly* for `ready-for-agent`, which has no human reading the brief against the branch.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
 - A skill's relationship to **upstream** — **Synced**, **Adapted**, **Forked** — governs how it is edited. See `## Upstream` in `CLAUDE.md`.
+- **Gauntlet-fitness** threads the lane: ambient policy (global `CLAUDE.md`) → shaped in a build-bound **grilling** → **ticket-lint** at the **stamper** → guaranteed at **Preflight**. Only `ticket.json` transits as data; upstream shape is advice re-derived at the stamper.
+- Both lanes that reach `ready-for-agent` gate through **ticket-lint** — the planning lane at **spec**/**ticket**, the inbound lane at **triage**. Same gate, two mouths.
+- The three **Unfitness class**es split by ownership and by *when* they are seen: **A** is the ticket's, decided at authoring time by **ticket-lint** (→ `/implement`); **B** is repo config's, seen only at the **specify stage** (→ **grow-the-seam prep ticket**); **C** is the deferred protected-paths hook's. Only **A** is a lint verdict. dotfiles#57's `serve.surfaces` converted a class-**B** jam into a bindable **Surface**.
+
+## Flagged ambiguities
+
+- **"not gauntlet work"** was a verdict the gauntlet returned on a live run → resolved: abolished except class **A**, the one class fixed at authoring time. **B**/**C** are "not fit *yet*, pending a seam the operator grows," surfaced downstream (B at specify, C at the protected-paths hook), never gauntlet limitations and never `ticket-lint` outputs.
+- **`ticket-lint` was speced two-tier** (shape+**A** always, **B**/**C** when `.gauntlet/config.json` present, degraded otherwise) → resolved: **shape+A only, config-independent**. Proven against `run.py` — `ticket.json` is `{issue,title,body}`, so a deterministic guard cannot classify B (needs served surfaces) or C (needs a `protectedPaths` evaluator that lives in the hook, not `run.py`). The config-dependent tier and the degraded mode dissolved with it.
