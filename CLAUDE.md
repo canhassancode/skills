@@ -27,7 +27,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
 | `implement` | Takes a ticket reference and fetches the agent brief through the tracker adapter. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
-| `to-spec`, `to-tickets` | Publish `ready-for-agent` by construction into this repo's two-lane model. |
+| `to-spec`, `to-tickets` | Publish `ready-for-agent` by construction into this repo's two-lane model, and shape criteria toward a served **Edge** so tickets are gauntlet-fit by construction. |
 | `tdd`, `domain-modeling`, `prototype`, `improve-codebase-architecture`, `codebase-design` | Local domain-doc conventions (`CONTEXT.md`, `docs/adr/`) and British English. |
 | `grill-me` | Local description and the second-brain sweep; the body is still upstream's one-line delegation. |
 
