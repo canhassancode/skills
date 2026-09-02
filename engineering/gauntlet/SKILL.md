@@ -13,20 +13,23 @@ Runs one ticket end to end and opens a PR only when every gate is green. Preflig
 
 1. **Parse the arguments.** The first token is the ticket reference; an optional `--from <stage>` names the stage to enter at (default `specify`). Valid stages: `specify`, `coder`, `cleaner`, `qa`, `ship`. Anything else: stop and list them.
 2. **Resolve a Linear reference.** If the reference matches `[A-Z]+-\d+`, fetch the issue through the Linear MCP tools, write its title as an H1 and its description verbatim below it to `.gauntlet/ticket-<id>.md` in the repo root, and use that path as the reference. A GitHub number or a file path needs nothing — `run.py` reads those itself.
-3. **Preflight.** From the repo root run, via Bash:
+3. **Enter the run's worktree.** The Stages are background subagents that Write/Edit the repo; on the shared checkout the platform's bg-isolation guard blocks them, forcing heredoc smuggling (ADR-0001). Isolate the run in a worktree this session owns:
+   - `git rev-parse --git-dir` vs `git rev-parse --git-common-dir`. Equal → you are on the main checkout: **EnterWorktree** (name it after the ticket, e.g. `gauntlet-<ref>`) to create and enter one. Unequal → you are already in a linked worktree; reuse it, never nest.
+   - Run preflight and the workflow from inside that worktree.
+4. **Preflight.** From the worktree root run, via Bash:
 
    ```sh
    python3 "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/gauntlet/run.py" preflight <ref> [--from <stage>]
    ```
 
-   It leaves main, mints the run secret, writes `.gauntlet/ticket.json`, refuses a body without `- [ ] Given …, when …, then …` criteria, and runs clean-tree, install, setup, build and coverage (plus acceptance green when re-entering past the coder). It prints one JSON line.
-4. **Branch on `ok`.**
+   It mints the run secret, writes `.gauntlet/ticket.json` (copying the git-ignored operator `config.json` into the worktree first), refuses a body without `- [ ] Given …, when …, then …` criteria, and runs clean-tree, install, setup, build and coverage (plus acceptance green when re-entering past the coder). It prints one JSON line.
+5. **Branch on `ok`.**
    - `false` → stop. Show `failed` and `tail` verbatim. Do not fix anything, do not retry, do not invoke the workflow. A missing config means the repo has not been bootstrapped (see the README); a ticket with no criteria goes back through `/to-tickets`; a red guard is the repo's problem to solve in this session.
    - `true` → invoke the workflow immediately, passing the JSON object as `args` (not a string):
 
      `Workflow({ name: "gauntlet-run", args: <the parsed JSON> })`
 
-5. **Report the outcome** when the workflow returns: the PR URL on `ship`; on `escalate`, the reason, the stage, and the `reenter` command verbatim — that command is how the run resumes once the cause is fixed here.
+6. **Report the outcome** when the workflow returns: the PR URL on `ship`; on `escalate`, the reason, the stage, and the `reenter` command verbatim — that command is how the run resumes once the cause is fixed here.
 
 ## Rules
 
