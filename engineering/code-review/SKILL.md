@@ -151,26 +151,6 @@ Present the reports under `## Standards`, `## Spec`, `## Structure`, `## Design`
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
 
-### 9. Write the verdict
-
-The review's outcome is a deterministic artefact the pre-PR gate (`gauntlet-pr-gate.sh`) consumes: a PR cannot open until a clean verdict exists for the exact commit being shipped. After aggregating, write it — pass **or** fail — keyed to the current HEAD.
-
-**Clean = zero hard findings** across the axes that ran. Each axis already labels its findings hard vs judgement — documented-standard breaches, structural regressions, the first four Design violations, and positive-control-proven hollow tests are hard; baseline smells, missed simplifications, motif/system breaches, and merely-suspected Verification issues are judgement calls that are advisory and do **not** block. For Spec, treat a missing or incorrectly-implemented requirement as hard and scope creep as judgement.
-
-Resolve the repo and HEAD, then write the artefact (the `.gauntlet/` directory is globally gitignored — do not add a per-repo ignore rule):
-
-```bash
-root=$(git rev-parse --show-toplevel)
-sha=$(git rev-parse HEAD)
-mkdir -p "$root/.gauntlet"
-jq -n --arg sha "$sha" --arg fp "<the fixed point pinned in step 1>" \
-      --argjson clean <true|false> --argjson hard <hard-finding count> \
-  '{sha:$sha, fixedPoint:$fp, clean:$clean, hardFindings:$hard, reviewedAt:(now|todateiso8601)}' \
-  > "$root/.gauntlet/verdict-$sha.json"
-```
-
-Report the path written and whether it is clean; a clean verdict for `HEAD` is what unblocks `gh pr create`, and any new commit or amend changes the SHA and needs a fresh review. **Never fabricate a clean verdict** — the SHA key and the recorded `hardFindings` count make a false pass auditable, and a blocker that escapes to the opened PR is a harness bug the retro answers with a new guard or axis, not a prompt tweak.
-
 ## Why separate axes
 
 A change can pass one axis and fail another:
