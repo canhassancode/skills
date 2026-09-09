@@ -1,6 +1,6 @@
 ---
 name: specifier
-description: Turn a ticket or a pull-request review comment into the specification the gauntlet runs against — derive the run contract from a fresh pull, prove it green, and publish it to the ticket.
+description: Turn a ticket or a pull-request review comment into the specification the gauntlet runs against — derive the run contract from a fresh pull, prove it green in a throwaway worktree, and publish it to the ticket.
 argument-hint: <ticket-ref | review-comment-url>
 disable-model-invocation: true
 ---
@@ -11,7 +11,7 @@ The gauntlet's only entrance and its only human gate. It interrogates the **tick
 
 It is a session, not a form. Iterate as freely as you like; the single gate is the moment it publishes. **Publication is approval**, and the gate is structural rather than promised: preflight only ever fetches from the tracker, so an unapproved specification has no address and the gauntlet cannot reach it.
 
-Run it on the default branch, clean tree, freshly pulled. The specification's whole worth is that it was proven against what the gauntlet will clone.
+Run it on the default branch, clean tree, freshly pulled. The specification's whole worth is that it was proven against what the gauntlet will clone — which is a worktree, not the clone you are sitting in, so the proof runs in one too.
 
 The issue tracker vocabulary should have been provided to you — run `/bootstrap` if not. The artefact's schema, id rule and publication format live in [SPECIFICATION.md](./SPECIFICATION.md).
 
@@ -50,15 +50,45 @@ This survives a `ready-for-agent` ticket and is not a re-grill: the grilling set
 
 Every command comes from the repo in front of you — `package.json` scripts, the tree, the dev-server config. There is no `.gauntlet/config.json`; this skill is what deleted it, and onboarding a new repo is `git pull`, `/specifier`. The field set is in [SPECIFICATION.md](./SPECIFICATION.md).
 
-### 4. Prove it
+### 4. Declare the carriage
 
-Run what you derived: build, the acceptance suite, start the server, hit every ready probe, and measure how long the server took to answer.
+`git worktree add` checks out tracked files only — gitignored and untracked files do not come with it. `install` rebuilds `node_modules/` and `build` rebuilds `dist/`, but a per-repo precondition has nothing to rebuild it, so it reds the run somewhere far from the cause and reads as a harness bug.
 
-Done when every command has exited zero, the suite has reported zero failures, and every probe has answered — in front of the operator. **A command that has not run green is not frozen into a specification.**
+Show the operator the main clone's ignored inventory and ask which entries are preconditions rather than build output.
 
-This is the step that catches the class no config file can: a per-repo precondition that reds a detached run and reads as a harness bug — an unapproved transitive build script, a report directory the runner will not create, a stack the Bash allowlist has never seen. The same run produces the baseline report every binding below is copied from.
+```
+git status --ignored --porcelain
 
-### 5. Classify, narrating as you go
+!! dist/            ← build output, dropped
+!! local.settings   ← precondition, kept
+!! node_modules/    ← build output, dropped
+!! secrets.d/       ← precondition, kept
+```
+
+**Declare-then-falsify, not discover-by-proof.** The operator declares and step 5 checks, because **the proof can show a path is necessary, never that the list is sufficient.** A file whose absence changes behaviour without breaking anything — a flag that silently defaults, a seed row that makes a fixture pass for the wrong reason — leaves the proof green with the list incomplete. Declaration is the operator's knowledge; the proof is the check on it.
+
+Done when `carry` is a list of paths that exist in the clone, possibly empty. **Paths only, never contents**, for the reason [SPECIFICATION.md](./SPECIFICATION.md) gives.
+
+### 5. Prove it, where the gauntlet will stand
+
+Not in the clone you are sitting in: it has the ignored files, and the worktree the gauntlet runs in will not.
+
+```bash
+WT=$(mktemp -d -t specifier-<ref>-XXXX)
+git worktree add --detach "$WT" HEAD
+```
+
+The throwaway lifecycle `/review` already uses. Copy the declared paths in, then run everything there — install, build, the acceptance suite, the server, every ready probe, the startup measurement.
+
+Then falsify the list. Drop a declared path, re-run the narrowest command that should depend on it, and watch it red — that is necessity, and it is the whole check the declaration buys. Where it stays green, say so and hand the keep-or-drop back to the operator: green without a file proves nothing loud depends on it, never that the file is unneeded.
+
+Done when every command has exited zero, the suite has reported zero failures, every probe has answered, and every declared path has been dropped once and its result reported — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
+
+**`git worktree remove --force "$WT"` before the session ends, by whichever route it ends** — published, declined, abandoned. The tree is detached, so nothing survives it and there is no branch to clean up.
+
+This is the step that catches the class no config file can — an unapproved transitive build script, a report directory the runner will not create, a stack the Bash allowlist has never seen. It now catches the missing-precondition class as well, at the human gate rather than at an unattended qa.
+
+### 6. Classify, narrating as you go
 
 State each classification and its reason **as you decide it** — *"this is an invariant because it binds to a test that passes on the baseline I just ran."* Awareness is bought by narration; a per-criterion approval would be N gates on one specification, which is the iterate-until-good shape this design rejects. One gate, at publication.
 
@@ -76,7 +106,7 @@ State each classification and its reason **as you decide it** — *"this is an i
 
 Every bound name is **copied from the baseline report, never typed**. Ids follow the high-water mark in [SPECIFICATION.md](./SPECIFICATION.md).
 
-### 6. Write the procedures
+### 7. Write the procedures
 
 Criteria and procedures are separate lists, and **QA is never shown a criterion**. A criterion is asserted by code and settled by an exit code; a procedure is executed by a model acting as a user and judged against what a person would perceive.
 
@@ -84,19 +114,23 @@ Each is `{id, at, do, expect}`. `at` is the address, **given, never chosen** —
 
 An empty list is legal and means QA is skipped. Say that in plain words at the gate rather than letting silence carry it.
 
-### 7. Render the whole thing
+### 8. Render the whole thing
 
-Nothing elided, nothing behind a link. Every choice that leads to a run belongs on one screen: where it will publish, each criterion's class, the test it binds to and whether it passes right now, the address QA will drive, and the commands just executed in front of you. On a review-comment origin the header names the thread `ship` will reply into as well as the ticket it publishes to.
+Nothing elided, nothing behind a link. Every choice that leads to a run belongs on one screen: where it will publish, each criterion's class, the test it binds to and whether it passes right now, the address QA will drive, the commands just executed in front of you, and what the run will carry into its worktree. Where `carry` is empty, say *nothing carried — a fresh worktree needs no preconditions* in words, rather than letting an absent heading carry it. On a review-comment origin the header names the thread `ship` will reply into as well as the ticket it publishes to.
 
 ```
 SPECIFICATION — #42 "Order lookup returns 404 for a missing order"
 Publishing to: GitHub issue #42
 
-CONTRACT — proven green just now
+CONTRACT — proven green in a worktree just now
   build          pnpm type-check                          ✓ 4.1s
   acceptance     pnpm test:integration                    ✓ 38 passed, 0 failed
   serve          pnpm dev → http://127.0.0.1:4321/        ✓ ready in 6s
   source         src/
+
+CARRIED — proven in that worktree just now
+  local.settings                                 ✓ serve.ready red without it
+  secrets.d/                                     kept on your word — nothing red without it
 
 CRITERIA
   42/behaviour-1   Given no order with id 9, when GET /orders/9,
@@ -124,7 +158,7 @@ ROUTING  gauntlet — 1 behaviour, 1 invariant, 1 retirement, 1 procedure. QA wi
 Publish this?
 ```
 
-### 8. Publish, or end the session
+### 9. Publish, or end the session
 
 **Publish** — append the specification to `ref` as a new comment, in the format [SPECIFICATION.md](./SPECIFICATION.md) gives. Always append: the blocks stack, the newest wins, and the history stays readable.
 
