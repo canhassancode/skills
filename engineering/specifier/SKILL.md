@@ -142,4 +142,4 @@ On a review-comment origin your reply in the thread is the record — a resolved
 
 ## Related
 
-`gauntlet` — runs the specification this publishes · `to-tickets` — writes the ticket this reads, and never writes criteria · `implement` — where work that fails the routing rule goes
+`to-tickets` — writes the ticket this reads, and never writes criteria · `implement` — where work that fails the routing rule goes
