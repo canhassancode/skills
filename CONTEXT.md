@@ -16,7 +16,7 @@ A tracer-bullet vertical slice of a spec — a narrow but complete path through 
 _Avoid_: issue, story.
 
 **Specification**:
-The structured document `/specifier` publishes to a **Ticket** as an append-only comment — the proven run contract, the criteria, the QA procedures — and the only artefact the gauntlet consumes. Distinct from a **Spec**: a spec is prose a human reads, written before the code exists; a specification is machine-read, and every command in it was executed green during the session that published it. Its publication **is** its approval, structurally — an unpublished one has no address, so the gauntlet cannot reach it.
+The structured document `/specifier` publishes to a **Ticket** as an append-only comment — the proven run contract, the criteria, the QA procedures — and the only artefact the gauntlet consumes. Distinct from a **Spec**: a spec is prose a human reads, written before the code exists; a specification is machine-read, and every command in it was executed green in a throwaway worktree during the session that published it. Its publication **is** its approval, structurally — an unpublished one has no address, so the gauntlet cannot reach it.
 _Avoid_: conflating with **Spec** (`/to-spec`'s document), or with a **Ticket**'s acceptance criteria — a ticket keeps a plain-prose definition of done and never authors criteria.
 
 **Triage**:

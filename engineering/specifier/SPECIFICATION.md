@@ -26,6 +26,7 @@ A published specification is one comment: a `## gauntlet-spec` heading, then a s
 
   "contract": {
     "sourcePaths": ["src"],
+    "carry":       ["local.settings", "secrets.d/"],
     "build":       "pnpm type-check",
     "setup":       "pnpm test:db:up",
     "teardown":    "pnpm test:db:down",
@@ -74,16 +75,19 @@ On a `review-comment` origin whose pull request came from no ticket, `ref` is th
 
 ## `contract`
 
-One command per surviving guard, each derived from the repo and each **executed green during the session** that publishes it.
+One command per surviving guard, each derived from the repo and each **executed green in a throwaway worktree during the session** that publishes it.
 
 | field | source |
 | --- | --- |
 | `sourcePaths` | the tree |
+| `carry` | the main clone's ignored inventory, filtered by the operator to preconditions and falsified by the proof run |
 | `build`, `setup`, `teardown`, `acceptance.run` | `package.json` scripts, or the stack's equivalent |
 | `acceptance.output` | wherever the runner is told to write its JSON report |
 | `acceptance.pattern` | the glob that says what a test file is — it also bounds which paths the examiner may delete |
 | `serve.run`, `serve.url`, `serve.ready` | the dev-server script and its config |
 | `serve.startup` | measured during the proof run, in milliseconds |
+
+`carry` is **paths only, never contents** — the specification is published as a tracker comment, so a field holding file bodies would leak every secret in the repo into a public thread. Preflight resolves each path against the main clone and copies it into the run's worktree before `install`; a declared path the clone does not have is a red preflight. An empty list is legal and is most repos' answer.
 
 `coverage` is absent: coverage-as-a-threshold was dropped, leaving `crap` as its only consumer, and `crap` does not arrive until v0.3.1. Add it when something reads it.
 
