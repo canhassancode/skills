@@ -20,6 +20,7 @@
     "./engineering/research",
     "./engineering/resolving-merge-conflicts",
     "./engineering/review",
+    "./engineering/specifier",
     "./engineering/tdd",
     "./engineering/to-proposal",
     "./engineering/to-spec",
