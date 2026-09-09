@@ -65,24 +65,26 @@ git status --ignored --porcelain
 !! secrets.d/       ← precondition, kept
 ```
 
-**Declare-then-falsify, not discover-by-proof.** The operator declares and step 5 checks, because **the proof can show a path is necessary, never that the list is sufficient.** Drop `local.settings`, watch `serve.ready` go red, and necessity is settled. A file whose absence changes behaviour without breaking anything — a flag that silently defaults, a seed row that makes a fixture pass for the wrong reason — leaves the proof green with the list incomplete, and discovery-by-proof alone returns an empty list there and calls it settled. Declaration is the operator's knowledge; the proof is the check on it.
+**Declare-then-falsify, not discover-by-proof.** The operator declares and step 5 checks, because **the proof can show a path is necessary, never that the list is sufficient.** A file whose absence changes behaviour without breaking anything — a flag that silently defaults, a seed row that makes a fixture pass for the wrong reason — leaves the proof green with the list incomplete. Declaration is the operator's knowledge; the proof is the check on it.
 
-Done when `carry` is a list of paths that exist in the clone. **Paths only, never contents** — the specification is published as a tracker comment, so a field carrying file bodies would leak every secret in the repo into a public thread. An empty list is legal and is most repos' answer.
+Done when `carry` is a list of paths that exist in the clone, possibly empty. **Paths only, never contents**, for the reason [SPECIFICATION.md](./SPECIFICATION.md) gives.
 
 ### 5. Prove it, where the gauntlet will stand
 
 Not in the clone you are sitting in: it has the ignored files, and the worktree the gauntlet runs in will not.
 
-```
-git worktree prune
-git worktree add --detach .git/specifier/<ref> HEAD
+```bash
+WT=$(mktemp -d -t specifier-<ref>-XXXX)
+git worktree add --detach "$WT" HEAD
 ```
 
-Copy the declared paths in, then run everything there — install, build, the acceptance suite, the server, every ready probe, the startup measurement. Under `.git/` the tree is invisible to the repo's own tooling and to a clean-tree check, and a carried file stays ignored inside it because `.gitignore` is tracked and comes with the checkout, so carriage can never be mistaken for uncommitted work.
+The throwaway lifecycle `/review` already uses. Copy the declared paths in, then run everything there — install, build, the acceptance suite, the server, every ready probe, the startup measurement.
 
 Then falsify the list. Drop a declared path, re-run the narrowest command that should depend on it, and watch it red — that is necessity, and it is the whole check the declaration buys. Where it stays green, say so and hand the keep-or-drop back to the operator: green without a file proves nothing loud depends on it, never that the file is unneeded.
 
-Done when every command has exited zero, the suite has reported zero failures, and every probe has answered — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
+Done when every command has exited zero, the suite has reported zero failures, every probe has answered, and every declared path has been dropped once and its result reported — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
+
+**`git worktree remove --force "$WT"` before the session ends, by whichever route it ends** — published, declined, abandoned. The tree is detached, so nothing survives it and there is no branch to clean up.
 
 This is the step that catches the class no config file can — an unapproved transitive build script, a report directory the runner will not create, a stack the Bash allowlist has never seen. It now catches the missing-precondition class as well, at the human gate rather than at an unattended qa.
 
@@ -126,9 +128,9 @@ CONTRACT — proven green in a worktree just now
   serve          pnpm dev → http://127.0.0.1:4321/        ✓ ready in 6s
   source         src/
 
-CARRIED — proven in that worktree, each necessary
-  local.settings                                 ✓ present in the clone
-  secrets.d/                                     ✓ present in the clone
+CARRIED — proven in that worktree just now
+  local.settings                                 ✓ serve.ready red without it
+  secrets.d/                                     kept on your word — nothing red without it
 
 CRITERIA
   42/behaviour-1   Given no order with id 9, when GET /orders/9,
@@ -169,8 +171,6 @@ Where the rendered JSON exceeds the tracker's comment limit, **refuse and name t
 | fails the routing rule | `/implement` — labels untouched, the work still happens |
 | agreed, but not concrete enough to bind | remove `ready-for-agent` and re-grill |
 | genuinely not worth doing | `wontfix` |
-
-Both routes end the same way: the proof worktree is removed, and a session that died before it could is repaired by the next one's `git worktree prune`.
 
 On a review-comment origin your reply in the thread is the record — a resolved thread is collapsed, not deleted. There is no refusal artefact and no `not-gauntlet-fit` label: the next session re-derives that assessment for free from a contract it must prove anyway. `ready-for-agent` and gauntlet-fit are different claims, so a decline is not evidence the triage was wrong.
 

@@ -87,7 +87,7 @@ One command per surviving guard, each derived from the repo and each **executed 
 | `serve.run`, `serve.url`, `serve.ready` | the dev-server script and its config |
 | `serve.startup` | measured during the proof run, in milliseconds |
 
-`carry` is **paths only, never contents** — the specification is published as a tracker comment, so a field holding file bodies would leak every secret in the repo into a public thread. Preflight resolves each path against the main clone and copies it into the run's worktree before `install`; a declared path the clone does not have is a red preflight. An empty list is legal and is most repos' answer.
+`carry` is **paths only, never contents** — the specification is published as a tracker comment, so a field holding file bodies would leak every secret in the repo into a public thread. Preflight resolves each path against the main clone and copies it into the run's worktree before `install`; a declared path the clone does not have is a red preflight. An empty list is legal.
 
 `coverage` is absent: coverage-as-a-threshold was dropped, leaving `crap` as its only consumer, and `crap` does not arrive until v0.3.1. Add it when something reads it.
 
