@@ -1,8 +1,10 @@
 ---
-status: accepted
+status: superseded
 ---
 
 # Preflight owns gauntlet-fitness; the ticketing lane shapes it
+
+> **Superseded by [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md).** The gauntlet rebuild (canhassancode/dotfiles#67) removed this decision's premise on both halves: `ticket-lint` no longer exists — `admit` validates a **Specification** against a test report instead — and the shaping half is deleted, because `/specifier` authors every criterion against a running repo with a report in hand. Kept as the record of what was reversed.
 
 The gauntlet was expected to return a "not gauntlet work" verdict when a ticket could not be driven to green, and a live run (brushfeed#110) jammed twice this way — discovering unfitness only after ~40 minutes of looping. The fix has two halves that must not be conflated:
 
