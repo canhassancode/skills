@@ -50,9 +50,7 @@ This survives a `ready-for-agent` ticket and is not a re-grill: the grilling set
 
 Every command comes from the repo in front of you — `package.json` scripts, the tree, the dev-server config. There is no `.gauntlet/config.json`; this skill is what deleted it, and onboarding a new repo is `git pull`, `/specifier`. The field set is in [SPECIFICATION.md](./SPECIFICATION.md).
 
-`coverage` comes from the repo like the rest — the instrumented suite, and where that run writes its JSON — but is **never copied from `acceptance`**. The acceptance suite runs at every gate and its report is what `criteria` and `admit` read; instrumenting it would tax all four chains for a guard that runs on one. The re-run is priced at the `code` gate alone, which is why it is its own command.
-
-The field is optional and `crap` is its only consumer. Where the repo has no instrumented suite to give, leave it out and say so in plain words at the gate — *no coverage declared, so crap will collect nothing* — rather than letting an absent heading carry it.
+`coverage` comes from the repo like the rest — the instrumented suite, and where that run writes its JSON. It is optional, and it is **a command of its own, never `acceptance.run`**, for the reason [SPECIFICATION.md](./SPECIFICATION.md) gives. Where the repo has no instrumented suite to give, leave the field out.
 
 ### 4. Declare the carriage
 
@@ -86,7 +84,7 @@ The throwaway lifecycle `/review` already uses. Copy the declared paths in, then
 
 Then falsify the list. Drop a declared path, re-run the narrowest command that should depend on it, and watch it red — that is necessity, and it is the whole check the declaration buys. Where it stays green, say so and hand the keep-or-drop back to the operator: green without a file proves nothing loud depends on it, never that the file is unneeded.
 
-Then check the coverage report, which fails silently rather than red. That one arrived at `coverage.output` settles only the `mkdir -p` class; the thing that makes the guard score fiction is that **the report must name the files under `sourcePaths`, not build output**. A report keyed to `dist/` or to transpiled sources still parses and still lands where it was promised, and yields a coverage fraction of 0.0 for every function the complexity tool found in `src/` — so every function scores its maximum CRAP and the finding is uniformly wrong rather than absent. Confirm at least one path in the report resolves under a declared source path, and report what you found.
+Then check the coverage report, whose failure is silent rather than red. Arriving at `coverage.output` settles only the `mkdir -p` class. What makes the guard score fiction is the report naming build output instead of source: **it must name the files under `sourcePaths`.** One keyed to `dist/` or to transpiled sources still parses and still lands where it was promised, yet yields a coverage fraction of 0.0 for every function the complexity tool found in `src/` — so every function scores its maximum CRAP and the finding is uniformly wrong rather than absent. Confirm at least one path in the report resolves under a declared source path, and report what you found.
 
 Done when every command has exited zero, the suite has reported zero failures, every probe has answered, any declared coverage report has arrived and named source files, and every declared path has been dropped once and its result reported — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
 

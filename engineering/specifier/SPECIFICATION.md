@@ -93,7 +93,7 @@ One command per surviving guard, each derived from the repo and each **executed 
 
 `carry` is **paths only, never contents** — the specification is published as a tracker comment, so a field holding file bodies would leak every secret in the repo into a public thread. Preflight resolves each path against the main clone and copies it into the run's worktree before `install`; a declared path the clone does not have is a red preflight. An empty list is legal.
 
-`coverage` is **optional**, and `crap` is its only consumer. A repo that declares none runs fine — the guard reports that it could not run, and the run continues. It is its own command and never a flag on `acceptance.run`: the acceptance suite runs at every gate, so instrumenting it would tax all four chains for a guard that runs on one.
+`coverage` is **optional**, and `crap` is its only consumer. A repo that declares none runs fine — the guard reports that it could not run, and the run continues. It is a separate command, never `acceptance.run` with the flag added to it — the same runner is fine, but the acceptance suite runs at every gate, and instrumenting that one would tax all four chains for a guard that runs on one. The re-run is priced at the `code` gate alone.
 
 There is no `ceiling` key and no `format` key. The ceiling is harness-owned, like `depth`'s, and the format is discriminated from the report itself — istanbul or coverage-py.
 
