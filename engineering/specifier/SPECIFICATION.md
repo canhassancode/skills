@@ -99,6 +99,20 @@ There is no `ceiling` key and no `format` key. The ceiling is harness-owned, lik
 
 There is no `examples` field. A criterion carries its values in its own prose, so a second array would only duplicate them.
 
+## `criteria`
+
+| field | `behaviour` | `invariant` |
+| --- | --- | --- |
+| `id` | `<ref>/behaviour-N` | `<ref>/invariant-N` |
+| `text` | the criterion in prose, carrying its own values | the same |
+| `edge.address` | required — the address it asserts through | — |
+| `edge.witness` | `{file, name}` of a test that already passes, or `null` | — |
+| `binds` | — | required `{file, name}` of a test that already passes |
+
+**A behaviour's witness may be `null`; an invariant's `binds` may not.** The two pointers carry different obligations. An invariant is green-only, so the test it binds is its entire ruler — without one it asserts nothing at all. A behaviour is red-then-green and is ruled by its own test's status; its witness is an **exemplar**, the passing test the examiner reads to find the convention at that edge. Where the seam does not exist yet — a new endpoint, a new export — no such test can exist, and a witness requirement would bar every new capability from the gauntlet.
+
+The key is still required. `"witness": null` is the declaration *this is a new seam*; an absent `witness` is a field left out, and `admit` rejects it.
+
 ## Criterion ids
 
 `<ref>/<class>-N` — the id sits **inline in the test name**, and the prose around it is decorative:
