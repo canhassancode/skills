@@ -118,7 +118,17 @@ Each is `{id, at, do, expect}`. `at` is the address, **given, never chosen** —
 
 An empty list is legal and means QA is skipped. Say that in plain words at the gate rather than letting silence carry it.
 
-### 8. Render the whole thing
+### 8. Admit it before you ask
+
+The worktree is still standing and the report is still in it. Write the assembled specification to `.gauntlet/spec.json` there and put it through the gate that will judge it at preflight:
+
+```bash
+"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/gauntlet/run.py" admit specifier
+```
+
+`exitCode` must be `0` with an empty `problems`. Where it is not, fix what it names and run it again — an inadmissible specification is never rendered to the operator, because publication **is** approval and a gate that approves something the machine then refuses has approved nothing. This is the one check the session cannot reason its way to: `admit` verifies the schema, every binding against the baseline report, and the entry stage it derives. It costs one command against a report already in hand, and the `baseline-tests.json` it writes dies with the tree.
+
+### 9. Render the whole thing
 
 Nothing elided, nothing behind a link. Every choice that leads to a run belongs on one screen: where it will publish, each criterion's class, the test it binds to and whether it passes right now, the address QA will drive, the commands just executed in front of you, and what the run will carry into its worktree. Where `carry` is empty, say *nothing carried — a fresh worktree needs no preconditions* in words, and where `coverage` is absent, *no coverage declared, so crap will collect nothing* — rather than letting an absent heading carry either. On a review-comment origin the header names the thread `ship` will reply into as well as the ticket it publishes to.
 
@@ -158,12 +168,14 @@ PROCEDURES
                    expect  The page shows "Order not found".
                            No error banner appears.
 
+ADMIT    exit 0 — entry stage examiner, no problems
+
 ROUTING  gauntlet — 1 behaviour, 1 invariant, 1 retirement, 1 procedure. QA will run.
 
 Publish this?
 ```
 
-### 9. Publish, or end the session
+### 10. Publish, or end the session
 
 **Publish** — append the specification to `ref` as a new comment, in the format [SPECIFICATION.md](./SPECIFICATION.md) gives. Always append: the blocks stack, the newest wins, and the history stays readable.
 
