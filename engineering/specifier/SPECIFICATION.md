@@ -33,6 +33,8 @@ A published specification is one comment: a `## gauntlet-spec` heading, then a s
     "acceptance":  { "run": "mkdir -p .gauntlet && pnpm test:integration",
                      "output": ".gauntlet/report.json",
                      "pattern": "**/*.spec.ts" },
+    "coverage":    { "run": "pnpm test:coverage",
+                     "output": "coverage/coverage-final.json" },
     "serve":       { "run": "pnpm dev", "url": "http://127.0.0.1:4321",
                      "ready": ["/health"], "startup": 1015 }
   },
@@ -84,12 +86,16 @@ One command per surviving guard, each derived from the repo and each **executed 
 | `build`, `setup`, `teardown`, `acceptance.run` | `package.json` scripts, or the stack's equivalent |
 | `acceptance.output` | wherever the runner is told to write its JSON report |
 | `acceptance.pattern` | the glob that says what a test file is — it also bounds which paths the examiner may delete |
+| `coverage.run` | the instrumented suite — a `package.json` script, or the acceptance runner with its coverage flag |
+| `coverage.output` | wherever that run writes its JSON report |
 | `serve.run`, `serve.url`, `serve.ready` | the dev-server script and its config |
 | `serve.startup` | measured during the proof run, in milliseconds |
 
 `carry` is **paths only, never contents** — the specification is published as a tracker comment, so a field holding file bodies would leak every secret in the repo into a public thread. Preflight resolves each path against the main clone and copies it into the run's worktree before `install`; a declared path the clone does not have is a red preflight. An empty list is legal.
 
-`coverage` is absent: coverage-as-a-threshold was dropped, leaving `crap` as its only consumer, and `crap` does not arrive until v0.3.1. Add it when something reads it.
+`coverage` is **optional**, and `crap` is its only consumer. A repo that declares none runs fine — the guard reports that it could not run, and the run continues. It is its own command and never a flag on `acceptance.run`: the acceptance suite runs at every gate, so instrumenting it would tax all four chains for a guard that runs on one.
+
+There is no `ceiling` key and no `format` key. The ceiling is harness-owned, like `depth`'s, and the format is discriminated from the report itself — istanbul or coverage-py.
 
 There is no `examples` field. A criterion carries its values in its own prose, so a second array would only duplicate them.
 
