@@ -50,6 +50,8 @@ This survives a `ready-for-agent` ticket and is not a re-grill: the grilling set
 
 Every command comes from the repo in front of you — `package.json` scripts, the tree, the dev-server config. There is no `.gauntlet/config.json`; this skill is what deleted it, and onboarding a new repo is `git pull`, `/specifier`. The field set is in [SPECIFICATION.md](./SPECIFICATION.md).
 
+`coverage` comes from the repo like the rest — the instrumented suite, and where that run writes its JSON. It is optional, and it is **a command of its own, never `acceptance.run`**, for the reason [SPECIFICATION.md](./SPECIFICATION.md) gives. Where the repo has no instrumented suite to give, leave the field out.
+
 ### 4. Declare the carriage
 
 `git worktree add` checks out tracked files only — gitignored and untracked files do not come with it. `install` rebuilds `node_modules/` and `build` rebuilds `dist/`, but a per-repo precondition has nothing to rebuild it, so it reds the run somewhere far from the cause and reads as a harness bug.
@@ -78,11 +80,13 @@ WT=$(mktemp -d -t specifier-<ref>-XXXX)
 git worktree add --detach "$WT" HEAD
 ```
 
-The throwaway lifecycle `/review` already uses. Copy the declared paths in, then run everything there — install, build, the acceptance suite, the server, every ready probe, the startup measurement.
+The throwaway lifecycle `/review` already uses. Copy the declared paths in, then run everything there — install, build, the acceptance suite, the instrumented suite, the server, every ready probe, the startup measurement.
 
 Then falsify the list. Drop a declared path, re-run the narrowest command that should depend on it, and watch it red — that is necessity, and it is the whole check the declaration buys. Where it stays green, say so and hand the keep-or-drop back to the operator: green without a file proves nothing loud depends on it, never that the file is unneeded.
 
-Done when every command has exited zero, the suite has reported zero failures, every probe has answered, and every declared path has been dropped once and its result reported — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
+Then check the coverage report, whose failure is silent rather than red. Arriving at `coverage.output` settles only the `mkdir -p` class. What makes the guard score fiction is the report naming build output instead of source: **it must name the files under `sourcePaths`.** One keyed to `dist/` or to transpiled sources still parses and still lands where it was promised, yet yields a coverage fraction of 0.0 for every function the complexity tool found in `src/` — so every function scores its maximum CRAP and the finding is uniformly wrong rather than absent. Confirm at least one path in the report resolves under a declared source path, and report what you found.
+
+Done when every command has exited zero, the suite has reported zero failures, every probe has answered, any declared coverage report has arrived and named source files, and every declared path has been dropped once and its result reported — in the worktree, in front of the operator. **A command that has not run green in the worktree is not frozen into a specification.** The same run produces the baseline report every binding below is copied from.
 
 **`git worktree remove --force "$WT"` before the session ends, by whichever route it ends** — published, declined, abandoned. The tree is detached, so nothing survives it and there is no branch to clean up.
 
@@ -116,7 +120,7 @@ An empty list is legal and means QA is skipped. Say that in plain words at the g
 
 ### 8. Render the whole thing
 
-Nothing elided, nothing behind a link. Every choice that leads to a run belongs on one screen: where it will publish, each criterion's class, the test it binds to and whether it passes right now, the address QA will drive, the commands just executed in front of you, and what the run will carry into its worktree. Where `carry` is empty, say *nothing carried — a fresh worktree needs no preconditions* in words, rather than letting an absent heading carry it. On a review-comment origin the header names the thread `ship` will reply into as well as the ticket it publishes to.
+Nothing elided, nothing behind a link. Every choice that leads to a run belongs on one screen: where it will publish, each criterion's class, the test it binds to and whether it passes right now, the address QA will drive, the commands just executed in front of you, and what the run will carry into its worktree. Where `carry` is empty, say *nothing carried — a fresh worktree needs no preconditions* in words, and where `coverage` is absent, *no coverage declared, so crap will collect nothing* — rather than letting an absent heading carry either. On a review-comment origin the header names the thread `ship` will reply into as well as the ticket it publishes to.
 
 ```
 SPECIFICATION — #42 "Order lookup returns 404 for a missing order"
@@ -125,6 +129,7 @@ Publishing to: GitHub issue #42
 CONTRACT — proven green in a worktree just now
   build          pnpm type-check                          ✓ 4.1s
   acceptance     pnpm test:integration                    ✓ 38 passed, 0 failed
+  coverage       pnpm test:coverage                       ✓ 14 files under src/
   serve          pnpm dev → http://127.0.0.1:4321/        ✓ ready in 6s
   source         src/
 
