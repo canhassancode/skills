@@ -28,6 +28,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
+- [align](engineering/align/SKILL.md) — settle an idea, feature or ticket into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
@@ -35,8 +36,6 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, update CONTEXT.md inline, offer ADRs)
-- [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core shared by `grill-me` and `grill-with-docs`
-- [grill-with-docs](engineering/grill-with-docs/SKILL.md) — stress-test a plan against the project's domain model, glossary, and ADRs; updates docs inline (and captures the session into the Obsidian Library if present)
 - [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
 - [implement](engineering/implement/SKILL.md) — implement a spec or set of tickets: TDD at pre-agreed seams, regular typecheck, then `code-review` before committing
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
@@ -56,7 +55,6 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `productivity/` — meta-skills for working with me and Claude
 
-- [grill-me](productivity/grill-me/SKILL.md) — interview me relentlessly about a plan until each branch of the decision tree resolves
 - [writing-great-skills](productivity/writing-great-skills/SKILL.md) — vocabulary and principles for predictable skills; companion [GLOSSARY.md](productivity/writing-great-skills/GLOSSARY.md)
 
 ## `personal/` — the Obsidian second brain
@@ -75,13 +73,16 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 
 ## `deprecated/` — kept for reference, no longer recommended
 
+- [grilling](deprecated/grilling/SKILL.md) — superseded by [align](engineering/align/SKILL.md); the interview loop survives, but with a target, an artefact and a verdict
+- [grill-with-docs](deprecated/grill-with-docs/SKILL.md) — superseded by [align](engineering/align/SKILL.md); it owned the four-pass discipline, which is now `/align`'s step 2
+- [grill-me](deprecated/grill-me/SKILL.md) — superseded by [align](engineering/align/SKILL.md); its whole body was a delegation to `/grilling`
 - [validate](deprecated/validate/SKILL.md) — superseded by per-repo validation hooks
 - [obsidian-vault](deprecated/obsidian-vault/SKILL.md) — superseded by the second-brain skills above (`ask`/`ingest`)
 - [write-a-skill](deprecated/write-a-skill/SKILL.md) — superseded by [writing-great-skills](productivity/writing-great-skills/SKILL.md)
 - [to-prd](deprecated/to-prd/SKILL.md) — superseded by [to-spec](engineering/to-spec/SKILL.md); "spec" is the honest superset of PRD
 - [to-issues](deprecated/to-issues/SKILL.md) — superseded by [to-tickets](engineering/to-tickets/SKILL.md); tracker-neutral "ticket", with blocking edges
 - [setup-tracker](deprecated/setup-tracker/SKILL.md) — superseded by [bootstrap](engineering/bootstrap/SKILL.md); configures both lanes, not just the tracker preference
-- [challenge](deprecated/challenge/SKILL.md) — superseded by [grill-me](productivity/grill-me/SKILL.md); the same Socratic pass, with a decision tree that has to resolve
+- [challenge](deprecated/challenge/SKILL.md) — superseded by [align](engineering/align/SKILL.md); the same Socratic pass, with a decision tree that has to resolve
 - [pickup](deprecated/pickup/SKILL.md) — superseded by [implement](engineering/implement/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
 - [inbox](deprecated/inbox/SKILL.md) — superseded by [ingest](personal/ingest/SKILL.md), which drains `Inbox/` as part of its own flow
 - [morning-brief](deprecated/morning-brief/SKILL.md) — retired, not replaced; the daily Operating Loop and its `Journal/` are gone
@@ -92,8 +93,8 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 
 The ones I reach for most:
 
-- `grill-me` / `grill-with-docs` before any non-trivial change
-- **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (tracker, as `ready-for-human`) instead.
+- `align` before any non-trivial change
+- **Planned work:** `align` on the feature or ticket — one pass or several — until the artefact is a contract → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. An alignment that turns out to be an argued recommendation rather than a build routes to `to-proposal` (tracker, as `ready-for-human`) instead.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR

@@ -1,6 +1,7 @@
 {
   "name": "canhassancode-skills",
   "skills": [
+    "./engineering/align",
     "./engineering/bootstrap",
     "./engineering/code-review",
     "./engineering/codebase-design",
@@ -8,8 +9,6 @@
     "./engineering/design-system",
     "./engineering/diagnose",
     "./engineering/domain-modeling",
-    "./engineering/grill-with-docs",
-    "./engineering/grilling",
     "./engineering/handoff",
     "./engineering/implement",
     "./engineering/improve-codebase-architecture",
@@ -31,7 +30,6 @@
     "./personal/ingest",
     "./personal/observe",
     "./personal/retro",
-    "./productivity/grill-me",
     "./productivity/writing-great-skills"
   ]
 }

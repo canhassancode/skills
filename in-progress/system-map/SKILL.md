@@ -10,7 +10,7 @@ Builds an end-to-end map of a flow across a multi-repo workspace. Treats each to
 
 ## Quick start
 
-0. **Grill first if fuzzy.** If the target is vague ("map checkout") or the architectural change driving this exercise isn't crisp, suggest `/grill-with-docs` and wait. A complete map is intractable; a map focused on the seams that will move is achievable. Skip this step only when the user has already framed target + redesign motivation precisely.
+0. **Align first if fuzzy.** If the target is vague ("map checkout") or the architectural change driving this exercise isn't crisp, suggest `/align` and wait. A complete map is intractable; a map focused on the seams that will move is achievable. Skip this step only when the user has already framed target + redesign motivation precisely.
 1. Confirm the **target** with the user (one of):
    - **Journey**: e.g. "checkout", "user signup"
    - **Entry point**: e.g. `POST /api/orders`, a button, a queue topic
