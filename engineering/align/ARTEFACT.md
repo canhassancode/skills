@@ -12,7 +12,7 @@ The ticket's **comments** hold the decisions that produced each revision; with n
 **Pass:** 3 · **Verdict:** fog · **Ticket:** #42 · **Verified against:** `abc1234`
 ```
 
-The commit is load-bearing: it is how a later pass knows which facts have expired. `Ticket` is `—` when no ticket exists — a pass can close without one, and a `dropped` pass never has a node to point at.
+The commit is load-bearing: it is how a later pass knows which facts have expired. `Ticket` is `—` when no ticket exists — a first pass can close without one.
 
 ## What we are trying to do
 
