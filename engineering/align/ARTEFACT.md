@@ -34,9 +34,19 @@ A scenario with no outcome is unresolved by definition, and it is what the gate 
 
 ## Interfaces
 
-Decided interfaces as real, checkable syntax. Undecided ones as a sketch, in whatever notation the operator reached for, with the open part marked.
+Everything another part of the system talks to — any surface with a callable shape, not only a type. These are the layers the design spans, and several kinds turn up in one session:
 
-**Settled** — the fence says `ts`, and it is the shape the work will be built against:
+| kind | the shape being decided |
+| --- | --- |
+| code type | a type, function, class or module signature |
+| REST endpoint | method, path, request and response body, status codes |
+| event | topic, payload, ordering, delivery guarantee |
+| CLI or config | flag, argument, env var, accepted values |
+| data | schema, migration, index, retention |
+
+Decided interfaces are written as real, checkable syntax. Undecided ones are a sketch, in whatever notation the operator reached for, with the open part marked.
+
+**Settled** — the fence names the syntax, and it is the shape the work will be built against:
 
 ```ts
 interface CarouselPost {
@@ -44,6 +54,16 @@ interface CarouselPost {
   images: readonly ImageAsset[];
   caption?: string;
 }
+```
+
+```http
+POST /channels/{channelId}/carousels
+Content-Type: application/json
+
+{ "images": [{ "url": "https://…" }], "caption": "" }
+
+201 → { "id": "…", "state": "published" }
+422 → { "error": "ratio_mismatch", "index": 2 }
 ```
 
 **Sketch** — the fence says `text`, and it is a conversation prop rather than a document. Placeholders are visible, because a placeholder handed to an agent becomes an invention:

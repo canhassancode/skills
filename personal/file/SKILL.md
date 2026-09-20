@@ -18,7 +18,7 @@ Files one **matter** — a document/record or an atomic self-fact — into a dom
 
 - **Your own record or self-fact** — file it, below.
 - **External reading about the world** (article, video, book) — hand to `/ingest`.
-- **One of your own ideas** — hand to `/align`. It settles over one pass or several.
+- **One of your own ideas** — hand to `/wayfinder` (foggy) or `/grilling` (one sitting).
 - **Neither** — bin it.
 
 The capture's kind picks the drain; these are peers, not a pipeline.

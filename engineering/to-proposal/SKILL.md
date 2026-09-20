@@ -1,10 +1,10 @@
 ---
 name: to-proposal
-description: Turn the current conversation (usually an alignment) into a proposal aimed at a decision-maker and publish it to the project tracker. The proposal sibling of /to-spec — an argued recommendation seeking buy-in, not a build spec.
+description: Turn the current conversation (usually a grilling) into a proposal aimed at a decision-maker and publish it to the project tracker. The proposal sibling of /to-spec — an argued recommendation seeking buy-in, not a build spec.
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and produces a **proposal** — an argued recommendation for a person to decide on, not a build spec for implementers. That's the line between this and `/to-spec`: a spec tells an implementer *what to build*; a proposal persuades a decision-maker *what to do and why*. Do NOT interview the user — synthesise what you already know from the alignment.
+This skill takes the current conversation context and produces a **proposal** — an argued recommendation for a person to decide on, not a build spec for implementers. That's the line between this and `/to-spec`: a spec tells an implementer *what to build*; a proposal persuades a decision-maker *what to do and why*. Do NOT interview the user — synthesise what you already know from the grilling.
 
 The issue tracker and triage label vocabulary should have been provided to you — run `/bootstrap` if not.
 
@@ -62,5 +62,5 @@ Exactly what you need from the reader: a decision, a sign-off, a resource, a dat
 
 ## Related
 
-- `/align` — the alignment this usually follows; its close hands the artefact on.
+- `/grill-with-docs`, `/grill-me` — the grilling this usually follows; their close-routing offers this skill.
 - `/to-spec` — the sibling for build specs aimed at implementers (a spec on the tracker; a proposal is the decision document beside it).

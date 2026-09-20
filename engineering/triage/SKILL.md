@@ -98,9 +98,9 @@ Show counts and a one-line summary per issue. Let the maintainer pick.
 
 2. **Recommend.** Tell the maintainer your category and state recommendation with reasoning, plus a brief codebase summary relevant to the issue — including whether it is already implemented. Wait for direction.
 
-3. **Reproduce (bugs only).** Before any alignment, attempt reproduction: read the reporter's steps, trace the relevant code, run tests or commands. Report what happened — successful repro with code path, failed repro, or insufficient detail (a strong `needs-info` signal). A confirmed repro makes a much stronger agent brief.
+3. **Reproduce (bugs only).** Before any grilling, attempt reproduction: read the reporter's steps, trace the relevant code, run tests or commands. Report what happened — successful repro with code path, failed repro, or insufficient detail (a strong `needs-info` signal). A confirmed repro makes a much stronger agent brief.
 
-4. **Align (if needed).** If the issue needs fleshing out, run an `/align` session. Its four-pass discipline is mandatory before declaring `ready-for-anything`. Apply it **more strictly** for `ready-for-agent` than for `ready-for-human` — agents have no judgment to course-correct mid-stream, so the brief must be fully self-contained. A human picking up a thin `ready-for-human` brief notices what is missing and asks; an agent works from what it is given.
+4. **Grill (if needed).** If the issue needs fleshing out, run a `/grill-with-docs` session. The four-pass discipline (trace branches, grep consumers, sketch `CONTEXT.md` if missing, check feature-flag/branch gates) is mandatory before declaring `ready-for-anything`. Apply it **more strictly** for `ready-for-agent` than for `ready-for-human` — agents have no judgment to course-correct mid-stream, so the brief must be fully self-contained. A human picking up a thin `ready-for-human` brief notices what is missing and asks; an agent works from what it is given.
 
 5. **Apply the outcome:**
    - `ready-for-agent` — post an agent brief comment ([AGENT-BRIEF.md](AGENT-BRIEF.md)). **Exception:** if the issue body already contains a complete agent brief, don't repost it as a comment — flip the label only.
@@ -115,7 +115,7 @@ Show counts and a one-line summary per issue. Let the maintainer pick.
 
 ## Quick state override
 
-If the maintainer says "move #42 to ready-for-agent", trust them and apply the role directly. Confirm what you're about to do (role changes, comment, close), then act. Skip alignment. If moving to `ready-for-agent` without an alignment session, ask whether they want to write an agent brief.
+If the maintainer says "move #42 to ready-for-agent", trust them and apply the role directly. Confirm what you're about to do (role changes, comment, close), then act. Skip grilling. If moving to `ready-for-agent` without a grilling session, ask whether they want to write an agent brief.
 
 ## Needs-info template
 
@@ -133,7 +133,7 @@ If the maintainer says "move #42 to ready-for-agent", trust them and apply the r
 - question 2
 ```
 
-Capture everything resolved during alignment under "established so far" so the work isn't lost. Questions must be specific and actionable, not "please provide more info".
+Capture everything resolved during grilling under "established so far" so the work isn't lost. Questions must be specific and actionable, not "please provide more info".
 
 ## Resuming a previous session
 

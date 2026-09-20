@@ -44,7 +44,7 @@ Fitness and worth-it are different axes. This rule answers fitness alone; whethe
 
 **The concreteness rule.** Every sentence that will become a criterion carries its values. *"Given an invalid id"* cannot become an assertion; *"given id 9, which does not exist"* can. Push for the value.
 
-This survives a `ready-for-agent` ticket and is not a re-align: the alignment settled what behaviour should exist, and this asks whether the sentence can bind. *Agreed, but not yet concrete enough to bind* is the commonest honest decline.
+This survives a `ready-for-agent` ticket and is not a re-grill: the grilling settled what behaviour should exist, and this asks whether the sentence can bind. *Agreed, but not yet concrete enough to bind* is the commonest honest decline.
 
 ### 3. Derive the contract
 
