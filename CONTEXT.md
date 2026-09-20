@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/wayfinder` invokes `/align`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
-The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can publish. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** on a branch, and closes each **Pass** with a **Verdict**. Supersedes `grilling`, `grill-me` and `grill-with-docs`.
+The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can publish. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling`, `grill-me` and `grill-with-docs`.
 _Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
 
 **Pass**:
@@ -20,7 +20,7 @@ The judgement an `/align` pass closes with — **aligned** (the gate is met; the
 _Avoid_: confidence, "feels complete".
 
 **Alignment artefact**:
-The markdown file `/align` maintains on the stack's base branch — the residue of the conversation, not its transcript. Holds the named **Scenario**s, the decisions and their rejected alternatives, the sketches and settled interfaces, the diagrams, and the unresolved list. Plain text throughout, so it diffs between passes and renders on the tracker.
+What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list. Each **Pass** also posts a **comment**: that pass's verdict and delta, its diagrams, the sketches as they stood, and the reasoning. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
 _Avoid_: transcript, notes, grilling notes.
 
 **Scenario**:
@@ -90,7 +90,7 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Relationships
 
-- Two lanes reach `ready-for-agent`: the **planning lane** (**align** → **spec** → **ticket**s — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until stage 2 republishes its body as the contract. The inbound lane has no verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
+- Two lanes reach `ready-for-agent`: the **planning lane** (**align** → **spec** → **ticket**s — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until stage 2 cuts the work from its body. The inbound lane has no verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
 - A **triage** session produces an **agent brief** when it moves a ticket to `ready-for-human` or `ready-for-agent`. `ready-for-human` still partitions what an agent can be trusted to finish alone from what it cannot; it just no longer gates on a separate skill.
 - **Four-pass discipline** is what makes an **agent brief** executable — without it, the brief names nothing that can be opened or grepped. Apply it *more strictly* for `ready-for-agent`, which has no human reading the brief against the branch.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
