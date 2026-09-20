@@ -4,7 +4,7 @@ The file `/align` maintains on the pass's branch. It is the **residue of the con
 
 One file, revised in place across passes. Keep the headings stable and let their contents sharpen. Plain text throughout, so it diffs between passes, renders wherever the ticket lives, and reads without vision.
 
-The ticket's **comments** hold the decisions that produced each revision. This file holds the current truth.
+The ticket's **comments** hold the decisions that produced each revision; with no ticket, this file holds them. This file holds the current truth.
 
 ## Header
 
@@ -12,7 +12,7 @@ The ticket's **comments** hold the decisions that produced each revision. This f
 **Pass:** 3 · **Verdict:** fog · **Ticket:** #42 · **Verified against:** `abc1234`
 ```
 
-The commit is load-bearing: it is how a later pass knows which facts have expired.
+The commit is load-bearing: it is how a later pass knows which facts have expired. `Ticket` is `—` when no ticket exists — a pass can close without one, and a `dropped` pass never has a node to point at.
 
 ## What we are trying to do
 

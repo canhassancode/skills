@@ -10,7 +10,7 @@ A **pass** at an idea, a feature or a ticket that ends in a contract — or in a
 
 `/align` is a mode, not an event. You invoke it to settle something, and you re-enter it when a requirement moves, a slice splits, or a fact turns out to be wrong. Each pass raises the resolution of the **Alignment artefact**; the artefact advances, not the session count.
 
-`/align` creates the **Ticket** it works on and holds it in `needs-alignment`. That label means **the body is not yet the contract** — the body is a draft until stage 2 republishes it as the fact, so nothing downstream reads it before then.
+`/align` works on a **Ticket** when one exists, and creates one only once the work is worth tracking — never on entry. The ticket it holds sits in `needs-alignment`, which means **the body is not yet the contract** — the body is a draft until stage 2 republishes it as the fact, so nothing downstream reads it before then.
 
 Every step below assumes the loop: one question at a time, facts looked up rather than asked, decisions kept with the operator.
 
@@ -20,8 +20,8 @@ One procedure, two entries. Establish which you have before asking anything.
 
 | argument | entry | first move |
 | --- | --- | --- |
-| a new feature, idea or ticket | **first pass** | create the ticket in `needs-alignment`; cut `docs/<slug>` as the stack's base layer |
-| a ticket already in flight | **re-entry** | read the artefact and the last pass comment **before** anything else |
+| a new feature, idea or ticket | **first pass** | cut `docs/<slug>` as the stack's base layer — no ticket yet; one is created on the operator's word (step 7) |
+| a ticket already in flight | **re-entry** | read the artefact and the last pass comment (if any) **before** anything else |
 
 On a re-entry, name what changed and which **Scenario** it touches. Re-asking a settled question wastes the artefact and restarts an interview the operator has already sat through.
 
@@ -89,9 +89,10 @@ The close is the decision, and it carries the weight: which **verdict**, what ha
 | --- | --- | --- |
 | **aligned** | the gate below is met | stage 2 — publish the contract |
 | **fog** | unresolved items remain, and each carries what would resolve it | another pass, with the routes as its plan |
+| **dropped** | the work is not worth doing | no ticket, no further pass — record the reason so it is not re-opened |
 | **thin** | unresolved items with no route, axes unmarked, or no decisions recorded | say plainly that the pass did not dig |
 
-Fog is a finding, not a failure, and it is not knowable at invocation — which verdict a pass returns is decided here, with the most information you will ever have. Fog and thin look identical from the outside, and the route attached to each open question is the only thing separating an honest fog from a shrug.
+Fog is a finding, not a failure, and it is not knowable at invocation — which verdict a pass returns is decided here, with the most information you will ever have. Fog and thin look identical from the outside, and the route attached to each open question is the only thing separating an honest fog from a shrug. **Dropped** is a finding too, and the cheapest: the work settled before a ticket existed to imply it was happening.
 
 **The gate.** The artefact is a contract when:
 
@@ -103,9 +104,11 @@ Fog is a finding, not a failure, and it is not knowable at invocation — which 
 
 Report the gate item by item, each met or unmet **with where the evidence sits**, then recommend. "Not complete" is the normal answer, and on a first pass into fog it is the correct one.
 
-Then write the **Alignment artefact** to [ARTEFACT.md](./ARTEFACT.md)'s shape, commit it on the pass's branch, and append **one** comment to the ticket: verdict first, then the delta since the last pass, then the link to the artefact at its commit. The comments are the record of decisions; the artefact is the working surface, revised in place.
+Then write the **Alignment artefact** to [ARTEFACT.md](./ARTEFACT.md)'s shape and commit it on the pass's branch. Where a ticket exists, append **one** comment to it: verdict first, then the delta since the last pass, then the link to the artefact at its commit. The comments are the record of decisions; the artefact is the working surface, revised in place. With no ticket, the artefact is the whole record.
 
-**Done when** the artefact is committed, the comment is appended, and the operator has the verdict and the choice to continue.
+A ticket is created on the operator's word, never on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**. A **dropped** pass never needs one.
+
+**Done when** the artefact is committed, any ticket carries its one comment, and the operator has the verdict and the choice to continue.
 
 ## Where this goes next
 
