@@ -6,15 +6,15 @@ Revised in place across passes. Keep the headings stable and let their contents 
 
 The body stays true to the intention being aligned. Cutting that intention into work is stage 2's, which reads the body and proposes the slicing — it does not rewrite it.
 
-**The split.** The body holds what decides: the header, the statement of intent, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds what argued: its verdict and the delta since the last pass, the diagrams, the sketches as they stood, the reasoning behind each decision, and what the research found.
+**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds what argued: its verdict and the delta since the last pass, the diagrams, the sketches as they stood, the reasoning behind each decision, and what the research found.
 
 ## Header
 
 ```markdown
-**Pass:** 3 · **Verdict:** fog · **Verified against:** `abc1234`
+**Pass:** 3 · **Verdict:** fog · **Destination:** tickets · **Verified against:** `abc1234`
 ```
 
-The commit is load-bearing: it is how a later pass knows which facts have expired.
+The commit is load-bearing: it is how a later pass knows which facts have expired. `Destination` is `tickets`, `project` or `proposal` — what the exit is. It lives here rather than in a label because it is a property of the work, not of the state.
 
 ## What we are trying to do
 

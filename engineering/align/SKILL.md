@@ -106,13 +106,13 @@ Report the gate item by item, each met or unmet **with where the evidence sits**
 
 Then update the ticket **body** to [ARTEFACT.md](./ARTEFACT.md)'s shape — revised in place, headings stable, carrying the pass number and the commit the facts were checked against — and post **one** comment with what this pass produced: the verdict, the delta since the last pass, the diagrams, the sketches as they stood, and the reasoning. The body is the current truth; the comments are how it got there.
 
-A ticket is never created on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**, and create it on the operator's word. A **dropped** pass has one only if an earlier pass earned it. A **branch** is cut only when the work changes a repo document — an ADR, `CONTEXT.md`, research worth keeping — and that branch is the stack's base layer; nothing else about the alignment lands on one.
+A ticket is never created on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**, and create it on the operator's word. On **aligned**, set the exit state: `ready-to-cut` when the work can be cut now, `ready-to-propose` when the destination names a proposal. Which of the two is the operator's call — whether someone else's yes is needed is a social fact the pass cannot read off the repo. A **dropped** pass has a ticket only if an earlier pass earned it. A **branch** is cut only when the work changes a repo document — an ADR, `CONTEXT.md`, research worth keeping — and that branch is the stack's base layer; nothing else about the alignment lands on one.
 
 **Done when** the operator has the verdict and the choice to continue, and the record matches it: the body current, one comment carrying this pass, and nothing created when a first pass closes **dropped**.
 
 ## Where this goes next
 
-Stage 2 reads the body and proposes what to cut from it — the **Ticket**s and the stack — rather than rewriting it, so the body stays true to the intention it records. **Ticket**s are cut there: vertical, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query. **Layer**s are cut in stage 3: horizontal, by code dependency, one branch and one pull request each.
+Stage 2 is `/cut`: it reads the body and cuts it into **Ticket**s — vertical, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query — rather than rewriting it, so the body stays true to the intention it records. Where the destination is a proposal, `/propose` asks first and the ticket waits in `awaiting-decision`. **Layer**s are cut in stage 3: horizontal, by code dependency, one branch and one pull request each, inside that ticket's own stack.
 
 Branch names are semantic throughout: `docs/` for the ADR, `CONTEXT.md` and research; `feat/` and `fix/` for work.
 

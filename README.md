@@ -33,6 +33,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
+- [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it; companion [SLICE.md](engineering/cut/SLICE.md)
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, update CONTEXT.md inline, offer ADRs)
@@ -42,6 +43,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [implement](engineering/implement/SKILL.md) — implement a spec or set of tickets: TDD at pre-agreed seams, regular typecheck, then `code-review` before committing
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
+- [propose](engineering/propose/SKILL.md) — turn a settled alignment into an argued proposal for a decision-maker and publish it to the tracker, leaving the ticket at `awaiting-decision` (the sibling of `to-spec`, which builds instead of asks)
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
@@ -49,7 +51,6 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `code-review` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `code-review` against a fixed point
 - [specifier](engineering/specifier/SKILL.md) — turn a ticket or a pull-request review comment into the specification the gauntlet runs against: derive the run contract from a fresh pull, prove it green in a throwaway worktree in front of you, publish it to the ticket; companion [SPECIFICATION.md](engineering/specifier/SPECIFICATION.md)
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
-- [to-proposal](engineering/to-proposal/SKILL.md) — turn a grilling into an argued proposal for a decision-maker and publish it to the tracker as `ready-for-human` (the proposal sibling of `to-spec`)
 - [to-spec](engineering/to-spec/SKILL.md) — synthesise the current conversation into a spec and publish it to the tracker as `ready-for-agent` (no triage); the planning lane's entry point
 - [to-tickets](engineering/to-tickets/SKILL.md) — break a spec into tracer-bullet tickets with blocking edges, as native tracker links or a local `tickets.md`
 - [triage](engineering/triage/SKILL.md) — triage inbound issues through a state machine driven by triage roles
@@ -93,8 +94,8 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 
 The ones I reach for most:
 
-- `grill-me` / `grill-with-docs` before any non-trivial change
-- **Planned work (triage-free lane):** `grill-with-docs` — or `wayfinder` when it's too big for one session — to shape it → `to-spec` → `to-tickets` → `implement` each ticket → `code-review` → `commit`/`pr`. A grill that turns out to be an argued recommendation rather than a build routes to `to-proposal` (tracker, as `ready-for-human`) instead.
+- `align` before any non-trivial change
+- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `implement` each slice → `code-review` → `commit`/`pr`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. `to-spec` and `to-tickets` remain for spec-first work; `wayfinder` charters the genuinely unknown.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR
