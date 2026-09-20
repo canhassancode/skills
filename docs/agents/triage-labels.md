@@ -1,11 +1,12 @@
 # Triage Labels
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
+The skills speak in terms of canonical roles across two lanes — the **inbound** lane, where **Triage** classifies work that arrived cold, and the **planning** lane, where **Align** creates work and holds it in `needs-alignment` until stage 2 publishes the contract. This file maps those roles to the actual label strings used in this repo's issue tracker.
 
-| Label in mattpocock/skills | Label in our tracker | Meaning                                  |
-| -------------------------- | -------------------- | ---------------------------------------- |
-| `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue  |
-| `needs-info`               | `needs-info`         | Waiting on reporter for more information |
+| Label in mattpocock/skills | Label in our tracker | Meaning                                          |
+| -------------------------- | -------------------- | ------------------------------------------------ |
+| `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue          |
+| —                          | `needs-alignment`    | Planning lane: the body is not yet the contract  |
+| `needs-info`               | `needs-info`         | Waiting on reporter for more information         |
 | `ready-for-agent`          | `ready-for-agent`    | Fully specified, ready for an AFK agent  |
 | `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
 | `wontfix`                  | `wontfix`            | Will not be actioned                     |

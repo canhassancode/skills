@@ -19,8 +19,8 @@ Infer the repo from `git remote -v` — `gh` does this automatically when run in
 Before creating, editing, or labelling any issue in a repo for the first time in a session, ensure the canonical triage labels exist. This is idempotent — the sentinel check at the top exits fast if bootstrap has already run in this repo, so the cost on subsequent invocations is a single API call.
 
 ```bash
-# Sentinel: if any canonical label exists, bootstrap has already run.
-if gh label view needs-triage >/dev/null 2>&1; then
+# Sentinel: if the newest canonical label exists, bootstrap has already run.
+if gh label view needs-alignment >/dev/null 2>&1; then
   return 0 2>/dev/null || exit 0
 fi
 
@@ -28,6 +28,7 @@ declare -A canonical=(
   [bug]="d73a4a:Something is broken"
   [enhancement]="a2eeef:New feature or improvement"
   [needs-triage]="fbca04:Maintainer needs to evaluate"
+  [needs-alignment]="5319e7:Planning lane: the body is not yet the contract"
   [needs-info]="d4c5f9:Waiting on reporter"
   [ready-for-agent]="0e8a16:Fully specified, AFK-ready"
   [ready-for-human]="1d76db:Needs human implementation"
