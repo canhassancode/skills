@@ -113,7 +113,7 @@ TDD the layer: /tdd, one /commit per red → green → refactor cycle — the re
 skipped. Commit on a real green, not on your say-so.
 
 Change only what the layer's criteria need. Leave the tree clean. Do not push, do not open anything,
-do not review: the parent owns the stack and the vetting.
+do not vet your own work: the parent owns the stack and the Review.
 
 If the window fills before the layer is done: commit what is green, leave the tree clean, and hand
 back a brief naming what is done and what remains. A split layer beats a degraded one.
@@ -136,7 +136,7 @@ A builder that stops because the window filled hands back at a green commit. Pus
 
 **Done when** the layer's branch is on the remote, with no pull request against it.
 
-## 7. Vet the layer
+## 7. Review the layer
 
 Invoke `/crucible` with the layer's delta `<base>...<branch>` and the ticket's contract. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
 
@@ -159,7 +159,7 @@ A fix round is a new Builder invocation with the findings as its brief, never a 
 
 Layer: <branch> · Ticket: #<n> · Round: <n> of 2
 
-A vetting returned findings against this layer. Each is a question with its evidence; answer it in
+The **Review** returned findings against this layer. Each is a question with its evidence; answer it in
 the code — the fix lands wherever the finding lives, which may be outside this layer's diff.
 
 <the findings verbatim: class, severity, found at, question, evidence>
@@ -210,7 +210,7 @@ The shipping half of the stage: the stack submitted once as drafts, each body wr
 
 ## Related
 
-- `/crucible` — the vetting every layer passes through.
+- `/crucible` — the **Review** every layer passes through.
 - `/tdd` — the cycles inside a layer.
 - `/commit` — one per cycle.
 - `/align` — where a finding that names a scenario goes, and where a ticket that cannot be layered goes.
