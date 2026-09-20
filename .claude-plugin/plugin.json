@@ -1,6 +1,7 @@
 {
   "name": "canhassancode-skills",
   "skills": [
+    "./engineering/align",
     "./engineering/bootstrap",
     "./engineering/code-review",
     "./engineering/codebase-design",

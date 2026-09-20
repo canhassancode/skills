@@ -35,9 +35,9 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
+| `align` | No upstream counterpart — supersedes `grilling`, `grill-me` and `grill-with-docs`. Owns the planning lane's entry, the four-pass discipline, and the `needs-alignment` state (ADR-0005). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `system-map` | Its live upstream is the work `claude-code-config` repo, not `mattpocock/skills`. Diff against that, not this remote. |
-| `grill-with-docs` | Built around this repo's `CONTEXT.md` / ADR layer and the four-pass discipline. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `specifier` | No upstream counterpart. The gauntlet's only entrance and its only human gate — it authors every acceptance criterion, which is why `to-spec`, `to-tickets` and `grill-with-docs` author none (ADR-0004). |
 | `commit`, `pr` | Local conventions and PR shape. |
@@ -55,9 +55,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**33 skill directories live in this library; 32 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**34 skill directories live in this library; 33 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 32 registered, **18 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **33 directories, 19 invisible / 14 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 33 registered, **18 carry `disable-model-invocation: true` and 15 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **34 directories, 19 invisible / 15 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 
