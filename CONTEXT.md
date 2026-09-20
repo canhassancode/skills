@@ -36,7 +36,7 @@ One branch in a `gh stack`, and the pull request that carries it. Cut by *code* 
 _Avoid_: slice, sub-task.
 
 **Spec**:
-A **destination**, not a stage — one exit an **Align** pass can take, alongside a proposal, direct tickets, an ADR, or nothing at all. The synthesised form of a planned piece of work: problem, solution, user stories, implementation and testing decisions, published to the tracker by `/to-spec`. `/to-spec`, `/to-tickets` and `/to-proposal` are **terminals**; a map's destination names its exit. Supersedes the old *PRD*: the document was never product-only, so "spec" is the honest superset (technical, non-technical, or a blend). A spec publishes as `ready-for-agent` by construction; the planning lane does **not** route it through triage.
+A **destination**, not a stage — one exit a planned piece of work can take, alongside the **Destination** an **Align** pass settles on (tickets, a project, or a **Proposal**), an ADR, or nothing at all. The synthesised form of a planned piece of work: problem, solution, user stories, implementation and testing decisions, published to the tracker by `/to-spec`. `/to-spec` and `/to-tickets` are **terminals** for spec-first work; a map's destination names its exit. Supersedes the old *PRD*: the document was never product-only, so "spec" is the honest superset (technical, non-technical, or a blend). A spec publishes as `ready-for-agent` by construction; the planning lane does **not** route it through triage.
 _Avoid_: PRD, requirements doc.
 
 **Ticket**:
