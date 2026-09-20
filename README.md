@@ -33,6 +33,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
+- [crucible](engineering/crucible/SKILL.md) — vet a diff against its contract: one hand-placed mutation per criterion (red required), the consumers of what changed grepped, findings returned and never posted
 - [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it; companion [SLICE.md](engineering/cut/SLICE.md)
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
