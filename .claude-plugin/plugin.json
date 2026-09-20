@@ -3,6 +3,7 @@
   "skills": [
     "./engineering/align",
     "./engineering/bootstrap",
+    "./engineering/build",
     "./engineering/code-review",
     "./engineering/codebase-design",
     "./engineering/commit",

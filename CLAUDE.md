@@ -43,6 +43,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
+| `build` | No upstream counterpart — stage 3's run: the fit, the layer plan, the fresh builder invocations, and the push flows in `STACK.md`. |
 | `crucible` | No upstream counterpart — the review policy; falsification and the consumer grep, and it absorbs `code-review`'s analysis once the loop has run in anger. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
@@ -56,9 +57,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**36 skill directories live in this library; 35 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**37 skill directories live in this library; 36 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 35 registered, **19 carry `disable-model-invocation: true` and 16 do not**. The installed set (`~/.agents/skills`) runs one ahead — **36 directories, 20 invisible / 16 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 36 registered, **20 carry `disable-model-invocation: true` and 16 do not**. The installed set (`~/.agents/skills`) runs one ahead — **37 directories, 21 invisible / 16 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 
