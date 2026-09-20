@@ -38,7 +38,7 @@ Three tests, all mechanical:
 
 - **Vertical.** A slice that cannot name the **scenario it makes pass** is a layer, not a slice. Horizontal work is real, but it is stage 3's — a branch and a pull request, never a tracker node.
 - **Sized.** One slice fits one fresh context window. Too big is a slice that cannot be built in one sitting; too small is a slice whose own scenario it cannot name.
-- **Sequenced.** Declare the blocking edges, and prefer prefactoring first — make the change easy, then make the easy change. A **wide refactor** is the exception to vertical slicing: sequence it expand → migrate → contract, with each batch its own slice, exactly as `/to-tickets` describes it.
+- **Sequenced.** Declare the blocking edges, and prefer prefactoring first — make the change easy, then make the easy change. A **wide refactor** is the exception to vertical slicing: one mechanical change whose blast radius fans across the codebase, so no single slice can land green. Sequence it as expand → migrate → contract. Expand first, adding the new form beside the old so nothing breaks. Then migrate callers in batches sized by blast radius, each batch its own slice blocked by the expand. Then contract, deleting the old form in a slice blocked by every batch.
 
 **Done when** every slice passes all three, or has been split, merged or re-cut until it does.
 
@@ -58,7 +58,7 @@ Write each body to [SLICE.md](./SLICE.md)'s template, by transclusion from the c
 
 ## 6. Quiz the operator
 
-Present the slices before publishing anything: title, what it delivers, its blocking edges, and which contract items it inherits. Ask what `/to-tickets` asks — is the granularity right, are the edges genuine, should any be merged or split. Iterate until the operator approves.
+Present the slices before publishing anything: title, what it delivers, its blocking edges, and which contract items it inherits. Ask whether the granularity is right, whether each edge genuinely gates the slice it blocks, and whether any slice should be merged or split. Iterate until the operator approves.
 
 **Done when** the operator has approved the breakdown.
 

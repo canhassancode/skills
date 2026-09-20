@@ -22,7 +22,7 @@ The test: read it aloud to someone who has never seen the project, and they can 
 ## Body
 
 ```markdown
-**Parent:** #42 · **Blocked by:** #51
+**Contract:** #42 · **Blocked by:** #51 · **Blocks:** #53 · **Container:** carousel-publish
 
 ## What to build
 
@@ -78,6 +78,8 @@ Each with its reason, because a bare exclusion invites the question back:
 - **Scheduling posts** — decided against for now: deferred until the publish path has run in production.
 ```
 
+**The header is the tracker's.** Reference the contract in the form that tracker's adapter uses — bare `#42` on GitHub, `CAR-###` on Linear — and use native blocking edges and container membership where the tracker has them, with the text line as the fallback. The four relationships to carry: the contract the slice was cut from, what blocks it, what it blocks, and the container it belongs to. Trackers render relationships natively, so they survive an edit and cost a builder nothing to read.
+
 ## What earns a place
 
 - **Its scenarios** — the rows of the contract this slice makes hold. One of them has to be there: it is what makes the slice vertical, and a slice that cannot name one is a layer.
@@ -88,5 +90,5 @@ Each with its reason, because a bare exclusion invites the question back:
 ## What does not
 
 - **A summary of the parent.** The parent's own body is the record; a slice carries the part of it that bears on this work, verbatim.
-- **File paths and line numbers.** They go stale between the cut and the build. Exceptions are the ones `/to-spec` and `/to-tickets` allow: a snippet that encodes a decision more precisely than prose — a state machine, a schema, a type shape — trimmed to the decision-rich part.
+- **File paths and line numbers.** They go stale between the cut and the build. The exception is a snippet that encodes a decision more precisely than prose can — a state machine, a reducer, a schema, a type shape — inlined at the decision it belongs to and trimmed to the decision-rich part, never a working demo.
 - **Anything decided at the cut.** If it is not in the contract, the cut does not get to invent it.
