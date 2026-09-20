@@ -53,9 +53,9 @@ A spec is an epic-style parent document — on Linear that is a **native Project
 
 ## Proposals are Documents, not labelled issues
 
-A proposal (`/to-proposal`) is a decision document for a decision-maker, not a delivery item — on Linear that is a native **Document**, placed in the location the user confirms.
+A proposal (`/propose`) is a decision document for a decision-maker, not a delivery item — on Linear that is a native **Document**, placed in the location the user confirms.
 
-- **`/to-proposal`** → create a Document with the proposal body, attached to the agreed **Initiative** or **Project**. Where the agreed home is a single-decision request rather than a document, publish it instead as an issue labelled `ready-for-human`.
+- **`/propose`** → create a Document with the proposal body, attached to the agreed **Initiative** or **Project**. Where the agreed home is a single-decision request rather than a document, publish it instead as an issue; the alignment ticket then moves to `awaiting-decision`.
 - **Placement is adopt-don't-impose** — attach to an existing Initiative / Project; never create one to hold the proposal. If no home exists, ask.
 - **The ask stays outstanding on the Document itself** — no separate log. Advance the body's status line (`draft` → `shared` → `decided`) as the decision lands.
 

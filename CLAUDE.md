@@ -42,7 +42,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `specifier` | No upstream counterpart. The gauntlet's only entrance and its only human gate — it authors every acceptance criterion, which is why `to-spec`, `to-tickets` and `grill-with-docs` author none (ADR-0004). |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
-| `to-proposal` | No upstream counterpart — the decision-doc sibling of `to-spec`, publishing to the tracker as `ready-for-human`. |
+| `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 ### Edit-time discipline
@@ -55,9 +55,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**34 skill directories live in this library; 33 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**35 skill directories live in this library; 34 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 33 registered, **18 carry `disable-model-invocation: true` and 15 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **34 directories, 19 invisible / 15 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 34 registered, **19 carry `disable-model-invocation: true` and 15 do not**. The installed set (`~/.agents/skills`) runs one ahead on both counts — **35 directories, 20 invisible / 15 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
 
 ## Deprecating a skill
 
