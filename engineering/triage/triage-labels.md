@@ -1,16 +1,15 @@
 # Triage Labels
 
-The skills speak in terms of canonical roles across two lanes — the **inbound** lane, where triage classifies work that arrived cold, and the **planning** lane, where `align` creates work and holds it in `needs-alignment` until stage 2 publishes the contract. This file maps those roles to the actual label strings used in this repo's issue tracker.
+The skills speak in terms of canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
 
 ## State labels
 
 Every triaged issue carries exactly one state label.
 
-| Label in our tracker | Meaning                                          |
-| -------------------- | ------------------------------------------------ |
-| `needs-triage`       | Maintainer needs to evaluate this issue          |
-| `needs-alignment`    | Planning lane: the body is not yet the contract  |
-| `needs-info`         | Waiting on reporter for more information         |
+| Label in our tracker | Meaning                                  |
+| -------------------- | ---------------------------------------- |
+| `needs-triage`       | Maintainer needs to evaluate this issue  |
+| `needs-info`         | Waiting on reporter for more information |
 | `ready-for-agent`    | Fully specified, ready for an AFK agent  |
 | `ready-for-human`    | Requires human implementation            |
 | `wontfix`            | Will not be actioned                     |
