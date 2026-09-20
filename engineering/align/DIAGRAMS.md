@@ -61,11 +61,11 @@ Every participant carries a DDD role. Human roles use mermaid's `actor`; everyth
 
 The roles are the point, because **a participant that cannot be classified is a finding, not a naming problem.** It usually means two roles are being served by one thing, or a concept has not been decided yet — and finding that during alignment is the entire return on declaring them. A worked example: classifying a `Normaliser` forced the question of whether per-platform ratio rules are an aggregate invariant or a domain policy, and the answer changed where the rule lives.
 
-Every participant resolves to a term in the repo's `CONTEXT.md`. One that does not is either a term to add — a domain-model decision, taken now — or a name that should not be in the diagram. Both are useful outcomes; leaving it unresolved is not. Record the participant table alongside the diagram, per [ARTEFACT.md](./ARTEFACT.md), and hand the model itself to `/domain-modeling`.
+Every participant resolves to a term in the repo's `CONTEXT.md`. One that does not is either a term to add — a domain-model decision, taken now — or a name that should not be in the diagram. Both are useful outcomes; leaving it unresolved is not. Record the participant table in the body, per [ARTEFACT.md](./ARTEFACT.md), and hand the model itself to `/domain-modeling`.
 
 ## Presentation
 
-The source and the artefact file are **mandatory**. Presenting the diagram is optional, and no presentation is ever a precondition for the work.
+The source is **mandatory** — the fenced block in the pass's comment. Presenting the rendered diagram is optional, and no presentation is ever a precondition for the work.
 
 1. **The harness renders mermaid inline** — show the fenced block and talk about it directly. In pi this is `markdown.mermaid`, default `streaming`.
 2. **The harness can open a link** — offer a `mermaid.live` editor URL. Generate it rather than hand-encoding; the state is a deflate-compressed JSON payload:
@@ -75,7 +75,7 @@ The source and the artefact file are **mandatory**. Presenting the diagram is op
    ```
 
    A plain `#base64:` variant exists that needs no compression, at the cost of a longer URL.
-3. **Neither** — write the file and print its path. GitHub and Linear both render the diagram wherever the ticket lives, so the link is a convenience and not a requirement.
+3. **Neither** — post the fenced block in the pass's comment and leave it at that. GitHub and Linear both render the diagram wherever the ticket lives, so the link is a convenience and not a requirement.
 
 ## Compatibility
 
@@ -84,3 +84,4 @@ GitHub and Linear each pin their own mermaid build, so feature age is a render r
 - `autonumber` — ancient, safe everywhere. Start and increment values (`autonumber 10 10`) arrived in v11.15; the bare form is enough.
 - `box` — newer, and safe in current builds, but keep it to a single level. Nested boxes are the newest thing here.
 - Before adopting a newer construct across the whole artefact, push one throwaway diagram to a scratch issue and check it renders. Once, cheaply, rather than discovering it in a review.
+- **The comment is the home**, so this is where a render risk bites: GitHub renders mermaid in issue bodies and comments; Linear's editor takes a mermaid fence (`/diagram`). Check the Linear comment case once on a scratch issue before relying on it.

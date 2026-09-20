@@ -1,18 +1,20 @@
 # The Alignment Artefact
 
-The file `/align` maintains on the pass's branch. It is the **residue of the conversation, not its transcript** — what survived the pass, not what was said in it.
+What `/align` maintains in the ticket's **body**: the **residue of the conversation, not its transcript** — what survived the pass, not what was said in it.
 
-One file, revised in place across passes. Keep the headings stable and let their contents sharpen. Plain text throughout, so it diffs between passes, renders wherever the ticket lives, and reads without vision.
+Revised in place across passes. Keep the headings stable and let their contents sharpen, so a session reads the body rather than the thread. Plain text throughout, so it renders wherever the ticket lives and reads without vision.
 
-The ticket's **comments** hold the decisions that produced each revision; with no ticket, this file holds them. This file holds the current truth.
+The body stays true to the intention being aligned. Cutting that intention into work is stage 2's, which reads the body and proposes the slicing — it does not rewrite it.
+
+**The split.** The body holds what decides: the header, the statement of intent, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds what argued: its verdict and the delta since the last pass, the diagrams, the sketches as they stood, the reasoning behind each decision, and what the research found.
 
 ## Header
 
 ```markdown
-**Pass:** 3 · **Verdict:** fog · **Ticket:** #42 · **Verified against:** `abc1234`
+**Pass:** 3 · **Verdict:** fog · **Verified against:** `abc1234`
 ```
 
-The commit is load-bearing: it is how a later pass knows which facts have expired. `Ticket` is `—` when no ticket exists — a first pass can close without one.
+The commit is load-bearing: it is how a later pass knows which facts have expired.
 
 ## What we are trying to do
 
@@ -44,7 +46,7 @@ Everything another part of the system talks to — any surface with a callable s
 | CLI or config | flag, argument, env var, accepted values |
 | data | schema, migration, index, retention |
 
-Decided interfaces are written as real, checkable syntax. Undecided ones are a sketch, in whatever notation the operator reached for, with the open part marked.
+Decided interfaces are written as real, checkable syntax. Undecided ones are a sketch, in whatever notation the operator reached for, with the open part marked. A settled interface belongs in the body; a sketch is a conversation prop, so it rides in the pass's comment.
 
 **Settled** — the fence names the syntax, and it is the shape the work will be built against:
 
@@ -72,7 +74,7 @@ Content-Type: application/json
 normalise(assets, targetRatio) -> ok | rejected(why)
 ```
 
-Promoting a sketch to settled **is** the moment the decision lands. Until then it belongs in the sketch block, with the open question named under Unresolved.
+Promoting a sketch to settled **is** the moment the decision lands. Until then it stays a sketch in the pass's comment, with the open question named under Unresolved.
 
 ## Modules
 
@@ -87,11 +89,17 @@ Not a diagram. Depth is the property being judged — a small interface over a l
 
 Sequence diagrams for flow, state diagrams for lifecycle, both with `autonumber`. Conventions — including participant declaration — are in [DIAGRAMS.md](./DIAGRAMS.md).
 
-Only the flows this work actually changes, so the diagram stays readable. A diagram of the whole system is a diagram nobody reads.
+These live in the pass's **comment**, because a diagram is how a pass argues the flow; the body carries what the argument settled. Only the flows this work actually changes, so the diagram stays readable. A diagram of the whole system is a diagram nobody reads.
 
 ## Decisions
 
-One block per decision. The rejected alternatives are not optional: a decision recorded without them cannot be revisited, and revisiting is what a later pass is for.
+The body carries the table — one row per decision, naming the rejected alternatives, because a decision recorded without them cannot be revisited, and revisiting is what a later pass is for:
+
+| decision | chosen | rejected | because |
+| --- | --- | --- | --- |
+| carousel, not single image | carousel, up to 10 images, 3:4 enforced on construction | single-image endpoint | the publisher's team already publishes carousels by hand, so single-image would keep the manual step |
+
+The pass's **comment** argues each one at the length it needs:
 
 ```markdown
 ### Carousel, not single image
@@ -156,6 +164,6 @@ The list that counts to zero. Every item carries **what would resolve it** — a
 
 ## What does not belong here
 
-- **The transcript.** The conversation is the conversation; this file is its residue.
+- **The transcript.** The conversation is the conversation; this body is its residue.
 - **Restated facts that live in code or a vendored doc.** Link them, or state the fact once with its source.
 - **Speculative work.** Anything nobody decided goes under Unresolved with a route, or stays out.
