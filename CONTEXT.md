@@ -20,15 +20,19 @@ The judgement an `/align` pass closes with — **aligned** (the gate is met; the
 _Avoid_: confidence, "feels complete".
 
 **Alignment artefact**:
-What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list. Each **Pass** also posts a **comment**: that pass's verdict and delta, its diagrams, the sketches as they stood, and the reasoning. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
+What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list, and the **Destination** — tickets, a project, or a proposal. Each **Pass** also posts a **comment**: that pass's verdict and delta, its diagrams, the sketches as they stood, and the reasoning. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
 _Avoid_: transcript, notes, grilling notes.
+
+**Cut**:
+The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to exactly one **Ticket**, and publishes the slices. It decides nothing: a slice that cannot be written from the contract sends the work back for an **Align** pass rather than being filled in with prose at the cut. It never cuts horizontally — a slice that cannot name the scenario it makes pass is a **Layer**, which is a branch rather than a tracker node.
+_Avoid_: breakdown, split.
 
 **Scenario**:
 A named, concrete walk through the system — *a publisher posts a carousel of four images* — that every question in an `/align` pass is woven through, so an option shows its impact instead of being argued in the abstract. Enumerated during the pass, and each one ends with an outcome or an unresolved item.
 _Avoid_: use case, user story.
 
 **Layer**:
-One branch in a `gh stack`, and the pull request that carries it. Cut by *code* dependency — schema, shared types, then their consumers — so a layer is green but not independently valuable. Stage 3 cuts layers; stage 1 cuts **Ticket**s. A layer is never a tracker node.
+One branch in a `gh stack`, and the pull request that carries it. Cut by *code* dependency — schema, shared types, then their consumers — so a layer is green but not independently valuable. The **Cut** produces **Ticket**s; stage 3 cuts layers. A layer is never a tracker node.
 _Avoid_: slice, sub-task.
 
 **Spec**:
@@ -36,8 +40,12 @@ A **destination**, not a stage — one exit an **Align** pass can take, alongsid
 _Avoid_: PRD, requirements doc.
 
 **Ticket**:
-A tracer-bullet vertical slice of a spec — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). Produced by `/to-tickets`, as native tracker links or a local `tickets.md`. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
+A tracer-bullet vertical slice cut from an **Alignment artefact**'s body by **Cut**, or from a **Spec** by `/to-tickets` — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). It carries its contract's material verbatim: its **Scenario**s, its acceptance criteria, the interfaces it owns, the diagram it changes, the decisions that bind it, and what was decided against. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
 _Avoid_: issue, story.
+
+**Proposal**:
+The decision document `/propose` publishes when an alignment needs someone else's yes — a **Destination** an **Align** pass can take, beside direct tickets and a project. Its publication leaves the ticket in `awaiting-decision`; the outcome routes back to `ready-to-cut` on a yes, to `needs-alignment` with the objections recorded on a change, or to `wontfix` on a no.
+_Avoid_: spec — a proposal persuades a decider, a **Spec** tells a builder.
 
 **Specification**:
 The structured document `/specifier` publishes to a **Ticket** as an append-only comment — the proven run contract, the criteria, the QA procedures — and the only artefact the gauntlet consumes. Distinct from a **Spec**: a spec is prose a human reads, written before the code exists; a specification is machine-read, and every command in it was executed green in a throwaway worktree during the session that published it. Its publication **is** its approval, structurally — an unpublished one has no address, so the gauntlet cannot reach it.
@@ -90,12 +98,12 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Relationships
 
-- Two lanes reach `ready-for-agent`: the **planning lane** (**align** → **spec** → **ticket**s — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same label, different provenance. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until stage 2 cuts the work from its body. The inbound lane has no verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
+- Two lanes reach the takeable states: the **planning lane** (**align** → **cut** → **ticket**s, with `/propose` as the branch that asks someone first — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same labels, different provenance. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until `/cut` cuts the work from its body. The inbound lane has no verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
 - A **triage** session produces an **agent brief** when it moves a ticket to `ready-for-human` or `ready-for-agent`. `ready-for-human` still partitions what an agent can be trusted to finish alone from what it cannot; it just no longer gates on a separate skill.
 - **Four-pass discipline** is what makes an **agent brief** executable — without it, the brief names nothing that can be opened or grepped. Apply it *more strictly* for `ready-for-agent`, which has no human reading the brief against the branch.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
-- The planning lane stops at the **Ticket**: `/to-tickets` writes a plain-prose definition of done and no criteria. Criteria are authored once, by `/specifier`, against a running repo — a ticket carrying them would create two authorities on "done", and the weaker, older one is the one visible in the backlog.
-- **Ticket**s are vertical and **Layer**s are horizontal. Stage 1 cuts tickets — scope, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query. Stage 3 cuts layers — code dependency, green but not independently valuable. One `gh stack` per ticket; one branch and one pull request per layer. A **Ticket** is never a sub-issue: nesting the workflow labels a level down would make `ready-for-agent` a different claim on a parent than on a child.
+- The planning lane stops at the **Ticket**: its acceptance criteria are authored from its own **Scenario**s at the **Cut**, and a **Specification** derived from it must agree with them rather than re-invent them — two authorities on "done" is the risk ADR-0004 named and ADR-0006 accepted knowingly.
+- **Ticket**s are vertical and **Layer**s are horizontal. The **Cut** produces tickets — scope, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query — and never a layer, because a slice that cannot name its **Scenario** is horizontal work wearing a ticket's clothes. Stage 3 cuts layers — code dependency, green but not independently valuable. One `gh stack` per ticket; one branch and one pull request per layer. A **Ticket** is never a sub-issue: nesting the workflow labels a level down would make `ready-for-agent` a different claim on a parent than on a child.
 - A skill's relationship to **upstream** — **Synced**, **Adapted**, **Forked** — governs how it is edited. See `## Upstream` in `CLAUDE.md`.
 
 ## Flagged ambiguities
