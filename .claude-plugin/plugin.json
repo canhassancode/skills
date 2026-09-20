@@ -6,6 +6,7 @@
     "./engineering/code-review",
     "./engineering/codebase-design",
     "./engineering/commit",
+    "./engineering/crucible",
     "./engineering/cut",
     "./engineering/design-system",
     "./engineering/diagnose",
