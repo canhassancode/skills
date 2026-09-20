@@ -26,6 +26,7 @@ Canonical roles map onto the **existing** team taxonomy. Roles are carried as **
 | Canonical role | Linear target | Notes |
 | --- | --- | --- |
 | `needs-triage` (state) | label **`To triage`** | Adopt the team's label; the ported `needs-triage` label is a duplicate to retire |
+| `needs-alignment` (state) | label **`needs-alignment`** | Personal planning lane — keep, never impose on the team's taxonomy |
 | `needs-info` (state) | label **`needs-info`** | No team equivalent — keep |
 | `ready-for-agent` (state) | label **`ready-for-agent`** | Personal AFK workflow — keep |
 | `ready-for-human` (state) | label **`ready-for-human`** | Personal AFK workflow — keep |
