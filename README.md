@@ -30,6 +30,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 - [align](engineering/align/SKILL.md) — settle an idea, feature or ticket into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
+- [build](engineering/build/SKILL.md) — stage 3: build a cut ticket into layers, one fresh builder invocation each, falsified by `crucible` and pushed as its own branch in the ticket's stack (no pull request yet); companion [STACK.md](engineering/build/STACK.md)
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`, runs alongside `review`
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
