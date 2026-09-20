@@ -45,13 +45,15 @@ Two **category** roles:
 - `bug` — something is broken
 - `enhancement` — new feature or improvement
 
-Five **state** roles:
+Five **state** roles, all of them inbound:
 
 - `needs-triage` — maintainer needs to evaluate
 - `needs-info` — waiting on reporter for more information
 - `ready-for-agent` — fully specified, ready for an AFK agent
 - `ready-for-human` — needs human implementation
 - `wontfix` — will not be actioned
+
+The **planning lane** keeps five states of its own — `needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build` — owned by `/align`, `/propose` and `/cut`. A ticket wearing one of those is not inbound work: leave it alone rather than classifying it.
 
 Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
 

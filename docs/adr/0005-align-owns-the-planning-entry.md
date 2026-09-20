@@ -42,6 +42,6 @@ The construction guarantee held. The artefact was thin anyway. Four failure mode
 
 - **A ticket can be seen before it is ready, deliberately.** A new intermediate state on the board is traded against agents inventing interfaces. The label, not the lane, carries the guarantee.
 - **`/align` is multi-pass, and a pass is the unit of work.** A clear idea reaches a contract in one pass; a foggy one takes several. The artefact advances, not the session count.
-- **Stage 2 is not designed here.** Whatever cuts the work reads the body: the alignment record stays the alignment's. Open: whether stage 2 subsumes `/to-spec` and `/to-tickets` or sits beside them.
+- **Stage 2 is not designed here.** Whatever cuts the work reads the body: the alignment record stays the alignment's. (Stage 2 is now `/cut` — [ADR-0006](./0006-cut-is-stage-2.md) — and whether it subsumes `/to-spec` and `/to-tickets` stays open.)
 - **The coach posture is rejected; the coach repertoire is taken.** From the two coach skills come the anti-pattern table (pattern → what it looks like → the question) and the context gate before asking anything. Not their refusal to produce deliverables — that is the guidance this ADR corrects.
 - **The grilling skills stay in place while `/align` earns its keep.** Their deprecation and the reference updates across the library are a follow-up rather than part of this decision, so the meantime carries two ways into the same conversation. The cost is accepted deliberately: `/align` can be reverted without untangling a deprecation first.

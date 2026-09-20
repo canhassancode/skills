@@ -26,9 +26,14 @@ Canonical roles map onto the **existing** team taxonomy. Roles are carried as **
 | Canonical role | Linear target | Notes |
 | --- | --- | --- |
 | `needs-triage` (state) | label **`To triage`** | Adopt the team's label; the ported `needs-triage` label is a duplicate to retire |
+| `needs-alignment` (state) | label **`needs-alignment`** | Personal planning lane — keep, never impose on the team's taxonomy |
 | `needs-info` (state) | label **`needs-info`** | No team equivalent — keep |
 | `ready-for-agent` (state) | label **`ready-for-agent`** | Personal AFK workflow — keep |
 | `ready-for-human` (state) | label **`ready-for-human`** | Personal AFK workflow — keep |
+| `ready-to-propose` (state) | label **`ready-to-propose`** | Personal planning lane — keep, never impose on the team's taxonomy |
+| `awaiting-decision` (state) | label **`awaiting-decision`** | Personal planning lane — keep |
+| `ready-to-cut` (state) | label **`ready-to-cut`** | Personal planning lane — keep |
+| `ready-to-build` (state) | label **`ready-to-build`** | Personal planning lane — supersedes `ready-for-agent`/`ready-for-human` once the flow is proven |
 | `wontfix` (state) | native state **`Canceled`** | Close by moving state, no label |
 | `bug` (category) | label **`Bug`** | Adopt the team's; don't create a lowercase `bug` |
 | `enhancement` (category) | label **`Feature`** | Adopt the team's; `Improvement` for minor changes. Ported `enhancement` is a duplicate to retire |
@@ -36,7 +41,6 @@ Canonical roles map onto the **existing** team taxonomy. Roles are carried as **
 | `proposal` (document) | native **Document** | See "Proposals are Documents" below — a decision doc, not a labelled issue |
 
 The native workflow states (`Backlog` → `Todo` → `In Progress` → `In Review` → `Done`) are the team's **delivery** pipeline and are orthogonal to the triage-role labels. Don't overload them with triage vocabulary.
-
 ## Specs are Projects, not labelled issues
 
 A spec is an epic-style parent document — on Linear that is a **native Project**, which is exactly how this team already organises work (rich-body Projects with child issues).

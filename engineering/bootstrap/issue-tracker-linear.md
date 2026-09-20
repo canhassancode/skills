@@ -8,14 +8,16 @@ Linear is almost always a **shared team workspace**. The governing principle is 
 
 - **Publish a spec** (`/to-spec`): `save_project` with the spec body as the Project description. A spec is a **Project**, not a labelled issue — Projects are the team's native epic mechanism.
 - **Publish tickets** (`/to-tickets`): `save_issue` per ticket, assigned to the spec's Project. Parent/child via native **sub-issues** (`save_issue` with a parent), never a `## Parent` text section. Blocking edges via Linear's native **blocking relation**, never a `## Blocked by` text section.
+- **Publish slices** (`/cut`): `save_issue` per slice, assigned to the Project that carries the contract. Blocking edges via the native **blocking relation**. Slices are peers, never sub-issues — the alignment ticket closes once they exist, so nothing nests under it.
+- **Agent-grabbable state**: apply the `ready-to-build` label — the planning lane's takeable state. (`ready-for-agent` remains the inbound lane's exit until that flow is replaced.)
 - **Read an issue**: `get_issue` for the body, `list_comments` for the discussion.
 - **Reference** issues by their `CAR-###` identifier (or URL), not `#N`.
-- **Agent-grabbable state**: apply the `ready-for-agent` label (a kept personal-workflow label — see the triage adapter's role mapping). Won't-do → native `Canceled` state.
+- Won't-do → native `Canceled` state.
 - No `## Status` block — Linear surfaces state, hierarchy, and activity natively.
 
 ## Pull requests as a triage surface
 
-N/A. Linear has no PR concept, and the planning lane doesn't triage — its tickets are `ready-for-agent` by construction.
+N/A. Linear has no PR concept, and the planning lane doesn't triage — its work is cut from an aligned contract, not classified.
 
 ## When a skill says "publish to the issue tracker"
 

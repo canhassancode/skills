@@ -4,6 +4,8 @@ status: accepted
 
 # `/specifier` is the sole author of acceptance criteria
 
+**Amended by [ADR-0006](./0006-cut-is-stage-2.md).** A **slice** cut by `/cut` carries acceptance criteria derived from the contract's scenarios, so the single-author claim below is narrowed to the specification: where a ticket carries criteria, the specification derived from it must agree with them rather than re-invent them.
+
 Supersedes [ADR-0003](./0003-lane-owns-gauntlet-fitness.md).
 
 ## Context
