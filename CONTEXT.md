@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/wayfinder` invokes `/align`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
-The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can publish. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling`, `grill-me` and `grill-with-docs`.
+The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling`, `grill-me` and `grill-with-docs`.
 _Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
 
 **Pass**:
