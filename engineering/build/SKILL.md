@@ -43,7 +43,7 @@ Read the classes closely: the ticket declared behaviour, claim, test or shape fo
 
 ## 3. Fit the repo
 
-The run owns one worktree for the whole ticket — created before the fit, with the git and stack flows in [STACK.md](./STACK.md) — so the primary checkout is never the build's scratch space and the proven loop survives every layer's branch switch.
+The run owns one worktree for the whole ticket — entered before the fit, the session's own where it already has one, with the git and stack flows in [STACK.md](./STACK.md) — so the primary checkout is never the build's scratch space and the proven loop survives every layer's branch switch.
 
 Derive the repo's own mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read what it documents: `CONTEXT.md` and `CLAUDE.md`, CI configuration, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist. One pass over those sources: what is not there is *unavailable*, named as needed rather than hunted for.
 

@@ -6,13 +6,15 @@ The flows below are the push and resume halves of the stack. They assume the `gh
 
 ## The run's worktree
 
-One worktree per ticket, created before the fit and used for the whole run:
+One worktree per ticket, entered before the fit and kept for the whole run. Take the harness's own where the session already has one — Claude Code's `--worktree <ticket-ref>` or `EnterWorktree`, pi's managed worktree — and never nest a second inside it. Otherwise create one:
 
 ```sh
 git worktree add ../<repo>-<ticket-ref> --detach   # the run's checkout, outside the primary tree
 ```
 
-Create and push the stack from inside that worktree. `gh stack` tracks a stack per worktree — the same branch shows `Stack #75` in the primary checkout and *"not part of a stack"* in a fresh one — so a run that initialises elsewhere cannot see this one. Each layer switches branch inside it (`git switch <layer-branch>`), and untracked installs (`node_modules`, `.venv`) survive the switch, so the loop proven at the fit holds for every layer.
+Enter it before doing anything else (Claude Code: `EnterWorktree` with that path). Create and push the stack from inside it. `gh stack` tracks a stack per worktree — the same branch shows `Stack #75` in the primary checkout and *"not part of a stack"* in a fresh one — so a run that initialises elsewhere cannot see this one. Each layer switches branch inside it (`git switch <layer-branch>`), and untracked installs (`node_modules`, `.venv`) survive the switch, so the loop proven at the fit holds for every layer.
+
+A fresh worktree is a clean checkout: gitignored config and installed dependencies are absent until the fit's loop is set up there once (Claude Code's `.worktreeinclude` is how a repo carries `.env` files in). Every child — **Builder** and **Review** — runs *in this worktree*, with per-child isolation off: Claude Code's `isolation: worktree` and pi's `worktree: true` each hand a child its own temporary tree, invisible to the stack, so the parent can never push those commits.
 
 ## Building it
 
