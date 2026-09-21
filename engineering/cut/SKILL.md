@@ -75,7 +75,7 @@ Apply `ready-to-build` to what can now be taken, and leave the closing comment n
 
 ## Where this goes next
 
-Stage 3 cuts what a slice contains: **layers**, by code dependency, one branch and one pull request each, inside that slice's own `gh stack`. One stack per slice; the layers are its pull requests, and an agent takes one layer at a time. `/cut` does not create branches.
+Stage 3 cuts what a slice contains: **layers**, by code dependency, one branch and one pull request each inside that slice's own `gh stack` — or, when the whole slice fits one builder invocation, a single branch in **direct** shape with one pull request. One stack per slice when it is layered; an agent takes one layer at a time. `/cut` does not create branches.
 
 ## Related
 

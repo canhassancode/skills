@@ -1,6 +1,6 @@
 ---
 name: crucible
-description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, grep the consumers of what the diff changed, return findings with class, severity, found-at and belongs-to. Never posts. Use when /build vets a layer, when a whole stack is critiqued, or when /review needs a named pull request analysed.
+description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, grep the consumers of what the diff changed, check the change against the three baselines, and return findings with class, severity, found-at and belongs-to plus the verified list. Never posts. Use when /build vets a unit, when a whole stack is critiqued, or when /review analyses a named pull request — with or without a contract.
 argument-hint: <layer | stack | pull request>
 ---
 
@@ -10,7 +10,7 @@ The **Review** policy. `/crucible` puts a diff in the fire and returns what surv
 
 It never posts. A finding has no home here — the caller owns the sink, a fix round inside **Build** or a draft comment from `/review` — so the same vetting serves the loop and the named pull request.
 
-**A diff is vetted against the contract it claims to satisfy**, never against taste. The contract is the ticket's body: its scenarios, its acceptance criteria and their classes, its settled interfaces, the decisions that bind it, and what it decided against. A diff with no contract stops here: there is nothing to falsify, and taste is not a standard.
+**A diff is vetted against the contract it claims to satisfy**, never against taste. The contract is the ticket's body: its scenarios, its acceptance criteria and their classes, its settled interfaces, the decisions that bind it, and what it decided against. Where the caller has no contract, resolve one before giving up — issue references in the commits, a path the caller passed, the pull request's body and its linked issue — and if none exists, review without one: there are no criteria, so nothing is falsified and the **falsification gate did not run**. The review then rests on the baselines, the consumer grep and regression, and the return names the gate that was missing. Never invent criteria from the diff: criteria are the author's, not the reviewer's.
 
 ## What the argument carries
 
@@ -20,7 +20,9 @@ It never posts. A finding has no home here — the caller owns the sink, a fix r
 | a **stack** — every layer of one ticket | the ticket's branches, from the layer records or `gh stack view --json` | `git diff <base of the bottom layer>...<tip of the top>` |
 | a **pull request** | `gh pr view <ref> --json headRefOid,baseRefOid,body`, the head fetched into a throwaway worktree | the pull request's own range |
 
-Falsification edits the working tree and runs the repo's commands, so run it somewhere a worktree may be mutated — the layer's checkout, or a disposable one for a pull request or a stack. Where it cannot mutate, say so rather than reading the diff and calling it reviewed.
+The caller may also pass **settled threads** — review comments already answered — and step 6 suppresses against them the way it suppresses the contract's out-of-scope entries.
+
+Falsification edits the working tree and runs the repo's commands, so run it somewhere a worktree may be mutated — the layer's checkout, or a disposable one for a pull request or a stack. Where it cannot mutate, say so rather than reading the diff and calling it reviewed. A whole stack or a pull request is the same procedure with steps 2 to 4 fanned out per criterion; classification stays in one window.
 
 ## Procedure
 
@@ -32,15 +34,17 @@ A criterion the diff owns with no witness is a **test** finding: the criterion c
 
 The one honest exception is a repo whose fit recorded **absence** — no suite, no typecheck, no CI. There the criterion has nowhere to be witnessed, the absence is already a fact, and the criterion is returned as a note — `unwitnessed — absence recorded` — never as a finding or as work. The verification left on such a repo is the operator's own run at hand-back.
 
-**Done when** every owned criterion carries a witness, an unwitnessed note for a recorded absence, or a finding saying why it cannot have one.
+The contract's **decisions** and **axis marks** bind the same way: each one this diff touches gets a witness — a test, an observable, or a rule in [BASELINES.md](./BASELINES.md) — and one that cannot be witnessed is a finding, because a recorded limit with nothing behind it is unvettable.
+
+**Done when** every owned criterion carries a witness, an unwitnessed note for a recorded absence, or a finding saying why it cannot have one — and every decision and axis mark this diff touches is bound or reported.
 
 ### 2. Falsify one criterion at a time
 
 The gate is not "the tests pass" — it is "the criterion's own witness goes red when the behaviour it claims is gone". So place the failure yourself, **one hand-placed mutation per criterion**:
 
-1. With the tree clean at the diff's head, remove exactly the behaviour the criterion claims — invert its guard, drop its call, hardcode its result — and nothing else.
+1. With the tree clean at the diff's head — `git diff --quiet`, or the mutation's result is not yours — remove exactly the behaviour the criterion claims: invert its guard, drop its call, hardcode its result, and nothing else.
 2. Run the **witness**, not the suite. Read the result.
-3. Restore the mutation exactly, and re-run to confirm green before moving on.
+3. Restore the mutation exactly, and re-run to confirm green before moving on. When the last mutation is restored the tree is clean again, and the return says so.
 
 | result | what it means | the finding |
 | --- | --- | --- |
@@ -54,7 +58,7 @@ One mutation per criterion, hand-placed, never more than the claimed behaviour. 
 
 ### 3. Read the criterion through the code
 
-A red mutation proves the witness, not the criterion. Walk each criterion's path through the diff — the primary path, then every fallback, retry, error branch and secondary caller — and ask whether the criterion holds there. The defect this catches is the one the tests were shaped around: a fallback that skips the check its primary path enforces, a branch that reports a success it did not achieve, a path that never reaches the guard.
+A red mutation proves the witness, not the criterion. Walk each criterion's path through the diff — the primary path, then every fallback, retry, error branch and secondary caller — and ask whether the criterion holds there. With no contract there is no criterion to walk, so walk the diff's own primary paths and fallbacks instead. The defect this catches is the one the tests were shaped around: a fallback that skips the check its primary path enforces, a branch that reports a success it did not achieve, a path that never reaches the guard.
 
 Each is a **behaviour** finding: `found at` the line that skips the check, `belongs to` the layer whose change put it there.
 
@@ -73,13 +77,19 @@ Every site the change invalidated is a finding, classed by what the site is:
 
 **Done when** every changed surface has been grepped and every hit judged.
 
-### 5. Suppress what the contract already rejected
+### 5. Read the diff's surplus
 
-Read the ticket's out-of-scope and decided-against entries before reporting anything. A finding that matches one is **suppressed**: cite the entry, quote it, and return the finding marked suppressed — never as work. A decision already taken is not a review finding, and re-raising it spends a fix round on a question the operator has answered.
+Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, resolution **product-call** — the operator decides whether to keep it or drop it — reported with the nearest thing that could have claimed it.
 
-**Done when** every finding has been checked against both lists.
+**Done when** every hunk the diff adds is mapped or reported.
 
-### 6. Classify and return
+### 6. Suppress what the contract already rejected
+
+Read the ticket's out-of-scope and decided-against entries before reporting anything, and any **settled threads** the caller passed. A finding that matches one is **suppressed**: cite the entry or the thread, quote it, and return the finding marked suppressed — never as work. A decision already taken is not a review finding, and re-raising it spends a fix round on a question the operator has answered.
+
+**Done when** every finding has been checked against both lists and the settled threads.
+
+### 7. Classify and return
 
 Findings are ephemeral: the caller's, never posted. Return each as:
 
@@ -93,7 +103,9 @@ evidence    the mutation and its result, or the grep and its hits
 resolution  open | contract-change | product-call | suppressed
 ```
 
-**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability — is a judgement class, always P2, and never stops a layer.
+Beside the findings, return the **verified list**: one line per criterion whose mutation went red — `criterion → mutation → red` — and, where no contract was found, the line saying the falsification gate did not run. A finding is only half an answer, and the caller's approval cites the other half.
+
+**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a layer. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
 
 **Severity.** P2 is shape's home. P1 is a criterion not met, a witness that does not hold, or a claim the change invalidated. P0 is reserved for a finding that breaks the contract elsewhere — a regression in behaviour the layer claims not to touch, or a consumer left broken.
 
@@ -106,10 +118,11 @@ resolution  open | contract-change | product-call | suppressed
 
 A finding you cannot decide is never resolved by guessing. Surface it, and let the operator decide.
 
-**Done when** every owned criterion carries a falsification result or a recorded absence, every changed surface's consumers have been grepped, and every finding is classed, placed, attributed and routed.
+**Done when** every owned criterion carries a falsification result or a recorded absence, every changed surface's consumers have been grepped, every hunk is mapped, the tree is clean, and every finding is classed, placed, attributed and routed.
 
 ## Related
 
 - `/build` — the caller that returns findings to a fresh builder invocation and records them on the layer.
 - `/review` — the voice and posting layer; a finding becomes a comment there, never here.
 - `/align` — where a finding that names a new scenario goes.
+- `/code-review` — the baselines in [BASELINES.md](./BASELINES.md) were its three axes; it stays registered until `/crucible` has run in anger under `/review`.

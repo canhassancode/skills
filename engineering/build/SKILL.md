@@ -1,13 +1,13 @@
 ---
 name: build
-description: Stage 3 — build a cut ticket into layers, one fresh builder invocation each, every layer falsified by /crucible and pushed as its own branch in the ticket's stack. Use when a ticket sits at ready-to-build, or when the operator asks to build a ticket.
+description: Stage 3 — build a cut ticket as one branch or a stack of layers, one fresh builder invocation each, every unit falsified by /crucible and pushed. Use when a ticket sits at ready-to-build, or when the operator asks to build a ticket.
 argument-hint: <ticket-ref>
 disable-model-invocation: true
 ---
 
 # Build
 
-Stage 3. `/build <ticket-ref>` reads a cut **Ticket**'s contract, proves the repo's own loop, cuts the ticket into **Layers**, and builds them one at a time — each in a fresh **Builder** invocation, each vetted by `/crucible`, each pushed before the next begins. It hands back a stack of pushed branches, and no pull request.
+Stage 3. `/build <ticket-ref>` reads a cut **Ticket**'s contract, proves the repo's own loop, decides the shape — one branch or a stack of **Layers** — and builds it one unit at a time: each in a fresh **Builder** invocation, each vetted by `/crucible`, each pushed before the next begins. It hands back a pushed branch or a stack of them, and no pull request.
 
 The parent session owns the loop. It holds the **contract** and the **layer records**, never a diff: code in this window is cost the next layer cannot afford. Every Builder is **fresh** — a finding returns to a new invocation carrying the finding as its brief, never a resumed one.
 
@@ -15,21 +15,21 @@ The layer plan is the budget. A layer is sized to one fresh invocation, and the 
 
 Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. The issue tracker should have been provided to you — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
 
-## 1. Declare the execution mode
+## 1. Declare the seats
 
-Do this before anything else; the rest of the procedure assumes it. One writer at a time, always: a builder and the Review are never in the checkout together.
+Do this before anything else; the rest of the procedure assumes it. One writer at a time, always: a builder and the Review are never in the checkout together. Seats are who occupies the two chairs — the shape, one branch or a stack, is decided in §4, because it depends on the contract and the fit.
 
-| mode | **Builder** | **Review** | when |
+| seat | **Builder** | **Review** | when |
 | --- | --- | --- | --- |
-| **delegated** (default) | one fresh subagent per layer, Claude Code's `Agent` or pi's `subagent`; it hands back the whole layer — green, committed, tree clean — never per commit | the parent launches a fresh `/crucible` subagent per layer | subagents resolve |
-| **in-session** | the parent builds each layer itself, with `/tdd` | the same fresh `/crucible` subagent per layer | the operator asks to watch the code being built |
+| **delegated** (default) | one fresh subagent per unit, Claude Code's `Agent` or pi's `subagent`; it hands back the whole unit — green, committed, tree clean — never per commit | the parent launches a fresh `/crucible` subagent per unit | subagents resolve |
+| **in-session** | the parent builds each unit itself, with `/tdd` | the same fresh `/crucible` subagent per unit | the operator asks to watch the code being built, or the shape is direct |
 | **self-review** | the parent | the parent runs `/crucible` in its own window, said plainly as weaker than a fresh seat | subagents are down |
 
 The parent owns the contract, the plan, the routing, the records, and the push. A **Builder** — subagent or parent — never pushes: it ends at a clean tree with its commits in hand, and the parent pushes before the Review runs.
 
-In-session mode is entered on the operator's word at invocation. A parent that fills its window mid-layer hands back at the same boundary as any builder: commit what is green, record it, and resume in a fresh session from the fit, plan and layer records.
+In-session is entered on the operator's word at invocation. Parent-as-builder is **direct** shape's default: there is no next layer whose window it must protect. A parent that fills its window mid-unit hands back at the same boundary as any builder: commit what is green, record it, and resume in a fresh session from the fit, plan and layer records.
 
-**Done when** you can name the mode this run is in and who occupies each seat.
+**Done when** you can name who occupies each seat.
 
 ## 2. Fetch the contract and claim the ticket
 
@@ -77,15 +77,28 @@ The tooling hash is over the repo's declared tooling as it stood — lockfiles a
 
 **Done when** every criterion has a witness and a command, the commands have been run, and the fit is on the ticket.
 
-## 4. Cut the layers
+## 4. Decide the shape, then cut
 
-Cut by **code dependency**: the schema, the shared types, then their consumers. A layer is green but not independently valuable — that is the point of the cut, and the reason it is a branch rather than a ticket. The first layer sits on the ticket's base — the trunk, or the alignment's docs branch where the contract put a document on one — and each layer sits on the one below it.
+**Shape first.** Two shapes, and the contract plus the fit decide which:
+
+| shape | what it is | when | push |
+| --- | --- | --- | --- |
+| **direct** | one branch, no stack | the contract fits one fresh builder invocation | `git push -u` |
+| **layered** | a stack, one branch per layer | it does not | `gh stack push` |
+
+Layering is the mechanism that makes work possible that never fit one window: a ticket larger than a builder invocation is cut horizontally, and the layer plan is what the window is spent against. So **layered** is the recommendation whenever the contract does not demonstrably fit one invocation, and the ask carries its evidence as an invocation count — *one invocation: four criteria, two files* against *four layers: schema, types, two consumers*. **Direct** is a prediction, not a promise: a builder whose window fills hands back at a green commit and the remainder becomes a layer above it (§5). Promotion is one-way — a layered run never collapses into direct.
+
+Where the work re-enters a branch that already exists, the shape is direct on that branch, and it becomes the stack's base if layers are added above it later. A branch that already has an open pull request stays open and skips the shipping half (§10).
+
+Read the base from the pass that settled the contract — the trunk, the `docs/` branch it wrote to, or the branch it was called about — never inferred.
+
+Then, in layered shape, cut by **code dependency**: the schema, the shared types, then their consumers. A layer is green but not independently valuable — that is the point of the cut, and the reason it is a branch rather than a ticket. The first layer sits on the base above, and each layer sits on the one below it. In direct shape the plan has one row: the branch owns every criterion and contributes to none.
 
 Assign every acceptance criterion to exactly **one owning layer**, and name the layers that **contribute** to it: the owner is the layer whose diff makes the criterion hold, and the contributors are the layers it needs to exist first. The owner is what the pull request's body will carry later.
 
 Size is the budget: a layer fits one fresh invocation. Too big is a layer whose brief a fresh builder cannot hold; too small is a layer that only makes sense as part of another. A ticket that cannot be cut into fitting layers is not this run's to shrink — take it back for an `/align` pass.
 
-Record the plan on the ticket, one comment for this run, so a re-entered run resumes rather than planning again:
+Record the plan on the ticket, one comment for this run — one row in direct shape — so a re-entered run resumes rather than planning again:
 
 ```markdown
 ### Plan — <n> layers
@@ -100,7 +113,7 @@ Record the plan on the ticket, one comment for this run, so a re-entered run res
 
 ## 5. Invoke a Builder per layer
 
-Prepare the branch first — created off its base, bottom to top, in the run's worktree, with the flows in [STACK.md](./STACK.md). In **delegated** mode the parent hands the brief below to a fresh subagent; in **in-session** mode the brief is the parent's own working constraint. Either way the brief goes to the builder, never onto the ticket.
+Prepare the branch first — created off its base, bottom to top, in the run's worktree, with the flows in [STACK.md](./STACK.md); in direct shape, one branch off the base, or a switch to the branch that already exists. In **delegated** seat the parent hands the brief below to a fresh subagent; in **in-session** the brief is the parent's own working constraint. Either way the brief goes to the builder, never onto the ticket.
 
 One fresh invocation per layer, with the brief. The brief carries the contract by reference and the layer's material verbatim — never a restatement of the contract:
 
@@ -117,8 +130,9 @@ Consumes: <the settled interfaces this layer calls, from the contract>
 The loop: <typecheck>, <focused tests>, <suite> — proven green at <commit>.
 Secrets live at: <paths> — never a value. If one is unreadable, stop and say so.
 
-TDD the layer: /tdd, one /commit per red → green → refactor cycle — the refactor included, never
-skipped. Commit on a real green, not on your say-so.
+TDD the layer: /tdd (or the project's equivalent), one /commit per red → green → refactor cycle — the
+refactor included, never skipped. Commit on a real green, not on your say-so. Where the fit recorded
+absence there is no cycle to run: commit per increment, and the operator's run is the verification.
 
 Change only what the layer's criteria need. Leave the tree clean. Do not push, do not open anything,
 do not vet your own work: the parent owns the stack and the Review.
@@ -140,13 +154,13 @@ A builder that stops because the window filled hands back at a green commit. Pus
 
 ## 6. Push the layer
 
-`gh stack push` once the tree is clean — a branch per layer, no pull request. The commands, the branch naming and the stack's construction are in [STACK.md](./STACK.md). A push is idempotent: re-running it with the branch already up changes nothing.
+Push once the tree is clean — `gh stack push` in layered shape, `git push -u origin <branch>` in direct — one branch per layer, no pull request. A branch that already carried an open pull request is pushed to it and stays open. The commands, the branch naming and the stack's construction are in [STACK.md](./STACK.md). A push is idempotent: re-running it with the branch already up changes nothing.
 
-**Done when** the layer's branch is on the remote, with no pull request against it.
+**Done when** the layer's branch is on the remote, with no pull request against it — or the one it already had, still open.
 
 ## 7. Review the layer
 
-Launch `/crucible` as a fresh subagent — in **delegated** and **in-session** mode — with the layer's delta `<base>...<branch>` and the ticket's contract: it executes in its own context, against the run's worktree, never in the parent's window. In **self-review** mode the parent runs it itself, said plainly as weaker. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
+Launch `/crucible` as a fresh subagent — in **delegated** and **in-session** seats — with the unit's delta `<base>...<branch>` and the ticket's contract: it executes in its own context, against the run's worktree, never in the parent's window. In **self-review** the parent runs it itself, said plainly as weaker. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
 
 A layer is vetted here on its own delta. The one whole-stack pass runs after the last layer, in the shipping half.
 
@@ -162,7 +176,7 @@ A layer is vetted here on its own delta. The one whole-stack pass runs after the
 | **matching an out-of-scope entry** | **suppressed**, citing the entry — never work |
 | **a product call the review cannot decide** | asked in session; the answer is recorded as a decision row or an out-of-scope entry |
 
-A fix round is a new Builder invocation — in **delegated** mode a fresh subagent, in **in-session** mode the parent — with the findings as its brief, never a resumed builder:
+A fix round is a new Builder invocation — in **delegated** a fresh subagent, in **in-session** the parent — with the findings as its brief, never a resumed builder:
 
 ```text
 <fix-brief>
@@ -186,7 +200,7 @@ The layer gets **two rounds at most**; a finding still open after its second is 
 
 ## 9. Record the layer
 
-Post one layer record on the ticket — the template below and nothing beyond it; it is the parent's durable memory, which is what a re-entered run reads instead of re-deriving:
+Post one record per branch on the ticket — one in direct shape — the template below and nothing beyond it; it is the parent's durable memory, which is what a re-entered run reads instead of re-deriving:
 
 ```markdown
 ### Layer — `<branch>` off `<base>`
@@ -206,7 +220,7 @@ Findings are counted here and nowhere else: they are ephemeral in the loop, and 
 
 When every layer is built, vetted and pushed:
 
-- the stack's branches, bottom first, with what each owns;
+- the branch, or the stack's branches bottom first, with what each owns;
 - the fit's commands, one per criterion, for the operator to run and see the ticket work;
 - nothing submitted: the drafts, their bodies and the flip come after the operator has seen the criteria work.
 
@@ -216,7 +230,7 @@ No pull request was created at any point. A run re-entered against the same tick
 
 ## Where this goes next
 
-The shipping half of the stage: the stack submitted once as drafts, each body written from the contract, the criteria distributed one owning layer each, ticked by the operator, and the flip once every tick is in.
+The shipping half of the stage: the stack submitted once as drafts — one pull request in direct shape — each body written from the contract, the criteria distributed one owning layer each, ticked by the operator, and the flip once every tick is in.
 
 ## Related
 

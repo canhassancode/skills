@@ -2,7 +2,7 @@
 
 Issues and specs for this repo live in **Linear**. All operations go through the **Linear MCP** (`linear-server` tools) — there is no CLI.
 
-Linear is almost always a **shared team workspace**. The governing principle is **adopt-don't-impose**: map onto the taxonomy the team already has, and **never create labels, workflow states, or Projects that don't already exist**. On first use, call `list_teams`, `list_issue_statuses`, and `list_issue_labels` to read the current taxonomy before writing. The richer triage-lane conventions (role→label mapping, AI disclaimer, what doesn't apply on Linear) live in `~/.claude/skills/triage/issue-tracker-linear.md`; this file covers what the **planning-lane** skills (`to-spec`, `to-tickets`, `wayfinder`, `code-review`) need.
+Linear is almost always a **shared team workspace**. The governing principle is **adopt-don't-impose**: map onto the taxonomy the team already has, and **never create labels, workflow states, or Projects that don't already exist**. On first use, call `list_teams`, `list_issue_statuses`, and `list_issue_labels` to read the current taxonomy before writing. The richer triage-lane conventions (role→label mapping, AI disclaimer, what doesn't apply on Linear) live in `~/.claude/skills/triage/issue-tracker-linear.md`; this file covers what the **planning-lane** skills (`to-spec`, `to-tickets`, `wayfinder`, `code-review`, `crucible`) need.
 
 ## Conventions
 

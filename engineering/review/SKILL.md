@@ -2,7 +2,7 @@
 name: review
 description: >
   Review a named GitHub PR in Hassan's voice — check the branch out locally, run
-  the analysis through /code-review, draft inline comments, confirm, then post.
+  the analysis through /crucible, draft inline comments, confirm, then post.
   Accepts full URLs or short forms like brushfeed#4. Use when the user asks to
   review a PR, check a pull request, or mentions /review with a PR reference.
 disable-model-invocation: true
@@ -10,13 +10,13 @@ disable-model-invocation: true
 
 Reviews a **named GitHub PR** with real local context and writes the findings in
 Hassan's voice: check the PR branch out locally, run the analysis through
-`/code-review`, draft inline comments, **reconcile with any review Hassan already
+`/crucible`, draft inline comments, **reconcile with any review Hassan already
 has in flight, confirm, then post**. If Hassan already has a pending review on the
 PR, the skill **merges** its comments into that pending review and submits it as
 one combined review; otherwise it posts a fresh grouped review.
 
 This skill is the **voice and posting layer**. The analysis is not done here —
-`/code-review` owns it, and this skill invokes it.
+`/crucible` owns it, and this skill invokes it.
 
 Voice rules live in [VOICE.md](VOICE.md) — load it before writing any comment.
 API and git commands live in [REFERENCE.md](REFERENCE.md).
@@ -70,16 +70,20 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
    [REFERENCE.md](REFERENCE.md)). This decides the posting path (merge vs fresh)
    and is one more thing to dedupe against — never re-flag a point Hassan has
    already drafted.
-4. **Analyse — invoke `/code-review`** against the PR's base ref as the fixed
-   point, from inside the worktree. It runs the Standards, Spec and Structure
-   axes in parallel and hands back its findings. Do not re-derive them here.
-5. **Draft & decide — independently.** Turn `/code-review`'s findings into a
+4. **Analyse — invoke `/crucible`** against the PR, from inside the worktree: the
+   four baselines, the falsification of whatever contract the PR carries, the
+   consumer grep and the diff's surplus. It returns findings **and** the verified
+   list. Pass it the published threads and Hassan's pending drafts as **settled
+   threads** so nothing already answered is raised again. Do not re-derive its
+   findings here.
+5. **Draft & decide — independently.** Turn `/crucible`'s findings into a
    review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
    carrying a file path and line number, and form the skill's **own** verdict from
    those findings alone. Hassan's pending draft comments do **not** feed this
    decision — the skill reaches its conclusion blind to them, so the two can be
    compared honestly.
-   - **No blocking issues** → `APPROVE`.
+   - **No blocking issues** → `APPROVE`, citing the verified list where the PR
+     carries a contract; where it does not, say which gate did not run.
    - **Anything worth flagging** → `COMMENT`. Never `REQUEST_CHANGES`.
 6. **Reconcile & confirm.** Present, side by side: the skill's verdict + its new
    inline comments, and Hassan's existing pending comments (plus any pending

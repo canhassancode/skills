@@ -35,7 +35,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
-| `align` | No upstream counterpart — supersedes `grilling`, `grill-me` and `grill-with-docs`. Owns the planning lane's entry, the four-pass discipline, and the `needs-alignment` state (ADR-0005). |
+| `align` | No upstream counterpart — supersedes `grilling`, `grill-me` and `grill-with-docs`. Owns the planning lane's entry — four entries, one of them a refusal — the four-pass discipline, the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `system-map` | Its live upstream is the work `claude-code-config` repo, not `mattpocock/skills`. Diff against that, not this remote. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
@@ -43,8 +43,8 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
-| `build` | No upstream counterpart — stage 3's run: the fit, the layer plan, the fresh builder invocations, and the push flows in `STACK.md`. |
-| `crucible` | No upstream counterpart — the review policy; falsification and the consumer grep, and it absorbs `code-review`'s analysis once the loop has run in anger. |
+| `build` | No upstream counterpart — stage 3's run: the shape (one branch or a stack), the fit, the layer plan, the fresh builder invocations, and the push flows in `STACK.md`. |
+| `crucible` | No upstream counterpart — the review policy; falsification, the consumer grep and the four baselines, and it replaces `code-review` as `/review`'s engine once it has run in anger (ADR-0007). |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 ### Edit-time discipline

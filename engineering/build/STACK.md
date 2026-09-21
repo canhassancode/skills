@@ -18,7 +18,7 @@ A fresh worktree is a clean checkout: gitignored config and installed dependenci
 
 ## Building it
 
-The stack starts where the ticket's work starts: the trunk, or the alignment's own branch when the contract put a document on one — that branch is the stack's base layer, and the layers stack above it.
+The stack starts where the ticket's work starts: the trunk, the `docs/` branch the pass wrote to, or the branch the pass was called about — where the work re-entered a branch that already exists, that branch is the base layer and the layers stack above it.
 
 ```sh
 gh stack init --base main <first-layer-branch>   # create the stack at its first layer
@@ -32,6 +32,12 @@ gh stack init <layer-1> <layer-2> <layer-3>
 ```
 
 Branch names are semantic throughout — `feat/` or `fix/`, then what the layer delivers (`feat/build-fit`, `feat/build-layers`) — never a number, because a number says nothing when it is read a week later.
+
+## No stack: direct shape
+
+A ticket that fits one builder invocation gets one branch off its base and no stack: `git push -u origin <branch>` once the tree is clean, and no `gh stack init`. A branch that already exists is switched to, not created; if it already carries an open pull request, push to it and leave that pull request open.
+
+Resuming reads the branch — its commits against the ticket's fit, plan and record comments — rather than `gh stack view --json`.
 
 ## Pushing a layer
 
@@ -51,6 +57,8 @@ A run re-entered against the same ticket re-enters the run's worktree and reads 
 cd <the run's worktree>     # the stack is tracked there; a fresh tree cannot see it
 gh stack view --json        # every layer, its branch and its state
 ```
+
+In direct shape there is no stack to read: the branch is the record, and `git log` against the ticket's plan says where the run stopped.
 
 If the worktree is gone, recreate it, adopt the branches bottom to top — `gh stack init <layer-1> <layer-2> …` — and re-prove the fit before resuming.
 
