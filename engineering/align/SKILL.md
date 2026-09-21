@@ -59,7 +59,7 @@ Weave each question through a scenario — *"Scenario: a publisher posts four im
 
 Carry a **recommendation and a plain-English reason** with every question. Drop the jargon: say what we are trying to do in the words the operator would use, not the words the model finds comfortable.
 
-The questions come from the artefact's own gaps and drain one per turn: a scenario with no outcome, an interface still sketched, a decision with no rejected alternative, an axis marked `N/A` whose note is not a fact you looked up. An answer settles a row, opens an unresolved entry with its route, or spawns a new scenario, interface or axis note — and so its own questions.
+The questions come from the artefact's own gaps and drain one per turn: a scenario with no outcome, an interface still sketched, a decision with no rejected alternative, an axis marked `N/A` whose note is not a fact you looked up. An answer settles a row, opens an unresolved entry with its route, or spawns a new scenario, interface or axis note — and so its own questions. Every one of them is still asked through a **Scenario**.
 
 Where the conversation stalls, or an answer arrives too easily, [ANTI-PATTERNS.md](./ANTI-PATTERNS.md) names the pattern and the question that surfaces it. Ask it; do not lecture it.
 

@@ -6,7 +6,7 @@ Revised in place across passes. Keep the headings stable and let their contents 
 
 The body stays true to the intention being aligned. Cutting that intention into work is stage 2's, which reads the body and proposes the slicing — it does not rewrite it.
 
-**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds only what moved: the verdict, the delta since the last pass, each changed decision as a one-line row, a diagram per flow the pass touched, where the writing went, and what closed each item this pass closed. A sketch lives in the comment while it is live and moves into the body once settled; a decision whose argument outgrows its row earns an ADR on the alignment branch, never comment prose; an unchanged flow is referenced, never repeated.
+**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds only what moved: the verdict, the delta since the last pass, each changed decision as a one-line row, a diagram per flow the pass touched, where the writing went, and the evidence for every item it closed. A sketch lives in the comment while it is live and moves into the body once settled; a decision whose argument outgrows its row earns an ADR on the alignment branch, never comment prose; an unchanged flow is referenced, never repeated.
 
 ## Header
 
