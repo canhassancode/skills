@@ -104,7 +104,7 @@ Done when `DESIGN.md` matches the code and every remaining drift has been named.
 
 ## Success metric
 
-The bar a repo is held to, and the same list the `code-review` design axis checks:
+The bar a repo is held to, and the same list `crucible` checks against `DESIGN.md` (ported from `code-review`'s design axis):
 
 - Zero raw hex values outside the token layer
 - Zero off-scale spacing
@@ -119,7 +119,7 @@ All five are greppable, which is the point — an aesthetic goal you cannot grep
 These skills read `DESIGN.md`. All of them activate on the same trigger: **the diff touches a path with a `DESIGN.md` at or above it.** The nearest one upward governs, and the path selects which surface profile applies. Backend-only diffs never trip it.
 
 - `implement` and `tdd` read it the way they read `CONTEXT.md`, and **stop and ask** when no rule covers a case, then write the answer back.
-- `code-review` runs the design axis against the success metric.
+- `crucible` runs the design baseline against the success metric.
 - `bootstrap` invokes this skill when scaffolding a new repo.
 
 ## Anti-patterns
