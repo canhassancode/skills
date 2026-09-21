@@ -28,7 +28,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — settle an idea, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
+- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [build](engineering/build/SKILL.md) — stage 3: build a cut ticket as one branch or a stack of layers, one fresh builder invocation each, falsified by `crucible` and pushed (no pull request yet); companion [STACK.md](engineering/build/STACK.md)
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`; `review` runs `crucible`, and this stays registered until that has run in anger

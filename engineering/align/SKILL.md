@@ -6,7 +6,7 @@ argument-hint: <feature | ticket-ref>
 
 # Align
 
-A **pass** at an idea, a ticket or work already in flight that ends in a contract — or in an honest **fog**.
+A **pass** at an idea, a feature, a ticket or work already in flight that ends in a contract — or in an honest **fog**.
 
 `/align` is a mode, not an event. You invoke it to settle something, and you re-enter it when a requirement moves, a slice splits, or a fact turns out to be wrong. Each pass raises the resolution of the **Alignment artefact**; the artefact advances, not the session count.
 
@@ -20,7 +20,7 @@ One procedure, four entries. Establish which you have before asking anything.
 
 | argument | entry | first move |
 | --- | --- | --- |
-| a new feature or an idea | **first pass** | nothing yet — no ticket, no branch; the ticket arrives when a pass has a record to publish (step 7) |
+| an idea or a feature | **first pass** | nothing yet — no ticket, no branch; the ticket arrives when a pass has a record to publish (step 7) |
 | a ticket at `needs-alignment`, or one whose contract has moved | **re-entry** | read the artefact and the last pass comment **before** anything else |
 | work already in flight — a branch, an open pull request, a merged change | **as-built** | read the work first: `gh pr view <ref> --json body,comments,reviews` and `git diff <base>...<head>`; seed **Unresolved** from the threads that are open *questions*, not defects |
 | a defect with no decision behind it | **not this skill** | name the owner — `/diagnose`, `/crucible`, `/review` — say what it owns instead, and stop |
