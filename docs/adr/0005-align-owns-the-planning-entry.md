@@ -4,6 +4,8 @@ status: accepted
 
 # `/align` owns the planning entry and the alignment state
 
+> **Superseded in part by [ADR-0007](./0007-align-build-and-one-review-policy.md).** The entry list gains work in flight (an as-built pass) and a refusal for entries `/align` does not own; where a pass's repository writing goes is asked rather than assumed from the branch rule below. The core decision — `/align` owns the planning entry and the alignment state — stands.
+
 Supersedes [ADR-0002](./0002-triage-free-planning-lane.md)'s *by construction* claim.
 
 ## Context
