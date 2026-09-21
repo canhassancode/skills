@@ -24,7 +24,7 @@ The judgement an `/align` pass closes with — **aligned** (the gate is met; the
 _Avoid_: confidence, "feels complete".
 
 **Alignment artefact**:
-What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list, and the **Destination** — tickets, a project, or a proposal. Each **Pass** also posts a **comment**: that pass's verdict and delta, its diagrams, the sketches as they stood, and the reasoning. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
+What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list, and the **Destination** — tickets, a project, or a proposal. Each **Pass** also posts a **comment** carrying only what moved: that pass's verdict and delta, each changed decision as a one-line row, and a diagram per flow the pass touched. A decision whose argument outgrows its row earns an **ADR** on the alignment branch, never comment prose. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
 _Avoid_: transcript, notes, grilling notes.
 
 **Cut**:
@@ -35,12 +35,16 @@ _Avoid_: breakdown, split.
 A named, concrete walk through the system — *a publisher posts a carousel of four images* — that every question in an `/align` pass is woven through, so an option shows its impact instead of being argued in the abstract. Enumerated during the pass, and each one ends with an outcome or an unresolved item.
 _Avoid_: use case, user story.
 
+**Axis**:
+One dimension of a change every pass must answer for before it can close — happy path, limits, failure, misuse, concurrency and idempotency, permissions, data volume, observability, migration, rollback, cost, timezone. Each is marked **decision**, **N/A** or **out of scope** with its reason; an unmarked axis, or an empty N/A column, is what a **thin** verdict names.
+_Avoid_: dimension, category, checklist.
+
 **Layer**:
 One branch in a `gh stack`, and the pull request that carries it. Cut by *code* dependency — schema, shared types, then their consumers — so a layer is green but not independently valuable. The **Cut** produces **Ticket**s; **Build** cuts layers. A layer is never a tracker node. Horizontal is the right cut here and the wrong cut one level up: a **Ticket** that cannot name the scenario it makes pass is horizontal work wearing a ticket's clothes.
 _Avoid_: slice, sub-task.
 
 **Build**:
-Stage 3 — the act that turns a cut **Ticket** into **Layer**s, builds each in turn, and hands back a stack of drafts. The parent session owns the loop: it decides the layers, invokes a **Builder** per layer, and holds the contract and the layer records rather than a diff. Each layer is proven against the **FeedbackLoop**, vetted by **Review**, and pushed before the next begins. Succeeds `/implement`, which retires once the loop has run in anger.
+Stage 3 — the act that turns a cut **Ticket** into **Layer**s, builds each in turn, and hands back a stack of drafts. The parent session owns the loop: it decides the layers, seats a **Builder** per layer — a fresh subagent by default, or itself in in-session mode — and holds the contract and the layer records rather than a diff. Each layer is proven against the **FeedbackLoop**, vetted by **Review**, and pushed before the next begins. Succeeds `/implement`, which retires once the loop has run in anger.
 _Avoid_: implement, execute, run.
 
 **Builder**:

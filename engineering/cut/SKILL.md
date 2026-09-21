@@ -58,7 +58,7 @@ Write each body to [SLICE.md](./SLICE.md)'s template, by transclusion from the c
 
 ## 6. Quiz the operator
 
-Present the slices before publishing anything: title, what it delivers, its blocking edges, and which contract items it inherits. Ask whether the granularity is right, whether each edge genuinely gates the slice it blocks, and whether any slice should be merged or split. Iterate until the operator approves.
+Present the slices before publishing anything — one table of title, what it delivers, its blocking edges and what it inherits — and one question: is this granularity right, does each edge genuinely gate the slice it blocks, and should any slice merge or split? Iterate until the operator approves.
 
 **Done when** the operator has approved the breakdown.
 
