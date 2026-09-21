@@ -9,7 +9,7 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 1. Run `/grilling` for the interview loop.
 2. Define up front what the intention appears to be. If a user wants to build a new feature, align upfront on the intention. If a user wants help fixing a bug or understanding PR comments, say this openly before proceeding. This helps with alignment with the user.
 3. Fan-out to subagents upfront, gather details from relevant sources. **Do not** reply to the user with questions or anything further until all initial research has been gathered.
-4. Combine with running `/domain-modeling` for domain work - challenge against the glossary, sharpen fuzzy language, stress-test with scenarios, cross-reference against code, update `CONTEXT.md` inline, offer ADRs, and visualise with Mermaid Sequence Diagrams (see `DOCS.md` for details on all 3).
+4. Combine with running `/domain-modeling` for domain work - challenge against the glossary, sharpen fuzzy language, stress-test with scenarios, cross-reference against code, update `CONTEXT.md` inline, offer ADRs, and visualise with Mermaid Sequence Diagrams (see `DIAGRAMS.md` for details).
 5. Scenarios on each pass is a must. Keep the text concise, unless told to go into more details by the user. Technical jargon holds no value in alignment session. Every choice of wording is vitally important, you are a guide to ensure the user is well-equipped whilst you pair through discovery.
 6. There will be multiple rounds in the loop. An example round looks like this:
 
