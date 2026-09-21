@@ -1,27 +1,37 @@
 ---
 name: grilling
-description: Grilling session — interview relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, or mentions "grill me" / "grill-with-docs".
+description: Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
 ---
 
-## Interview loop
+Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
 
-Ask the questions one at a time, waiting for feedback on each question before continuing. Asking multiple questions at once is bewildering.
+Format a round like so:
 
-If a *fact* can be found by exploring the environment (filesystem, tools, etc.), look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
+```
+**S1** - <one concrete walk, in the user's own words, and the outcome it has today>
 
-Before designing failure, retry, or idempotency semantics around an existing function, read *that function's* error handling first — reasoning about it instead invents machinery the reused code already made unnecessary (CAR-833).
+---
 
-Do not enact the plan until I confirm we've reached a shared understanding.
+❓ **Q1** - **<question title>**: <question body; name the scenario it turns on, and what changes under each option>
 
-## Second-brain awareness (if `~/Obsidian/` exists)
+- **A.** <option>
+- **B.** <option>
 
-Probe for the gate with `ls ~/Obsidian/CLAUDE.md` — **never `test -f`**, which this zsh shadows with a vitest alias, so the probe silently runs the suite and reports failure. If that `ls` fails, skip this section silently — do not block. The gate is this file, not the vault directory, and its absence is never reported as "vault absent".
+➡️ **<recommended answer>** - <the reason, in plain English>
 
-Open with a sweep — an index-first `/ask` on the session topic to surface prior grillings, ingested material, and Profile focus that bear on it. One topic sweep + targeted re-queries; never a blanket dump.
+↳ <the fact this rests on and where it came from (`file:line`, a command, a doc) — or the route that would settle it when no fact can>
 
-**Authority order** depends on whether the repo has its own canon:
+---
 
-- **Repo has `CONTEXT.md` / ADRs** → they are **canon**; the vault is *supplementary*. A Library page that contradicts live code is a flag to surface (*"your `Stripe Checkout` concept says webhook-as-truth, but this resolver reads the session — which is right?"*), never a fact to trust over the code.
-- **No repo to ground against** → the vault is the *only* prior-art source. Weight it accordingly, but still treat any page as a snapshot to sanity-check — it may be stale.
+❓ **Q2** - **<question title>**: <question body>
+```
+
+Open the round with its scenarios — the concrete walks its questions turn on, in the user's own words. Number them (`S1`, `S2`) when a round turns on more than one, and have each question name its own. Every question carries its options as lettered choices, so answers come back as `Q1: C`. The `↳` line shows the fact the question rests on and where it came from, because facts are found and never asked — the user should be able to see what the choices stand on. A scenario no option changes is decoration: delete it, or make it the question.
+
+Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
+
+Finding _facts_ is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a sub-agent to find it; don't ask the user for anything you could look up yourself. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the sub-agent to report; ask the rest of the frontier now. The _decisions_ are the user's: put each to them and wait.
+
+The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.
