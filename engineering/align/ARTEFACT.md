@@ -6,7 +6,7 @@ Revised in place across passes. Keep the headings stable and let their contents 
 
 The body stays true to the intention being aligned. Cutting that intention into work is stage 2's, which reads the body and proposes the slicing — it does not rewrite it.
 
-**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds only what moved: the verdict, the delta since the last pass, each changed decision as a one-line row, and a diagram per flow the pass touched. A sketch lives in the comment while it is live and moves into the body once settled; a decision whose argument outgrows its row earns an ADR on the alignment branch, never comment prose; an unchanged flow is referenced, never repeated.
+**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds only what moved: the verdict, the delta since the last pass, each changed decision as a one-line row, a diagram per flow the pass touched, where the writing went, and what closed each item this pass closed. A sketch lives in the comment while it is live and moves into the body once settled; a decision whose argument outgrows its row earns an ADR on the alignment branch, never comment prose; an unchanged flow is referenced, never repeated.
 
 ## Header
 
@@ -14,7 +14,7 @@ The body stays true to the intention being aligned. Cutting that intention into 
 **Pass:** 3 · **Verdict:** fog · **Destination:** tickets · **Verified against:** `abc1234`
 ```
 
-The commit is load-bearing: it is how a later pass knows which facts have expired. `Destination` is `tickets`, `project` or `proposal` — what the exit is. It lives here rather than in a label because it is a property of the work, not of the state.
+The commit is load-bearing: it is how a later pass knows which facts have expired, so it must resolve — the branch tip, the pull request's head, or the commit the facts were checked against. A pass that fetched nothing outside the body is **thin** by definition. `Destination` is `tickets`, `project` or `proposal` — what the exit is. It lives here rather than in a label because it is a property of the work, not of the state.
 
 A body with no `**Pass:**` line predates `/align`: the first pass preserves it verbatim as one comment — `### Original body — preserved at first pass` — before rewriting, and never touches that comment again.
 
@@ -101,7 +101,7 @@ The body carries the table — one row per decision, naming the rejected alterna
 | --- | --- | --- | --- |
 | carousel, not single image | carousel, up to 10 images, 3:4 enforced on construction | single-image endpoint | the publisher's team already publishes carousels by hand, so single-image would keep the manual step |
 
-The row is the argument. A decision a row cannot carry — hard to reverse, or the reasoning is itself the record — earns an ADR on the alignment branch, and the row links it.
+The row is the argument. A decision whose rejected alternative cannot be named is not settled — it stays under Unresolved until it can, because the alternative is what makes a later pass able to revisit it. A decision a row cannot carry — hard to reverse, or the reasoning is itself the record — earns an ADR on the alignment branch, and the row links it.
 
 ## Participants
 
@@ -147,6 +147,8 @@ Written with its reason, always. This list is what stops a reviewer, an agent or
 ## Unresolved
 
 The list that counts to zero. Every item carries **what would resolve it** — a route, not a wish. An item without a route is a shrug, and a pass carrying one is thin rather than foggy.
+
+An as-built pass seeds the list from the work's own open questions — a review thread that asks rather than asserts a defect — and a decision the code already implements still names its rejected alternative, or the row describes the code rather than the decision.
 
 ```markdown
 - **Do carousel creations share the account-level rate limit with single posts?**

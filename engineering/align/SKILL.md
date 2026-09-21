@@ -1,12 +1,12 @@
 ---
 name: align
-description: Settle an idea, feature or ticket into an agreed contract before planning — feasibility, scenarios, interfaces, domain language, out-of-scope. Use when starting new work, when a requirement changes mid-flight, or when a ticket has to become buildable; mentions "align on", "grill me", "stress-test this plan". Other skills reach it to settle a plan.
+description: Settle an idea, a ticket or work already in flight into an agreed contract before planning — feasibility, scenarios, interfaces, domain language, out-of-scope. Use when starting new work, when a requirement changes mid-flight, when work already has a branch or open PR, or when a ticket has to become buildable; mentions "align on", "grill me", "stress-test this plan". Other skills reach it to settle a plan.
 argument-hint: <feature | ticket-ref>
 ---
 
 # Align
 
-A **pass** at an idea, a feature or a ticket that ends in a contract — or in an honest **fog**.
+A **pass** at an idea, a ticket or work already in flight that ends in a contract — or in an honest **fog**.
 
 `/align` is a mode, not an event. You invoke it to settle something, and you re-enter it when a requirement moves, a slice splits, or a fact turns out to be wrong. Each pass raises the resolution of the **Alignment artefact**; the artefact advances, not the session count.
 
@@ -16,20 +16,24 @@ Every step below assumes the loop: one question at a time, facts looked up rathe
 
 ## 1. Name the entry
 
-One procedure, two entries. Establish which you have before asking anything.
+One procedure, four entries. Establish which you have before asking anything.
 
 | argument | entry | first move |
 | --- | --- | --- |
-| a new feature, idea or ticket | **first pass** | nothing yet — no ticket, no branch; the ticket arrives when a pass has a record to publish (step 7) |
-| a ticket already in flight | **re-entry** | read the artefact and the last pass comment (if any) **before** anything else |
+| a new feature or an idea | **first pass** | nothing yet — no ticket, no branch; the ticket arrives when a pass has a record to publish (step 7) |
+| a ticket at `needs-alignment`, or one whose contract has moved | **re-entry** | read the artefact and the last pass comment **before** anything else |
+| work already in flight — a branch, an open pull request, a merged change | **as-built** | read the work first: `gh pr view <ref> --json body,comments,reviews` and `git diff <base>...<head>`; seed **Unresolved** from the threads that are open *questions*, not defects |
+| a defect with no decision behind it | **not this skill** | name the owner — `/diagnose`, `/crucible`, `/review` — say what it owns instead, and stop |
 
-On a re-entry, name what changed and which **Scenario** it touches. Re-asking a settled question wastes the artefact and restarts an interview the operator has already sat through. A body with no `**Pass:**` header predates `/align` — it is not an artefact yet, and step 7 preserves it before anything is rewritten.
+An entry `/align` does not own is refused in one line, with its route. A pass never re-asks a question the work has already answered: the answer becomes a decision row, and only what the work left open gets asked. On a re-entry, name what changed and which **Scenario** it touches. Re-asking a settled question wastes the artefact and restarts an interview the operator has already sat through. A body with no `**Pass:**` header predates `/align` — it is not an artefact yet, and step 7 preserves it before anything is rewritten.
 
-**Done when** you know the pass number, the ticket whose body you will revise, and — on a re-entry — the delta since the last pass.
+**Done when** you know the pass number, the ticket whose body you will revise, and — on a re-entry or an as-built pass — the delta since the last pass.
 
 ## 2. Gather facts
 
-Look them up. Every fact on the table is one fewer question the operator has to answer, and one fewer place an assumption can take root. Check what is already settled before anything else — `.out-of-scope/`, `docs/adr/`, the body of a ticket already in flight — because a no that is already recorded ends the pass in minutes and creates nothing.
+Look them up. Every fact on the table is one fewer question the operator has to answer, and one fewer place an assumption can take root. Check what is already settled before anything else — `docs/adr/`, `CONTEXT.md`, the body and pass comments of a ticket already in flight, the reviews and threads of work already in flight — because a no that is already recorded ends the pass in minutes and creates nothing.
+
+The fetch is not optional. An as-built pass reads the work — `gh pr view <ref> --json body,comments,reviews`, `git diff <base>...<head>` — before it asks anything, and every pass's header carries a `Verified against` commit it resolved for real: the branch tip, the pull request's head, or the commit the facts were checked against. A pass that fetched nothing outside the body is **thin** by definition.
 
 Delegate the legwork: trace request paths, grep for consumers, read the docs of anything being integrated with, establish what the data actually permits, find what the current practice is for this shape of problem. Fan several out at the top of the pass rather than one at a time, and bring the findings back into the conversation.
 
@@ -37,7 +41,7 @@ Run the **four-pass discipline** before the pass can close: trace request paths 
 
 Every claim carries where it came from, and anything without a source is **labelled as an assumption** rather than stated as fact. Freshness is per subject: record the commit or date a fact was checked against, so a later pass re-checks only what moved. Where a fact is worth having and the operator would otherwise gather it by hand, say what to run.
 
-**Done when** every claim in the artefact is sourced or labelled an assumption, and all four passes have run.
+**Done when** every claim in the artefact is sourced or labelled an assumption, `Verified against` resolves to a real commit, and all four passes have run.
 
 ## 3. Enumerate the scenarios
 
@@ -49,17 +53,19 @@ A first pass into fog may only yield one or two. That is the finding, and it is 
 
 ## 4. Walk the loop
 
-Interview the operator until the decision tree closes. One question at a time, and wait for the answer.
+Interview the operator until the decision tree closes — the loop is `/align`'s own, long or short as the work is. One question at a time, and wait for the answer: a question the pass raises is closed only by the operator's answer, never by the pass itself, and an item raised and closed in the same turn stays unresolved.
 
 Weave each question through a scenario — *"Scenario: a publisher posts four images where one is 1:1 — under option a the whole post is rejected, under option b we crop. Which?"* — so an option shows its impact instead of being argued in the abstract.
 
 Carry a **recommendation and a plain-English reason** with every question. Drop the jargon: say what we are trying to do in the words the operator would use, not the words the model finds comfortable.
 
+The questions come from the artefact's own gaps and drain one per turn: a scenario with no outcome, an interface still sketched, a decision with no rejected alternative, an axis marked `N/A` whose note is not a fact you looked up. An answer settles a row, opens an unresolved entry with its route, or spawns a new scenario, interface or axis note — and so its own questions.
+
 Where the conversation stalls, or an answer arrives too easily, [ANTI-PATTERNS.md](./ANTI-PATTERNS.md) names the pattern and the question that surfaces it. Ask it; do not lecture it.
 
 Sketches are welcome and stay rough. The operator's whiteboard form — a pseudo-interface, a half-drawn shape — is an input, not a document: take it as written, mark what is unresolved, and leave it in the notation it arrived in.
 
-**Done when** every scenario has an outcome, and every decision carries its reason and its rejected alternatives.
+**Done when** the queue is empty — every scenario has an outcome, and every settled decision carries its reason and its rejected alternatives. The pass ends when the operator confirms the shared understanding, not when the artefact looks complete, and not before the decision table has been read back and confirmed.
 
 ## 5. Draw what is settled
 
@@ -104,13 +110,15 @@ Fog is a finding, not a failure, and it is not knowable at invocation — which 
 
 Report the gate as one line per item, each met or unmet **with where the evidence sits** — the evidence is named, never restated — then recommend. "Not complete" is the normal answer, and on a first pass into fog it is the correct one.
 
+**Where the writing goes.** When the pass decides a repo document changes — a `CONTEXT.md` term, an ADR, research worth keeping — ask before writing anything, with a recommendation and three answers: a `docs/` branch off the trunk, which becomes a stack's base layer · the branch the pass was called about, which becomes the work surface and the stack's base · straight to main, no stack. Which document belongs beneath the work and which beside it is the operator's call, not the pass's. Nothing is written until they answer.
+
 Then update the ticket **body** to [ARTEFACT.md](./ARTEFACT.md)'s shape — revised in place, headings stable, carrying the pass number and the commit the facts were checked against.
 
 A body with no `**Pass:**` header predates `/align`. Post it verbatim as one comment — `### Original body — preserved at first pass` — before rewriting, and never edit that comment.
 
-Post **one** comment carrying the pass's delta: the verdict, what moved since the last pass, each changed decision as a one-line row, and a diagram per flow this pass touched. Nothing else. A decision's argument lives in the body's table, or in an ADR when a row cannot carry it; an unchanged flow is referenced, not repeated. The body is the current truth; the comments are how it got there.
+Post **one** comment carrying the pass's delta: the verdict, what moved since the last pass, each changed decision as a one-line row, a diagram per flow this pass touched, and where the writing went if it went anywhere. Each unresolved item the pass closed names what closed it — a commit, a `file:line`, a command output, or the operator's words. Nothing else. A decision's argument lives in the body's table, or in an ADR when a row cannot carry it; an unchanged flow is referenced, not repeated. The body is the current truth; the comments are how it got there.
 
-A ticket is never created on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**, and create it on the operator's word. On **aligned**, set the exit state: `ready-to-cut` when the work can be cut now, `ready-to-propose` when the destination names a proposal. Which of the two is the operator's call — whether someone else's yes is needed is a social fact the pass cannot read off the repo. A **dropped** pass has a ticket only if an earlier pass earned it. A **branch** is cut only when the work changes a repo document — an ADR, `CONTEXT.md`, research worth keeping — and that branch is the stack's base layer; nothing else about the alignment lands on one.
+A ticket is never created on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**, and create it on the operator's word. On **aligned**, set the exit state: `ready-to-cut` when the work can be cut now, `ready-to-propose` when the destination names a proposal. Which of the two is the operator's call — whether someone else's yes is needed is a social fact the pass cannot read off the repo. A **dropped** pass has a ticket only if an earlier pass earned it. A branch is written only where the write ask was answered, and nothing else about the alignment lands on one.
 
 **Done when** the operator has the verdict and the choice to continue, and the record matches it: the body current, one comment carrying this pass, and nothing created when a first pass closes **dropped**.
 
