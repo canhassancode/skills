@@ -23,7 +23,7 @@ One procedure, two entries. Establish which you have before asking anything.
 | a new feature, idea or ticket | **first pass** | nothing yet — no ticket, no branch; the ticket arrives when a pass has a record to publish (step 7) |
 | a ticket already in flight | **re-entry** | read the artefact and the last pass comment (if any) **before** anything else |
 
-On a re-entry, name what changed and which **Scenario** it touches. Re-asking a settled question wastes the artefact and restarts an interview the operator has already sat through.
+On a re-entry, name what changed and which **Scenario** it touches. Re-asking a settled question wastes the artefact and restarts an interview the operator has already sat through. A body with no `**Pass:**` header predates `/align` — it is not an artefact yet, and step 7 preserves it before anything is rewritten.
 
 **Done when** you know the pass number, the ticket whose body you will revise, and — on a re-entry — the delta since the last pass.
 
@@ -63,7 +63,7 @@ Sketches are welcome and stay rough. The operator's whiteboard form — a pseudo
 
 ## 5. Draw what is settled
 
-Diagrams are how both sides see the same flow, so they are produced often rather than saved for the end. Flow, lifecycle, interfaces and module depth each have a form that carries them and a form that does not; [DIAGRAMS.md](./DIAGRAMS.md) holds the conventions, including how participants are declared.
+Diagrams are how both sides see the same flow, so the pass draws one the moment a flow changes rather than saving it for the end. One diagram per flow this pass touched — two are fine when the feature has two genuinely different walks; a flow that already stands is referenced, never redrawn. Flow, lifecycle, interfaces and module depth each have a form that carries them and a form that does not; [DIAGRAMS.md](./DIAGRAMS.md) holds the conventions, including how participants are declared.
 
 The move that matters: an interface starts as a **sketch** and is promoted to **settled** when its decision lands. The fence tag records which it is. A sketch holds the operator's questions; a settled interface holds the answers, and only the second can be built from.
 
@@ -71,7 +71,7 @@ The move that matters: an interface starts as a **sketch** and is promoted to **
 
 ## 6. Mark every axis
 
-Walk the axis list once per pass, at session level rather than per scenario, marking each one **decision**, **N/A** or **out of scope**:
+An **axis** is one dimension of the change every pass must answer for — happy path, failure, permissions and the rest. Walk the list once per pass, at session level rather than per scenario, marking each one **decision**, **N/A** or **out of scope**:
 
 happy path · limits · failure · misuse · concurrency and idempotency · permissions · data volume · observability · migration · rollback · cost · timezone
 
@@ -102,9 +102,13 @@ Fog is a finding, not a failure, and it is not knowable at invocation — which 
 - every unresolved item carries what would resolve it — at zero, for **aligned**
 - every participant in every diagram resolves to a term in the repo's `CONTEXT.md`
 
-Report the gate item by item, each met or unmet **with where the evidence sits**, then recommend. "Not complete" is the normal answer, and on a first pass into fog it is the correct one.
+Report the gate as one line per item, each met or unmet **with where the evidence sits** — the evidence is named, never restated — then recommend. "Not complete" is the normal answer, and on a first pass into fog it is the correct one.
 
-Then update the ticket **body** to [ARTEFACT.md](./ARTEFACT.md)'s shape — revised in place, headings stable, carrying the pass number and the commit the facts were checked against — and post **one** comment with what this pass produced: the verdict, the delta since the last pass, the diagrams, the sketches as they stood, and the reasoning. The body is the current truth; the comments are how it got there.
+Then update the ticket **body** to [ARTEFACT.md](./ARTEFACT.md)'s shape — revised in place, headings stable, carrying the pass number and the commit the facts were checked against.
+
+A body with no `**Pass:**` header predates `/align`. Post it verbatim as one comment — `### Original body — preserved at first pass` — before rewriting, and never edit that comment.
+
+Post **one** comment carrying the pass's delta: the verdict, what moved since the last pass, each changed decision as a one-line row, and a diagram per flow this pass touched. Nothing else. A decision's argument lives in the body's table, or in an ADR when a row cannot carry it; an unchanged flow is referenced, not repeated. The body is the current truth; the comments are how it got there.
 
 A ticket is never created on entry: offer one when the verdict is **fog** and the routes are worth tracking, or **aligned**, and create it on the operator's word. On **aligned**, set the exit state: `ready-to-cut` when the work can be cut now, `ready-to-propose` when the destination names a proposal. Which of the two is the operator's call — whether someone else's yes is needed is a social fact the pass cannot read off the repo. A **dropped** pass has a ticket only if an earlier pass earned it. A **branch** is cut only when the work changes a repo document — an ADR, `CONTEXT.md`, research worth keeping — and that branch is the stack's base layer; nothing else about the alignment lands on one.
 

@@ -6,7 +6,7 @@ Revised in place across passes. Keep the headings stable and let their contents 
 
 The body stays true to the intention being aligned. Cutting that intention into work is stage 2's, which reads the body and proposes the slicing — it does not rewrite it.
 
-**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds what argued: its verdict and the delta since the last pass, the diagrams, the sketches as they stood, the reasoning behind each decision, and what the research found.
+**The split.** The body holds what decides: the header, the statement of intent, the destination, the scenario table, the settled interfaces, the module table, the participants, the decision table, the axis marks, out of scope, and the unresolved list. The pass's **comment** holds only what moved: the verdict, the delta since the last pass, each changed decision as a one-line row, and a diagram per flow the pass touched. A sketch lives in the comment while it is live and moves into the body once settled; a decision whose argument outgrows its row earns an ADR on the alignment branch, never comment prose; an unchanged flow is referenced, never repeated.
 
 ## Header
 
@@ -15,6 +15,8 @@ The body stays true to the intention being aligned. Cutting that intention into 
 ```
 
 The commit is load-bearing: it is how a later pass knows which facts have expired. `Destination` is `tickets`, `project` or `proposal` — what the exit is. It lives here rather than in a label because it is a property of the work, not of the state.
+
+A body with no `**Pass:**` line predates `/align`: the first pass preserves it verbatim as one comment — `### Original body — preserved at first pass` — before rewriting, and never touches that comment again.
 
 ## What we are trying to do
 
@@ -89,7 +91,7 @@ Not a diagram. Depth is the property being judged — a small interface over a l
 
 Sequence diagrams for flow, state diagrams for lifecycle, both with `autonumber`. Conventions — including participant declaration — are in [DIAGRAMS.md](./DIAGRAMS.md).
 
-These live in the pass's **comment**, because a diagram is how a pass argues the flow; the body carries what the argument settled. Only the flows this work actually changes, so the diagram stays readable. A diagram of the whole system is a diagram nobody reads.
+These live in the pass's **comment**, because a diagram is how a pass argues a flow and the body carries what the argument settled. One diagram per flow the pass touched — a feature with two genuinely different walks keeps both; a flow that already stands is referenced, never repeated. Only the flows this work actually changes, so the diagram stays readable. A diagram of the whole system is a diagram nobody reads.
 
 ## Decisions
 
@@ -99,16 +101,7 @@ The body carries the table — one row per decision, naming the rejected alterna
 | --- | --- | --- | --- |
 | carousel, not single image | carousel, up to 10 images, 3:4 enforced on construction | single-image endpoint | the publisher's team already publishes carousels by hand, so single-image would keep the manual step |
 
-The pass's **comment** argues each one at the length it needs:
-
-```markdown
-### Carousel, not single image
-
-**Chosen:** carousel, up to 10 images, 3:4 enforced on construction.
-**Because:** the publisher's team already publishes carousels by hand, so a single-image endpoint would force a second piece of work.
-**Rejected:** single-image only — would not remove the manual process it exists to remove.
-**Rejected:** 1:1 ratio — the platform crops to 3:4 anyway, so enforcing 1:1 moves the crop somewhere less visible.
-```
+The row is the argument. A decision a row cannot carry — hard to reverse, or the reasoning is itself the record — earns an ADR on the alignment branch, and the row links it.
 
 ## Participants
 

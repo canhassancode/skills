@@ -56,7 +56,8 @@ interface CarouselPost {
 ## Flow
 
 The diagram the contract settled for the flow this slice changes, copied whole, with the
-part this slice owns named — never by step number.
+part this slice owns named — never by step number. Include it only when this slice changes a
+flow; a slice that changes none omits the section, because the flow it rides on is not its own.
 
 ```mermaid
 sequenceDiagram
@@ -65,6 +66,9 @@ sequenceDiagram
 ```
 
 ## Decisions that bind it
+
+Only the rows whose absence would let a builder re-decide a settled decision; the reason stays
+one clause. Where the contract hit a real fork, the row is what stops the fork reopening.
 
 | decision | chosen | rejected | because |
 | --- | --- | --- | --- |

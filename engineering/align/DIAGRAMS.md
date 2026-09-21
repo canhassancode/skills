@@ -1,6 +1,6 @@
 # Diagram Conventions
 
-A diagram's value is not that it looks good. It is that **both sides see the same flow at the same time**, and that a gap becomes conspicuous: a missing arrow is visible in a drawing in a way it never is in prose. That is why they are produced often here rather than saved for a handover.
+A diagram's value is not that it looks good. It is that **both sides see the same flow at the same time**, and that a gap becomes conspicuous: a missing arrow is visible in a drawing in a way it never is in prose. That is why a pass draws one the moment a flow changes rather than saving it for a handover.
 
 ## Which form carries which thing
 
@@ -11,7 +11,7 @@ A diagram's value is not that it looks good. It is that **both sides see the sam
 | module depth and boundaries | a table, not a diagram | depth is *small interface, large hidden implementation* — countable, and a drawing flatters it |
 | the shape of an interface | code | see the sketch/settled rule in [ARTEFACT.md](./ARTEFACT.md) |
 
-Only diagram the flows this work changes. A diagram of the whole system is a diagram nobody reads.
+Only diagram the flows this work changes. One diagram per flow a pass touched; a flow that already stands is referenced, never redrawn. A diagram of the whole system is a diagram nobody reads.
 
 ## Sequence diagrams
 
@@ -84,4 +84,4 @@ GitHub and Linear each pin their own mermaid build, so feature age is a render r
 - `autonumber` — ancient, safe everywhere. Start and increment values (`autonumber 10 10`) arrived in v11.15; the bare form is enough.
 - `box` — newer, and safe in current builds, but keep it to a single level. Nested boxes are the newest thing here.
 - Before adopting a newer construct across the whole artefact, push one throwaway diagram to a scratch issue and check it renders. Once, cheaply, rather than discovering it in a review.
-- **The comment is the home**, so this is where a render risk bites: GitHub renders mermaid in issue bodies and comments; Linear's editor takes a mermaid fence (`/diagram`). Check the Linear comment case once on a scratch issue before relying on it.
+- **The pass comment that changed the flow is the home**, so this is where a render risk bites: GitHub renders mermaid in issue bodies and comments; Linear's editor takes a mermaid fence (`/diagram`). Check the Linear comment case once on a scratch issue before relying on it.

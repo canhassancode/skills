@@ -17,13 +17,19 @@ Run it against a ticket at `ready-to-build`; with no ticket there is nothing to 
 
 ## 1. Declare the execution mode
 
-Do this before anything else; the rest of the procedure assumes it.
+Do this before anything else; the rest of the procedure assumes it. One writer at a time, always: a builder and the Review are never in the checkout together.
 
-- **Subagents available** — launch one per Builder and one per `/crucible`: Claude Code's `Agent` with `general-purpose`, pi's `subagent` with its generic agent. One at a time, awaited before the next — one writer in the checkout — and give each its brief, so nothing but the brief and the hand-back crosses contexts.
-- **No subagents** — the operator is the fallback. Post each layer's brief on the ticket and hand it over; resume when their session returns the commits. The parent fits, plans, routes and records either way.
-- **Never build in the parent's window.** The parent's seat is the contract, the plan, the routing and the records.
+| mode | **Builder** | **Review** | when |
+| --- | --- | --- | --- |
+| **delegated** (default) | one fresh subagent per layer, Claude Code's `Agent` or pi's `subagent`; it hands back the whole layer — green, committed, tree clean — never per commit | the parent launches a fresh `/crucible` subagent per layer | subagents resolve |
+| **in-session** | the parent builds each layer itself, with `/tdd` | the same fresh `/crucible` subagent per layer | the operator asks to watch the code being built |
+| **self-review** | the parent | the parent runs `/crucible` in its own window, said plainly as weaker than a fresh seat | subagents are down |
 
-**Done when** you can name the mode this run is in and who occupies the builder seat.
+The parent owns the contract, the plan, the routing, the records, and the push. A **Builder** — subagent or parent — never pushes: it ends at a clean tree with its commits in hand, and the parent pushes before the Review runs.
+
+In-session mode is entered on the operator's word at invocation. A parent that fills its window mid-layer hands back at the same boundary as any builder: commit what is green, record it, and resume in a fresh session from the fit, plan and layer records.
+
+**Done when** you can name the mode this run is in and who occupies each seat.
 
 ## 2. Fetch the contract and claim the ticket
 
@@ -37,7 +43,9 @@ Read the classes closely: the ticket declared behaviour, claim, test or shape fo
 
 ## 3. Fit the repo
 
-Derive the repo's own mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read what it documents: `CONTEXT.md` and `CLAUDE.md`, CI configuration, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist.
+The run owns one worktree for the whole ticket — created before the fit, with the git and stack flows in [STACK.md](./STACK.md) — so the primary checkout is never the build's scratch space and the proven loop survives every layer's branch switch.
+
+Derive the repo's own mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read what it documents: `CONTEXT.md` and `CLAUDE.md`, CI configuration, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist. One pass over those sources: what is not there is *unavailable*, named as needed rather than hunted for.
 
 | field | what it holds |
 | --- | --- |
@@ -48,7 +56,7 @@ Derive the repo's own mechanics from the repo on every run, never from a cache �
 Then **prove them**: run the commands at the base commit. One of three honest outcomes comes back:
 
 - **Absent** — no suite, no typecheck, no CI. Absence is a recorded **fact** and the run proceeds: the operator's own run at hand-back is the verification such a repo has left.
-- **Unavailable** — a command, a service or a secret the loop needs is missing. **Stop before writing anything**, name the path (never the value), and escalate to the operator. Nothing is re-derived: once it is supplied, the run resumes at this step.
+- **Unavailable** — a command, a service or a secret the loop needs is missing. **Stop before writing anything**, name what is needed and the path it lives at (never the value), and escalate to the operator. Nothing is re-derived: once it is supplied, the run resumes at this step.
 - **Green** — record the baseline and the suite's duration; both are what the layer's `facts` will be measured against.
 
 Record the fit on the ticket, one comment for this run:
@@ -92,7 +100,7 @@ Record the plan on the ticket, one comment for this run, so a re-entered run res
 
 ## 5. Invoke a Builder per layer
 
-Prepare the checkout first — create the layer's branch off its base, bottom to top, with the flows in [STACK.md](./STACK.md) — then brief the builder. The parent prepares the branch and owns the stack; the builder owns the code in it.
+Prepare the branch first — created off its base, bottom to top, in the run's worktree, with the flows in [STACK.md](./STACK.md). In **delegated** mode the parent hands the brief below to a fresh subagent; in **in-session** mode the brief is the parent's own working constraint. Either way the brief goes to the builder, never onto the ticket.
 
 One fresh invocation per layer, with the brief. The brief carries the contract by reference and the layer's material verbatim — never a restatement of the contract:
 
@@ -124,7 +132,7 @@ the tree is clean.
 </builder-brief>
 ```
 
-A builder ends when it judges the layer done — green, committed, tree clean. A hand-back that is anything else is a brief that failed its completion criterion, and the parent re-briefs rather than resuming the builder.
+A builder ends when it judges the layer done — green, committed, tree clean. A hand-back that is anything else is a brief that failed its completion criterion, and the parent re-briefs rather than resuming the builder. The parent pushes the layer next (§6), then launches the Review (§7).
 
 A builder that stops because the window filled hands back at a green commit. Push what exists, record it, and cut the remainder into a new layer above it: the plan changed, so the split layer gets its own brief like any other.
 
@@ -138,7 +146,9 @@ A builder that stops because the window filled hands back at a green commit. Pus
 
 ## 7. Review the layer
 
-Invoke `/crucible` with the layer's delta `<base>...<branch>` and the ticket's contract. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
+Launch `/crucible` as a fresh subagent — in **delegated** and **in-session** mode — with the layer's delta `<base>...<branch>` and the ticket's contract: it executes in its own context, against the run's worktree, never in the parent's window. In **self-review** mode the parent runs it itself, said plainly as weaker. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
+
+A layer is vetted here on its own delta. The one whole-stack pass runs after the last layer, in the shipping half.
 
 **Done when** every owned criterion has a falsification result, and the findings are in hand.
 
@@ -152,7 +162,7 @@ Invoke `/crucible` with the layer's delta `<base>...<branch>` and the ticket's c
 | **matching an out-of-scope entry** | **suppressed**, citing the entry — never work |
 | **a product call the review cannot decide** | asked in session; the answer is recorded as a decision row or an out-of-scope entry |
 
-A fix round is a new Builder invocation with the findings as its brief, never a resumed one:
+A fix round is a new Builder invocation — in **delegated** mode a fresh subagent, in **in-session** mode the parent — with the findings as its brief, never a resumed builder:
 
 ```text
 <fix-brief>
@@ -170,13 +180,13 @@ no push. Do not widen scope: a finding that adds a scenario is not yours to fix 
 </fix-brief>
 ```
 
-The layer gets **two rounds at most**; a finding still open after its second is escalated in session with what was tried and what remains, and the operator decides. A round that commits re-runs step 6 before it re-vets, and each round ends by re-running step 7 on the criterion it touched: a round that does not turn the mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes.
+The layer gets **two rounds at most**; a finding still open after its second is escalated in session with what was tried and what remains, and the operator decides. A round that commits is re-pushed (§6) before it is re-vetted, and crucible re-runs on the criterion the round touched — not on the whole layer: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes.
 
 **Done when** every acting finding is closed by a red mutation or escalated with what was tried, and every non-acting finding is recorded as it resolved.
 
 ## 9. Record the layer
 
-Post one layer record on the ticket — the parent's durable memory, which is what a re-entered run reads instead of re-deriving:
+Post one layer record on the ticket — the template below and nothing beyond it; it is the parent's durable memory, which is what a re-entered run reads instead of re-deriving:
 
 ```markdown
 ### Layer — `<branch>` off `<base>`
