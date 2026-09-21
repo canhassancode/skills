@@ -1,6 +1,6 @@
 ---
 name: align
-description: Settle an idea, a ticket or work already in flight into an agreed contract before planning — feasibility, scenarios, interfaces, domain language, out-of-scope. Use when starting new work, when a requirement changes mid-flight, when work already has a branch or open PR, or when a ticket has to become buildable; mentions "align on", "grill me", "stress-test this plan". Other skills reach it to settle a plan.
+description: Settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning — feasibility, scenarios, interfaces, domain language, out-of-scope. Use when starting new work, when a requirement changes mid-flight, when work already has a branch or open PR, or when a ticket has to become buildable; mentions "align on", "grill me", "stress-test this plan". Other skills reach it to settle a plan.
 argument-hint: <feature | ticket-ref>
 ---
 
