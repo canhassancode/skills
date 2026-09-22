@@ -84,7 +84,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 ### Body
 ```markdown
 
-[ Pass: N / N | Verdict: < aligned | fog | dropped > ]
+[ Passes: N e.g. 4 | Verdict: < aligned | fog | dropped > ]
 
 [ If dropped: Insert _dropped_ reason at the top here ]
 
@@ -108,6 +108,9 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 # Out of scope
 [ Numbered list, short, format might be e.g. Considered, reason why not ]
+
+# Relevant Sources
+[ Any sources that we should carry across to the body from a pass ]
     
 ```
 
@@ -117,7 +120,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 - Each pass is minimal, showing only what was discovered, the body is the alignment truth.
 
 ```markdown
-[ Pass N ]
+[ Pass N e.g. Pass 1]
 
 # Aligned on
 [ Concise bullet point list ]
