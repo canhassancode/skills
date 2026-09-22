@@ -84,9 +84,9 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 ### Body
 ```markdown
 
-[ Pass: N / N | Verdict: < aligned | aligning | won't do > ]
+[ Pass: N / N | Verdict: < aligned | fog | dropped > ]
 
-[ Insert _won't do_ reason at the top here ]
+[ If dropped: Insert _dropped_ reason at the top here ]
 
 # Background context
 [ One paragraph relevant statement on the why ]

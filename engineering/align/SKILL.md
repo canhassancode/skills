@@ -9,12 +9,12 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 1. Run `/grilling` for the interview loop.
 2. Fan-out to subagents upfront, gather details from relevant sources. **Do not** reply to the user with questions or anything further until all initial research has been gathered.
 3. Combine with running `/domain-modeling` for domain work - challenge against the glossary, sharpen fuzzy language, stress-test with scenarios, cross-reference against code, update `CONTEXT.md` inline, offer ADRs, and visualise with Mermaid Sequence Diagrams (see `DIAGRAMS.md` for details).
-4. Scenarios on each pass is a must. Keep the text concise, unless told to go into more details by the user. Technical jargon holds no value in alignment session. Every choice of wording is vitally important, you are a guide to ensure the user is well-equipped whilst you pair through discovery.
+4. Scenarios on each pass is a must. Keep the text concise, unless told to go into more details by the user. Technical jargon holds no value in alignment session. Every choice of wording is vitally important, you are a guide to ensure the user is well-equipped whilst you pair through discovery. Conciseness and clarity wins over verbosity. 
 5. There will be multiple rounds in the loop. An example round looks like this:
 6. Run `/codebase-design` to explore with the user interface design, deep module names, agreements using mermaid sequence diagrams. The user wants to be involved in this layer. 
 
 ## At session close - route the output
-An alignment is a _thinking_ artefact, not by default a spec or a build. The close writes two things into the artefact header — the **Verdict** and the **Destination** — and the destination is what stage 2 reads.
+An alignment is a _thinking_ artefact, not by default a spec or a build. The close has a few routes, see more details in the _Additional Files_ section. Some early examples of routes are:
 
 | the pass ends on | Verdict | Destination | Ticket state | Next |
 | --- | --- | --- | --- | --- |
