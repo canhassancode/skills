@@ -1,0 +1,130 @@
+# 1. Example alignment round
+
+```
+## Scenario:
+A customer checks out a basket. Today's API service creates orders and takes no payment; the payment part is new. First walk: a customer pays by card and the order lands in `paid`.
+
+## Question:
+Does the API service keep its own copy of payment status, or is the payment service the single source of truth that the API service reads through?
+
+## Choices A-N:
+- **A.** API service stores a `payment_status` column, updated from the provider's webhook.
+- **B.** API service stores only `payment_intent_id` and reads status from the payment service on each request.
+- **C.** Payment service owns an `orders` mirror; anything payment-shaped is read from there.
+- **D.** API service holds no payment state at all; the client polls the payment service directly.
+- **E.** API service stores the id plus a cached status with a short TTL, refreshed lazily on read.
+- **F.** Undecided — the decision cannot be taken before the provider is chosen.
+
+## Recommendation:
+**B**, with E as the upgrade if list endpoints get slow. One source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
+
+## Other notes
+The choice is not free either way: B puts the payment service on the critical path of every order read, so when it is down, order reads fail. If that trade is unacceptable, A moves the failure to "status is stale" instead of "status is unavailable" — but then a reconciliation task must exist, and it is the unresolved row this round opens: *who reconciles after a webhook never arrives, and when? → resolve by checking the provider's webhook retry window, then killing the listener in staging and waiting it out.*
+
+```
+
+# 2. Example Diagrams
+
+## Sequence diagrams (mermaid)
+
+Always `autonumber`, immediately after the opening line. Participants declared with the DDD role they play, grouped by bounded context.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    box "Publishing"
+        actor U as Publisher
+        participant PC as PostCarousel
+        participant C as Carousel
+        participant R as CarouselRepo
+    end
+    box "TikTok (external)"
+        participant T as TikTokAPI
+    end
+    U->>PC: submit(images, caption)
+    PC->>C: create(images, 3:4)
+    C-->>PC: ok | ratio_mismatch
+    PC->>R: save(carousel)
+    PC->>T: createCarousel(images, caption)
+    T-->>PC: 201
+    PC-->>U: published
+```
+
+Use `alt/else` blocks where necessary. Keep the diagrams concise and easy to understand. Deep diagrams only come from a specific request from the user.
+
+# 3. Alignment Artefacts
+
+## Captured ticket (multiple passes)
+Alignment passes aren't always one session, in a bigger plan, create an artefact ticket in the following shape:
+
+### Alignment ticket title
+
+A good title contains the thing you would grep for: a component, endpoint, file, flag, or number. A title that names a feeling is not a ticket.
+
+| Bad | Good | What changed |
+|---|---|---|
+| "Login broken" | "Session cookie not set on Safari 17 after OAuth redirect" | Symptom → observable fact with scope |
+| "Fix bug in checkout" | "Order total ignores discount code when cart has >1 item" | Names the input condition and wrong output |
+| "Improve performance" | "Reduce `/search` p95 latency from 4.2s to under 500ms" | Vague wish → measurable target |
+| "Investigate DB issue" | "Postgres connection pool exhausted under 50 concurrent uploads" | Names the mechanism, not the vibe |
+| "Add feature for users" | "Allow users to export transaction history as CSV" | Names actor, action, artifact |
+| "Refactor auth" | "Split `AuthService` into token issuance and session lookup" | Says what the split is |
+| "Customer complained about emails" | "Welcome email arrives 6 hours late (SendGrid queue backlog)" | Complaint → reproducible behaviour |
+| "Update dependencies" | "Upgrade React 17 → 18, remove `ReactDOM.render` calls" | Names the version and the follow-on work |
+| "Make UI nicer" | "Align invoice table to design tokens; row height 48px" | Replaces taste with a spec |
+| "Something wrong with API" | "`POST /v1/refunds` returns 500 when `amount` is null" | Endpoint, trigger, status code |
+
+### Labels
+
+- needs-alignment (ongoing alignment captured in ticket)
+- needs-info (blocked and needs answers from someone/something external to user and agent)
+- ready-to-cut (ready to hand off to `/cut`)
+- ready-to-build (ready to build straight from alignment ticket)
+
+### Body
+```markdown
+
+[ Pass: N / N | Verdict: < aligned | fog | dropped > ]
+
+[ If dropped: Insert _dropped_ reason at the top here ]
+
+# Background context
+[ One paragraph relevant statement on the why ]
+
+# Problem Statement
+[ One paragraph with a scenario to make this easy to understand by human readers and AI. ]
+
+# The solution
+[ One paragraph on the destination solution, this will change through alignment. This may be fog at the beginning ]
+
+# Relevant Diagrams
+[ Place Sequence Diagram here ]
+
+# Agreed Interfaces
+[ Any interface design goes here ]
+
+# Acceptance Criteria
+[ Checklist ]
+
+# Out of scope
+[ Numbered list, short, format might be e.g. Considered, reason why not ]
+    
+```
+
+### Comment (passes)
+- If alignment proceeds past one session and requires more depth, each comment adds what was discovered in that pass.
+- If body already exists on ticket created by someone else or some other route, place the body as is in a comment.
+- Each pass is minimal, showing only what was discovered, the body is the alignment truth.
+
+```markdown
+[ Pass N ]
+
+# Aligned on
+[ Concise bullet point list ]
+
+# Outstanding
+[ Short bullet point list on what is in the fog, what is blocked, what is preventing this from moving to ready-to-cut or ready-to-build ]
+
+# Relevant Sources
+[ Short bullet point list on any relevant sources from this pass ]    
+```
