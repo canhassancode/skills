@@ -38,7 +38,7 @@ API and git commands live in [REFERENCE.md](REFERENCE.md).
 3. **Bare `#N`** in a repo working directory → the current repo.
 4. **No argument** → there is nothing to review here. **`/review` no longer
    self-reviews the current branch** — that is `/crucible` against a fixed
-   point (`/crucible main`). Say so and stop.
+   point (`/crucible main...HEAD`). Say so and stop.
 
 Resolution table and existence checks are in [REFERENCE.md](REFERENCE.md).
 

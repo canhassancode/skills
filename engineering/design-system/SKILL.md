@@ -87,7 +87,7 @@ Done when every motif has both fields and the losing variants have been deleted 
 
 ### 6. Name the exit test
 
-Flavour discovery is finished when **a new screen can be built without `build` stopping**. Amendments cluster in the first few screens and tail to near zero.
+Flavour discovery is finished when **a new screen can be built without stopping to ask**. Amendments cluster in the first few screens and tail to near zero.
 
 Tell the user this test rather than handing them a checklist, and re-prototype only when a genuinely new kind of surface appears — never the same screen twice. Re-prototyping a screen means the question was wrong, not that another round is owed.
 
@@ -118,7 +118,7 @@ All five are greppable, which is the point — an aesthetic goal you cannot grep
 
 These skills read `DESIGN.md`. All of them activate on the same trigger: **the diff touches a path with a `DESIGN.md` at or above it.** The nearest one upward governs, and the path selects which surface profile applies. Backend-only diffs never trip it.
 
-- `build` and `tdd` read it the way they read `CONTEXT.md`, and **stop and ask** when no rule covers a case, then write the answer back.
+- `tdd` reads it the way it reads `CONTEXT.md`, and a builder **stops and asks** when no rule covers a case, then writes the answer back.
 - `crucible` runs the design baseline against the success metric.
 - `bootstrap` invokes this skill when scaffolding a new repo.
 
