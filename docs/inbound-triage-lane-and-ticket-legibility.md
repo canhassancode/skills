@@ -23,7 +23,7 @@ With the delegability label and `pickup` provisionally retired while charting, d
 
 ## Sharpest insight
 
-**A dead-looking lane is often a measurement artefact.** The evidence for retirement counted GitHub labels only. Journals for June–July show the triage vocabulary used **69 times across 8 separate days in July** — the agent-takeable label 24, the delegability label 21, `needs-triage` 10 — all of it on the work Linear. Meanwhile the one personal repo that "showed life" (10 agent-takeable labels on brushfeed) turned out to be a single `/to-tickets` batch dumped on 3 May, none assigned, none closed, untouched for twelve weeks. The lane's habitat is the work tracker; the personal-repo signal was one stale batch pointing the wrong way.
+**A dead-looking lane is often a measurement artefact.** The evidence for retirement counted GitHub labels only. Journals for June–July show the triage vocabulary used **69 times across 8 separate days in July** — the agent-takeable label 24, the delegability label 21, `needs-triage` 10 — all of it on the work Linear. Meanwhile the one personal repo that "showed life" (10 agent-takeable labels on brushfeed) turned out to be a single batch of tickets dumped on 3 May, none assigned, none closed, untouched for twelve weeks. The lane's habitat is the work tracker; the personal-repo signal was one stale batch pointing the wrong way.
 
 The second insight: **the delegability label is a predicate, and its four causes fail very differently when handed to an agent anyway.**
 

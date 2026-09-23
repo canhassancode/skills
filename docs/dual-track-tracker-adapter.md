@@ -1,7 +1,7 @@
 ---
 created: 2026-07-01
 updated: 2026-07-26
-sources: grill-with-docs session (2026-07-01)
+sources: grill session (2026-07-01)
 ---
 
 # Dual-Track Tracker Adapter — GitHub + Linear (grill)

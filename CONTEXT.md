@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/wayfinder` invokes `/align`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
-The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling`, `grill-me` and `grill-with-docs`.
+The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
 _Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
 
 **Pass**:
@@ -92,11 +92,11 @@ The decision document `/propose` publishes when an alignment needs someone else'
 _Avoid_: spec — a proposal persuades a decider, a **Spec** tells a builder.
 
 **Specification**:
-The structured document `/specifier` publishes to a **Ticket** as an append-only comment — the proven run contract, the criteria, the QA procedures — and the only artefact the gauntlet consumes. Distinct from a **Spec**: a spec is prose a human reads, written before the code exists; a specification is machine-read, and every command in it was executed green in a throwaway worktree during the session that published it. Its publication **is** its approval, structurally — an unpublished one has no address, so the gauntlet cannot reach it.
-_Avoid_: conflating with **Spec** (`/to-spec`'s document), or with a **Ticket**'s acceptance criteria — the ticket's criteria are authored as prose at the **Cut**, and a **Specification** derived from it agrees with them rather than re-inventing them.
+The structured document published to a **Ticket** as an append-only comment — the proven run contract, the criteria, the QA procedures — and the only artefact the gauntlet consumes. Distinct from a **Spec**: a spec is prose a human reads, written before the code exists; a specification is machine-read, and every command in it was executed green in a throwaway worktree during the session that published it. Its publication **is** its approval, structurally — an unpublished one has no address, so the gauntlet cannot reach it.
+_Avoid_: conflating with **Spec** (the container's body), or with a **Ticket**'s acceptance criteria — the ticket's criteria are authored as prose at the **Cut**, and a **Specification** derived from it agrees with them rather than re-inventing them.
 
 **Carriage**:
-The gitignored paths a worktree cannot get from git — a local settings file, a certificate, a seed database — declared by the operator during `/specifier`, falsified by its proof run, and frozen into the **Specification** as `contract.carry`. Build output is not carriage: `install` and `build` rebuild it.
+The gitignored paths a worktree cannot get from git — a local settings file, a certificate, a seed database — declared by the operator during the **Fit**, falsified by its proof run, and frozen into the **Specification** as `contract.carry`. Build output is not carriage: `install` and `build` rebuild it.
 _Avoid_: copying, syncing.
 
 **Triage**:
@@ -151,5 +151,5 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Flagged ambiguities
 
-- **The ticketing lane shaped gauntlet-fitness** — ADR-0003, plus the **Edge**, **Gauntlet-fitness**, **Unfitness class**, **Grow-the-seam prep ticket**, **Ticket-lint** and **Stamper** terms → resolved: **removed**. `/specifier` is the sole author of acceptance criteria and runs against a live repo with the server up and a test report in hand, so shaping in prose upstream of it produced criteria that *looked* runnable and were therefore trusted. `ticket-lint` no longer exists; ADR-0003 is superseded rather than deleted, and its premise is recorded there.
+- **The ticketing lane shaped gauntlet-fitness** — ADR-0003, plus the **Edge**, **Gauntlet-fitness**, **Unfitness class**, **Grow-the-seam prep ticket**, **Ticket-lint** and **Stamper** terms → resolved: **removed**. Acceptance criteria are authored at the **Cut**, each with the command and evidence that decide it, so shaping them in prose upstream of that act produced criteria that *looked* runnable and were therefore trusted. `ticket-lint` no longer exists; ADR-0003 is superseded rather than deleted, and its premise is recorded there.
 - **The agent-takeable label was guaranteed by construction** — ADR-0002, plus the *triage-free planning lane* → resolved: **reversed**. `/align` creates the ticket before it is buildable, so `needs-alignment` is a real intermediate state and the label means *the body is not yet the contract*. Construction promised a label, not a ticket: nothing in it required a named interface, a scenario, or an out-of-scope list. See ADR-0005.

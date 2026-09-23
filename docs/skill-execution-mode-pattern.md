@@ -1,7 +1,7 @@
 ---
 created: 2026-06-14
 updated: 2026-06-14
-source: grill-with-docs (session)
+source: grill (session)
 ---
 
 # Skill Execution-Mode Pattern (grill)
@@ -20,7 +20,7 @@ Grilling session that designed how skills declare whether to use pi subagents or
 
 | Tier | Skills | Behaviour |
 |------|--------|-----------|
-| **HITL choice** | grill-with-docs, grill-me | Ask user: fan-out or linear? If no answer or subagents unavailable, go linear |
+| **HITL choice** | grill-me | Ask user: fan-out or linear? If no answer or subagents unavailable, go linear |
 | **Subagent-default** | tdd | Context-isolated loop (test-writer → implementer → refactorer). Fall back linear only if unavailable |
 
 Skills that don't need subagents (pickup, diagnose, improve-codebase-architecture, commit, log, etc.) have no execution-mode block.

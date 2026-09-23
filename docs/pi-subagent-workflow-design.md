@@ -1,6 +1,6 @@
 ---
 created: 2026-06-14
-sources: grill-with-docs session (2026-06-14), no raw
+sources: grill session (2026-06-14), no raw
 ---
 
 # Pi Subagent Workflow Design — Tiered Models · TDD Loop · Planning Fan-out

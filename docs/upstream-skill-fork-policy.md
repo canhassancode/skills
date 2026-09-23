@@ -10,7 +10,7 @@ What relationship the local skill library (`~/Repos/skills`) should have with `m
 
 ## Two premises that had to die first
 
-**"Upstream got thinner, the fork stayed fat."** False. Aggregate is near-parity — upstream 22 skills / 16,211 words vs local 26 / 18,377. The four skills that collapsed (`grill-with-docs`, `grill-me`, `grilling`, `implement`) collapsed in a *single* upstream move that extracted `grilling` as a shared primitive and made the others compositions over it. Total prose in that family is roughly conserved; it just stopped being duplicated three times. **Deduplication, not deletion.**
+**"Upstream got thinner, the fork stayed fat."** False. Aggregate is near-parity — upstream 22 skills / 16,211 words vs local 26 / 18,377. The four skills that collapsed did so in a *single* upstream move that extracted `grilling` as a shared primitive and made the others compositions over it. Total prose in that family is roughly conserved; it just stopped being duplicated three times. **Deduplication, not deletion.**
 
 **"Track or diverge."** Not a live choice, and never was about size. There is no git fork point — the library was a copy-paste import into a fresh repo, zero shared commit objects, `git merge-base` undefined. Merging is blocked three ways: no common ancestor, divergent paths, and ~40% semantic divergence on shared skills. So the only real question is *what upstream is for*.
 
