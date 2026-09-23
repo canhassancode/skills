@@ -16,7 +16,7 @@ One `/align` session. The unit of work, not the conversation: each pass raises t
 _Avoid_: iteration, round, session.
 
 **Operator**:
-The human the lane serves: owns the contract, supplies what the run cannot reach, runs the acceptance criteria at hand-back, flips the **Stack**, and retires skills. Not in the loop's per-layer path — a fallback the run reaches for, never a station it waits at.
+The human the lane serves: owns the contract, supplies what the run cannot reach, runs the acceptance criteria at hand-back, merges the pull request, and retires skills. Not in the loop's per-unit path — a fallback the run reaches for, never a station it waits at.
 _Avoid_: user, developer, owner.
 
 **Verdict**:
@@ -32,7 +32,7 @@ The exit an **Align** pass settles on, carried as a line in the **Alignment arte
 _Avoid_: project, spec — a container rides inside the **tickets** value, and is not a destination of its own.
 
 **Cut**:
-The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to exactly one **Ticket**, and publishes those tickets. It decides nothing: what cannot be written from the contract goes back for an **Align** pass rather than being filled in with prose at the cut. It never cuts horizontally — work that cannot name the scenario it makes pass is a **Layer**, which is a branch rather than a tracker node. **The cut is atomic**: no node is written until every slice passes the **Readiness check** and the operator confirms the set; one unwritable slice returns the work to `needs-alignment`.
+The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to exactly one **Ticket**, and publishes those tickets. It decides nothing: what cannot be written from the contract goes back for an **Align** pass rather than being filled in with prose at the cut. It never cuts horizontally — work that cannot name the scenario it makes pass is horizontal work wearing a ticket's clothes. **The cut is atomic**: no node is written until every slice passes the **Readiness check** and the operator confirms the set; one unwritable slice returns the work to `needs-alignment`.
 _Avoid_: breakdown, split.
 
 **Readiness check**:
@@ -47,20 +47,20 @@ _Avoid_: use case, user story.
 One dimension of a change every pass must answer for before it can close — happy path, limits, failure, misuse, concurrency and idempotency, permissions, observability, rollback, cost. Each is marked **decision**, **N/A** or **out of scope** with its reason, and the pass closes with one coverage line naming the counts, which total the list.
 _Avoid_: dimension, category, checklist.
 
-**Layer**:
-One branch in a `gh stack`, and the pull request that carries it. Cut by *code* dependency — schema, shared types, then their consumers — so a layer is green but not independently valuable. The **Cut** produces **Ticket**s; **Build** cuts layers. A layer is never a tracker node. Horizontal is the right cut here and the wrong cut one level up: a **Ticket** that cannot name the scenario it makes pass is horizontal work wearing a ticket's clothes.
-_Avoid_: slice, sub-task.
+**Unit**:
+The build's quantum — the work one fresh **Builder** invocation takes: a criterion, or a coherent group of them, cut by coherence rather than by the window. When a window fills mid-unit, what is green is committed, the comment records the resume point, and the remainder joins the plan as a unit of its own. Never horizontal: work that cannot name the criterion it makes pass is not a unit.
+_Avoid_: layer, chunk — a **Ticket** is a slice, and this is the code's quantum inside one.
 
 **Build**:
-Stage 3 — the act that turns a cut **Ticket** into **Layer**s, builds each in turn, and hands back a stack of drafts. The parent session owns the loop: it decides the layers, seats a **Builder** per layer — a fresh subagent by default, or itself in in-session mode — and holds the contract and the layer records rather than a diff. Each layer is proven against the **FeedbackLoop**, vetted by **Review**, and pushed before the next begins. Succeeds `/implement`, which retires once the loop has run in anger.
+Stage 3 — the act that turns a cut **Ticket** into working code: one branch, a sequential loop of **Unit**s, each in a fresh **Builder** invocation, each vetted by **Review** between units, handed back with the commands that show each criterion working. The parent session — the Delegator — holds the contract and the run's one comment rather than a diff, and never builds. One writer per checkout. Succeeds `/implement`, which retires once the loop has run in anger.
 _Avoid_: implement, execute, run.
 
 **Builder**:
-One invocation that builds one **Layer** — never a station that persists. A builder is always fresh: *returned to a fresh builder* means a new invocation carrying the **Finding** as its brief, not a resumed one. It TDDs the layer, committing every red → green → refactor cycle, and ends when it judges the layer done.
+One invocation that builds one **Unit** — never a station that persists. A builder is always fresh: *returned to a fresh builder* means a new invocation carrying the **Finding** as its brief, not a resumed one. It TDDs the unit, committing every red → green → refactor cycle, and ends when it judges the unit done.
 _Avoid_: agent, worker, subagent — those are the transport, not the role.
 
 **Fit**:
-The act that derives and proves the repo's own mechanics before any code is written — the commands, one per acceptance criterion, the paths a secret lives at (never its value), and the commit and tooling hash they were proven against. Recorded on the ticket for that run rather than cached per repo.
+The act that derives and proves the repo's own mechanics before any code is written — the commands, one per acceptance criterion, the paths a secret lives at (never its value), and the commit and tooling hash they were proven against. Recorded in the session's build comment for that run rather than a separate artefact.
 _Avoid_: setup, onboarding, environment.
 
 **FeedbackLoop**:
@@ -68,16 +68,12 @@ The repo's own verification, derived and proven at the **fit** before any code i
 _Avoid_: pipeline, CI, guard.
 
 **Review**:
-The **policy** that vets a diff before it goes anywhere: a layer's delta as the loop runs, once over the whole stack before it is submitted, and a named pull request when `/review` calls it. It answers with **Finding**s and the caller owns the sink — a fix round inside **Build**, a draft comment from `/review` — and it never posts. The skill implementing it is `/crucible`, which retires `/code-review` once the loop has run in anger.
+The **policy** that vets a diff before it goes anywhere: a **Unit**'s delta as the loop runs, and a named pull request when `/review` calls it. It answers with **Finding**s and the caller owns the sink — a fix round inside **Build**, a draft comment from `/review` — and it never posts. The skill implementing it is `/crucible`; `/review` invokes it and owns the voice and the posting, and `/code-review` is deprecated into it.
 _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code review, linting.
 
 **Finding**:
-One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the layer it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act. Resolved findings are counted in the layer record and never transcribed into the pull request.
+One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act. Resolved findings are counted in the run's comment and never transcribed into the pull request.
 _Avoid_: comment, defect, issue.
-
-**Stack**:
-One `gh stack` per **Ticket** — one branch and one pull request per **Layer**. Pushed as the loop builds, submitted as drafts, and opened only once every acceptance criterion has been ticked and seen working.
-_Avoid_: batch, series, PR chain.
 
 **Spec**:
 The container's body, cut by `/cut` when an alignment settles into more than one **Ticket**: the map, not the contract — the scenario-to-slice assignment, and the shared interfaces with the consumers that claim them. It carries no acceptance criteria and no boundaries, so it wears no workflow label and is checked as a map only. Where the tracker has native sub-issues it parents its slices, and it closes when its last slice closes. Supersedes the old *PRD*: the document was never product-only, so "spec" is the honest superset (technical, non-technical, or a blend).
@@ -141,12 +137,12 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Relationships
 
-- The planning lane is three acts: `/align` → `/cut` → `/build`. `/implement` retires into **Build** once stage 3 has run in anger, and the inbound lane keeps it until then. `/review`'s engine is `/crucible`; `/code-review` stays registered until `/crucible` has run in anger under `/review` — deferred, not taken (ADR-0007).
+- The planning lane is three acts: `/align` → `/cut` → `/build`. `/implement` retires into **Build** once stage 3 has run in anger, and the inbound lane keeps it until then. `/build`'s engine is `/crucible`; `/review` invokes the same policy and owns the posting, and `/code-review` is deprecated into it (ADR-0009).
 - Two lanes reach the takeable states: the **planning lane** (**align** → **cut** → **ticket**s, with `/propose` as the branch that asks someone first — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → placeholder, for work that arrived cold). One label set, two provenances. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until `/cut` cuts the work from its body. The inbound lane reaches no takeable state of its own — triage queues, and only a readiness check (`/align`'s close or `/cut`) stamps `ready-to-build`.
 - A **triage** session never writes a brief: the contract is the **Alignment artefact**'s body, and an inbound ticket waits in `needs-alignment` for the pass that writes it. Delegability is a body fact, not a state — the takeable pair retired with it.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
 - The planning lane stops at the **Ticket**: its acceptance criteria are authored from its own **Scenario**s at the **Cut**, and a **Specification** derived from it must agree with them rather than re-invent them — two authorities on "done" is the risk ADR-0004 named and ADR-0006 accepted knowingly.
-- **Ticket**s are vertical and **Layer**s are horizontal. The **Cut** produces tickets — scope, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query — and never a layer, because a slice that cannot name its **Scenario** is horizontal work wearing a ticket's clothes. Stage 3 cuts layers — code dependency, green but not independently valuable. One `gh stack` per ticket; one branch and one pull request per layer. A **Ticket** is never a sub-issue of another **Ticket** — nesting the workflow labels a level down would make the takeable claim a different one on a parent than on a child. Its container is the one **Spec** that parents it, which wears no workflow label, so there is no claim to differ from.
+- **Ticket**s are vertical. The **Cut** produces tickets — scope, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query — and never a horizontal cut, because a slice that cannot name its **Scenario** is horizontal work wearing a ticket's clothes. Stage 3 is one branch with a sequential loop of **Unit**s inside it. A **Ticket** is never a sub-issue of another **Ticket** — nesting the workflow labels a level down would make the takeable claim a different one on a parent than on a child. Its container is the one **Spec** that parents it, which wears no workflow label, so there is no claim to differ from.
 - A skill's relationship to **upstream** — **Synced**, **Adapted**, **Forked** — governs how it is edited. See `## Upstream` in `CLAUDE.md`.
 
 ## Flagged ambiguities
