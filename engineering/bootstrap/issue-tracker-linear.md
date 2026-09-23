@@ -29,11 +29,19 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 
 - **Publish a spec** (`/to-spec`): `save_project` with the spec body as the Project description. A spec is a **Project**, not a labelled issue — Projects are the team's native epic mechanism.
 - **Publish tickets** (`/to-tickets`): `save_issue` per ticket, assigned to the spec's Project. Parent/child via native **sub-issues** (`save_issue` with a parent), never a `## Parent` text section. Blocking edges via Linear's native **blocking relation**, never a `## Blocked by` text section.
-- **Publish slices** (`/cut`): `save_issue` per slice, assigned to the Project that carries the contract. Blocking edges via the native **blocking relation**. Slices are peers, never sub-issues — the alignment ticket closes once they exist, so nothing nests under it.
 - **Agent-grabbable state**: apply the `ready-to-build` label — the planning lane's takeable state.
 - **Read an issue**: `get_issue` for the body, `list_comments` for the discussion.
 - **Reference** issues by their `CAR-###` identifier (or URL), not `#N`.
 - Won't-do → native `Canceled` state.
+
+## Publishing a cut
+
+`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+
+- **One slice** — the alignment issue graduates in place: `save_issue` with the body unchanged and `ready-to-cut` swapped for `ready-to-build`.
+- **Several slices** — the spec is the **Project** that carries the map: `save_project`, carrying no planning label. Each slice is an issue created into that Project (`save_issue` with the Project set) and labelled `ready-to-build`.
+- **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each slice lands; the slice's `# Blocked by` row repeats the identifiers for a cold reader.
+- **Close the alignment issue** — `save_comment` naming the slices and their `CAR-###` identifiers, then move the issue to `Done`, once every slice exists.
 
 ## Pull requests as a triage surface
 
