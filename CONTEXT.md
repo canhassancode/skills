@@ -32,8 +32,12 @@ The exit an **Align** pass settles on, carried as a line in the **Alignment arte
 _Avoid_: project, spec — a container rides inside the **tickets** value, and is not a destination of its own.
 
 **Cut**:
-The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to exactly one **Ticket**, and publishes those tickets. It decides nothing: what cannot be written from the contract goes back for an **Align** pass rather than being filled in with prose at the cut. It never cuts horizontally — work that cannot name the scenario it makes pass is a **Layer**, which is a branch rather than a tracker node.
+The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to exactly one **Ticket**, and publishes those tickets. It decides nothing: what cannot be written from the contract goes back for an **Align** pass rather than being filled in with prose at the cut. It never cuts horizontally — work that cannot name the scenario it makes pass is a **Layer**, which is a branch rather than a tracker node. **The cut is atomic**: no node is written until every slice passes the **Readiness check** and the operator confirms the set; one unwritable slice returns the work to `needs-alignment`.
 _Avoid_: breakdown, split.
+
+**Readiness check**:
+The ten-row test a body passes before `ready-to-build`: scenarios with outcomes; criteria falsifiable, traced to a scenario, with their command and evidence; every interface owned or consumed; each settled decision with its rejected alternative; out-of-scope with reasons; boundaries (always / ask first / never); no unresolved entries; sources that resolve; native blockers naming real tickets; and every axis marked, the coverage line totalling the list. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, and `/align`'s close applies it when a single-deliverable contract graduates. Failing any row refuses the stamp.
+_Avoid_: gate, definition of done.
 
 **Scenario**:
 A named, concrete walk through the system — *a publisher posts a carousel of four images* — that every question in an `/align` pass is woven through, so an option shows its impact instead of being argued in the abstract. Enumerated during the pass, and each one ends with an outcome or an unresolved item.
