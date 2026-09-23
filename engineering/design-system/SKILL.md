@@ -87,7 +87,7 @@ Done when every motif has both fields and the losing variants have been deleted 
 
 ### 6. Name the exit test
 
-Flavour discovery is finished when **a new screen can be built without `implement` stopping**. Amendments cluster in the first few screens and tail to near zero.
+Flavour discovery is finished when **a new screen can be built without `build` stopping**. Amendments cluster in the first few screens and tail to near zero.
 
 Tell the user this test rather than handing them a checklist, and re-prototype only when a genuinely new kind of surface appears — never the same screen twice. Re-prototyping a screen means the question was wrong, not that another round is owed.
 
@@ -104,7 +104,7 @@ Done when `DESIGN.md` matches the code and every remaining drift has been named.
 
 ## Success metric
 
-The bar a repo is held to, and the same list `crucible` checks against `DESIGN.md` (ported from `code-review`'s design axis):
+The bar a repo is held to, and the same list `crucible` checks against `DESIGN.md` (the design axis `code-review` carried until its deprecation into `crucible`):
 
 - Zero raw hex values outside the token layer
 - Zero off-scale spacing
@@ -118,7 +118,7 @@ All five are greppable, which is the point — an aesthetic goal you cannot grep
 
 These skills read `DESIGN.md`. All of them activate on the same trigger: **the diff touches a path with a `DESIGN.md` at or above it.** The nearest one upward governs, and the path selects which surface profile applies. Backend-only diffs never trip it.
 
-- `implement` and `tdd` read it the way they read `CONTEXT.md`, and **stop and ask** when no rule covers a case, then write the answer back.
+- `build` and `tdd` read it the way they read `CONTEXT.md`, and **stop and ask** when no rule covers a case, then write the answer back.
 - `crucible` runs the design baseline against the success metric.
 - `bootstrap` invokes this skill when scaffolding a new repo.
 

@@ -52,7 +52,7 @@ The build's quantum — the work one fresh **Builder** invocation takes: a crite
 _Avoid_: layer, chunk — a **Ticket** is a slice, and this is the code's quantum inside one.
 
 **Build**:
-Stage 3 — the act that turns a cut **Ticket** into working code: one branch, a sequential loop of **Unit**s, each in a fresh **Builder** invocation, each vetted by **Review** between units, handed back with the commands that show each criterion working. The parent session — the Delegator — holds the contract and the run's one comment rather than a diff, and never builds. One writer per checkout. Succeeds `/implement`, which retires once the loop has run in anger.
+Stage 3 — the act that turns a cut **Ticket** into working code: one branch, a sequential loop of **Unit**s, each in a fresh **Builder** invocation, each vetted by **Review** between units, handed back with the commands that show each criterion working. The parent session — the Delegator — holds the contract and the run's one comment rather than a diff, and never builds. One writer per checkout. Succeeds `/implement`, now deprecated.
 _Avoid_: implement, execute, run.
 
 **Builder**:
@@ -137,7 +137,7 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Relationships
 
-- The planning lane is three acts: `/align` → `/cut` → `/build`. `/implement` retires into **Build** once stage 3 has run in anger, and the inbound lane keeps it until then. `/build`'s engine is `/crucible`; `/review` invokes the same policy and owns the posting, and `/code-review` is deprecated into it (ADR-0009).
+- The planning lane is three acts: `/align` → `/cut` → `/build`. `/implement` is deprecated into **Build**, now that stage 3 has run in anger; the inbound lane uses `/build` too. `/build`'s engine is `/crucible`; `/review` invokes the same policy and owns the posting, and `/code-review` is deprecated into it (ADR-0009).
 - Two lanes reach the takeable states: the **planning lane** (**align** → **cut** → **ticket**s, with `/propose` as the branch that asks someone first — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → placeholder, for work that arrived cold). One label set, two provenances. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until `/cut` cuts the work from its body. The inbound lane reaches no takeable state of its own — triage queues, and only a readiness check (`/align`'s close or `/cut`) stamps `ready-to-build`.
 - A **triage** session never writes a brief: the contract is the **Alignment artefact**'s body, and an inbound ticket waits in `needs-alignment` for the pass that writes it. Delegability is a body fact, not a state — the takeable pair retired with it.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.

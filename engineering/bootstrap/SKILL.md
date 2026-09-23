@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: One-time per-repo setup for the engineering skills — configures the issue tracker, triage-label vocabulary, and domain-doc layout for BOTH the triage-graph lane (triage) and the planning lane (align/cut/propose/wayfinder/code-review/crucible/implement). Use when onboarding a repo to these skills or switching its tracker.
+description: One-time per-repo setup for the engineering skills — configures the issue tracker, triage-label vocabulary, and domain-doc layout for BOTH the triage-graph lane (triage) and the planning lane (align/cut/propose/wayfinder/review/crucible/build). Use when onboarding a repo to these skills or switching its tracker.
 disable-model-invocation: true
 ---
 
@@ -9,7 +9,7 @@ disable-model-invocation: true
 Configure how *this* repo's skills talk to its tracker and domain docs. The skills resolve two config surfaces at run time — this skill writes both, so both lanes work:
 
 - **Triage-graph lane** (`triage`) reads a `tracker:` preference from the repo's `CLAUDE.md`, its label strings from `docs/agents/triage-labels.md`, and its commands from `docs/agents/issue-tracker.md`. GitHub and Linear only.
-- **Planning lane** (`align`, `cut`, `propose`, `wayfinder`, `code-review`, `crucible`, `implement`) reads per-repo `docs/agents/*.md`. GitHub, Linear, GitLab, local-markdown, or a freeform "other".
+- **Planning lane** (`align`, `cut`, `propose`, `wayfinder`, `review`, `crucible`, `build`) reads per-repo `docs/agents/*.md`. GitHub, Linear, GitLab, local-markdown, or a freeform "other".
 
 **GitHub and Linear are fully wired for both lanes.** If you pick GitLab / local / other, the planning lane works from its seed template while the triage-graph lane has no adapter — flag this to the user rather than pretending it's configured.
 
