@@ -68,6 +68,15 @@ Create a GitHub issue.
 
 Run `gh issue view <number> --comments`.
 
+## Publishing a cut
+
+`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+
+- **One slice** — the alignment ticket graduates in place: `gh issue edit <n> --remove-label ready-to-cut --add-label ready-to-build`. Its body already carries the contract; nothing is rewritten.
+- **Several slices** — create the spec node first, with no label: `gh issue create --title "<spec title>" --body-file - <<'EOF' … EOF`. Then each slice as its native sub-issue: `gh issue create --title "<slice title>" --body-file - --parent <spec> --label ready-to-build`.
+- **Blocking edges** — native issue dependencies, set as each slice lands: `gh issue create … --blocked-by <n>,<n>`. The slice's `# Blocked by` row repeats them for a cold reader; the native edge is the live gate.
+- **Close the alignment ticket** — `gh issue close <alignment> --comment "Cut into #232, #233, #234"`, once every slice exists.
+
 ## Wayfinding operations
 
 Used by `/wayfinder`. The **map** is a single issue with **child** issues as tickets.

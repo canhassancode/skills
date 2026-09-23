@@ -18,6 +18,15 @@ Create a new file under `.scratch/<feature-slug>/` (creating the directory if ne
 
 Read the file at the referenced path. The user will normally pass the path or the issue number directly.
 
+## Publishing a cut
+
+`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+
+- **One slice** — the alignment file graduates in place: swap its `Status: ready-to-cut` line for `Status: ready-to-build`. Its body already carries the contract; nothing is rewritten.
+- **Several slices** — write `.scratch/<feature-slug>/spec.md` from the spec body: the map, with no status. Write each slice as `.scratch/<feature-slug>/issues/NN-<slug>.md` with the slice body, `Status: ready-to-build`, and its top link row pointing at `spec.md`.
+- **Blocking edges** — a `Blocked by: NN, NN` line near the top of the slice. A ticket is unblocked when every file it lists is `resolved`.
+- **Close the alignment ticket** — set its `Status:` to `closed` and append a `## Cut` note naming the slice files, once every slice exists.
+
 ## Wayfinding operations
 
 Used by `/wayfinder`. The **map** is a file with one **child** file per ticket.

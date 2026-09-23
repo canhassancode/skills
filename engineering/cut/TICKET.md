@@ -1,34 +1,57 @@
-# Ticket Title
-- One claim about behaviour a stranger can falsify.
+# Slice title
 
-# Ticket Body
+One sentence, affirmative, specific, sentence case, no internal names — *Carousels reject off-ratio images before upload*, not *Add ratio validation to `Normaliser`*. Where the deliverable is a removal or a chore, the imperative carries it honestly — *Delete the old ratio column*.
+
+# Slice body
+
 ```markdown
-# What this makes work
-The scenario it makes pass, in user terms. Not how.
+> Spec: #<n> · Alignment: #<n>
 
-# Contract it inherits
-The rows that bind it, copied verbatim, each tagged with where it came from
-and that source's date. A copy, never a reference — an agent reads one body.
+# Scenarios
 
-# Interfaces
-Rows, one per unit, not prose:
-name · signature · inputs · outputs · composed-from · owned | consumed
-
-# Where the work lands
-Claimed surfaces, each with the pattern it obeys. Every path is a claim to
-be re-verified at the start of the run, not a fact. Stale paths are how the
-touchpoint evidence turns from a benefit into a trap.
+| scenario | outcome |
+| --- | --- |
 
 # Acceptance criteria
-- [ ] One rule per line, each falsifiable, each with the command that decides it
-  and the evidence that counts as passing.
+
+- [ ] Each falsifiable, traced to the scenario it makes pass, with the command that decides it and the evidence that counts as passing.
+
+# Interfaces
+
+| name | signature | inputs | outputs | owned | consumed |
+| --- | --- | --- | --- | --- | --- |
+
+A row owned here defines the contract; a row consumed here depends on another node's.
+
+# Decisions
+
+| decision | taken | rejected | because | source |
+| --- | --- | --- | --- | --- |
+
+# Diagram
+
+Where the slice changes one: the flow, with the part it owns named.
+
+# Where the work lands
+
+| surface | pattern |
+| --- | --- |
 
 # Boundaries
-Always / Ask first / Never.
+
+**Always** · **Ask first** · **Never**
 
 # Out of scope
+
 Numbered, each with the reason it was rejected.
 
-# Open questions
-Anything unresolved. The run stops here rather than guessing.
+# Blocked by
+
+Each a real ticket, its native edge set.
+
+# Unresolved
+
+Empty, or the route that settles each entry.
+
+# Sources
 ```

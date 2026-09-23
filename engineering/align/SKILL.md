@@ -30,5 +30,7 @@ An alignment is a _thinking_ artefact, not by default a spec or a build. The clo
 
 Where the pass carries on, the row is the state change plus the pass comment; nothing else moves. Where a ticket has to be created for the next pass, the operator says so — `/align` does not create nodes on its own.
 
+A contract that graduates to `ready-to-build` at the close passes the ten rows in [READINESS.md](../cut/READINESS.md) first; a failed row keeps the work at `needs-alignment` with the row named.
+
 ## Additional Files
 **Examples**: See [EXAMPLES.md](EXAMPLES.md)

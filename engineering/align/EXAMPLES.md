@@ -91,25 +91,25 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 # Background context
 [ One paragraph relevant statement on the why ]
 
-# Problem Statement
+# Problem statement
 [ One paragraph with a scenario to make this easy to understand by human readers and AI. ]
 
 # The solution
 [ One paragraph on the destination solution, this will change through alignment. This may be fog at the beginning ]
 
-# Relevant Diagrams
+# Diagram
 [ Place Sequence Diagram here ]
 
-# Agreed Interfaces
+# Interfaces
 [ Any interface design goes here ]
 
-# Acceptance Criteria
+# Acceptance criteria
 [ Checklist ]
 
 # Out of scope
 [ Numbered list, short, format might be e.g. Considered, reason why not ]
 
-# Relevant Sources
+# Sources
 [ Any sources that we should carry across to the body from a pass ]
     
 ```
@@ -128,7 +128,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 # Outstanding
 [ Short bullet point list on what is in the fog, what is blocked, what is preventing this from moving to ready-to-cut or ready-to-build ]
 
-# Relevant Sources
+# Sources
 [ Short bullet point list on any relevant sources from this pass ]    
 ```
 
@@ -141,7 +141,7 @@ A raw line queued at `needs-alignment`: the body above, degenerate to three rows
 # Background context
 [ One paragraph on how the work arrived, and why it is worth a pass. ]
 
-# Problem Statement
+# Problem statement
 [ One paragraph on what is wanted or wrong, in the words of whoever brought it. ]
 
 # Triage notes
