@@ -6,6 +6,8 @@ status: accepted
 
 Narrows [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md)'s single-author claim about acceptance criteria. Leaves [ADR-0005](./0005-align-owns-the-planning-entry.md)'s stage-2 question open rather than closing it.
 
+**Amended by [ADR-0008](./0008-the-spec-node-parents-its-slices.md).** A container where the tracker has native sub-issues is a spec node that parents the slices, carries no workflow label, and closes when its last slice closes. `**Destination:**` names tickets, a proposal, an ADR, or nothing — a project is the container inside the tickets exit.
+
 ## Context
 
 ADR-0005 ended the planning lane's *by construction* guarantee and left stage 2 undesigned: "whatever cuts the work reads the body. Open: whether stage 2 subsumes `/to-spec` and `/to-tickets` or sits beside them."

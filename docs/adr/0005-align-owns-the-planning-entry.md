@@ -8,6 +8,8 @@ status: accepted
 
 Supersedes [ADR-0002](./0002-triage-free-planning-lane.md)'s *by construction* claim.
 
+**Amended 2026-09-23.** The four-pass claim below retires with the term: no skill ever executed it, `grill-with-docs` was the only home it ever had, and upstream never carried it. Removed from `CONTEXT.md` and `CLAUDE.md`; `/triage`'s own reference goes with its round.
+
 ## Context
 
 ADR-0002 made the planning lane triage-free: `/to-spec`, `/to-tickets` and `/grill-with-docs` publish `ready-for-agent` **by construction**, so no planned ticket ever waits in an intermediate state. Upstream's v1.1.0 move then extracted `grilling` as a shared primitive and made `grill-me` and `grill-with-docs` compositions over it — deduplication, not deletion, and the family is roughly the same size as before.
