@@ -14,7 +14,7 @@ A remote named `upstream` outranks `origin` when `gh` resolves this repo, so the
 
 ### Classes
 
-Every skill is one of three. The class governs what a harvest is allowed to do to it.
+Every registered skill is one of three. The class governs what a harvest is allowed to do to it.
 
 **Synced** — tracks upstream byte-for-byte: `research`, `wayfinder`, `writing-great-skills`.
 
@@ -24,10 +24,8 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why it diverges |
 |---|---|
-| `code-review` | The Structure axis is local — it encodes the ladder in the global `CLAUDE.md`. |
 | `triage` | The Linear adapter and the markdown-ticket flow are local. |
 | `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
-| `implement` | Takes a ticket reference and fetches the agent brief through the tracker adapter. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
 | `tdd`, `domain-modeling`, `prototype`, `improve-codebase-architecture`, `codebase-design` | Local domain-doc conventions (`CONTEXT.md`, `docs/adr/`) and British English. |
 | `grill-me` | Local description and the second-brain sweep; the body is still upstream's one-line delegation. |
@@ -38,14 +36,15 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 |---|---|
 | `align` | No upstream counterpart — supersedes `grilling` and `grill-me`. Owns the planning lane's entry — four entries, one of them a refusal — the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
-| `system-map` | Its live upstream is the work `claude-code-config` repo, not `mattpocock/skills`. Diff against that, not this remote. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
-| `crucible` | No upstream counterpart — the review policy; falsification, the consumer grep and the four baselines, and it replaces `code-review` as `/review`'s engine once it has run in anger (ADR-0007). |
+| `crucible` | No upstream counterpart — the only review policy; falsification, the consumer grep and the three baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
+
+The experiment bench sits outside these tables until it ships: `in-progress/system-map` is the one unregistered directory (`## The count`), forked from the work `claude-code-config` repo — diff against that, not this remote.
 
 ### Edit-time discipline
 
