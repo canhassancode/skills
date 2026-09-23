@@ -121,6 +121,9 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 | rollback | | |
 | cost | | |
 
+# Diagram
+[ The flow this change moves through, where one changed. ]
+
 # Interfaces
 
 | name | signature | owned | consumed |
@@ -159,9 +162,6 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 # Outstanding
 [ Short bullet point list on what is in the fog, what is blocked, what is preventing this from moving to ready-to-cut or ready-to-build ]
-
-# Diagram
-[ One per flow the pass touched, only where one changed. ]
 
 # Sources
 [ Short bullet point list on any relevant sources from this pass ]    
