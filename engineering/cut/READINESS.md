@@ -1,8 +1,8 @@
 # Readiness check
 
-The ten-row test a body passes before it is stamped `ready-to-build`. Failing any row refuses the stamp.
+The ten-row test a body passes before it takes a takeable stamp. Failing any row refuses the stamp.
 
-Two readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it when a single-deliverable contract graduates.
+Two readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build`.
 
 | # | row | the check |
 | --- | --- | --- |

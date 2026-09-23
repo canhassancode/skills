@@ -35,7 +35,7 @@ An alignment is a _thinking_ artefact, not by default a spec or a build. The clo
 
 The body carries the pass count, the verdict, the destination, what the pass was verified against, the unresolved items with their routes, and the next act. A pass comment carries only what moved in that pass.
 
-A contract that graduates to `ready-to-build` at the close passes the ten rows in [READINESS.md](../cut/READINESS.md) first; a failed row keeps the work at `needs-alignment` with the row named.
+A contract that takes either takeable exit — `ready-to-cut` or `ready-to-build` — passes the ten rows in [READINESS.md](../cut/READINESS.md) before the stamp; a failed row keeps the work at `needs-alignment` with the failing rows named, so `/cut` never reads a body still carrying fog.
 
 ## Additional Files
 **Examples**: See [EXAMPLES.md](EXAMPLES.md)
