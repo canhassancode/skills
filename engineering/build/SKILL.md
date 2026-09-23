@@ -1,241 +1,218 @@
 ---
 name: build
-description: Stage 3 — build a cut ticket as one branch or a stack of layers, one fresh builder invocation each, every unit falsified by /crucible and pushed. Use when a ticket sits at ready-to-build, or when the operator asks to build a ticket.
+description: Build a cut ticket as a sequential loop of fresh-child units, gated by crucible, ended by its pull request.
 argument-hint: <ticket-ref>
 disable-model-invocation: true
 ---
 
 # Build
 
-Stage 3. `/build <ticket-ref>` reads a cut **Ticket**'s contract, proves the repo's own loop, decides the shape — one branch or a stack of **Layers** — and builds it one unit at a time: each in a fresh **Builder** invocation, each vetted by `/crucible`, each pushed before the next begins. It hands back a pushed branch or a stack of them, and no pull request.
+Stage 3. `/build <ticket-ref>` reads a cut ticket's **contract**, fits the repo's own loop, and builds the ticket as a **sequential** loop of **Units** — each one in a fresh **Builder** child, each vetted by the **Review** in a child of its own, each green and committed before the next begins. It ends with the branch pushed and the pull request open, its table showing every criterion's command and result.
 
-The parent session owns the loop. It holds the **contract** and the **layer records**, never a diff: code in this window is cost the next layer cannot afford. Every Builder is **fresh** — a finding returns to a new invocation carrying the finding as its brief, never a resumed one.
+The parent session — the **Delegator** — holds the contract, the unit list and the run's one comment, never a diff. Code in this window is the failure this skill closes: the parent delegates every unit and never edits the tree. One writer per checkout, always — a Builder and the Review never hold the tree at the same time.
 
-The layer plan is the budget. A layer is sized to one fresh invocation, and the plan is what keeps the run inside its windows.
+Fresh children come from the harness, in one line: pi's `subagent` with `delegate`, Claude Code's `Agent` tool. A harness that cannot spawn one is an **unavailable** dependency like any other, and the run stops before writing (§2).
 
-Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. The issue tracker should have been provided to you — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
+Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. Tickets are read through the tracker adapter — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
 
-## 1. Declare the seats
+## 1. Read the contract
 
-Do this before anything else; the rest of the procedure assumes it. One writer at a time, always: a builder and the Review are never in the checkout together. Seats are who occupies the two chairs — the shape, one branch or a stack, is decided in §4, because it depends on the contract and the fit.
+Fetch the ticket and read its body: the scenarios and their outcomes, the acceptance criteria with their class — behaviour, claim, test, shape — the interfaces it owns and consumes, the decisions that bind it, what it decided against, and its blocking edges. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
 
-| seat | **Builder** | **Review** | when |
-| --- | --- | --- | --- |
-| **delegated** (default) | one fresh subagent per unit, Claude Code's `Agent` or pi's `subagent`; it hands back the whole unit — green, committed, tree clean — never per commit | the parent launches a fresh `/crucible` subagent per unit | subagents resolve |
-| **in-session** | the parent builds each unit itself, with `/tdd` | the same fresh `/crucible` subagent per unit | the operator asks to watch the code being built, or the shape is direct |
-| **self-review** | the parent | the parent runs `/crucible` in its own window, said plainly as weaker than a fresh seat | subagents are down |
+Every criterion carries the command that decides it and the evidence that counts as passing. The fit pairs each with its **witness** — the test or observable that shows it. A criterion with no class is not yet this run's contract: hand the ticket back for `/align` rather than assigning one.
 
-The parent owns the contract, the plan, the routing, the records, and the push. A **Builder** — subagent or parent — never pushes: it ends at a clean tree with its commits in hand, and the parent pushes before the Review runs.
+**Done when** every criterion has a class, traces to a scenario, and names its command.
 
-In-session is entered on the operator's word at invocation. Parent-as-builder is **direct** shape's default: there is no next layer whose window it must protect. A parent that fills its window mid-unit hands back at the same boundary as any builder: commit what is green, record it, and resume in a fresh session from the fit, plan and layer records.
+## 2. Fit the repo, then prove the loop at the base
 
-**Done when** you can name who occupies each seat.
-
-## 2. Fetch the contract and claim the ticket
-
-Fetch the ticket through the tracker adapter and read the **body**: what to build, the scenario table, the acceptance criteria with their **classes**, the interfaces it owns and consumes, the flow, the decisions that bind it, what is decided against, and the blocking edges.
-
-Read the classes closely: the ticket declared behaviour, claim, test or shape for every criterion at the cut, and the fit will witness each one. A ticket whose criteria carry no class is not yet the contract this run reads — an `/align` pass settles it rather than this run assigning classes.
-
-**Claim it**: `gh issue edit <n> --add-assignee @me` is the run's first write, so the frontier stops offering it.
-
-**Done when** every criterion carries its class and traces to a scenario, and the ticket is claimed.
-
-## 3. Fit the repo
-
-The run owns one worktree for the whole ticket — entered before the fit, the session's own where it already has one, with the git and stack flows in [STACK.md](./STACK.md) — so the primary checkout is never the build's scratch space and the proven loop survives every layer's branch switch.
-
-Derive the repo's own mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read what it documents: `CONTEXT.md` and `CLAUDE.md`, CI configuration, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist. One pass over those sources: what is not there is *unavailable*, named as needed rather than hunted for.
+Derive the mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read `CONTEXT.md` and `CLAUDE.md`, the CI config, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist. One pass: what is not there is *absent*.
 
 | field | what it holds |
 | --- | --- |
-| **commands** | the loop's commands — typecheck, focused tests, the suite — plus one command per acceptance criterion, paired with its **witness**, the test or observable that will show it |
-| **secrets** | the paths a secret lives at, never a value |
-| **proven** | the commit and the tooling hash the commands were run against |
+| **loop** | typecheck, focused tests, the suite — the commands every unit runs |
+| **criteria** | one command per criterion, each with its witness |
+| **secrets** | the path a secret lives at, never the value |
+| **children** | the harness call that spawns a fresh Builder and the one that spawns the Review |
+| **proven** | the base commit the commands ran against |
 
-Then **prove them**: run the commands at the base commit. One of three honest outcomes comes back:
+Then run them at the base commit. One of three honest outcomes comes back:
 
-- **Absent** — no suite, no typecheck, no CI. Absence is a recorded **fact** and the run proceeds: the operator's own run at hand-back is the verification such a repo has left.
-- **Unavailable** — a command, a service or a secret the loop needs is missing. **Stop before writing anything**, name what is needed and the path it lives at (never the value), and escalate to the operator. Nothing is re-derived: once it is supplied, the run resumes at this step.
-- **Green** — record the baseline and the suite's duration; both are what the layer's `facts` will be measured against.
+- **Absent** — no suite, no typecheck, no CI. Absence is a recorded fact and the run proceeds: the operator's own run at hand-back is the verification such a repo has left.
+- **Unavailable** — a command, a service, a secret or the harness's spawn call is missing. **Stop before writing anything**: name what is needed and where it lives (a secret's path, never its value), ask the operator, and record the block on the ticket as §6's comment. An unavailable dependency is never worked around, and once it is supplied a fresh session resumes here.
+- **Green** — record the base commit and the suite's duration: the baseline every unit is measured against.
 
-Record the fit on the ticket, one comment for this run:
+A witness is derived from the criterion. Inventing one to fit the code is the failure this gate closes.
 
-```markdown
-### Fit — <run>, at `<commit>`
+**Done when** every criterion has a witness and a command, both have been run at the base, and the outcome is one of the three.
 
-**Loop**  typecheck `<cmd>` · focused `<cmd>` · suite `<cmd>` · CI `<run | absent>`
-**Proven**  `<commit>` at tooling `<hash>` — green · absent · unavailable
-**Secrets**  `<path>` (paths, never values)
+## 3. Cut the ticket into units
 
-| criterion | class | witness | command |
-| --- | --- | --- | --- |
-| <the criterion, short> | behaviour | <the test or observable> | <what runs it> |
-```
+A **Unit** is a criterion, or a coherent group of them, that one fresh Builder can hold end to end. Cut by coherence, never horizontally: work that cannot name the criterion it makes pass is not a unit, and the window is a stop-rule rather than a cutter.
 
-The tooling hash is over the repo's declared tooling as it stood — lockfiles and tool config, hashed with the shell's own tool — so a claim proven against stale mechanics is visible.
+Order the units so each begins from the last one's green tree — a schema before its consumers, a shared type before the code that calls it. Every criterion belongs to exactly one unit.
 
-**Done when** every criterion has a witness and a command, the commands have been run, and the fit is on the ticket.
+A ticket that will not cut into units one Builder can hold is not this run's to shrink: take it back for `/align`.
 
-## 4. Decide the shape, then cut
+**Done when** every criterion has exactly one unit, in an order where each unit starts from a green tree.
 
-**Shape first.** Two shapes, and the contract plus the fit decide which:
+## 4. Run the loop
 
-| shape | what it is | when | push |
-| --- | --- | --- | --- |
-| **direct** | one branch, no stack | the contract fits one fresh builder invocation | `git push -u` |
-| **layered** | a stack, one branch per layer | it does not | `gh stack push` |
+One unit at a time, in order. The moves below repeat until the units are done.
 
-Layering is the mechanism that makes work possible that never fit one window: a ticket larger than a builder invocation is cut horizontally, and the layer plan is what the window is spent against. So **layered** is the recommendation whenever the contract does not demonstrably fit one invocation, and the ask carries its evidence as an invocation count — *one invocation: four criteria, two files* against *four layers: schema, types, two consumers*. **Direct** is a prediction, not a promise: a builder whose window fills hands back at a green commit and the remainder becomes a layer above it (§5). Promotion is one-way — a layered run never collapses into direct.
+### 4.1 Brief a fresh Builder
 
-Where the work re-enters a branch that already exists, the shape is direct on that branch, and it becomes the stack's base if layers are added above it later. A branch that already has an open pull request stays open and skips the shipping half (§10).
-
-Read the base from the pass that settled the contract — the trunk, the `docs/` branch it wrote to, or the branch it was called about — never inferred.
-
-Then, in layered shape, cut by **code dependency**: the schema, the shared types, then their consumers. A layer is green but not independently valuable — that is the point of the cut, and the reason it is a branch rather than a ticket. The first layer sits on the base above, and each layer sits on the one below it. In direct shape the plan has one row: the branch owns every criterion and contributes to none.
-
-Assign every acceptance criterion to exactly **one owning layer**, and name the layers that **contribute** to it: the owner is the layer whose diff makes the criterion hold, and the contributors are the layers it needs to exist first. The owner is what the pull request's body will carry later.
-
-Size is the budget: a layer fits one fresh invocation. Too big is a layer whose brief a fresh builder cannot hold; too small is a layer that only makes sense as part of another. A ticket that cannot be cut into fitting layers is not this run's to shrink — take it back for an `/align` pass.
-
-Record the plan on the ticket, one comment for this run — one row in direct shape — so a re-entered run resumes rather than planning again:
-
-```markdown
-### Plan — <n> layers
-
-| # | branch | base | owns | contributes |
-| --- | --- | --- | --- | --- |
-| 1 | `feat/…` | `main` | criteria 1, 2 | 3 |
-| 2 | `feat/…` | `feat/…` | criterion 3 | — |
-```
-
-**Done when** every criterion has exactly one owning layer, every layer names its base, and the plan is on the ticket.
-
-## 5. Invoke a Builder per layer
-
-Prepare the branch first — created off its base, bottom to top, in the run's worktree, with the flows in [STACK.md](./STACK.md); in direct shape, one branch off the base, or a switch to the branch that already exists. In **delegated** seat the parent hands the brief below to a fresh subagent; in **in-session** the brief is the parent's own working constraint. Either way the brief goes to the builder, never onto the ticket.
-
-One fresh invocation per layer, with the brief. The brief carries the contract by reference and the layer's material verbatim — never a restatement of the contract:
+Spawn a fresh child with the brief below. It carries the contract by reference and the unit's material verbatim — never a restatement of the whole contract.
 
 ```text
 <builder-brief>
 
-Layer: <branch> off <base> · Ticket: #<n> · Plan: <the plan comment>
+Unit <n> of <m> — <one line> · Ticket: #<n>
 
-You build one layer of this ticket. Read the contract on the ticket; the criteria below are yours, verbatim.
+You build one unit of this ticket. Read the contract on the ticket; the criteria below are yours, verbatim.
 
-Owns: <criterion 1>, <criterion 2>
-Contributes to: <criterion…> (owned by <layer>)
-Consumes: <the settled interfaces this layer calls, from the contract>
+Owns: <criterion>, <criterion>
+Witness and command: <criterion> → <witness> → <command>
 The loop: <typecheck>, <focused tests>, <suite> — proven green at <commit>.
 Secrets live at: <paths> — never a value. If one is unreadable, stop and say so.
 
-TDD the layer: /tdd (or the project's equivalent), one /commit per red → green → refactor cycle — the
-refactor included, never skipped. Commit on a real green, not on your say-so. Where the fit recorded
-absence there is no cycle to run: commit per increment, and the operator's run is the verification.
+TDD the unit — /tdd, or the project's equivalent — one /commit per red → green → refactor cycle, the
+refactor included. Commit on a real green, not on your say-so. Where the fit recorded absence there is
+no cycle to run: commit per increment, and the operator's run is the verification.
 
-Change only what the layer's criteria need. Leave the tree clean. Do not push, do not open anything,
-do not vet your own work: the parent owns the stack and the Review.
+Change only what this unit's criteria need. Leave the tree clean. Do not push, do not open anything, do
+not review this work: the Review is a separate child.
 
-If the window fills before the layer is done: commit what is green, leave the tree clean, and hand
-back a brief naming what is done and what remains. A split layer beats a degraded one.
+If your window fills before the unit is done, commit what is green, leave the tree clean, and hand back
+what is done and what remains.
 
-Hand back: the commits, the facts you proved (typecheck, focused tests, suite), and confirmation
-the tree is clean.
-
-</builder-brief>
+Hand back: the commits, the criterion's command with its output quoted, the loop's results, and
+confirmation the tree is clean.
 ```
 
-A builder ends when it judges the layer done — green, committed, tree clean. A hand-back that is anything else is a brief that failed its completion criterion, and the parent re-briefs rather than resuming the builder. The parent pushes the layer next (§6), then launches the Review (§7).
+A Builder ends when it judges the unit done — green, committed, tree clean, the criterion's command run and quoted. Any other hand-back is a brief that failed: re-brief a fresh child rather than resuming that one.
 
-A builder that stops because the window filled hands back at a green commit. Push what exists, record it, and cut the remainder into a new layer above it: the plan changed, so the split layer gets its own brief like any other.
+**Done when** the unit's commits are in and the tree is clean.
 
-**Done when** the layer's commits are in and the tree is clean.
+### 4.2 Vet the unit with the Review
 
-## 6. Push the layer
+Launch `/crucible` in a fresh child of its own — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies each witness with one hand-placed mutation and greps the consumers of every surface the diff changed. It never posts.
 
-Push once the tree is clean — `gh stack push` in layered shape, `git push -u origin <branch>` in direct — one branch per layer, no pull request. A branch that already carried an open pull request is pushed to it and stays open. The commands, the branch naming and the stack's construction are in [STACK.md](./STACK.md). A push is idempotent: re-running it with the branch already up changes nothing.
+It returns **Findings** — class, severity, where it was found, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red`. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
 
-**Done when** the layer's branch is on the remote, with no pull request against it — or the one it already had, still open.
+**Done when** every criterion the unit owns carries a falsification result and the findings are in hand.
 
-## 7. Review the layer
-
-Launch `/crucible` as a fresh subagent — in **delegated** and **in-session** seats — with the unit's delta `<base>...<branch>` and the ticket's contract: it executes in its own context, against the run's worktree, never in the parent's window. In **self-review** the parent runs it itself, said plainly as weaker. It returns **Findings**; it never posts. Falsification is the gate: every criterion the layer owns has its witness mutated — one hand-placed mutation each, red required — a survived mutation is not accepted, and the consumers of every changed surface are grepped.
-
-A layer is vetted here on its own delta. The one whole-stack pass runs after the last layer, in the shipping half.
-
-**Done when** every owned criterion has a falsification result, and the findings are in hand.
-
-## 8. Route the findings
+### 4.3 Route the findings
 
 | finding | route |
 | --- | --- |
-| **behaviour · claim · test** | returned to a **fresh invocation** with the finding as its brief; the fix lands wherever the finding lives |
-| **shape** | rides at P2 — recorded in the layer record, never a fix round, never a stop |
-| **a scenario the contract never named** | a **contract change**: an `/align` pass on the ticket, not a fix round |
-| **matching an out-of-scope entry** | **suppressed**, citing the entry — never work |
-| **a product call the review cannot decide** | asked in session; the answer is recorded as a decision row or an out-of-scope entry |
+| behaviour · claim · test — P0/P1 | a fresh fix child, §4.4 |
+| shape — P2 | recorded in the comment, never a fix round |
+| an out-of-scope row | suppressed, citing the row |
+| a scenario the contract never named | a contract change: `/align`, never a fix round |
+| a product call | asked in session; the answer recorded as a decision row or an out-of-scope entry |
 
-A fix round is a new Builder invocation — in **delegated** a fresh subagent, in **in-session** the parent — with the findings as its brief, never a resumed builder:
+**Done when** every finding has a route and none is left unplaced.
+
+### 4.4 Fix, twice at most
+
+A fix is a new Builder child carrying the findings as its brief, never a resumed one:
 
 ```text
 <fix-brief>
 
-Layer: <branch> · Ticket: #<n> · Round: <n> of 2
+Unit <n> of <m> · Ticket: #<n> · Round <n> of 2
 
-The **Review** returned findings against this layer. Each is a question with its evidence; answer it in
-the code — the fix lands wherever the finding lives, which may be outside this layer's diff.
+The Review returned findings against this unit. Each is a question with its evidence; answer it in the
+code — the fix lands wherever the finding lives, which may be outside this unit's diff.
 
-<the findings verbatim: class, severity, found at, question, evidence>
+<the findings verbatim>
 
-Same boundary as the layer brief: /tdd where a test is the answer, one commit per cycle, tree clean,
-no push. Do not widen scope: a finding that adds a scenario is not yours to fix — say so and stop.
-
-</fix-brief>
+Same boundary as the unit brief: /tdd where a test is the answer, one commit per cycle, tree clean, no
+push. Round two varies the route: a second attempt that repeats the first one's failed route is not a
+second attempt. Do not widen scope — a finding that adds a scenario is not yours to fix; say so and stop.
 ```
 
-The layer gets **two rounds at most**; a finding still open after its second is escalated in session with what was tried and what remains, and the operator decides. A round that commits is re-pushed (§6) before it is re-vetted, and crucible re-runs on the criterion the round touched — not on the whole layer: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes.
+Commit the round, then re-vet only the criterion the round touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Two rounds per finding is the cap; a finding still open after its second goes to the operator in session — the finding, what was tried, and a proposition with the route it would take.
 
-**Done when** every acting finding is closed by a red mutation or escalated with what was tried, and every non-acting finding is recorded as it resolved.
+**Done when** every acting finding is closed by a red mutation, escalated with a proposition, or recorded as accepted open.
 
-## 9. Record the layer
+### 4.5 Close the unit
 
-Post one record per branch on the ticket — one in direct shape — the template below and nothing beyond it; it is the parent's durable memory, which is what a re-entered run reads instead of re-deriving:
+A unit closes when the tree is clean, its commits are in, and every criterion it owns is red-mutated in the verified list or explicitly accepted by the operator. A criterion accepted open is named as accepted in the comment and in the pull request's table.
+
+### 4.6 The stop rule
+
+The window is a stop-rule, for the parent and for a Builder alike. When it fills mid-unit: what is green is committed, the tree is left clean, the comment (§6) records the resume point, and the remainder becomes a unit of its own for a fresh session. Push the branch so the green commits are on the remote, and open nothing.
+
+## 5. Push and open the pull request
+
+After the last unit — never before — push the branch and open the pull request:
+
+```sh
+git push -u origin <branch>
+gh pr create --title "<subject> (#<n>)" --body-file -
+```
+
+The body carries every criterion, the command that decides it, and the result that was actually run:
 
 ```markdown
-### Layer — `<branch>` off `<base>`
+## Summary
 
-**Owns** <criteria> · **Contributes to** <criteria> · **Window** peak <n>
-**Commits** `<sha>` <subject> · …
-**Facts** typecheck green · focused green · suite green · <n> tests
-**Falsification** <criterion> → red · <criterion> → survives (test P1, resolved round 1)
-**Findings** behaviour P1 ×0 · claim P1 ×1 (resolved) · test P1 ×1 (resolved) · shape P2 ×2 (riding) · suppressed ×1
+- <what the branch does, in the contract's language>
+
+## Criteria
+
+| criterion | command | result |
+| --- | --- | --- |
+| <the criterion, short> | `<the command>` | <green — n tests · accepted open> |
+
+## How to see it running
+
+<the server or container command, the screens — or "no runnable surface">
+
+Closes #<n>
 ```
 
-Findings are counted here and nowhere else: they are ephemeral in the loop, and never transcribed into a pull request. The peak window is measured, not capped — the layer plan is the enforcement, and the measurement is how the next plan gets better.
+The rows are the run's own evidence, so a branch that already carries an open pull request has its body rewritten rather than appended to — the table is the signal the loop finished. Push only on a real green: never force push, and never open the pull request with a P0 or P1 still open.
 
-**Done when** the layer record is on the ticket and the next layer's base is this layer's branch.
+**Done when** the pull request is open and its table has a row for every criterion in the contract.
 
-## 10. Hand back
+## 6. Write the run's one comment
 
-When every layer is built, vetted and pushed:
+One comment per session, appended to the ticket and never edited. It is the run's durable memory: a fresh session reads it and resumes from it.
 
-- the branch, or the stack's branches bottom first, with what each owns;
-- the fit's commands, one per criterion, for the operator to run and see the ticket work;
-- nothing submitted: the drafts, their bodies and the flip come after the operator has seen the criteria work.
+```markdown
+### Build — session <n>, <date>
 
-No pull request was created at any point. A run re-entered against the same ticket reads the ticket's fit, plan and layer records and its own stack, and resumes at the first layer without a record — the resume flow is in [STACK.md](./STACK.md).
+**Loop**  <typecheck> · <focused> · <suite> · CI <run | absent> — proven at `<commit>`
+**Units**  `<sha>` <subject> → <criterion> · `<sha>` <subject> → <criterion>
+**Gate**  <criterion> → red · <criterion> → red · findings: behaviour P1 ×0 · claim P1 ×1 (resolved) · test P1 ×0 · shape P2 ×2 (riding)
+**Blocked**  —
+**Resume**  <the next unit, or `nothing — complete`>
+```
 
-**Done when** the stack and the fit's commands are in the operator's hands, and nothing is submitted.
+Every field keeps its line: nothing blocked writes `—`, nothing left writes `nothing — complete`. The resume line names the next unit, or its remainder, precisely enough that a fresh session starts there without reading the diff. Worked comments are in [EXAMPLES.md](./EXAMPLES.md).
 
-## Where this goes next
+**Done when** the comment is on the ticket and it is the only one this session wrote.
 
-The shipping half of the stage: the stack submitted once as drafts — one pull request in direct shape — each body written from the contract, the criteria distributed one owning layer each, ticked by the operator, and the flip once every tick is in.
+## 7. Hand back
+
+Give the operator the pull request and, per criterion, the command they can run to see the work. Where the change has a runnable surface, name the server, container or screen to start, so the ticket is seen rather than asserted — "it works" is not a hand-back.
+
+**Done when** the pull request, the per-criterion commands and the running thing are in the operator's hands.
+
+## Boundaries
+
+**Always** — read the contract before writing · prove the loop at the base · one writer per checkout · commit on a real green · leave the tree clean · escalate with a proposition.
+**Ask first** — an unavailable loop dependency · a fix that would change the contract · a finding unclosed after two rounds · anything the out-of-scope rows do not cover.
+**Never** — a second writer in the checkout · a witness invented to fit the code · working around a missing service · writing to the ticket beyond one comment per session · a commit tagged with a criterion id · pushing with a P0 or P1 open · a done without the command's output.
 
 ## Related
 
-- `/crucible` — the **Review** every layer passes through.
-- `/tdd` — the cycles inside a layer.
+- `/crucible` — the **Review** every unit passes through.
+- `/tdd` — the cycles inside a unit.
 - `/commit` — one per cycle.
-- `/align` — where a finding that names a scenario goes, and where a ticket that cannot be layered goes.
+- `/align` — where a finding that names a scenario goes, and where a ticket that will not cut into units goes.
 - `/cut` — the stage before this one.
+</content>
+</invoke>

@@ -43,7 +43,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
-| `build` | No upstream counterpart — stage 3's run: the shape (one branch or a stack), the fit, the layer plan, the fresh builder invocations, and the push flows in `STACK.md`. |
+| `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
 | `crucible` | No upstream counterpart — the review policy; falsification, the consumer grep and the four baselines, and it replaces `code-review` as `/review`'s engine once it has run in anger (ADR-0007). |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
