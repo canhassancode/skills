@@ -28,14 +28,14 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
+- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [build](engineering/build/SKILL.md) — stage 3: build a cut ticket as a sequential loop of fresh-child units, each falsified by `crucible`, ended by the pull request whose table carries every criterion's command and result; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
 - [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`; `review` runs `crucible`, and this stays registered until that has run in anger
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [crucible](engineering/crucible/SKILL.md) — vet a diff against its contract, or without one: one hand-placed mutation per criterion (red required), the consumers of what changed grepped, the diff checked against three baselines, findings and the verified list returned and never posted; companion [BASELINES.md](engineering/crucible/BASELINES.md)
-- [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it; companion [SLICE.md](engineering/cut/SLICE.md)
+- [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, update CONTEXT.md inline, offer ADRs)
