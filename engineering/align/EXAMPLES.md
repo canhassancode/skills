@@ -1,13 +1,16 @@
 # 1. Example alignment round
 
-```
-## Scenario:
-A customer checks out a basket. Today's API service creates orders and takes no payment; the payment part is new. First walk: a customer pays by card and the order lands in `paid`.
 
-## Question:
-Does the API service keep its own copy of payment status, or is the payment service the single source of truth that the API service reads through?
+```markdown
+**S1** - A customer checks out a basket. Today's API service creates orders and takes no payment; the payment part is new. First walk: a customer pays by card and the order lands in `paid`.
 
-## Choices A-N:
+**S2** - The same basket, card declined. The customer stays on the basket and retries with a second card, landing on `paid` on the second attempt.
+
+**Diagram** - < Insert Diagram(s) where necessary to visualise >
+---
+
+❓ **Q1** - **Who owns payment status**: does the API service keep its own copy of payment status, or is the payment service the single source of truth the API service reads through? Turns on S1.
+
 - **A.** API service stores a `payment_status` column, updated from the provider's webhook.
 - **B.** API service stores only `payment_intent_id` and reads status from the payment service on each request.
 - **C.** Payment service owns an `orders` mirror; anything payment-shaped is read from there.
@@ -15,12 +18,21 @@ Does the API service keep its own copy of payment status, or is the payment serv
 - **E.** API service stores the id plus a cached status with a short TTL, refreshed lazily on read.
 - **F.** Undecided — the decision cannot be taken before the provider is chosen.
 
-## Recommendation:
-**B**, with E as the upgrade if list endpoints get slow. One source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
+➡️ **B**, with E as the upgrade if list endpoints get slow - one source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
 
-## Other notes
-The choice is not free either way: B puts the payment service on the critical path of every order read, so when it is down, order reads fail. If that trade is unacceptable, A moves the failure to "status is stale" instead of "status is unavailable" — but then a reconciliation task must exist, and it is the unresolved row this round opens: *who reconciles after a webhook never arrives, and when? → resolve by checking the provider's webhook retry window, then killing the listener in staging and waiting it out.*
+↳ `apps/api/src/orders/orderRepo.ts:41` reads `payment_status` today; nothing in the repo reconciles it, and `docs/adr/0012-payment-service-owns-intents.md` already names the payment service the owner of intents.
 
+---
+
+❓ **Q2** - **What a declined retry leaves behind**: after a declined card, does the second attempt reuse the first order row or write a new one? Turns on S2.
+
+- **A.** One row per basket; the second attempt updates it.
+- **B.** One row per attempt; abandoned rows are swept later.
+- **C.** No order row until payment succeeds.
+
+➡️ **C** - a declined payment is not an order, and A leaves a row whose total and status disagree the moment the basket changes between attempts.
+
+↳ `apps/api/src/checkout/basket.ts:88` mints an order at submit, before any payment call.
 ```
 
 # 2. Example Diagrams
