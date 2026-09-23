@@ -1,13 +1,13 @@
 ---
 name: to-prd
-description: Deprecated — superseded by /to-spec.
+description: Deprecated — superseded by /align.
 disable-model-invocation: true
 ---
 
 # to-prd (deprecated)
 
-Superseded by [`to-spec`](../../engineering/to-spec/SKILL.md). The document was never really a PRD — "spec" is the honest superset (technical, non-technical, or a blend). `to-spec` synthesises the conversation into a spec and publishes it to the tracker as `ready-for-agent` by construction, so the planning lane no longer routes through `/triage`.
+Superseded by [`align`](../../engineering/align/SKILL.md). The document was never really a PRD — "spec" is the honest superset (technical, non-technical, or a blend). `align` settles the conversation into an agreed contract and moves the ticket to its next state — `ready-to-cut`, `ready-to-build`, or `ready-to-propose` — so the planning lane no longer routes through `/triage`.
 
-If you want an argued recommendation for a decision-maker rather than a build spec, use [`to-proposal`](../../engineering/to-proposal/SKILL.md).
+If you want an argued recommendation for a decision-maker rather than a build-ready contract, use [`propose`](../../engineering/propose/SKILL.md).
 
-Run `/to-spec` instead.
+Run `/align` instead.
