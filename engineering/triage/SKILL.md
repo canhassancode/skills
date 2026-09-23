@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Queue inbound work. Triage **classifies and routes**: it writes no brief, runs no pass, and stamps no state a builder can take. The pass that turns a placeholder into a contract is `/align`'s.
 
-A ticket wearing `ready-to-propose`, `awaiting-decision`, `ready-to-cut` or `ready-to-build` is planning work, not inbound — leave it alone. `needs-alignment` is the one state the two lanes share: triage queues into it, and an `/align` pass is what clears it.
+A ticket wearing `ready-to-propose`, `awaiting-decision`, `ready-to-cut` or `ready-to-build` is planning work, not inbound — leave it alone. `needs-alignment` is the one state the two lanes share: triage queues into it, and an `/align` pass is what clears it. A body already carrying the contract's rows is planning work whatever it wears — say so and stop, rather than re-queuing it.
 
 ## Roles
 
@@ -22,6 +22,8 @@ Two **category** roles — `bug` and `enhancement`. Every queued issue carries e
 | `wontfix` | not worth doing | the reason, then close |
 
 Human-only work wears `needs-alignment` too: delegability is a body fact, so no state carries it.
+
+A `wontfix` on an enhancement also records the rejection in `.out-of-scope/<concept>.md` where the repo sets `out-of-scope: on`; bugs never get an entry.
 
 These roles are canonical; the label strings are the repo's. Read `docs/agents/triage-labels.md` and apply its strings — where it disagrees with this table, the repo wins. Commands live in the repo's `docs/agents/issue-tracker.md`. Nothing global is read at run time.
 
@@ -39,7 +41,7 @@ These roles are canonical; the label strings are the repo's. Read `docs/agents/t
 
    Triage invokes no other skill — the route is a name, not a session.
 3. **Recommend, then wait.** Category, state, reasoning, and the codebase summary. The maintainer directs; work that needs fleshing out is a pass, and a pass is `/align`'s.
-4. **Write.** Show the body and confirm it before it is written — a route answer is never write permission. Apply the category and the state, and say why on the ticket: the placeholder carries the reasoning when one is written, a comment otherwise. Close the issue only on `wontfix`, with the reason.
+4. **Write.** Show the body and confirm it before it is written — a route answer is never write permission. Apply the category and the state, and say why on the ticket itself: the placeholder carries the reasoning when one is written, the notes otherwise. Close the issue only on `wontfix`, with the reason.
 
 ## What needs attention
 

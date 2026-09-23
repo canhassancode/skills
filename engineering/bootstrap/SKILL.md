@@ -45,7 +45,7 @@ Write a `tracker:` line under an `## Issue tracker` section in the repo's `CLAUD
 tracker: github
 ```
 
-- **GitHub** — nothing else needed; the global adapter bootstraps the canonical labels on first use.
+- **GitHub** — nothing else needed; the tracker doc's pre-flight creates the canonical labels on first use.
 - **Linear** — the workspace is usually shared, so **adopt, don't impose**: never bootstrap labels. Inspect the live workspace (`list_teams`, `list_issue_statuses`, `list_issue_labels`), map each canonical role onto an **existing** label / workflow state / Project mechanism, and record the mapping in `CLAUDE.md` (or `docs/agents/triage-labels.md`). Where no target exists, ask — don't create taxonomy. Flag any duplicate (a ported label beside a native one). Linear conventions live in [issue-tracker-linear.md](./issue-tracker-linear.md).
 - **GitLab / local / other** — no triage-graph adapter exists. Set the `tracker:` line for the record, and **tell the user the triage-graph lane (`triage`) is GitHub/Linear-only** — only the planning lane is wired for this tracker.
 

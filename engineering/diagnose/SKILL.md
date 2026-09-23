@@ -133,6 +133,6 @@ Required before declaring done:
 
 **If the diagnosis ends without a fix** there is no commit and no PR to carry the finding. Post it as a comment on the ticket instead: the winning hypothesis, the loop you built (the command, verbatim), and what you ruled out. The next session starts from the loop rather than rebuilding it.
 
-**Then stamp the ticket.** A diagnosis that ended without a fix stamps `ready-to-build` only where Phase 1 left a **red-capable** command *and* the fix it implies is scoped to that loop. Where the loop never went red, or the fix is not scoped, move the ticket to `needs-alignment` instead — no pass is recorded, and the comment stands as the handover.
+**Then stamp the ticket.** That comment is the handover, and the ticket's state follows from what the diagnosis left behind: `ready-to-build` where Phase 1 left a **red-capable** command *and* the fix it implies is scoped to that loop, `needs-alignment` otherwise. A diagnosis records no pass either way.
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-codebase-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.
