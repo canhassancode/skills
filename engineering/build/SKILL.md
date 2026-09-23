@@ -11,7 +11,7 @@ Stage 3. `/build <ticket-ref>` reads a cut ticket's **contract**, fits the repo'
 
 The parent session — the **Delegator** — holds the contract, the unit list and the run's one comment, never a diff. Code in this window is the failure this skill closes: the parent delegates every unit and never edits the tree. One writer per checkout, always — a Builder and the Review never hold the tree at the same time.
 
-Fresh children come from the harness, named in one line: pi's `subagent` with `delegate`, Claude Code's `Agent` tool. A harness that cannot spawn one is an **unavailable** dependency like any other, and the run stops before writing (§2).
+Fresh children come from the harness, named in one line: pi's `subagent` with the `Builder` and `Reviewer` agents, Claude Code's `Agent` tool. A harness that cannot spawn one is an **unavailable** dependency like any other, and the run stops before writing (§2).
 
 Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. Tickets are read through the tracker adapter — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
 
@@ -65,12 +65,12 @@ One unit at a time, in order. The moves below repeat until the units are done.
 
 ### 4.1 Brief a fresh Builder
 
-Spawn a fresh child with the brief below. It carries the contract by reference and the unit's material verbatim — never a restatement of the whole contract.
+Spawn a fresh child with the brief below. It carries the contract by reference and the unit's material verbatim — never a restatement of the whole contract — and its first line is the unit's identity, so every surface names the unit rather than repeating the agent.
 
 ```text
-<builder-brief>
-
 Unit <n> of <m> — <one line> · Ticket: #<n>
+
+<builder-brief>
 
 You build one unit of this ticket. Read the contract on the ticket; the criteria below are yours, verbatim.
 
@@ -79,9 +79,11 @@ Witness and command: <criterion> → <witness> → <command>
 The loop: <typecheck>, <focused tests>, <suite> — proven green at <commit>.
 Secrets live at: <paths> — never a value. If one is unreadable, stop and say so.
 
-TDD the unit — /tdd, or the project's equivalent — one /commit per red → green → refactor cycle, the
-refactor included. Commit on a real green, not on your say-so. Where the fit recorded absence there is
-no cycle to run: commit per increment, and the operator's run is the verification.
+TDD the unit — /tdd, or the project's equivalent — and commit once, when every criterion you own is
+green and its command has run. One unit, one commit: its subject names the criteria it makes pass, and
+that commit is your hand-back. A fix round adds one on top (§4.4) — three commits at most for one unit.
+Commit on a real green, never on your say-so. Where the fit recorded absence there is no cycle to run
+and the unit still closes on one commit — the operator's run is the verification.
 
 Change only what this unit's criteria need. End at a clean tree with your commits in hand: the parent
 pushes and opens, and the Review is a separate child.
@@ -89,18 +91,18 @@ pushes and opens, and the Review is a separate child.
 If your window fills before the unit is done, commit what is green, leave the tree clean, and hand back
 what is done and what remains.
 
-Hand back: the commits, the criterion's command with its output quoted, the loop's results, and
+Hand back: the commit, the criterion's command with its output quoted, the loop's results, and
 confirmation the tree is clean.
 </builder-brief>
 ```
 
 A Builder ends when it judges the unit done — green, committed, tree clean, the criterion's command run and quoted. Any other hand-back is a brief that failed: re-brief a fresh child rather than resuming that one.
 
-**Done when** the unit's commits are in and the tree is clean.
+**Done when** the unit's commit is in and the tree is clean.
 
 ### 4.2 Vet the unit with the Review
 
-Launch `/crucible` in a fresh child of its own — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies every owned witness with one hand-placed mutation, and it never posts.
+Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies every owned witness with one hand-placed mutation, and it never posts.
 
 It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red`. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
 
@@ -132,7 +134,7 @@ code — the fix lands wherever the finding lives, which may be outside this uni
 
 <the findings verbatim>
 
-Same boundary as the unit brief: /tdd where a test is the answer, one commit per cycle, tree clean, no
+Same boundary as the unit brief: /tdd where a test is the answer, one commit for the round, tree clean, no
 push. Round two varies the route: a second attempt that repeats the first one's failed route is not a
 second attempt. Do not widen scope — a finding that adds a scenario is not yours to fix; say so and stop.
 </fix-brief>
@@ -217,6 +219,6 @@ Give the operator the pull request and, per criterion, the command they can run 
 
 - `/crucible` — the **Review** every unit passes through.
 - `/tdd` — the cycles inside a unit.
-- `/commit` — one per cycle.
+- `/commit` — one per unit; a round's commit rides on top.
 - `/align` — where a finding that names a scenario goes, and where a ticket that will not cut into units goes.
 - `/cut` — the stage before this one.
