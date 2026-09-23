@@ -78,6 +78,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 - needs-alignment (ongoing alignment captured in ticket)
 - needs-info (blocked and needs answers from someone/something external to user and agent)
+- ready-to-propose (a yes is owed outside the room, before the work can be cut)
 - ready-to-cut (ready to hand off to `/cut`)
 - ready-to-build (ready to build straight from alignment ticket)
 

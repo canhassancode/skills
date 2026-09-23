@@ -16,13 +16,13 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 
 ## At session close - route the output
-An alignment is a _thinking_ artefact, not by default a spec or a build. The close has four exits — `needs-alignment`, `needs-info`, `ready-to-cut`, `ready-to-build` — and the row it takes is read from the body, never guessed from the conversation. The routes are:
+An alignment is a _thinking_ artefact, not by default a spec or a build. The close has five exits — `needs-alignment`, `needs-info`, `ready-to-propose`, `ready-to-cut`, `ready-to-build` — and the row it takes is read from the body, never guessed from the conversation. The routes are:
 
 | the pass ends on | Verdict | Destination | Ticket state | Next |
 | --- | --- | --- | --- | --- |
 | the body already carries the contract | aligned | `tickets` | `ready-to-build` | `/build` |
 | the contract is settled but the cut is owed | aligned | `tickets` | `ready-to-cut` | `/cut` → one ticket, or slice tickets at `ready-to-build` → `/build` |
-| a yes is owed outside the room | aligned | `proposal` | `needs-info` | `/propose` → `awaiting-decision` → yes: `ready-to-cut` · change: `needs-alignment` with the objections · no: `wontfix` |
+| a yes is owed outside the room | aligned | `proposal` | `ready-to-propose` | `/propose` → `awaiting-decision` → yes: `ready-to-cut` · change: `needs-alignment` with the objections · no: `wontfix` |
 | the deliverable is the decision itself | aligned | ADR, or nothing | none — the ticket closes | write the ADR, update `CONTEXT.md`, stop |
 | decisions still open | fog | unchanged | `needs-alignment` | `/align <ref>` again — every unresolved item carries the route that would settle it |
 | unresolved items with no route, axes unmarked, or no decisions recorded | thin | unchanged | `needs-alignment` | record what is missing, then `/align <ref>` |
