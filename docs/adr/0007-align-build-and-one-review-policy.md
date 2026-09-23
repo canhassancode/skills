@@ -4,6 +4,8 @@ status: accepted
 
 # `/align` admits work in flight, `/build` declares its shape, and one policy reviews
 
+**Amended by [ADR-0009](./0009-the-build-is-a-sequential-fresh-child-loop.md)**: its `/build` shapes — direct and layered — and its three seats retire; the build is one branch with a sequential loop of fresh-child units, and `/crucible` is the only review policy.
+
 Supersedes [ADR-0005](./0005-align-owns-the-planning-entry.md) in part: its entry list and its branch rule. Its core decision — `/align` owns the planning entry and the alignment state — stands.
 
 ## Context
