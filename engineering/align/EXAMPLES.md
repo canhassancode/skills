@@ -7,6 +7,7 @@
 **S2** - The same basket, card declined. The customer stays on the basket and retries with a second card, landing on `paid` on the second attempt.
 
 **Diagram** - < Insert Diagram(s) where necessary to visualise >
+
 ---
 
 ❓ **Q1** - **Who owns payment status**: does the API service keep its own copy of payment status, or is the payment service the single source of truth the API service reads through? Turns on S1.
@@ -33,6 +34,10 @@
 ➡️ **C** - a declined payment is not an order, and A leaves a row whose total and status disagree the moment the basket changes between attempts.
 
 ↳ `apps/api/src/checkout/basket.ts:88` mints an order at submit, before any payment call.
+
+---
+
+❓ **Q3** - **<next frontier question>**: <and so on, until the frontier is empty — as many questions as the work holds>
 ```
 
 # 2. Example Diagrams
