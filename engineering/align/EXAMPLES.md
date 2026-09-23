@@ -131,3 +131,20 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 # Relevant Sources
 [ Short bullet point list on any relevant sources from this pass ]    
 ```
+
+## Placeholder (written by `/triage`)
+
+A raw line queued at `needs-alignment`: the body above, degenerate to three rows and no `Passes:` header. The first alignment pass folds the notes into Background and writes the header and the rest of the rows over it.
+
+```markdown
+
+# Background context
+[ One paragraph on how the work arrived, and why it is worth a pass. ]
+
+# Problem Statement
+[ One paragraph on what is wanted or wrong, in the words of whoever brought it. ]
+
+# Triage notes
+[ What triage established: the category, where the codebase already stands, any prior rejection surfaced, and the route when one was named. ]
+
+```

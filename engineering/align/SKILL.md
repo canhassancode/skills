@@ -13,6 +13,8 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 5. Alignment loops have multiple passes. A _pass_ is a _session_, make the decision together during the pass if it should be recorded then picked up in a new pass later with rationale. This could be context window _dumb zone_, waiting on dependencies, user request, etc. 
 6. Run `/codebase-design` to explore with the user interface design, deep module names, agreements using mermaid sequence diagrams. The user wants to be involved in this layer. 
 
+**Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header and three rows — Background, Problem statement, Triage notes. The first pass detects that shape, folds the notes into Background, and writes the header and rows as usual. A ticket whose body already carries the contract is not a placeholder: the pass updates it in place.
+
 ## At session close - route the output
 An alignment is a _thinking_ artefact, not by default a spec or a build. The close has a few routes, see more details in the _Additional Files_ section. Some early examples of routes are:
 

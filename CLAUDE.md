@@ -23,7 +23,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | Skill | Why it diverges |
 |---|---|
 | `code-review` | The Structure axis is local — it encodes the ladder in the global `CLAUDE.md`. |
-| `triage` | Linear adapter, the `## Status` block, and the markdown-ticket flow are all local. |
+| `triage` | The Linear adapter and the markdown-ticket flow are local. |
 | `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
 | `implement` | Takes a ticket reference and fetches the agent brief through the tracker adapter. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
