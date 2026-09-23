@@ -35,7 +35,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
-| `align` | No upstream counterpart — supersedes `grilling`, `grill-me` and `grill-with-docs`. Owns the planning lane's entry — four entries, one of them a refusal — the four-pass discipline, the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
+| `align` | No upstream counterpart — supersedes `grilling`, `grill-me` and `grill-with-docs`. Owns the planning lane's entry — four entries, one of them a refusal — the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `system-map` | Its live upstream is the work `claude-code-config` repo, not `mattpocock/skills`. Diff against that, not this remote. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
