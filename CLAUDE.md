@@ -10,6 +10,8 @@ git remote add upstream https://github.com/mattpocock/skills.git
 
 That remote is the whole mechanism. There is no `/sync` skill, no recorded baseline SHA in a tracking file, no rejected-hunk ledger and no scheduled drift check — harvesting is a manual pass, run when there is a reason to run it.
 
+A remote named `upstream` outranks `origin` when `gh` resolves this repo, so the first `gh` call after adding it lands on `mattpocock/skills` with read-only access. Fix it once per clone: `gh repo set-default canhassancode/skills`.
+
 ### Classes
 
 Every skill is one of three. The class governs what a harvest is allowed to do to it.
