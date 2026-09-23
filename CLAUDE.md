@@ -36,12 +36,14 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 |---|---|
 | `align` | No upstream counterpart — supersedes `grilling` and `grill-me`. Owns the planning lane's entry — four entries, one of them a refusal — the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
+| `propose` | No upstream counterpart — the planning lane's ask-someone-first destination: publishes the argued proposal, leaves the ticket `awaiting-decision`, routes on the answer (ADR-0006). |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
 | `crucible` | No upstream counterpart — the only review policy; falsification, the consumer grep and the three baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
+| `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); upstream's four-axis body went to the deprecated `code-review` and crucible's baselines. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 The experiment bench sits outside these tables until it ships: `in-progress/system-map` is the one unregistered directory (`## The count`), forked from the work `claude-code-config` repo — diff against that, not this remote.
