@@ -32,7 +32,7 @@ test generation and straightforward implementation (5/5 on code-implement benchm
 Three parallel async subagents before HITL grilling:
 - **scout**: code trace (follow every request path, enumerate branches), consumer hunt
   (grep reads of every changed contract), feature-flag sweep — the three code-facing
-  passes from grill-with-docs's four-pass discipline, one agent, one filesystem
+  passes, one agent, one filesystem
 - **ask**: vault sweep — query the Library for prior grillings, ingested articles,
   Profile focus bearing on the topic
 - **researcher**: external docs, ecosystem behaviour, recent changes, primary sources

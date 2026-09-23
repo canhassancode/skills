@@ -16,19 +16,22 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 
 ## At session close - route the output
-An alignment is a _thinking_ artefact, not by default a spec or a build. The close has a few routes, see more details in the _Additional Files_ section. Some early examples of routes are:
+An alignment is a _thinking_ artefact, not by default a spec or a build. The close has five exits — `needs-alignment`, `needs-info`, `ready-to-propose`, `ready-to-cut`, `ready-to-build` — and the row it takes is read from the body, never guessed from the conversation. The routes are:
 
 | the pass ends on | Verdict | Destination | Ticket state | Next |
 | --- | --- | --- | --- | --- |
-| the tree is empty, one slice's worth | aligned | `tickets` | `ready-to-cut` | `/cut` → one ticket → `/build` |
-| the tree is empty, more than one slice | aligned | `tickets` | `ready-to-cut` | `/cut` → slice tickets at `ready-to-build` → `/build` |
-| the tree is empty, but a yes is owed outside the room | aligned | `proposal` | `ready-to-propose` | `/propose` → `awaiting-decision` → yes: `ready-to-cut` · change: `needs-alignment` with the objections · no: `wontfix` |
-| the tree is empty and the deliverable is the decision itself | aligned | ADR, or nothing | closed, no node | write the ADR, update `CONTEXT.md`, stop |
+| the body already carries the contract | aligned | `tickets` | `ready-to-build` | `/build` |
+| the contract is settled but the cut is owed | aligned | `tickets` | `ready-to-cut` | `/cut` → one ticket, or slice tickets at `ready-to-build` → `/build` |
+| a yes is owed outside the room | aligned | `proposal` | `ready-to-propose` | `/propose` → `awaiting-decision` → yes: `ready-to-cut` · change: `needs-alignment` with the objections · no: `wontfix` |
+| the deliverable is the decision itself | aligned | ADR, or nothing | none — the ticket closes | write the ADR, update `CONTEXT.md`, stop |
 | decisions still open | fog | unchanged | `needs-alignment` | `/align <ref>` again — every unresolved item carries the route that would settle it |
-| what is open is a fact, not a decision | fog | unchanged | `needs-alignment` | clear the fact (`/research`, a sub-agent, the vendor's docs), then `/align <ref>` |
-| the work is not worth doing | dropped | nothing | `wontfix` if a ticket exists, none if it does not | record the reason in one paragraph, stop |
+| unresolved items with no route, axes unmarked, or no decisions recorded | thin | unchanged | `needs-alignment` | record what is missing, then `/align <ref>` |
+| what is open is a fact, not a decision | fog | unchanged | `needs-info` | clear the fact (`/research`, a sub-agent, the vendor's docs), then `/align <ref>` |
+| the work is not worth doing | dropped | nothing | none — the ticket closes | record the reason in one paragraph, close `wontfix` where a ticket exists, stop |
 
-Where the pass carries on, the row is the state change plus the pass comment; nothing else moves. Where a ticket has to be created for the next pass, the operator says so — `/align` does not create nodes on its own.
+**The close writes three things and refuses more**: the ticket's body and its pass comment, the ADR where one is owed, and `CONTEXT.md` inline. The pass preps work, it does not execute it — the files a ticket delivers land after the cut and the readiness check. A route answer is never write permission: `/align` creates no node on its own, and no node is written without its body shown and confirmed first.
+
+The body carries the pass count, the verdict, the destination, what the pass was verified against, the unresolved items with their routes, and the next act. A pass comment carries only what moved in that pass.
 
 A contract that graduates to `ready-to-build` at the close passes the ten rows in [READINESS.md](../cut/READINESS.md) first; a failed row keeps the work at `needs-alignment` with the row named.
 

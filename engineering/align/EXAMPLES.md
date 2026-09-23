@@ -78,41 +78,77 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 - needs-alignment (ongoing alignment captured in ticket)
 - needs-info (blocked and needs answers from someone/something external to user and agent)
+- ready-to-propose (a yes is owed outside the room, before the work can be cut)
 - ready-to-cut (ready to hand off to `/cut`)
 - ready-to-build (ready to build straight from alignment ticket)
 
 ### Body
-```markdown
 
-**Passes: N e.g. 4 | Verdict: < aligned | fog | dropped >**
+**Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha or ref>`
 
-> If dropped: Insert _dropped_ reason at the top here
+> If dropped: the reason, in one paragraph, at the top.
 
 # Background context
-[ One paragraph relevant statement on the why ]
+[ One paragraph on the why; a placeholder's triage notes fold in here at pass 1. ]
 
 # Problem statement
 [ One paragraph with a scenario to make this easy to understand by human readers and AI. ]
 
-# The solution
-[ One paragraph on the destination solution, this will change through alignment. This may be fog at the beginning ]
+# Scenarios
+
+| scenario | outcome |
+| --- | --- |
+| [ Named and concrete — one walk through the system. ] | [ The observable result that ends it, or the unresolved item that stays. ] |
+
+# Decisions
+
+| decision | taken | rejected | because | source |
+| --- | --- | --- | --- | --- |
+| [ What was settled. ] | [ The choice. ] | [ The alternative, and why it lost. ] | [ The reason the choice holds. ] | [ The pass it came from. ] |
+
+# Axes
+
+**Axes:** n decision · n N/A
+
+| axis | mark | note |
+| --- | --- | --- |
+| happy path | | |
+| limits | | |
+| failure | | |
+| misuse | | |
+| concurrency and idempotency | | |
+| permissions | | |
+| observability | | |
+| rollback | | |
+| cost | | |
 
 # Diagram
-[ Place Sequence Diagram here ]
+[ The flow this change moves through, where one changed. ]
 
 # Interfaces
-[ Any interface design goes here ]
+
+| name | signature | owned | consumed |
+| --- | --- | --- | --- |
+| [ The interface. ] | [ Its exact shape. ] | [ Who defines it. ] | [ Who reads it. ] |
 
 # Acceptance criteria
-[ Checklist ]
+
+- [ ] [ Each falsifiable, traced to the scenario it makes pass, with the command that decides it and the evidence that counts as passing. ]
+
+# Boundaries
+
+**Always** · **Ask first** · **Never**
+
+# Unresolved
+[ Empty, or one route per entry — what would settle it, and where it is looked up. ]
 
 # Out of scope
-[ Numbered list, short, format might be e.g. Considered, reason why not ]
+[ Numbered, short, each with the reason it was rejected. ]
 
 # Sources
-[ Any sources that we should carry across to the body from a pass ]
-    
-```
+[ Each resolving — link, version, date. ]
+
+**Next:** [ The act this close hands to — `/cut`, `/propose`, `/build`, `/align <ref>`, or `stop`. ]
 
 ### Comment (passes)
 - If alignment proceeds past one session and requires more depth, each comment adds what was discovered in that pass.
@@ -120,7 +156,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 - Each pass is minimal, showing only what was discovered, the body is the alignment truth.
 
 ```markdown
-**Pass N e.g. Pass 1 | Verdict: < aligned | fog | dropped >**
+**Pass N e.g. Pass 1 · Verdict: < aligned | fog | dropped | thin >**
 
 # Aligned on
 [ Concise bullet point list ]
