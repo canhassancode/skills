@@ -96,7 +96,8 @@ The gitignored paths a worktree cannot get from git — a local settings file, a
 _Avoid_: copying, syncing.
 
 **Triage**:
-The state-machine move that classifies an *inbound* ticket — a user bug, a collaborator draft, a stale issue — and prepares it for execution. Operates at the issue tracker level, not in the editor. Planned work does **not** pass through triage: `/to-spec` and `/to-tickets` publish `ready-for-agent` by construction. Triage is the lane for work that arrives without an **Align** pass behind it.
+The state-machine move that classifies an *inbound* ticket — a user bug, a collaborator draft, a stale issue — and queues it for the act it needs. Operates at the issue tracker level, not in the editor. It applies `bug`/`enhancement` with one of `needs-triage`, `needs-info`, `needs-alignment`, `wontfix`, and sizes a bug's blast radius from the trace reproduction already reads. It stamps no takeable state, writes no brief, and runs no pass. Planned work does **not** pass through triage: `/align` creates it and `/cut` cuts it. Triage is the lane for work that arrives without an **Align** pass behind it.
+_Avoid_: reading `needs-alignment` as a pass that happened — a pass is owed, not paid.
 
 **Handoff**:
 A continuity doc written by `/handoff` so a fresh session can continue mid-task work. When an Obsidian vault is present it lands in the vault's `Handoffs/`; otherwise a tmp file. Transient — consumed once, then deleted. The vault is transport, not a store.
@@ -105,8 +106,9 @@ A continuity doc written by `/handoff` so a fresh session can continue mid-task 
 Resuming a **Handoff** (`/receive`). Scoped to context transfer *within* a task — a window reset, a worktree crossing — never cross-day continuity.
 _Avoid_: "resume", "continue" — reserved session commands in Claude Code and pi.dev; a skill of either name is shadowed by the built-in.
 
-**Agent brief**:
-The structured comment posted when a ticket reaches `ready-for-anything`. The contract that downstream execution works from. The issue body is context; the brief is canon.
+**Placeholder body**:
+An inbound ticket's queue form — Background context, Problem statement, and the triage notes — carrying no `Passes:` header, no criteria and no boundaries. Written by **Triage** only where the body cannot already answer those two, and folded into Background by an **Align** pass 1.
+_Avoid_: calling it a brief or a contract; it is the queue's shape.
 
 **Surface**:
 A concrete code location a piece of work claims to touch — a function, endpoint, resolver, type. Concrete enough to open in an editor. Branches (feature flags, env gates, A/B switches) that gate a surface are part of the surface, not separate from it.
@@ -136,8 +138,8 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 ## Relationships
 
 - The planning lane is three acts: `/align` → `/cut` → `/build`. `/implement` retires into **Build** once stage 3 has run in anger, and the inbound lane keeps it until then. `/review`'s engine is `/crucible`; `/code-review` stays registered until `/crucible` has run in anger under `/review` — deferred, not taken (ADR-0007).
-- Two lanes reach the takeable states: the **planning lane** (**align** → **cut** → **ticket**s, with `/propose` as the branch that asks someone first — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → **agent brief**, for work that arrived cold). Same labels, different provenance. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until `/cut` cuts the work from its body. The inbound lane has no verification step in front of it — `/implement` takes a ticket reference and fetches the brief itself.
-- A **triage** session produces an **agent brief** when it moves a ticket to `ready-for-human` or `ready-for-agent`. `ready-for-human` still partitions what an agent can be trusted to finish alone from what it cannot; it just no longer gates on a separate skill.
+- Two lanes reach the takeable states: the **planning lane** (**align** → **cut** → **ticket**s, with `/propose` as the branch that asks someone first — an **Alignment artefact** stands behind the contract) and the **inbound lane** (**triage** → placeholder, for work that arrived cold). One label set, two provenances. The planning lane is **no longer triage-free**: a ticket born from `/align` waits in `needs-alignment` until `/cut` cuts the work from its body. The inbound lane reaches no takeable state of its own — triage queues, and only a readiness check (`/align`'s close or `/cut`) stamps `ready-to-build`.
+- A **triage** session never writes a brief: the contract is the **Alignment artefact**'s body, and an inbound ticket waits in `needs-alignment` for the pass that writes it. Delegability is a body fact, not a state — the `ready-for-human`/`ready-for-agent` pair retired with it.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without `implement` stopping to ask.
 - The planning lane stops at the **Ticket**: its acceptance criteria are authored from its own **Scenario**s at the **Cut**, and a **Specification** derived from it must agree with them rather than re-invent them — two authorities on "done" is the risk ADR-0004 named and ADR-0006 accepted knowingly.
 - **Ticket**s are vertical and **Layer**s are horizontal. The **Cut** produces tickets — scope, independently valuable, linked by native blocking edges, so the **frontier** stays one flat query — and never a layer, because a slice that cannot name its **Scenario** is horizontal work wearing a ticket's clothes. Stage 3 cuts layers — code dependency, green but not independently valuable. One `gh stack` per ticket; one branch and one pull request per layer. A **Ticket** is never a sub-issue of another **Ticket** — nesting the workflow labels a level down would make the takeable claim a different one on a parent than on a child. Its container is the one **Spec** that parents it, which wears no workflow label, so there is no claim to differ from.
