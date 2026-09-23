@@ -81,7 +81,7 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 - [to-issues](deprecated/to-issues/SKILL.md) — superseded by [cut](engineering/cut/SKILL.md); tracker-neutral "ticket", with blocking edges
 - [setup-tracker](deprecated/setup-tracker/SKILL.md) — superseded by [bootstrap](engineering/bootstrap/SKILL.md); configures both lanes, not just the tracker preference
 - [challenge](deprecated/challenge/SKILL.md) — superseded by [grill-me](productivity/grill-me/SKILL.md); the same Socratic pass, with a decision tree that has to resolve
-- [pickup](deprecated/pickup/SKILL.md) — superseded by [implement](engineering/implement/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
+- [pickup](deprecated/pickup/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
 - [inbox](deprecated/inbox/SKILL.md) — superseded by [ingest](personal/ingest/SKILL.md), which drains `Inbox/` as part of its own flow
 - [morning-brief](deprecated/morning-brief/SKILL.md) — retired, not replaced; the daily Operating Loop and its `Journal/` are gone
 - [eod-summary](deprecated/eod-summary/SKILL.md) — retired, not replaced; same reason as `morning-brief`
