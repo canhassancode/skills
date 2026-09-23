@@ -43,7 +43,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
 | `crucible` | No upstream counterpart — the only review policy; falsification, the consumer grep and the three baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
-| `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); upstream's four-axis body went to the deprecated `code-review` and crucible's baselines. |
+| `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 The experiment bench sits outside these tables until it ships: `in-progress/system-map` is the one unregistered directory (`## The count`), forked from the work `claude-code-config` repo — diff against that, not this remote.
