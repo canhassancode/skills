@@ -10,14 +10,14 @@ The **Review** policy. `/crucible` puts a diff in the fire and returns what surv
 
 It never posts. A finding has no home here — the caller owns the sink, a fix round inside **Build** or a draft comment from `/review` — so the same vetting serves the loop and the named pull request.
 
-**A diff is vetted against the contract it claims to satisfy**, never against taste. The contract is the ticket's body: its scenarios, its acceptance criteria and their classes, its settled interfaces, the decisions that bind it, and what it decided against. Where the caller has no contract, resolve one before giving up — issue references in the commits, or a path the caller passed — and if none exists, review without one: there are no criteria, so nothing is falsified and the **falsification gate did not run**. The review then rests on the baselines, the consumer grep and regression, and the return names the gate that was missing. Never invent criteria from the diff: criteria are the author's, not the reviewer's.
+**A diff is vetted against the contract it claims to satisfy**, never against taste. The contract is the ticket's body: its scenarios, its acceptance criteria, its settled interfaces, the decisions that bind it, and what it decided against. Where the caller has no contract, resolve one before giving up — issue references in the commits, or a path the caller passed — and if none exists, review without one: there are no criteria, so nothing is falsified and the **falsification gate did not run**. The review then rests on the baselines, the consumer grep and regression, and the return names the gate that was missing. Never invent criteria from the diff: criteria are the author's, not the reviewer's.
 
 ## What the invocation carries
 
 | input | what it is | who resolves it |
 | --- | --- | --- |
 | the **diff range** | `<base>...<head>` — the change under review | `/build`, as the unit's previous head or the branch point; `/review`, as the pull request's own range |
-| the **contract** | scenarios with outcomes, criteria with their class and command, interfaces, decisions, out-of-scope and boundaries | the ticket's body, or the pull request's body and its linked issues |
+| the **contract** | scenarios with outcomes, criteria with their command, interfaces, decisions, out-of-scope and boundaries | the ticket's body, or the pull request's body and its linked issues |
 | **settled threads** | review comments already answered | the caller; step 6 suppresses against them the way it suppresses out-of-scope entries |
 
 The range and the contract arrive together, and with them the run's **fit** where the caller derived one — the witness and command paired to each criterion the diff owns. Where the caller passes no contract, resolve one from issue references in the commits or a path it named; where none exists, review without one.
@@ -28,7 +28,7 @@ Falsification edits the working tree and runs the repo's commands, so the caller
 
 ### 1. Bind every criterion to its witness
 
-Read the contract, and the run's **fit** where the caller passes one. Each criterion the diff owns was paired at the fit with a **witness** — the test or observable that shows it — and a command that runs it. Bind them: criterion → class → witness.
+Read the contract, and the run's **fit** where the caller passes one. Each criterion the diff owns was paired at the fit with a **witness** — the test or observable that shows it — and a command that runs it. Bind them: criterion → witness.
 
 A criterion the diff owns with no witness is a **test** finding: the criterion cannot be shown, so it cannot be accepted. Do not invent the witness for the author.
 

@@ -17,11 +17,11 @@ Run it against a ticket at `ready-to-build`; with no ticket there is nothing to 
 
 ## 1. Read the contract
 
-Fetch the ticket and read its body: the scenarios and their outcomes, the acceptance criteria with their class — behaviour, claim, test, shape — the interfaces it owns and consumes, the decisions that bind it, what it decided against, and its blocking edges. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
+Fetch the ticket and read its body: the scenarios and their outcomes, the acceptance criteria, the interfaces it owns and consumes, the decisions that bind it, what it decided against, and its blocking edges. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
 
-Every criterion carries the command that decides it and the evidence that counts as passing. The fit pairs each with its **witness** — the test or observable that shows it. A criterion with no class is not yet this run's contract: hand the ticket back for `/align` rather than assigning one.
+Every criterion carries the command that decides it and the evidence that counts as passing. The fit pairs each with its **witness** — the test or observable that shows it. A criterion the fit cannot pair is a **gap** (§2), never a hand-back.
 
-**Done when** every criterion has a class, traces to a scenario, and names its command.
+**Done when** every criterion traces to a scenario and names its command.
 
 ## 2. Fit the repo, then prove the loop at the base
 
@@ -43,7 +43,9 @@ Then run them at the base commit. One of three honest outcomes comes back:
 
 A witness is derived from the criterion.
 
-**Done when** every criterion has a witness and a command, both have been run at the base, and the outcome is one of the three.
+A criterion the fit cannot pair is a **gap**. The run collects every gap — from the fit or from the cut — and puts the set to the operator once, in session, with a proposition: proceed and record it open, or stop. On a yes the criterion is **accepted open** — owned by no unit, recorded `accepted open — <why>` in §6's Gate line and in the pull request's table; on a no the run stops with the gap on the ticket as §6's comment. The run never refuses on contract shape; the operator may.
+
+**Done when** every criterion is paired with a witness and a command, both run at the base, or is a gap put to the operator — and the outcome is one of the three.
 
 ## 3. Cut the ticket into units
 
@@ -51,11 +53,11 @@ The run owns one checkout for the whole ticket — a worktree off the base, or t
 
 A **Unit** is a criterion, or a coherent group of them, that one fresh Builder can hold end to end. Cut by coherence, never horizontally: work that cannot name the criterion it makes pass is not a unit, and the window is a stop-rule rather than a cutter.
 
-Order the units so each begins from the last one's green tree — a schema before its consumers, a shared type before the code that calls it. Every criterion belongs to exactly one unit.
+Order the units so each begins from the last one's green tree — a schema before its consumers, a shared type before the code that calls it. Every criterion that is not a gap belongs to exactly one unit.
 
-A ticket that will not cut into units one Builder can hold is not this run's to shrink: take it back for `/align`.
+A ticket that will not cut into units one Builder can hold is not this run's to shrink: cut what cuts, and put the remainder to the operator as a gap, on §2's terms.
 
-**Done when** every criterion has exactly one unit, in an order where each unit starts from a green tree.
+**Done when** every criterion that is not a gap has exactly one unit, in an order where each unit starts from a green tree.
 
 ## 4. Run the loop
 
