@@ -11,7 +11,7 @@ The planning lane's one way of asking. Most alignments settle into work; some ne
 
 It reads the **aligned body**, not a conversation. The scenarios, the decisions with their rejected alternatives, the settled interfaces and the out-of-scope list are already the argument — the proposal's job is to retell it for a reader who was not in the room. Do NOT interview; synthesise.
 
-A proposal is a request for a decision, not a build spec: a spec tells a builder *what to build*, a proposal persuades a decision-maker *what to do and why*. That is the line between this and `/to-spec`.
+A proposal is a request for a decision, not a build spec: a spec tells a builder *what to build*, a proposal persuades a decision-maker *what to do and why*. That is the line between this and `/cut`.
 
 Run it against a ticket at `ready-to-propose` — the state `/align`'s close sets when a formal document is owed. A decision found during the pass never sets it on its own; only an ask that has to leave the room does.
 
@@ -78,4 +78,3 @@ Exactly what you need from the reader: a decision, a sign-off, a resource, a dat
 
 - `/align` — the pass whose body this reads, and whose close sets `ready-to-propose`.
 - `/cut` — what a yes leads to.
-- `/to-spec` — the sibling for build specs aimed at implementers.

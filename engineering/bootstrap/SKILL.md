@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: One-time per-repo setup for the engineering skills — configures the issue tracker, triage-label vocabulary, and domain-doc layout for BOTH the triage-graph lane (triage) and the planning lane (align/cut/propose/to-spec/to-tickets/wayfinder/code-review/crucible/implement). Use when onboarding a repo to these skills or switching its tracker.
+description: One-time per-repo setup for the engineering skills — configures the issue tracker, triage-label vocabulary, and domain-doc layout for BOTH the triage-graph lane (triage) and the planning lane (align/cut/propose/wayfinder/code-review/crucible/implement). Use when onboarding a repo to these skills or switching its tracker.
 disable-model-invocation: true
 ---
 
@@ -9,7 +9,7 @@ disable-model-invocation: true
 Configure how *this* repo's skills talk to its tracker and domain docs. The skills resolve two config surfaces at run time — this skill writes both, so both lanes work:
 
 - **Triage-graph lane** (`triage`) reads a `tracker:` preference from the repo's `CLAUDE.md`, its label strings from `docs/agents/triage-labels.md`, and its commands from `docs/agents/issue-tracker.md`. GitHub and Linear only.
-- **Planning lane** (`to-spec`, `to-tickets`, `wayfinder`, `code-review`, `crucible`, `implement`) reads per-repo `docs/agents/*.md`. GitHub, Linear, GitLab, local-markdown, or a freeform "other".
+- **Planning lane** (`align`, `cut`, `propose`, `wayfinder`, `code-review`, `crucible`, `implement`) reads per-repo `docs/agents/*.md`. GitHub, Linear, GitLab, local-markdown, or a freeform "other".
 
 **GitHub and Linear are fully wired for both lanes.** If you pick GitLab / local / other, the planning lane works from its seed template while the triage-graph lane has no adapter — flag this to the user rather than pretending it's configured.
 
@@ -58,7 +58,7 @@ tracker: github
 Seed the per-repo docs from the templates in this folder (let the user edit before writing):
 
 - `docs/agents/issue-tracker.md` — from [issue-tracker-github.md](./issue-tracker-github.md) / [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) / [issue-tracker-linear.md](./issue-tracker-linear.md) / [issue-tracker-local.md](./issue-tracker-local.md). For **other**, write from the user's description.
-- `docs/agents/triage-labels.md` — from [triage-labels.md](./triage-labels.md). Ten canonical roles across two lanes: inbound (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`) and planning (`needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build`). (No `prd` label — the planning lane holds a ticket in `needs-alignment` until `/cut` cuts it into slices.)
+- `docs/agents/triage-labels.md` — from [triage-labels.md](./triage-labels.md). Seven canonical states plus `wontfix` across two lanes: inbound (`needs-triage`, `needs-info`), planning (`needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build`), and `wontfix`. (No `prd` label — the planning lane holds a ticket in `needs-alignment` until `/cut` cuts it into slices.)
 - `docs/agents/domain.md` — from [domain.md](./domain.md). Confirm single-context (`CONTEXT.md` + `docs/adr/`) vs multi-context (`CONTEXT-MAP.md`).
 
 Then add an `## Agent skills` block to whichever of `CLAUDE.md` / `AGENTS.md` already exists (edit the existing one; never create the second when one is present; ask which to create if neither exists). Update in place if the block already exists — don't append a duplicate.

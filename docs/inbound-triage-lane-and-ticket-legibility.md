@@ -10,12 +10,12 @@ Whether the inbound/triage lane survives in Hassan's workflow, and what the agen
 
 ## The question
 
-With `ready-for-human` and `pickup` provisionally retired while charting, does the inbound lane — `triage`, the five state roles, the agent brief — survive at all? Wayfinder had eaten the front of the SDLC, and the triage labels totalled 4 instances across personal repos against 50 wayfinder tickets.
+With the delegability label and `pickup` provisionally retired while charting, does the inbound lane — `triage`, the five state roles, the agent brief — survive at all? Wayfinder had eaten the front of the SDLC, and the triage labels totalled 4 instances across personal repos against 50 wayfinder tickets.
 
 ## Decisions
 
 1. **The lane survives whole — one skill, two trackers.** It was never dead; it was measured on the wrong surface. `/triage` already resolves its tracker through an adapter (see [Dual-Track Tracker Adapter](./dual-track-tracker-adapter.md)), so splitting it into work-triage and personal-triage would duplicate ~1,500 words to encode a difference that is about *inbound volume*, not method.
-2. **`ready-for-human` is un-retired.** The retirement argued that when you are the only human, every ticket is ready-for-human by default, so the label partitions nothing. That misreads what it partitions: not humans from other humans, but **what an agent can be trusted to finish alone from what it cannot**. Solo work sharpens that distinction rather than collapsing it.
+2. **The delegability label is un-retired.** The retirement argued that when you are the only human, every ticket is human work by default, so the label partitions nothing. That misreads what it partitions: not humans from other humans, but **what an agent can be trusted to finish alone from what it cannot**. Solo work sharpens that distinction rather than collapsing it.
 3. **`pickup` is deprecated anyway** — but for a different reason: 574 words of per-ticket ceremony guarding a drift risk that `/implement` absorbs. Its blast radius is 8 references across 6 files, two of them load-bearing (the agent-brief `Key interfaces` field and the stricter-for-agents rule are both *justified by* pickup, so they need rewording rather than deleting).
 4. **No gate line added to `/implement`.** The discipline moves to the human at invocation time. `/implement` does gain `disable-model-invocation: true`, matching upstream and 22 of 40 local skills — every other skill that mutates something consequential already has it.
 5. **The agent brief gains two mandatory plain-English fields**, on *both* states: **Why this matters** (the observable stake) and **Why this routing** (why it is yours, or why it is safe to delegate). Two rather than one because they have different lifetimes — the stake survives re-scoping; the routing flips as blockers clear.
@@ -23,9 +23,9 @@ With `ready-for-human` and `pickup` provisionally retired while charting, does t
 
 ## Sharpest insight
 
-**A dead-looking lane is often a measurement artefact.** The evidence for retirement counted GitHub labels only. Journals for June–July show the triage vocabulary used **69 times across 8 separate days in July** — `ready-for-agent` 24, `ready-for-human` 21, `needs-triage` 10 — all of it on the work Linear. Meanwhile the one personal repo that "showed life" (10 `ready-for-agent` on brushfeed) turned out to be a single `/to-tickets` batch dumped on 3 May, none assigned, none closed, untouched for twelve weeks. The lane's habitat is the work tracker; the personal-repo signal was one stale batch pointing the wrong way.
+**A dead-looking lane is often a measurement artefact.** The evidence for retirement counted GitHub labels only. Journals for June–July show the triage vocabulary used **69 times across 8 separate days in July** — the agent-takeable label 24, the delegability label 21, `needs-triage` 10 — all of it on the work Linear. Meanwhile the one personal repo that "showed life" (10 agent-takeable labels on brushfeed) turned out to be a single batch of tickets dumped on 3 May, none assigned, none closed, untouched for twelve weeks. The lane's habitat is the work tracker; the personal-repo signal was one stale batch pointing the wrong way.
 
-The second insight: **`ready-for-human` is a delegability predicate, and its four causes fail very differently when handed to an agent anyway.**
+The second insight: **the delegability label is a predicate, and its four causes fail very differently when handed to an agent anyway.**
 
 | Non-delegation reason | What the agent does | Risk |
 |---|---|---|
@@ -40,7 +40,7 @@ Only two of the four actually need a guard. The failure mode is never refusal �
 
 ## Ticket legibility — the real defect
 
-The brief is optimised as a contract for the agent, and the human reads it first. Concrete evidence: a `ready-for-human` ticket on brushfeed that **never says why it is human** — upstream keeps that instruction as prose in the skill body with no slot in the template, so it silently gets dropped.
+The brief is optimised as a contract for the agent, and the human reads it first. Concrete evidence: a human-only ticket on brushfeed that **never says why it is human** — upstream keeps that instruction as prose in the skill body with no slot in the template, so it silently gets dropped.
 
 Best practice from both traditions converges. 2026 agentic guidance wants "background, goal, acceptance criteria, constraints" written as issues rather than chats; classic AC guidance wants what-and-why with criteria that "specify what needs to happen, not how it's implemented" — verbatim the agent brief's own behavioural-not-procedural principle. Mapping the classic shape (user story / background / tasks / ACs / out of scope) onto the template leaves **exactly one hole: the why**. `Summary` restates the *what* a second time.
 
