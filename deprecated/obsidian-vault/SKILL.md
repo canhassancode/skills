@@ -1,9 +1,12 @@
 ---
 name: obsidian-vault
 description: Search, create, and manage notes in the Obsidian vault with wikilinks and index notes. Use when user wants to find, create, or organize notes in Obsidian.
+disable-model-invocation: true
 ---
 
 # Obsidian Vault
+
+Superseded by [`ingest`](../../personal/ingest/SKILL.md), which files sources into the vault, and [`ask`](../../personal/ask/SKILL.md), which answers questions from it.
 
 ## Vault location
 

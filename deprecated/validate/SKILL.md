@@ -1,11 +1,13 @@
 ---
 name: validate
 description: Run the full validation workflow — type-check, lint, and tests
-disable-model-invocation: false
+disable-model-invocation: true
 user-invocable: true
 argument-hint: "[scope: all, types, lint, test]"
 allowed-tools: Bash, Read, Grep, Glob
 ---
+
+Superseded by [`build`](../../engineering/build/SKILL.md): the repo's own validation hooks own validation now, and `/build` derives and proves that loop at its fit.
 
 Run the project's validation workflow. Detect the package manager and available scripts automatically.
 
