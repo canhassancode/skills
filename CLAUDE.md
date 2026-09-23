@@ -10,6 +10,8 @@ git remote add upstream https://github.com/mattpocock/skills.git
 
 That remote is the whole mechanism. There is no `/sync` skill, no recorded baseline SHA in a tracking file, no rejected-hunk ledger and no scheduled drift check — harvesting is a manual pass, run when there is a reason to run it.
 
+A remote named `upstream` outranks `origin` when `gh` resolves this repo, so the first `gh` call after adding it lands on `mattpocock/skills` with read-only access. Fix it once per clone: `gh repo set-default canhassancode/skills`.
+
 ### Classes
 
 Every skill is one of three. The class governs what a harvest is allowed to do to it.
@@ -23,7 +25,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | Skill | Why it diverges |
 |---|---|
 | `code-review` | The Structure axis is local — it encodes the ladder in the global `CLAUDE.md`. |
-| `triage` | Linear adapter, the `## Status` block, and the markdown-ticket flow are all local. |
+| `triage` | The Linear adapter and the markdown-ticket flow are local. |
 | `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
 | `implement` | Takes a ticket reference and fetches the agent brief through the tracker adapter. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
