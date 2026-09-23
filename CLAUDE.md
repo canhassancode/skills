@@ -56,9 +56,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 31 registered, **17 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
+Of the 29 registered, **16 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 
