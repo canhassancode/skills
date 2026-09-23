@@ -70,12 +70,17 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
    [REFERENCE.md](REFERENCE.md)). This decides the posting path (merge vs fresh)
    and is one more thing to dedupe against — never re-flag a point Hassan has
    already drafted.
-4. **Analyse — invoke `/crucible`** against the PR, from inside the worktree: the
-   four baselines, the falsification of whatever contract the PR carries, the
-   consumer grep and the diff's surplus. It returns findings **and** the verified
-   list. Pass it the published threads and Hassan's pending drafts as **settled
-   threads** so nothing already answered is raised again. Do not re-derive its
-   findings here.
+4. **Analyse — invoke `/crucible`** from inside the worktree, handing it exactly
+   three things:
+   - the **diff range** `<baseRefOid>...<headRefOid>` — the PR's own;
+   - the **contract** the PR carries: its body and linked issues; where it
+     carries none, hand it nothing — crucible resolves what the commits point at
+     and reports the gate that did not run;
+   - **settled threads** — the published threads and Hassan's pending drafts, so
+     nothing already answered is raised again.
+   The procedure is crucible's, not this skill's: the baselines, the
+   falsification, the consumer grep and the surplus pass are never re-derived
+   here. It returns the findings **and** the verified list.
 5. **Draft & decide — independently.** Turn `/crucible`'s findings into a
    review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
    carrying a file path and line number, and form the skill's **own** verdict from
