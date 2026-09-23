@@ -28,27 +28,25 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; companions [ARTEFACT.md](engineering/align/ARTEFACT.md), [DIAGRAMS.md](engineering/align/DIAGRAMS.md), [ANTI-PATTERNS.md](engineering/align/ANTI-PATTERNS.md)
+- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [build](engineering/build/SKILL.md) — stage 3: build a cut ticket as a sequential loop of fresh-child units, each falsified by `crucible`, ended by the pull request whose table carries every criterion's command and result; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
-- [code-review](engineering/code-review/SKILL.md) — four-axis review of a diff (Standards, with a Fowler smell baseline ‖ Spec ‖ Structure ‖ Design, path-triggered on `DESIGN.md`) in parallel sub-agents; called by `implement`; `review` runs `crucible`, and this stays registered until that has run in anger
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
 - [crucible](engineering/crucible/SKILL.md) — vet a diff against its contract, or without one: one hand-placed mutation per criterion (red required), the consumers of what changed grepped, the diff checked against three baselines, findings and the verified list returned and never posted; companion [BASELINES.md](engineering/crucible/BASELINES.md)
-- [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it; companion [SLICE.md](engineering/cut/SLICE.md)
+- [cut](engineering/cut/SKILL.md) — stage 2: cut a settled alignment into vertical slices a builder can pick up cold, each ticket carrying the interfaces, scenarios, criteria, decisions and rejections that bear on it
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
 - [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, update CONTEXT.md inline, offer ADRs)
 - [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core behind `grill-me`
 - [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
-- [implement](engineering/implement/SKILL.md) — implement a spec or set of tickets: TDD at pre-agreed seams, regular typecheck, then `code-review` before committing
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
 - [propose](engineering/propose/SKILL.md) — turn a settled alignment into an argued proposal for a decision-maker and publish it to the tracker, leaving the ticket at `awaiting-decision`
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
-- [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `code-review` against a fixed point
+- [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `crucible` against a fixed point
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; the passing is `/align`'s
 - [wayfinder](engineering/wayfinder/SKILL.md) — chart an oversized, foggy plan as a map of investigation tickets (research/prototype/grilling/task) on the tracker, resolved one session at a time
@@ -81,18 +79,20 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 - [to-issues](deprecated/to-issues/SKILL.md) — superseded by [cut](engineering/cut/SKILL.md); tracker-neutral "ticket", with blocking edges
 - [setup-tracker](deprecated/setup-tracker/SKILL.md) — superseded by [bootstrap](engineering/bootstrap/SKILL.md); configures both lanes, not just the tracker preference
 - [challenge](deprecated/challenge/SKILL.md) — superseded by [grill-me](productivity/grill-me/SKILL.md); the same Socratic pass, with a decision tree that has to resolve
-- [pickup](deprecated/pickup/SKILL.md) — superseded by [implement](engineering/implement/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
+- [pickup](deprecated/pickup/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which takes a ticket reference and absorbs the stale-brief risk pickup existed to catch
 - [inbox](deprecated/inbox/SKILL.md) — superseded by [ingest](personal/ingest/SKILL.md), which drains `Inbox/` as part of its own flow
 - [morning-brief](deprecated/morning-brief/SKILL.md) — retired, not replaced; the daily Operating Loop and its `Journal/` are gone
 - [eod-summary](deprecated/eod-summary/SKILL.md) — retired, not replaced; same reason as `morning-brief`
 - [lint](deprecated/lint/SKILL.md) — retired, not replaced; the vault's surviving files are hand-written and don't generate hygiene debt
+- [implement](deprecated/implement/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which runs the ticket's contract as a gated loop of fresh-child units instead of one session's judgement
+- [code-review](deprecated/code-review/SKILL.md) — superseded by [crucible](engineering/crucible/SKILL.md), which carries its Standards, Structure and Design axes as baselines and is invoked by `build` and `review`
 
 # My day-to-day
 
 The ones I reach for most:
 
 - `align` before any non-trivial change
-- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `implement` each slice → `code-review` → `commit`/`pr`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. `wayfinder` charters the genuinely unknown.
+- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `build` each slice → `review`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. `wayfinder` charters the genuinely unknown.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
-- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `implement` the ticket → `tdd` / `diagnose`.
-- `diagnose` for anything broken; `code-review` for my own branch, `review` for posting on someone else's PR
+- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `build` the ticket → `tdd` / `diagnose`.
+- `diagnose` for anything broken; `crucible` for my own branch, `review` for posting on someone else's PR

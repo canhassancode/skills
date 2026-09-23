@@ -125,4 +125,4 @@ A finding you cannot decide is never resolved by guessing. Surface it, and let t
 - `/build` — the caller that returns findings to a fresh builder invocation and records them in the run's comment.
 - `/review` — the voice and posting layer; a finding becomes a comment there, never here.
 - `/align` — where a finding that names a new scenario goes.
-- `/code-review` — the baselines in [BASELINES.md](./BASELINES.md) were its three axes; it stays registered until `/crucible` has run in anger under `/review`.
+- `/code-review` — deprecated into `/crucible`; the baselines in [BASELINES.md](./BASELINES.md) were its three axes and are the survivor.

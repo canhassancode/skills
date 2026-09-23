@@ -1,6 +1,6 @@
 # Baselines
 
-Three fixed standards the `shape`, `behaviour` and `claim` classes are checked against when the contract is silent. Ported from `/code-review`, whose Standards, Structure and Design axes were their home; if that skill retires, this file is the survivor.
+Three fixed standards the `shape`, `behaviour` and `claim` classes are checked against when the contract is silent. Ported from `/code-review`, whose Standards, Structure and Design axes were their home; that skill is deprecated into `/crucible`, and this file is the survivor.
 
 Three rules bind all three:
 
