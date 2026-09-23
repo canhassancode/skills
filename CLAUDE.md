@@ -16,7 +16,7 @@ A remote named `upstream` outranks `origin` when `gh` resolves this repo, so the
 
 Every skill is one of three. The class governs what a harvest is allowed to do to it.
 
-**Synced** — tracks upstream byte-for-byte: `research`, `resolving-merge-conflicts`, `wayfinder`, `writing-great-skills`.
+**Synced** — tracks upstream byte-for-byte: `research`, `wayfinder`, `writing-great-skills`.
 
 One why-line covers them: they are general-purpose and upstream maintains them better than a fork would. **`wayfinder` is the exception that earns its own line:** it carries one deliberate divergence — upstream's `/setup-matt-pocock-skills` is `/bootstrap` here. Perfect sync is exactly what let that dangling command name sit in the file unnoticed, so it will recur on every harvest unless the divergence is re-applied by hand each time.
 
@@ -29,7 +29,6 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
 | `implement` | Takes a ticket reference and fetches the agent brief through the tracker adapter. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
-| `to-spec`, `to-tickets` | Publish `ready-for-agent` by construction into this repo's two-lane model. |
 | `tdd`, `domain-modeling`, `prototype`, `improve-codebase-architecture`, `codebase-design` | Local domain-doc conventions (`CONTEXT.md`, `docs/adr/`) and British English. |
 | `grill-me` | Local description and the second-brain sweep; the body is still upstream's one-line delegation. |
 
@@ -41,7 +40,6 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `system-map` | Its live upstream is the work `claude-code-config` repo, not `mattpocock/skills`. Diff against that, not this remote. |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
-| `specifier` | No upstream counterpart. The gauntlet's only entrance and its only human gate — it authors every acceptance criterion, which is why `to-spec`, `to-tickets` and `grill-with-docs` author none (ADR-0004). |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
@@ -55,13 +53,13 @@ Editing a **synced** or **adapted** `SKILL.md` means: diff against `upstream/mai
 
 ### Install-direct upstream skills
 
-Some upstream skills are installed directly from `mattpocock/skills` and are deliberately **not vendored** into this library — `teach` is the current one. Installed-and-absent-from-the-library is a category with a reason, not drift. Do not re-raise it as a gap, and do not tidy it into `engineering/` or `productivity/`.
+Some upstream skills are installed directly from `mattpocock/skills` and are deliberately **not vendored** into this library — `teach` and `wait-what` are the current ones. Installed-and-absent-from-the-library is a category with a reason, not drift. Do not re-raise it as a gap, and do not tidy it into `engineering/` or `productivity/`.
 
 ## The count
 
-**37 skill directories live in this library; 36 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 36 registered, **20 carry `disable-model-invocation: true` and 16 do not**. The installed set (`~/.agents/skills`) runs one ahead — **37 directories, 21 invisible / 16 visible** — because `teach` is installed direct from upstream and deliberately not vendored here.
+Of the 31 registered, **17 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 
@@ -109,7 +107,7 @@ GitHub Issues (`canhassancode/skills`). External PRs are not a triage surface. S
 
 ### Triage labels
 
-Five canonical roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+Seven canonical states plus `wontfix`: `needs-triage`, `needs-info`, `needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build`, `wontfix`. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 

@@ -33,7 +33,7 @@ The 2026-06-10 grill (the 2026-06-10 daily-workflow redesign grill (retired)) ha
 
 - New `triage/issue-tracker-linear.md` adapter drives ops through the **Linear MCP** (not a CLI); bootstrap disabled.
 - Terminology collision to canonicalise: **Linear (tracker)** vs **linear (execution mode)** in the grill skills' step-1 prompt.
-- **AFK reachability risk:** `ready-for-agent` against Linear only works if the Linear MCP is authenticated in the headless pi/ralph runtime. Natural split — agent reads the brief from Linear (MCP), ships code via a GitHub PR (`gh`), a human closes the Linear issue. Verify before relying on it.
+- **AFK reachability risk:** the agent-takeable label against Linear only works if the Linear MCP is authenticated in the headless pi/ralph runtime. Natural split — agent reads the brief from Linear (MCP), ships code via a GitHub PR (`gh`), a human closes the Linear issue. Verify before relying on it.
 - Ops debt (not a skills change): tidy the duplicate labels already made in the team Linear.
 - Execution: no issue ceremony — it's one coherent prompt-file edit, done in a session. Recorded in skills-repo ADR `0001-dual-track-issue-tracker-adapters`.
 

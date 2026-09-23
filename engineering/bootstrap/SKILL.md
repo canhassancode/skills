@@ -58,7 +58,7 @@ tracker: github
 Seed the per-repo docs from the templates in this folder (let the user edit before writing):
 
 - `docs/agents/issue-tracker.md` — from [issue-tracker-github.md](./issue-tracker-github.md) / [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) / [issue-tracker-linear.md](./issue-tracker-linear.md) / [issue-tracker-local.md](./issue-tracker-local.md). For **other**, write from the user's description.
-- `docs/agents/triage-labels.md` — from [triage-labels.md](./triage-labels.md). Ten canonical roles across two lanes: inbound (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`) and planning (`needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build`). (No `prd` label — the planning lane holds a ticket in `needs-alignment` until `/cut` cuts it into slices.)
+- `docs/agents/triage-labels.md` — from [triage-labels.md](./triage-labels.md). Seven canonical states plus `wontfix` across two lanes: inbound (`needs-triage`, `needs-info`), planning (`needs-alignment`, `ready-to-propose`, `awaiting-decision`, `ready-to-cut`, `ready-to-build`), and `wontfix`. (No `prd` label — the planning lane holds a ticket in `needs-alignment` until `/cut` cuts it into slices.)
 - `docs/agents/domain.md` — from [domain.md](./domain.md). Confirm single-context (`CONTEXT.md` + `docs/adr/`) vs multi-context (`CONTEXT-MAP.md`).
 
 Then add an `## Agent skills` block to whichever of `CLAUDE.md` / `AGENTS.md` already exists (edit the existing one; never create the second when one is present; ask which to create if neither exists). Update in place if the block already exists — don't append a duplicate.
