@@ -130,6 +130,7 @@ Required before declaring done:
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns
+- [ ] `/crucible <base>...<head>` has vetted the PR, with the Phase 1 command as the criterion and the regression test as its witness; findings are fixed before the PR leaves draft
 
 **If the diagnosis ends without a fix** there is no commit and no PR to carry the finding. Post it as a comment on the ticket instead: the winning hypothesis, the loop you built (the command, verbatim), and what you ruled out. The next session starts from the loop rather than rebuilding it.
 
