@@ -31,6 +31,7 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 - **Read an issue**: `get_issue` for the body, `list_comments` for the discussion.
 - **Reference** issues by their `CAR-###` identifier (or URL), not `#N`.
 - Won't-do → native `Canceled` state.
+- Duplicate → `save_issue` with `duplicateOf: <survivor>`, the native duplicate relation, then `save_comment` naming the survivor's `CAR-###`.
 
 ## Publishing a cut
 
