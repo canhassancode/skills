@@ -41,11 +41,23 @@ These roles are canonical; the label strings are the repo's. Read `docs/agents/t
 
    Triage invokes no other skill — the route is a name, not a session.
 3. **Recommend, then wait.** Category, state, reasoning, and the codebase summary. The maintainer directs; work that needs fleshing out is a pass, and a pass is `/align`'s.
-4. **Write.** Show the body and confirm it before it is written — a route answer is never write permission. Apply the category and the state, and say why on the ticket itself: the placeholder carries the reasoning when one is written, the notes otherwise. Close the issue only on `wontfix`, with the reason.
+4. **Write.** Show the body and confirm it before it is written — a route answer is never write permission. Apply the category and the state, and say why on the ticket itself: the placeholder carries the reasoning when one is written, the notes otherwise. Close the issue only on `wontfix`, with the reason, or as a duplicate of the ticket with the richest context — the survivor, whose triage notes receive the closed ticket's unique facts.
 
 ## What needs attention
 
 Query the tracker and present three buckets, oldest first: unlabelled, `needs-triage`, and `needs-info` with reporter activity since the last notes. Show a count and a one-line summary each, and let the maintainer pick.
+
+## Sweep
+
+`/triage sweep [scope]` triages a backlog instead of one ticket. With no scope it reads the open tickets assigned to the operator that are unlabelled or wear `needs-triage`, `needs-info` or `needs-alignment`, paging the tracker until the list is exhausted; a wider scope only when the operator names one. Planning states are left alone whatever the scope.
+
+1. **Group.** Sort every ticket into a **Duplicate**, a **Family** or a single, and pick each group's survivor by the close rule in Procedures step 4.
+2. **Trace.** One code trace per group, run on the survivor; what it finds routes the whole group by the single-ticket rules — the Roles table, and for a bug Procedures step 2. A ticket whose behaviour already exists, or whose code no longer exists, is a `wontfix` candidate, where it lives or the missing code named as the reason. Age is shown, but age never decides.
+3. **Plan.** One table: `ticket · what it is · group · action · state after · route`, where "what it is" is one plain line ending in the ticket's age — a number alone does not say what a ticket is. Every ticket read is one row. The operator confirms it as one set, with overrides per row; nothing is written before that confirmation.
+4. **Write.** Apply each row's category and state after, with the write the Roles table gives that state. Close each duplicate and family member with the repo's duplicate command, its comment naming the survivor, and fold its unique facts into the survivor's triage notes. A family survivor carries a `needs-alignment` placeholder listing every member along with what only that member said; a survivor already carrying one gets the new members appended, not a second placeholder.
+5. **Report.** The before → after count, the failed rows, and the next-up queue: `/diagnose` routes first, then `/align` survivors oldest first.
+
+The sweep runs no pass, stamps no `ready-to-*` state, and creates no Linear labels, states or Projects. It reads open tickets only, so a re-run resumes from live state.
 
 ## A markdown ticket
 

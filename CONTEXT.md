@@ -99,6 +99,17 @@ _Avoid_: copying, syncing.
 The state-machine move that classifies an *inbound* ticket — a user bug, a collaborator draft, a stale issue — and queues it for the act it needs. Operates at the issue tracker level, not in the editor. It applies `bug`/`enhancement` with one of `needs-triage`, `needs-info`, `needs-alignment`, `wontfix`, and sizes a bug's blast radius from the trace reproduction already reads. It stamps no takeable state, writes no brief, and runs no pass. Planned work does **not** pass through triage: `/align` creates it and `/cut` cuts it. Triage is the lane for work that arrives without an **Align** pass behind it.
 _Avoid_: reading `needs-alignment` as a pass that happened — a pass is owed, not paid.
 
+**Sweep**:
+A **Triage** run over a whole backlog instead of one ticket. It reads the operator's open inbound tickets, groups them into **Duplicate**s and **Family**s, traces one survivor per group, and writes the whole plan once the operator has confirmed it as a set. It ends with a before → after count and a next-up queue. It stamps no takeable state and runs no pass.
+_Avoid_: cluster, batch triage, bulk triage.
+
+**Duplicate**:
+A ticket asking for the same fix or the same change as another. The richer one survives; the other closes through the tracker's native duplicate relation, and its unique facts are copied into the survivor.
+
+**Family**:
+Separate tickets that touch the same code and would be aligned together. One member survives with a placeholder listing every member; the rest close as its duplicates, and `/cut` separates the family back into slices.
+_Avoid_: epic, group — a family is a queueing move, not a container.
+
 **Handoff**:
 A continuity doc written by `/handoff` so a fresh session can continue mid-task work. When an Obsidian vault is present it lands in the vault's `Handoffs/`; otherwise a tmp file. Transient — consumed once, then deleted. The vault is transport, not a store.
 
