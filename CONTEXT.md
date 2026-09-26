@@ -15,9 +15,17 @@ _Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
 One `/align` session. The unit of work, not the conversation: each pass raises the **Alignment artefact**'s resolution, from fog to questions to decisions to a settled contract. Carries a number, and re-entry is the normal case rather than a restart.
 _Avoid_: iteration, round, session.
 
+**Short pass**:
+A **Pass** of one round, raised mid-build or by a case the contract never named, that closes on one of three exits — fixed in this ticket, out of scope, or a new ticket. It keeps the full close: pass count, **Verdict**, **Readiness check**, and an open item in Unresolved rather than a comment. A full pass replaces it when the answer changes what another slice promises.
+_Avoid_: amendment, mini-alignment.
+
 **Operator**:
 The human the lane serves: owns the contract, supplies what the run cannot reach, runs the acceptance criteria at hand-back, merges the pull request, and retires skills. Not in the loop's per-unit path — a fallback the run reaches for, never a station it waits at.
 _Avoid_: user, developer, owner.
+
+**Escalation**:
+A message a run sends the **Operator** at one of three levels — **decision** (a choice only they can make), **action** (a yes before something outward happens), **information** (nothing is asked). The level says how soon they need to look; the session is its sink until a notifier exists.
+_Avoid_: ping, notification.
 
 **Verdict**:
 The judgement an `/align` pass closes with — **aligned** (the gate is met; the artefact is a contract), **fog** (the work is still mostly unknown, but every unresolved item carries what would resolve it, so the routes are the next pass's plan), **dropped** (the work is not worth doing — nothing new is created, and a ticket that exists goes to `wontfix`), or **thin** (unresolved items with no route, axes unmarked, no decisions recorded). Fog is a finding, not an input: which verdict a pass returns is decided at its close, never at invocation. Thin is the failure; fog and thin look identical from outside, and the route is the discriminator.
@@ -42,6 +50,10 @@ _Avoid_: gate, definition of done.
 **Scenario**:
 A named, concrete walk through the system — *a publisher posts a carousel of four images* — that every question in an `/align` pass is woven through, so an option shows its impact instead of being argued in the abstract. Enumerated during the pass, and each one ends with an outcome or an unresolved item.
 _Avoid_: use case, user story.
+
+**Impact line**:
+The part of a **Scenario** that says what goes wrong, for whom, and how many — counted from data where the data is reachable, otherwise marked "not counted" with the reason. Counted, never rated: it lets an operator weigh a case without knowing the domain.
+_Avoid_: severity, priority.
 
 **Axis**:
 One dimension of a change every pass must answer for before it can close — happy path, limits, failure, misuse, concurrency and idempotency, permissions, observability, rollback, cost. Each is marked **decision**, **N/A** or **out of scope** with its reason, and the pass closes with one coverage line naming the counts, which total the list.
@@ -74,6 +86,10 @@ _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code
 **Finding**:
 One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act. Resolved findings are counted in the run's comment and never transcribed into the pull request.
 _Avoid_: comment, defect, issue.
+
+**Shepherd**:
+The stage after **Build** — takes one pull request from open to ready to merge. It waits for the review bot's round to finish, triages each outside comment — fixed through a fresh **Unit** and **Review**, or answered with evidence — asks for re-review, and sends an **Escalation** for anything that changes the contract. Replies to colleagues are drafted for the **Operator**'s yes. Outside review is input to it, never a second gate, and it never merges (ADR-0010).
+_Avoid_: watcher, post-PR loop, relay.
 
 **Spec**:
 The container's body, cut by `/cut` when an alignment settles into more than one **Ticket**: the map, not the contract — the scenario-to-slice assignment, and the shared interfaces with the consumers that claim them. It carries no acceptance criteria and no boundaries, so it wears no workflow label and is checked as a map only. Where the tracker has native sub-issues it parents its slices, and it closes when its last slice closes. Supersedes the old *PRD*: the document was never product-only, so "spec" is the honest superset (technical, non-technical, or a blend).
