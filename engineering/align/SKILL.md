@@ -37,5 +37,12 @@ The body carries the pass count, the verdict, the destination, what the pass was
 
 A contract that takes either takeable exit — `ready-to-cut` or `ready-to-build` — passes the eleven rows in [READINESS.md](../cut/READINESS.md) before the stamp; a failed row keeps the work at `needs-alignment` with the failing rows named, so `/cut` never reads a body still carrying fog.
 
+Where the body lists slices, the close dry-runs the cut's assignment by hand before it stamps a takeable state — every scenario landing in exactly one slice, every slice naming the scenario it makes pass — and shows the slice table, one row per slice, in the map's own signature, so the operator sees the assignment before the stamp rather than in a refusal afterwards:
+
+| slice | scenarios | blocked by |
+| --- | --- | --- |
+
+`/cut` still owns the split; the run decides nothing. A scenario in no slice or two, or a slice naming no scenario, refuses the stamp the way a failed readiness row does: the work stays at `needs-alignment` with the failing rows named.
+
 ## Additional Files
 **Examples**: See [EXAMPLES.md](EXAMPLES.md)
