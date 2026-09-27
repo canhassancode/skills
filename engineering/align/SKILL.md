@@ -15,6 +15,8 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 
 **The round.** A round is one reply carrying the whole frontier: as many scenario walks as the work turns on, and as many questions as the frontier holds — two questions is a small round, nine is a large one. Each question carries one recommendation, and the names of functions, columns and ids sit only on the fact line. Every waivable case carries an impact line — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open.
 
+**The short pass.** A build that finds a gap routes it back to `/align` as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close below runs in full either way. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
+
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 
 ## At session close - route the output
