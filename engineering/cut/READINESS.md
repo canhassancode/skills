@@ -2,7 +2,7 @@
 
 The eleven-row test a body passes before it takes a takeable stamp. Failing any row refuses the stamp.
 
-Two readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build`.
+Three readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build`; `/diagnose`'s Phase 6 stamp applies it to the ticket the diagnosis leaves behind, before that ticket takes `ready-to-build`.
 
 | # | row | the check |
 | --- | --- | --- |
