@@ -154,11 +154,12 @@ When a window fills mid-unit — the Delegator's or a Builder's — what is gree
 
 ## 5. Push and open the pull request
 
-Once every unit is closed, push the branch and open the pull request:
+Once every unit is closed, push the branch and open the pull request. The ticket drops `ready-to-build` as the pull request opens:
 
 ```sh
 git push -u origin <branch>
 gh pr create --title "<subject> (#<n>)" --body-file -
+gh issue edit <n> --remove-label "ready-to-build"
 ```
 
 The body carries every criterion, the command that decides it, and the result that was actually run:

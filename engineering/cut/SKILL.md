@@ -19,7 +19,11 @@ The roles in this skill are canonical; the label strings are the repo's — read
 2. **Assign.** Every scenario lands in exactly one slice; every interface row is owned or consumed; every decision binds the slices it touches. A slice that cannot name the scenario it makes pass is horizontal work wearing a ticket's clothes — a branch, not a tracker node. Each slice takes a title in the shape [TICKET.md](TICKET.md) gives, a body transcribed from the contract and opened by its `# What this builds` paragraph, and its blocking edges.
 3. **Check.** Apply [READINESS.md](READINESS.md) to every slice. One unwritable slice, or one failed row, **refuses the cut as one act**: write nothing, publish none of the passing slices, and return the work to `needs-alignment` with the failing rows named. Never fill the gap with prose at the cut.
 4. **Show.** Present the set: every slice's body, every blocking edge, the map where there is one. Ask the operator to confirm the set. Nothing is created before that confirmation — the cut is atomic.
-5. **Create.** Publish in one pass. One slice: the alignment ticket graduates in place, keeping its number and its body, and takes `ready-to-build`. Several: create the spec node first, unlabelled, then each slice as its child at `ready-to-build`, its native blocking edges set as it lands.
+5. **Create.** Publish in one pass. One slice: the alignment ticket graduates in place, keeping its number and its body, and takes `ready-to-build`. Several: create the spec node first, unlabelled, then each slice as its child at `ready-to-build`, its native blocking edges set as it lands. The alignment ticket drops `ready-to-cut` as the set publishes:
+
+   ```sh
+   gh issue edit <alignment> --remove-label "ready-to-cut"
+   ```
 6. **Close.** Close the alignment ticket with one comment naming the slices — carrying the map where no spec node was created. The cut is done when every slice exists and the ticket's body is the frozen record.
 
 # Labels
