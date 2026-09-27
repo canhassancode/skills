@@ -49,7 +49,7 @@ Query the tracker and present three buckets, oldest first: unlabelled, `needs-tr
 
 ## Sweep
 
-`/triage sweep [scope]` triages a backlog instead of one ticket. With no scope it reads the open tickets assigned to the operator that are unlabelled or wear `needs-triage`, `needs-info` or `needs-alignment`, paging the tracker until the list is exhausted; a wider scope only when the operator names one. Planning states are left alone whatever the scope.
+`/triage sweep [scope]` triages a backlog instead of one ticket. With no scope it reads the open tickets assigned to or created by the operator that are unlabelled or wear `needs-triage`, `needs-info` or `needs-alignment`, paging the tracker until the list is exhausted; a wider scope only when the operator names one. Planning states are left alone whatever the scope.
 
 1. **Group.** Sort every ticket into a **Duplicate**, a **Family** or a single, and pick each group's survivor by the close rule in Procedures step 4.
 2. **Trace.** One code trace per group, run on the survivor; what it finds routes the whole group by the single-ticket rules — the Roles table, and for a bug Procedures step 2. A ticket whose behaviour already exists, or whose code no longer exists, is a `wontfix` candidate, where it lives or the missing code named as the reason. Age is shown, but age never decides.
