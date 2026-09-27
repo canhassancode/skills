@@ -40,7 +40,7 @@ Run `glab issue view <number> --comments`.
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
 
 - **One slice** — the alignment issue graduates in place: `glab issue update <n> --label ready-to-build --unlabel ready-to-cut`. Its body already carries the contract; nothing is rewritten.
-- **Several slices** — where the tier has a native hierarchy (an epic, or child work items), the container is that node and the slices are created under it; otherwise no spec node is created, the slices are top-level, and the closing note carries the map. Either way each slice carries `ready-to-build`.
+- **Several slices** — where the tier has a native hierarchy (an epic, or child work items), the container is that node and the slices are created under it; otherwise no spec node is created, the slices are top-level, and the closing note carries the map. Either way each slice carries `ready-to-build`. The alignment issue drops `ready-to-cut` as the set publishes: `glab issue update <alignment> --unlabel ready-to-cut`.
 - **Blocking edges** — GitLab's native blocking link, posted as a note on the slice: `/blocked_by #<n>`. On the free tier, fall back to a `Blocked by: #<n>` line in the description.
 - **Close the alignment issue** — `glab issue note <alignment> --message "Cut into #232, #233, #234"`, then `glab issue close <alignment>`, once every slice exists.
 

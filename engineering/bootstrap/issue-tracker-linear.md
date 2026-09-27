@@ -38,7 +38,7 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
 
 - **One slice** — the alignment issue graduates in place: `save_issue` with the body unchanged and `ready-to-cut` swapped for `ready-to-build`.
-- **Several slices** — the spec is the **Project** that carries the map: `save_project`, carrying no planning label. Each slice is an issue created into that Project (`save_issue` with the Project set) and labelled `ready-to-build`.
+- **Several slices** — the spec is the **Project** that carries the map: `save_project`, carrying no planning label. Each slice is an issue created into that Project (`save_issue` with the Project set) and labelled `ready-to-build`. The alignment issue drops `ready-to-cut` as the set publishes: `save_issue` with `ready-to-cut` removed.
 - **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each slice lands; the slice's `# Blocked by` row repeats the identifiers for a cold reader.
 - **Close the alignment issue** — `save_comment` naming the slices and their `CAR-###` identifiers, then move the issue to `Done`, once every slice exists.
 
