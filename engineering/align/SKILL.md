@@ -13,7 +13,7 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 5. Alignment loops have multiple passes. A _pass_ is a _session_, make the decision together during the pass if it should be recorded then picked up in a new pass later with rationale. This could be context window _dumb zone_, waiting on dependencies, user request, etc. 
 6. Run `/codebase-design` to explore with the user interface design, deep module names, agreements using mermaid sequence diagrams. The user wants to be involved in this layer. 
 
-**The round.** A round is one reply carrying the whole frontier: as many scenario walks as the work turns on, and as many questions as the frontier holds — two questions is a small round, nine is a large one.
+**The round.** A round is one reply carrying the whole frontier: as many scenario walks as the work turns on, and as many questions as the frontier holds — two questions is a small round, nine is a large one. Each question carries one recommendation, and the names of functions, columns and ids sit only on the fact line. Every waivable case carries an impact line — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open.
 
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 

@@ -6,6 +6,8 @@
 
 **S2** - The same basket, card declined. The customer stays on the basket and retries with a second card, landing on `paid` on the second attempt.
 
+**Impact** - 11 of the 80 declined checkouts in the last 30 days retry and land in `paid`, counted from `payment_attempts`: each one leaves a declined attempt beside a live order for a single basket, and support has no way to say which row is the customer's.
+
 **Diagram** - < Insert Diagram(s) where necessary to visualise >
 
 ---
@@ -19,7 +21,7 @@
 - **E.** API service stores the id plus a cached status with a short TTL, refreshed lazily on read.
 - **F.** Undecided — the decision cannot be taken before the provider is chosen.
 
-➡️ **B**, with E as the upgrade if list endpoints get slow - one source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
+➡️ **B** - one source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
 
 ↳ `apps/api/src/orders/orderRepo.ts:41` reads `payment_status` today; nothing in the repo reconciles it, and `docs/adr/0012-payment-service-owns-intents.md` already names the payment service the owner of intents.
 
