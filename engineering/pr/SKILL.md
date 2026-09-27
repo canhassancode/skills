@@ -14,7 +14,7 @@ Create a GitHub PR with a structured summary of all changes.
 2. Run `git log` and `git diff` against the base branch to understand all changes
 3. Determine the base branch (usually `main` or `master`)
 4. Push the current branch to remote with `-u` flag if needed
-5. Create the PR using `gh pr create`
+5. Create the PR using `gh pr create --draft`
 
 ## PR format
 
