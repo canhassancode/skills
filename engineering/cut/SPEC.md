@@ -18,7 +18,10 @@ The alignment's `# Problem statement`, transcribed verbatim.
 
 # Interfaces
 
-The rows with more than one consumer, each naming the slices that consume it. A row with a single consumer belongs in that slice.
+The rows with more than one consumer, each naming the slice that builds it and the slices that use it. A row with a single consumer belongs in that slice.
+
+| name | shape | built by | used by |
+| --- | --- | --- | --- |
 
 # Decisions
 
