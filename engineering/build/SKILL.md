@@ -17,7 +17,7 @@ Run it against a ticket at `ready-to-build`; with no ticket there is nothing to 
 
 ## 1. Read the contract
 
-Fetch the ticket and read its body: the scenarios and their outcomes, the acceptance criteria, the interfaces it owns and consumes, the decisions that bind it, what it decided against, and its blocking edges. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
+Fetch the ticket and read its body: the paragraph on what it builds, the scenarios and their outcomes, the acceptance criteria, the interfaces it owns and consumes, the decisions that bind it, what it decided against, and its blocking edges. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
 
 Every criterion carries the command that decides it and the evidence that counts as passing. The fit pairs each with its **witness** — the test or observable that shows it. A criterion the fit cannot pair is a **gap** (§2), never a hand-back.
 

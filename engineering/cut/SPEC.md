@@ -7,6 +7,10 @@ The map a cut publishes when it makes several slices: the scenario-to-slice assi
 
 <One line: what is true after every slice ships.>
 
+# What this builds
+
+The alignment's `# Problem statement`, transcribed verbatim.
+
 # Scenarios
 
 | scenario | slice | blocked by |

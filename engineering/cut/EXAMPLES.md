@@ -9,6 +9,10 @@ One alignment (#228) cut into a spec node and three slices. The spec body follow
 
 Every saved search alerts the shopper when a matching listing lands.
 
+# What this builds
+
+Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+
 # Scenarios
 
 | scenario | slice | blocked by |
@@ -48,6 +52,10 @@ None.
 
 ````markdown
 > Spec: #231 · Alignment: #228
+
+# What this builds
+
+Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
 
 # Scenarios
 
@@ -127,6 +135,10 @@ Its `# Diagram` row is absent because the slice changes no diagram; the rest of 
 ````markdown
 > Spec: #231 · Alignment: #228
 
+# What this builds
+
+Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+
 # Scenarios
 
 | scenario | outcome |
@@ -184,6 +196,10 @@ None.
 
 ````markdown
 > Spec: #231 · Alignment: #228
+
+# What this builds
+
+Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
 
 # Scenarios
 

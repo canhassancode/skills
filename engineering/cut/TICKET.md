@@ -7,6 +7,10 @@ One sentence, affirmative, specific, sentence case, no internal names — *Carou
 ```markdown
 > Spec: #<n> · Alignment: #<n>
 
+# What this builds
+
+The alignment's `# Problem statement`, transcribed verbatim.
+
 # Scenarios
 
 | scenario | outcome |
