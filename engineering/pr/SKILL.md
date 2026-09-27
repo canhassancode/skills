@@ -18,7 +18,7 @@ Create a GitHub PR with a structured summary of all changes.
 
 ## PR format
 
-- Title: short (under 70 characters), use the same prefix convention as commits (feat, fix, etc.)
+- Title: short (within 70 characters), use the same prefix convention as commits (feat, fix, etc.)
 - If the user provides a title via $ARGUMENTS, use it
 
 Body template:
