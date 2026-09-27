@@ -186,9 +186,9 @@ Closes #<n>
 
 The rows are the run's own evidence: one per criterion, each with the command that was actually run. The pull request opens when the loop has finished — never with a P0, or a P1 neither closed nor explicitly accepted, still standing — and never as a force push.
 
-The run's last act starts `/shepherd` on the pull request it opened and hands it that pull request and the ticket's contract — the review loop begins there, without the operator relaying the bot. The operator can start it by hand on any other pull request.
+§5's last act starts `/shepherd` on the pull request it opened, once the pull request is open and `ready-to-build` is dropped, and hands it that pull request and the ticket's contract — the review loop begins there, without the operator relaying the bot. §6's comment and §7's hand-back to the operator follow it. The operator can start it by hand on any other pull request.
 
-**Done when** the pull request is open, its table has a row for every criterion in the contract, and that last act has run.
+**Done when** the pull request is open, its table has a row for every criterion in the contract, and §5's last act has run.
 
 ## 6. Write the run's one comment
 
