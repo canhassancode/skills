@@ -23,10 +23,10 @@ Shoppers who watch for a kind of listing re-run the same search by hand and miss
 
 # Interfaces
 
-| interface | signature | consumed by |
-| --- | --- | --- |
-| `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | #232, #233 |
-| `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | #232, #234 |
+| name | shape | built by | used by |
+| --- | --- | --- | --- |
+| `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | #232 | #233 |
+| `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | #232 | #234 |
 
 # Decisions
 
@@ -73,7 +73,7 @@ Shoppers who watch for a kind of listing re-run the same search by hand and miss
 | name | signature | inputs | outputs | owned | consumed |
 | --- | --- | --- | --- | --- | --- |
 | `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | the committed listing | the digest row | yes | — |
-| `SavedSearchStore` | `find(query)`, `list(account_id)` | the saved query, the account | matching ids | — | yes |
+| `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | the saved query, the account | matching ids | yes | — |
 
 # Decisions
 

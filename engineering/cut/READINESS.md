@@ -20,6 +20,6 @@ Three readers: `/cut` applies it to every slice it stamps; `/align`'s close appl
 
 Rows 1–10 are checked against the slice's body. Row 11 reads the axes on the alignment body's coverage line — **Axes:** n decision · n N/A — which totals the nine: happy path · limits · failure · misuse · concurrency and idempotency · permissions · observability · rollback · cost. A slice reads the marks rather than re-filling them.
 
-**Container route.** Every slice passes on its own. The spec node is checked as a map only: every scenario assigned to exactly one slice, every shared interface claimed by a consumer, no label. It carries no criteria and no boundaries of its own.
+**Container route.** Every slice passes on its own. The spec node is checked as a map only: every scenario assigned to exactly one slice, every shared interface naming the slice that builds it and the consumers that claim it, no label. A shared row whose `built by` names no slice refuses the stamp. It carries no criteria and no boundaries of its own.
 
 **Refusal.** One unwritable slice, or one failed row, refuses the cut as one act — no node is written, the passing slices are not published, and the ticket keeps `needs-alignment` with the failing rows named in a comment.
