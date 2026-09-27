@@ -47,6 +47,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `crucible` against a fixed point
+- [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds: triage each thread, fix inside the contract through a fresh unit and `crucible`, reply with evidence, and ask before colleague review; started by `build`'s last act on the pull request it opened, or by hand on any other
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; `/triage sweep` groups a whole backlog into duplicates and families; the passing is `/align`'s
 - [wayfinder](engineering/wayfinder/SKILL.md) — chart an oversized, foggy plan as a map of investigation tickets (research/prototype/grilling/task) on the tracker, resolved one session at a time

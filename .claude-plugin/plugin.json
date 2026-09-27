@@ -20,6 +20,7 @@
     "./engineering/receive",
     "./engineering/research",
     "./engineering/review",
+    "./engineering/shepherd",
     "./engineering/tdd",
     "./engineering/triage",
     "./engineering/wayfinder",
