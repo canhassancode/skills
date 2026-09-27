@@ -158,9 +158,11 @@ Once every unit is closed, push the branch and open the pull request. The ticket
 
 ```sh
 git push -u origin <branch>
-gh pr create --title "<subject> (#<n>)" --body-file -
+gh pr create --title "<type>: <subject> (#<n>)" --body-file -
 gh issue edit <n> --remove-label "ready-to-build"
 ```
+
+The title opens with the conventional type prefix — `feat`, `fix`, `hotfix`, `refactor`, `chore`, `docs`. The whole title stays within 70 characters, so `<subject>` is trimmed to fit.
 
 The body carries every criterion, the command that decides it, and the result that was actually run:
 
