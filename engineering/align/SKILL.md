@@ -15,6 +15,8 @@ argument-hint: <new feature | ticket-ref | requirements | pr comments | general 
 
 **The round.** A round is one reply carrying the whole frontier: as many scenario walks as the work turns on, and as many questions as the frontier holds — two questions is a small round, nine is a large one. Each question carries one recommendation, and the names of functions, columns and ids sit only on the fact line. Every waivable case carries an impact line — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open.
 
+**The short pass.** A build that finds a gap routes it back to `/align` as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close below runs in full either way. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
+
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 
 ## At session close - route the output
@@ -36,6 +38,13 @@ An alignment is a _thinking_ artefact, not by default a spec or a build. The clo
 The body carries the pass count, the verdict, the destination, what the pass was verified against, the unresolved items with their routes, and the next act. A pass comment carries only what moved in that pass.
 
 A contract that takes either takeable exit — `ready-to-cut` or `ready-to-build` — passes the eleven rows in [READINESS.md](../cut/READINESS.md) before the stamp; a failed row keeps the work at `needs-alignment` with the failing rows named, so `/cut` never reads a body still carrying fog.
+
+Where the body lists slices, the close dry-runs the cut's assignment by hand before it stamps a takeable state — every scenario landing in exactly one slice, every slice naming the scenario it makes pass — and shows the slice table, one row per slice, in the map's own signature, so the operator sees the assignment before the stamp rather than in a refusal afterwards:
+
+| slice | scenarios | blocked by |
+| --- | --- | --- |
+
+`/cut` still owns the split; the run decides nothing. A scenario in no slice or two, or a slice naming no scenario, refuses the stamp the way a failed readiness row does: the work stays at `needs-alignment` with the failing rows named.
 
 ## Additional Files
 **Examples**: See [EXAMPLES.md](EXAMPLES.md)
