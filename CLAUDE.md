@@ -44,6 +44,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
 | `crucible` | No upstream counterpart — the only review policy; falsification, the consumer grep and the three baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
+| `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started by `build`'s last act on the pull request it opened, or by hand on any other. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 The experiment bench sits outside these tables until it ships: `in-progress/system-map` is the one unregistered directory (`## The count`), forked from the work `claude-code-config` repo — diff against that, not this remote.
@@ -58,9 +59,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**31 skill directories live in this library; 30 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 29 registered, **16 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
+Of the 30 registered, **17 carry `disable-model-invocation: true` and 13 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 
