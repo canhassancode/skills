@@ -13,7 +13,7 @@ The parent session — the **Delegator** — holds the contract, the unit list a
 
 Fresh children come from the harness, named in one line: pi's `subagent` with the `Builder` and `Reviewer` agents, Claude Code's `Agent` tool. A harness that cannot spawn one is an **unavailable** dependency like any other, and the run stops before writing (§2).
 
-Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. Tickets are read through the tracker adapter — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing.
+Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. Tickets are read through the tracker adapter — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing. Depending on the issue tracker, assign to me, move to in progress if the issue tracker allows (e.g. Linear not Github).
 
 ## 1. Read the contract
 
