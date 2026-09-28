@@ -8,11 +8,11 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/wayfinder` invokes `/align`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
-The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: one question at a time, facts looked up rather than asked, decisions kept with the operator, and every question woven through a named **Scenario** with a recommendation and a plain-English reason. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
+The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: a playback of the problem the operator confirms first, then rounds of one named **Scenario** and the questions it raises, each whole on its own with a recommendation and a plain-English reason, then the design shown interface by interface — facts looked up rather than asked, decisions kept with the operator. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
 _Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
 
 **Pass**:
-One `/align` session. The unit of work, not the conversation: each pass raises the **Alignment artefact**'s resolution, from fog to questions to decisions to a settled contract. Carries a number, and re-entry is the normal case rather than a restart.
+One `/align` session. The unit of work, not the conversation: each pass raises the **Alignment artefact**'s resolution, from fog to questions to decisions to a settled contract. Its scope is set at the playback — one area sized to fit a session — and it stops at its close. Carries a number, and re-entry is the normal case rather than a restart.
 _Avoid_: iteration, round, session.
 
 **Operator**:
