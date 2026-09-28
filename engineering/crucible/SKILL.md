@@ -109,13 +109,13 @@ Beside the findings, return the **verified list**: one line per criterion whose 
 
 Beside both, return the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe — `case → evidence`, the line that handles it and why it holds. A note is neither a finding nor work; it is the answer ready for when a reviewer asks about that input.
 
-**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a unit. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
+**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a unit; a small style one contained in its unit may still resolve `open`. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
 
 **Severity.** P2 is shape's home. P1 is a criterion not met, a witness that does not hold, or a claim the change invalidated. P0 is reserved for a finding that breaks the contract elsewhere — a regression in behaviour the unit claims not to touch, or a consumer left broken.
 
 **Resolution.** Classify the route, because the caller's sink differs:
 
-- **open** — behaviour, claim and test findings act; the caller returns them to a fresh builder invocation;
+- **open** — behaviour, claim and test findings act, and a small style one contained in its unit gets one round; the caller returns them to a fresh builder invocation;
 - **contract-change** — a scenario the contract never named: the contract is short, and the fix is an `/align` pass on the ticket, never a fix round;
 - **product-call** — the review cannot decide because the answer is the operator's: surface it in session, and the parent records the answer as a decision row or an out-of-scope entry;
 - **suppressed** — named against its entry, above.

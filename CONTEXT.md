@@ -72,7 +72,7 @@ The **policy** that vets a diff before it goes anywhere: a **Unit**'s delta as t
 _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code review, linting.
 
 **Finding**:
-One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act — beyond one **Build** fix round for a small shape finding contained in its unit. Resolved findings are counted in the run's comment and never transcribed into the pull request.
+One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act — beyond one **Build** fix round for a small style finding contained in its unit. Resolved findings are counted in the run's comment and never transcribed into the pull request.
 _Avoid_: comment, defect, issue.
 
 **Spec**:
