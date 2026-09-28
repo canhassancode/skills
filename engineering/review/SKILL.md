@@ -80,7 +80,9 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
      nothing already answered is raised again.
    The procedure is crucible's, not this skill's: the baselines, the
    falsification, the consumer grep and the surplus pass are never re-derived
-   here. It returns the findings **and** the verified list.
+   here. It returns the findings, the verified list **and** the notes — step
+   1's `unwitnessed — absence recorded`, and one per input case step 3 judged
+   safe with its evidence.
 5. **Draft & decide — independently.** Turn `/crucible`'s findings into a
    review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
    carrying a file path and line number, and form the skill's **own** verdict from
