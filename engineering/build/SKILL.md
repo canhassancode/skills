@@ -104,7 +104,7 @@ A Builder ends when it judges the unit done — green, committed, tree clean, th
 
 Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies every owned witness with one hand-placed mutation, and it never posts.
 
-It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red`. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
+It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red` — and the **notes**, each input case judged safe with its evidence. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
 
 **Done when** every criterion the unit owns carries a falsification result and the findings are in hand.
 
