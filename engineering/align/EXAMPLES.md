@@ -1,46 +1,86 @@
-# 1. Example alignment round
+# 1. Example pass
 
+## Playback
 
 ```markdown
-**S1** - A customer checks out a basket. Today's API service creates orders and takes no payment; the payment part is new. First walk: a customer pays by card and the order lands in `paid`.
+**Today** - A customer submits a basket and the API service creates an order straight away. No payment is taken at checkout; someone settles each order by hand afterwards.
 
-**S2** - The same basket, card declined. The customer stays on the basket and retries with a second card, landing on `paid` on the second attempt.
+**The ask** - Take a card payment at checkout, so an order only exists once it has been paid for.
 
-**Impact** - 11 of the 80 declined checkouts in the last 30 days retry and land in `paid`, counted from `payment_attempts`: each one leaves a declined attempt beside a live order for a single basket, and support has no way to say which row is the customer's.
+**Diagram** - < today's flow, as a sequence diagram >
 
-**Diagram** - < Insert Diagram(s) where necessary to visualise >
+**This pass settles** - what a successful card payment and a declined card do to checkout. Refunds and saved cards go to Unresolved, each with its route.
 
----
+Is that the problem as you see it?
+```
 
-❓ **Q1** - **Who owns payment status**: does the API service keep its own copy of payment status, or is the payment service the single source of truth the API service reads through? Turns on S1.
+## Round
 
-- **A.** API service stores a `payment_status` column, updated from the provider's webhook.
-- **B.** API service stores only `payment_intent_id` and reads status from the payment service on each request.
-- **C.** Payment service owns an `orders` mirror; anything payment-shaped is read from there.
-- **D.** API service holds no payment state at all; the client polls the payment service directly.
-- **E.** API service stores the id plus a cached status with a short TTL, refreshed lazily on read.
-- **F.** Undecided — the decision cannot be taken before the provider is chosen.
+```markdown
+**A declined card, then a second card**
 
-➡️ **B** - one source of truth means a status can never be quietly wrong; a mirror is a second copy that drifts the first time a webhook is missed, and nobody has scheduled the job that would notice.
-
-↳ `apps/api/src/orders/orderRepo.ts:41` reads `payment_status` today; nothing in the repo reconciles it, and `docs/adr/0012-payment-service-owns-intents.md` already names the payment service the owner of intents.
+A customer's first card is declined. They stay on the basket, try a second card, and it goes through. Today the order row is written when the basket is submitted, before any payment call, so the declined attempt already has an order sitting behind it.
 
 ---
 
-❓ **Q2** - **What a declined retry leaves behind**: after a declined card, does the second attempt reuse the first order row or write a new one? Turns on S2.
+❓ **Q1** - **What a declined retry leaves behind**: when a customer's first card is declined and their second is accepted, does the second attempt reuse the order row the first one wrote, write a new row, or does no order exist until a payment succeeds?
+
+**Impact** - 11 of the 80 declined checkouts in the last 30 days retry and succeed, counted from `payment_attempts`: each leaves a declined attempt beside a live order for one basket, and support has no way to say which row is the customer's.
+
+➡️ **No order until payment succeeds** - a declined payment is not an order, and reusing the row leaves a total and a status that disagree the moment the basket changes between attempts.
+
+↳ `apps/api/src/checkout/basket.ts:88` mints an order at submit, before any payment call.
 
 - **A.** One row per basket; the second attempt updates it.
 - **B.** One row per attempt; abandoned rows are swept later.
 - **C.** No order row until payment succeeds.
 
-➡️ **C** - a declined payment is not an order, and A leaves a row whose total and status disagree the moment the basket changes between attempts.
+---
 
-↳ `apps/api/src/checkout/basket.ts:88` mints an order at submit, before any payment call.
+❓ **Q2** - **What the customer sees after a decline**: when the first card is declined, does the customer stay on the basket with the decline reason shown, or go to a separate retry page?
+
+➡️ **Stay on the basket** - the basket is already the page they trust, and a retry page is a second place the basket's contents could drift.
+
+↳ `apps/web/src/checkout/Basket.tsx:120` already renders an inline error slot, unused today.
+```
+
+## Design
+
+````markdown
+**Design - the payment gate**
+
+Checkout asks one module whether a basket may become an order. The provider, its retries and its webhooks sit behind it, so checkout never learns which provider is in use.
+
+```ts
+interface PaymentGate {
+  charge(basketId: BasketId, card: CardToken): Promise<ChargeResult>
+}
+
+type ChargeResult =
+  | { kind: 'paid'; orderId: OrderId }
+  | { kind: 'declined'; reason: DeclineReason }
+```
+
+A caller:
+
+```ts
+const result: ChargeResult = await paymentGate.charge(basket.id, card)
+if (result.kind === 'declined') return showDecline(result.reason)
+return redirectToOrder(result.orderId)
+```
+
+**Invariants** - an `OrderId` exists only on `paid`. **Errors** - a provider timeout returns `declined` with reason `unavailable`; `charge` never throws.
+
+**Diagram** - < the checkout flow through `PaymentGate`, where it changes >
 
 ---
 
-❓ **Q3** - **<next frontier question>**: <and so on, until the frontier is empty — as many questions as the work holds>
-```
+❓ **Q1** - **Whether the gate writes the order**: does `PaymentGate.charge` write the order row itself on `paid`, or return and leave checkout to write it?
+
+➡️ **The gate writes it** - an order and its payment then land together or not at all, and no caller can hold a `paid` result with no order behind it.
+
+↳ `apps/api/src/orders/orderRepo.ts:12` exposes `create` to any caller today; nothing ties it to a payment.
+````
 
 # 2. Example Diagrams
 

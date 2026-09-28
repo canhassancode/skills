@@ -4,16 +4,17 @@ description: Accepting a users new feature, requirements, general idea, ticket, 
 argument-hint: <new feature | ticket-ref | requirements | pr comments | general idea>
 ---
 
-## Procedures of the alignment loop
+## The pass
 
-1. Run `/grilling` for the interview loop — read [grilling/SKILL.md](../grilling/SKILL.md) and ask its round shape.
-2. Fan-out to subagents upfront, gather details from relevant sources. **Do not** reply to the user with questions until the research that answers them has been looked up — ask every question whose facts are back, never holding the round for the slowest source.
-3. Combine with running `/domain-modeling` for domain work - challenge against the glossary, sharpen fuzzy language, stress-test with scenarios, cross-reference against code, update `CONTEXT.md` inline, offer ADRs, and visualise with Mermaid Sequence Diagrams.
-4. You **MUST** always stick to the reply format shown in [EXAMPLES.md](EXAMPLES.md). Scenarios on each pass is a must. Keep the text concise, unless told to go into more details by the user. Technical jargon holds no value in alignment session. Every choice of wording is vitally important, you are a guide to ensure the user is well-equipped whilst you pair through discovery. Conciseness and clarity wins over verbosity. 
-5. Alignment loops have multiple passes. A _pass_ is a _session_, make the decision together during the pass if it should be recorded then picked up in a new pass later with rationale. This could be context window _dumb zone_, waiting on dependencies, user request, etc. 
-6. Run `/codebase-design` to explore with the user interface design, deep module names, agreements using mermaid sequence diagrams. The user wants to be involved in this layer. 
+A _pass_ is one session, and it runs in four parts — **playback, rounds, design, close** — then stops. You are pairing through discovery: every reply follows [EXAMPLES.md](EXAMPLES.md), and every choice of wording is there to leave the user well-equipped.
 
-**The round.** A round is one reply carrying the whole frontier: as many scenario walks as the work turns on, and as many questions as the frontier holds — two questions is a small round, nine is a large one. Each question carries one recommendation, and the names of functions, columns and ids sit only on the fact line. Every waivable case carries an impact line — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open.
+1. **Gather.** Fan out to sub-agents for the facts the pass turns on — at most two at a time, each returning its conclusion with `file:line`, not the files it read. From pass 2 onwards, read the ticket body only; fetch a pass comment when a question needs it. Questions wait for the research that answers them, and the round never waits for the slowest source.
+2. **Playback.** Before any question, say back what exists today, what is being asked, and one diagram of today's flow, in plain words and with the room it needs to be understood. Close it with the pass's scope in one line: the one area this pass settles, sized to fit a ~100K-token session, with everything else sent to Unresolved carrying its route. The playback is done when the user has confirmed or corrected it.
+3. **Rounds.** Run `/grilling`'s round shape — read [grilling/SKILL.md](../grilling/SKILL.md): one scenario per round and the questions it raises. Run `/domain-modeling` alongside it — challenge against the glossary, sharpen fuzzy language, cross-reference against code, update `CONTEXT.md` inline, offer ADRs. Rounds end when the scope's behaviour is settled.
+4. **Design.** Run `/codebase-design` with the user, one interface at a time: its signature as code, a caller using it, its invariants and error modes, and a sequence diagram where the flow changes. Ask about each before showing the next. The design is done when every interface the scope touches has been shown and agreed.
+5. **Close.** Route the output by the table below, then stop. The next pass is `/align <ref>` in a fresh session.
+
+**The round.** Two to four questions, each carrying one recommendation. In playback and rounds, the names of functions, columns and ids sit on the fact line; in design they are the subject. Every waivable case carries an impact line under its question — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open.
 
 **The short pass.** A build that finds a gap routes it back to `/align` as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close below runs in full either way. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
 
