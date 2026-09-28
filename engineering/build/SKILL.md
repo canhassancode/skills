@@ -104,7 +104,7 @@ A Builder ends when it judges the unit done — green, committed, tree clean, th
 
 Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies every owned witness with one hand-placed mutation, and it never posts.
 
-It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red`. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
+It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red` — and the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe, with its evidence. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
 
 **Done when** every criterion the unit owns carries a falsification result and the findings are in hand.
 
@@ -113,7 +113,8 @@ It returns **Findings** — class, severity, where it was found, the unit it bel
 | finding | route |
 | --- | --- |
 | behaviour · claim · test — P0/P1 | a fresh fix child, §4.4 |
-| shape — P2 | recorded in the comment, never a fix round |
+| shape — P2, a small style finding found at and belonging to this unit | a fresh fix child, §4.4 — one round; still open after it, it rides |
+| shape — P2, any other | recorded in the comment, never a fix round |
 | an out-of-scope row | suppressed, citing the row |
 | a scenario the contract never named | a contract change: `/align`, never a fix round |
 | a product call | asked in session; the answer recorded as a decision row or an out-of-scope entry |
@@ -127,7 +128,7 @@ A fix is a new Builder child carrying the findings as its brief, never a resumed
 ```text
 <fix-brief>
 
-Unit <n> of <m> · Ticket: #<n> · Round <n> of 2 — <the finding this round answers>
+Unit <n> of <m> · Ticket: #<n> · Round <n> of <2, or 1 for shape> — <the finding this round answers>
 
 The Review returned findings against this unit. Each is a question with its evidence; answer it in the
 code — the fix lands wherever the finding lives, which may be outside this unit's diff.
@@ -140,9 +141,9 @@ second attempt. Do not widen scope — a finding that adds a scenario is not you
 </fix-brief>
 ```
 
-Commit the round, then re-vet only the criterion the round touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each finding gets two rounds at most — a round answers one finding, or several answered by the same change — and a finding still open after its second goes to the operator in session: the finding, what was tried, and a proposition with the route it would take.
+Commit the round, then re-vet only the criterion the round touched — or, for a shape round, whether its finding still stands and every criterion whose lines it touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets two rounds at most — a round answers one finding, or several answered by the same change — and a finding still open after its second goes to the operator in session: the finding, what was tried, and a proposition with the route it would take. A shape finding gets one round and is never escalated: still open after it, it rides.
 
-**Done when** every acting finding is closed by a red mutation, escalated with a proposition, or recorded as accepted open.
+**Done when** every acting finding is closed by a red mutation, escalated with a proposition, or recorded as accepted open, and every shape round is closed or riding.
 
 ### 4.5 Close the unit
 

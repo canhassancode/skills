@@ -1,6 +1,6 @@
 ---
 name: crucible
-description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, grep the consumers of what the diff changed, check the change against the three baselines, and return findings with class, severity, found-at and belongs-to plus the verified list. Never posts. Use when /build vets a unit, or when /review analyses a named pull request — with or without a contract.
+description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, grep the consumers of what the diff changed, check the change against the three baselines, and return findings with class, severity, found-at and belongs-to plus the verified list and the notes. Never posts. Use when /build vets a unit, or when /review analyses a named pull request — with or without a contract.
 argument-hint: <base>...<head> · the contract · settled threads
 ---
 
@@ -62,7 +62,9 @@ A red mutation proves the witness, not the criterion. Walk each criterion's path
 
 Each is a **behaviour** finding: `found at` the line that skips the check, `belongs to` the unit whose change put it there.
 
-**Done when** every criterion's path — the primary and every fallback — has been walked.
+Then read the path through the inputs production can send that the witness does not: several rows, rows written before the change, a row or version production can lack, two rows sharing a key, two calls at once, a malformed id. This step reads; it does not mutate. A case that breaks a criterion is a **behaviour** finding, placed and attributed as above; a case outside the contract is **contract-change**, routed to `/align`; a case judged safe returns as a **note** with its evidence — the line that handles it and why it holds.
+
+**Done when** every criterion's path — the primary and every fallback — has been walked, and every input case the path can receive is a finding or a note.
 
 ### 4. Grep the consumers of what changed
 
@@ -105,20 +107,22 @@ resolution  open | contract-change | product-call | suppressed
 
 Beside the findings, return the **verified list**: one line per criterion whose mutation went red — `criterion → mutation → red` — and, where no contract was found, the line saying the falsification gate did not run. A finding is only half an answer, and the caller's approval cites the other half.
 
-**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a unit. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
+Beside both, return the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe — `case → evidence`, the line that handles it and why it holds. A note is neither a finding nor work; it is the answer ready for when a reviewer asks about that input.
+
+**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a unit; a small style one contained in its unit may still resolve `open`. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
 
 **Severity.** P2 is shape's home. P1 is a criterion not met, a witness that does not hold, or a claim the change invalidated. P0 is reserved for a finding that breaks the contract elsewhere — a regression in behaviour the unit claims not to touch, or a consumer left broken.
 
 **Resolution.** Classify the route, because the caller's sink differs:
 
-- **open** — behaviour, claim and test findings act; the caller returns them to a fresh builder invocation;
+- **open** — behaviour, claim and test findings act, and a small style one contained in its unit gets one round; the caller returns them to a fresh builder invocation;
 - **contract-change** — a scenario the contract never named: the contract is short, and the fix is an `/align` pass on the ticket, never a fix round;
 - **product-call** — the review cannot decide because the answer is the operator's: surface it in session, and the parent records the answer as a decision row or an out-of-scope entry;
 - **suppressed** — named against its entry, above.
 
 A finding you cannot decide is never resolved by guessing. Surface it, and let the operator decide.
 
-**Done when** every owned criterion carries a falsification result or a recorded absence, every changed surface's consumers have been grepped, every hunk is mapped, the tree is clean, and every finding is classed, placed, attributed and routed.
+**Done when** every owned criterion carries a falsification result or a recorded absence, every input case is a finding or a note, every changed surface's consumers have been grepped, every hunk is mapped, the tree is clean, and every finding is classed, placed, attributed and routed.
 
 ## Related
 

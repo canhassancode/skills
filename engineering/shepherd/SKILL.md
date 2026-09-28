@@ -2,7 +2,6 @@
 name: shepherd
 description: Take one open pull request through the review bot's rounds to the top score or a decision — triage each thread, fix through crucible, reply with evidence, and ask before colleague review.
 argument-hint: <pr-ref>
-disable-model-invocation: true
 ---
 
 # Shepherd
