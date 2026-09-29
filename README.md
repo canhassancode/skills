@@ -28,7 +28,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time
+- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time; questions no fact settles exit as routes — research, prototype, task, pass or decide
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [build](engineering/build/SKILL.md) — stage 3: build a cut ticket as a sequential loop of fresh-child units, each falsified by `crucible`, ended by the pull request whose table carries every criterion's command and result; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
@@ -43,14 +43,13 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
 - [propose](engineering/propose/SKILL.md) — turn a settled alignment into an argued proposal for a decision-maker and publish it to the tracker, leaving the ticket at `awaiting-decision`
-- [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `wayfinder` can reach it
+- [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `align`'s prototype route can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `crucible` against a fixed point
 - [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds: triage each thread, fix inside the contract through a fresh unit and `crucible`, reply with evidence, and ask before colleague review; started by `build`'s last act on the pull request it opened, or by hand on any other
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; `/triage sweep` groups a whole backlog into duplicates and families; the passing is `/align`'s
-- [wayfinder](engineering/wayfinder/SKILL.md) — chart an oversized, foggy plan as a map of investigation tickets (research/prototype/grilling/task) on the tracker, resolved one session at a time
 
 ## `productivity/` — meta-skills for working with me and Claude
 
@@ -87,13 +86,14 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 - [lint](deprecated/lint/SKILL.md) — retired, not replaced; the vault's surviving files are hand-written and don't generate hygiene debt
 - [implement](deprecated/implement/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which runs the ticket's contract as a gated loop of fresh-child units instead of one session's judgement
 - [code-review](deprecated/code-review/SKILL.md) — superseded by [crucible](engineering/crucible/SKILL.md), which carries its Standards, Structure and Design axes as baselines and is invoked by `build` and `review`
+- [wayfinder](deprecated/wayfinder/SKILL.md) — superseded by [align](engineering/align/SKILL.md): the pass's Unresolved list is the map, and each entry's Route is the ticket type
 
 # My day-to-day
 
 The ones I reach for most:
 
 - `align` before any non-trivial change
-- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `build` each slice → `review`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. `wayfinder` charters the genuinely unknown.
+- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `build` each slice → `review`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. A question that is a fact or a shape leaves a pass as a route — `research` or `prototype` — and comes back folded into the next one.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `build` the ticket → `tdd` / `diagnose`.
 - `diagnose` for anything broken; `crucible` for my own branch, `review` for posting on someone else's PR
