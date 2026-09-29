@@ -82,7 +82,24 @@ return redirectToOrder(result.orderId)
 ↳ `apps/api/src/orders/orderRepo.ts:12` exposes `create` to any caller today; nothing ties it to a payment.
 ````
 
-# 2. Example Diagrams
+# 2. Example routes
+
+A question no fact settles and no choice moves is not argued — it leaves the round as a route.
+
+In the round:
+
+❓ **Q3** - **What the declined card screen looks like**: when the payment is declined and the customer stays on the basket, what does the basket show?
+
+➡️ **Prototype it rather than describe it** - the screen is the decision, and prose has already produced three pictures of it in this session.
+
+↳ `apps/web/src/checkout/Basket.tsx:120` has an unused inline error slot; **Route: prototype** against `/prototype`'s UI branch.
+
+In Unresolved:
+
+- **The declined card screen's shape** — **Route: prototype**. Owner: the operator. Artefact: `prototype/decline-screen`, linked from the pass comment.
+- **Whether the provider retries a failed webhook** — **Route: research**. Owner: a `/research` sub-agent, at most two at a time. Artefact: a cited note where the repo keeps notes.
+
+# 3. Example Diagrams
 
 ## Sequence diagrams (mermaid)
 
@@ -111,7 +128,7 @@ sequenceDiagram
 
 Use `alt/else` blocks where necessary. Keep the diagrams concise and easy to understand. Deep diagrams only come from a specific request from the user.
 
-# 3. Alignment Artefacts
+# 4. Alignment Artefacts
 
 ## Captured ticket (multiple passes)
 Alignment passes aren't always one session, in a bigger plan, create an artefact ticket in the following shape:
@@ -199,7 +216,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 **Always** · **Ask first** · **Never**
 
 # Unresolved
-[ Empty, or one route per entry — what would settle it, and where it is looked up. ]
+[ Empty, or one **Route** per entry from the ladder — research · prototype · task · pass · decide — with its owner and where the artefact lands. ]
 
 # Out of scope
 [ Numbered, short, each with the reason it was rejected. ]

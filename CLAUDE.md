@@ -16,9 +16,9 @@ A remote named `upstream` outranks `origin` when `gh` resolves this repo, so the
 
 Every registered skill is one of three. The class governs what a harvest is allowed to do to it.
 
-**Synced** — tracks upstream byte-for-byte: `research`, `wayfinder`, `writing-great-skills`.
+**Synced** — tracks upstream byte-for-byte: `research`, `writing-great-skills`.
 
-One why-line covers them: they are general-purpose and upstream maintains them better than a fork would. **`wayfinder` is the exception that earns its own line:** it carries one deliberate divergence — upstream's `/setup-matt-pocock-skills` is `/bootstrap` here. Perfect sync is exactly what let that dangling command name sit in the file unnoticed, so it will recur on every harvest unless the divergence is re-applied by hand each time.
+One why-line covers them: they are general-purpose and upstream maintains them better than a fork would.
 
 **Adapted** — an upstream shape carrying deliberate local changes. Upstream fixes land here hunk by hunk.
 
@@ -59,9 +59,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**31 skill directories live in this library; 30 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 30 registered, **16 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
+Of the 29 registered, **15 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 

@@ -5,11 +5,11 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 ## Language
 
 **Skill**:
-A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/wayfinder` invokes `/align`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
+A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
 The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: a playback of the problem the operator confirms first, then rounds of one named **Scenario** and the questions it raises, each whole on its own with a recommendation and a plain-English reason, then the design shown interface by interface — facts looked up rather than asked, decisions kept with the operator. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
-_Avoid_: grilling, interview, discovery — `/wayfinder` owns fog-charting.
+_Avoid_: grilling, interview, discovery.
 
 **Pass**:
 One `/align` session. The unit of work, not the conversation: each pass raises the **Alignment artefact**'s resolution, from fog to questions to decisions to a settled contract. Its scope is set at the playback — one area sized to fit a session — and it stops at its close. Carries a number, and re-entry is the normal case rather than a restart.
@@ -20,11 +20,15 @@ The human the lane serves: owns the contract, supplies what the run cannot reach
 _Avoid_: user, developer, owner.
 
 **Verdict**:
-The judgement an `/align` pass closes with — **aligned** (the gate is met; the artefact is a contract), **fog** (the work is still mostly unknown, but every unresolved item carries what would resolve it, so the routes are the next pass's plan), **dropped** (the work is not worth doing — nothing new is created, and a ticket that exists goes to `wontfix`), or **thin** (unresolved items with no route, axes unmarked, no decisions recorded). Fog is a finding, not an input: which verdict a pass returns is decided at its close, never at invocation. Thin is the failure; fog and thin look identical from outside, and the route is the discriminator.
+The judgement an `/align` pass closes with — **aligned** (the gate is met; the artefact is a contract), **fog** (the work is still mostly unknown, but every unresolved item carries a **Route**, so the routes are the next pass's plan), **dropped** (the work is not worth doing — nothing new is created, and a ticket that exists goes to `wontfix`), or **thin** (unresolved items with no **Route**, axes unmarked, no decisions recorded). Fog is a finding, not an input: which verdict a pass returns is decided at its close, never at invocation. Thin is the failure; fog and thin look identical from outside, and the **Route** is the discriminator.
 _Avoid_: confidence, "feels complete".
 
+**Route**:
+The one named act that settles an Unresolved entry, carried by the entry itself: **research** (a fact read from primary sources by a `/research` sub-agent, at most two at a time, landing as a cited note), **prototype** (a shape reacted to via `/prototype`, landing as a throwaway branch linked from the pass comment), **task** (work that must happen before the discussion can move, landing as a fact row), **pass** (more rounds in a fresh session), **decide** (a yes owed outside the room, `/propose`'s). Each entry names its route's owner and where the artefact lands; fog is every unresolved entry carrying one, and an entry without one is thin. A route is content, not a label — the ticket's state stays the one the next act gives it.
+_Avoid_: ticket type, label — a route is an act; whether it needs a tracker node of its own is a size question, not a kind.
+
 **Alignment artefact**:
-What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list, and the **Destination** — tickets, a proposal, an ADR, or nothing. Each **Pass** also posts a **comment** carrying only what moved: that pass's verdict and delta, each changed decision as a one-line row, and a diagram per flow the pass touched. A decision whose argument outgrows its row earns an **ADR** on the alignment branch, never comment prose. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
+What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list with its **Route**s, and the **Destination** — tickets, a proposal, an ADR, or nothing. Each **Pass** also posts a **comment** carrying only what moved: that pass's verdict and delta, each changed decision as a one-line row, and a diagram per flow the pass touched. A decision whose argument outgrows its row earns an **ADR** on the alignment branch, never comment prose. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
 _Avoid_: transcript, notes, grilling notes.
 
 **Destination**:

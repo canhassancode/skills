@@ -54,15 +54,4 @@ N/A. Linear has no PR concept, and the planning lane doesn't triage — its work
 
 `get_issue` for the body, `list_comments` for the discussion.
 
-## Wayfinding operations
-
-Used by `/wayfinder`. The **map** is a **Linear Project**; its tickets are the Project's **issues**.
-
-- **Map**: a Project whose description holds the Destination / Notes / Decisions-so-far / Not-yet-specified / Out-of-scope body. `save_project`. The Project *is* the map — don't create a `wayfinder:map` label. To keep maps visually separable from spec Projects, prefix the name, e.g. `Wayfinder: <destination>`.
-- **Child ticket**: an **issue** in the map's Project (`save_issue` with the Project set), the question in the body under `## Question`. Record the ticket type on a `Type:` line at the top of the body — `research` / `prototype` / `grilling` / `task` — rather than a `wayfinder:<type>` label, so no new taxonomy is manufactured in the shared workspace.
-- **Blocking**: Linear's native **blocking relation** between issues (the same mechanism `/cut` uses) — it renders the frontier visually in Linear's own UI. If the integration token can't set relations, fall back to a `Blocked by: CAR-###` line at the top of the body. A ticket is **unblocked** when every blocker is `Done` or `Canceled`.
-- **Frontier**: `list_issues` scoped to the map's Project, open states only, dropping any with an open blocker or an assignee; first in map order wins.
-- **Claim**: `save_issue` assigning the ticket to the driving dev — the session's first write, before any work. An open, unassigned ticket is unclaimed.
-- **Resolve**: `save_comment` with the answer, move the issue to `Done` (or `Canceled` if it turned out to sit past the destination), then append a context pointer (gist + `CAR-###` link) to the map Project's Decisions-so-far.
-
 Confirm the exact MCP calls — especially setting blocking relations — against the live server before relying on them; run `list_teams` / `list_issue_statuses` / `list_issue_labels` first, per adopt-don't-impose.
