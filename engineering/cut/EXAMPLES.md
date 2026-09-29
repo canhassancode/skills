@@ -55,7 +55,7 @@ None.
 
 # What this builds
 
-Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+A shopper who saves a search gets one digest row when a matching listing lands. Today the search is re-run by hand, and there is no saved search to match against.
 
 # Scenarios
 
@@ -137,7 +137,7 @@ Its `# Diagram` row is absent because the slice changes no diagram; the rest of 
 
 # What this builds
 
-Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+A search that matches nothing sends no digest row, and the account's other searches still send theirs. Today nothing is saved, so the digest cannot tell a quiet search from an absent one.
 
 # Scenarios
 
@@ -199,7 +199,7 @@ None.
 
 # What this builds
 
-Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+Deleting a saved search stops its alerts from the moment the delete commits. Today there is no saved search to delete, so nothing to stop and nothing watching.
 
 # Scenarios
 
