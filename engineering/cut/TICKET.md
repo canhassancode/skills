@@ -9,7 +9,7 @@ One sentence, affirmative, specific, sentence case, no internal names — *Carou
 
 # What this builds
 
-The alignment's `# Problem statement`, transcribed verbatim.
+One paragraph, built from this slice's own scenarios: what its surface does after it ships, and what it cannot do today.
 
 # Scenarios
 

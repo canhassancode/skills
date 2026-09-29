@@ -8,6 +8,8 @@ Narrows [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md)'s single-
 
 **Amended by [ADR-0008](./0008-the-spec-node-parents-its-slices.md).** A container where the tracker has native sub-issues is a spec node that parents the slices, carries no workflow label, and closes when its last slice closes. `**Destination:**` names tickets, a proposal, an ADR, or nothing — a project is the container inside the tickets exit.
 
+**Amended 2026-09-29 (#128).** A slice's `# What this builds` is written from that slice's own scenarios rather than transcribed from the alignment's problem statement: the parent paragraph describes the programme, so copying it into every slice told a cold reader nothing about the slice. The transclusion rule below still governs every row it lists — scenarios, criteria, interfaces, diagram, decisions, rejections are copied, not re-described. Only the opening paragraph is written rather than copied, and a **Spec** node keeps the parent's paragraph verbatim because it covers every slice.
+
 ## Context
 
 ADR-0005 ended the planning lane's *by construction* guarantee and left stage 2 undesigned: "whatever cuts the work reads the body. Open: whether stage 2 subsumes `/to-spec` and `/to-tickets` or sits beside them."

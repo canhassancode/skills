@@ -36,7 +36,7 @@ The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to 
 _Avoid_: breakdown, split.
 
 **Readiness check**:
-The eleven-row test a body passes before `ready-to-build`: a paragraph on what this builds (the alignment's `Problem statement`, verbatim on a slice); scenarios with outcomes; criteria falsifiable, traced to a scenario, with their command and evidence; every interface owned or consumed; each settled decision with its rejected alternative; out-of-scope with reasons; boundaries (always / ask first / never); no unresolved entries; sources that resolve; native blockers naming real tickets; and every axis marked, the coverage line totalling the list. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it when a single-deliverable contract graduates, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
+The eleven-row test a body passes before `ready-to-build`: a paragraph on what this builds, built from the node's own scenarios and surface; scenarios with outcomes; criteria falsifiable, traced to a scenario, with their command and evidence; every interface owned or consumed; each settled decision with its rejected alternative; out-of-scope with reasons; boundaries (always / ask first / never); no unresolved entries; sources that resolve; native blockers naming real tickets; and every axis marked, the coverage line totalling the list. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it when a single-deliverable contract graduates, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
 _Avoid_: gate, definition of done.
 
 **Scenario**:
@@ -80,7 +80,7 @@ The container's body, cut by `/cut` when an alignment settles into more than one
 _Avoid_: PRD, requirements doc; and *destination* — the exit is the **Destination**, and a container rides inside its **tickets** value.
 
 **Ticket**:
-A tracer-bullet vertical slice cut from an **Alignment artefact**'s body by **Cut**, or from the **Spec** that parents it — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). It carries its contract's material verbatim: the paragraph on what it builds, its **Scenario**s, its acceptance criteria, the interfaces it owns, the diagram it changes, the decisions that bind it, and what was decided against. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
+A tracer-bullet vertical slice cut from an **Alignment artefact**'s body by **Cut**, or from the **Spec** that parents it — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). It carries its contract's material verbatim — its **Scenario**s, its acceptance criteria, the interfaces it owns, the diagram it changes, the decisions that bind it, and what was decided against — and opens with a paragraph on what it builds written from its own scenarios. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
 _Avoid_: issue, story, slice.
 
 **Proposal**:
