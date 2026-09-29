@@ -6,7 +6,7 @@ Three readers: `/cut` applies it to every slice it stamps; `/align`'s close appl
 
 | # | row | the check |
 | --- | --- | --- |
-| 1 | What this builds | one paragraph, built from the node's own scenarios and surface: what it does after it ships and what it cannot do today — on a slice, never the alignment's `# Problem statement` |
+| 1 | What this builds | one paragraph, built from the node's own scenarios and surface: what it does after it ships and what it cannot do today |
 | 2 | Scenarios | at least one, its outcome named, the outcome observable |
 | 3 | Acceptance criteria | each falsifiable, traced to the scenario it makes pass, carrying the command that decides it and the evidence that counts as passing |
 | 4 | Interfaces | every row owned or consumed, no orphan |

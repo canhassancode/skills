@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Cut
 
-`/cut` reads a settled alignment's **body** — the pass comments are only the delta — and turns it into slices a builder can pick up cold. It transcribes: it decides nothing, invents no row, and writes no node until the whole set passes.
+`/cut` reads a settled alignment's **body** — the pass comments are only the delta — and turns it into slices a builder can pick up cold. It transcribes the contract's rows: it decides nothing, invents no row, and writes no node until the whole set passes.
 
 One slice, and the ticket graduates in place. Several, and a **Spec** node parents them: it carries the map — the scenario-to-slice assignment, the shared interfaces and their consumers — and wears no label. [SPEC.md](SPEC.md) is the map's shape; [TICKET.md](TICKET.md) is a slice's.
 
