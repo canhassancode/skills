@@ -116,7 +116,7 @@ It returns **Findings** — class, severity, where it was found, the unit it bel
 | shape — P2, a small style finding found at and belonging to this unit | a fresh fix child, §4.4 — one round; still open after it, it rides |
 | shape — P2, any other | recorded in the comment, never a fix round |
 | an out-of-scope row | suppressed, citing the row |
-| a scenario the contract never named | a contract change: `/align`, never a fix round |
+| a path whose handling changes a named scenario's outcome | a contract change: `/align`, never a fix round |
 | a product call | asked in session; the answer recorded as a decision row or an out-of-scope entry |
 
 **Done when** every finding has a route and none is left unplaced.
@@ -137,11 +137,11 @@ code — the fix lands wherever the finding lives, which may be outside this uni
 
 Same boundary as the unit brief: /tdd where a test is the answer, one commit for the round, tree clean, no
 push. Round two varies the route: a second attempt that repeats the first one's failed route is not a
-second attempt. Do not widen scope — a finding that adds a scenario is not yours to fix; say so and stop.
+second attempt. Do not widen scope — a finding that changes a named scenario's outcome is not yours to fix; say so and stop.
 </fix-brief>
 ```
 
-Commit the round, then re-vet only the criterion the round touched — or, for a shape round, whether its finding still stands and every criterion whose lines it touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets two rounds at most — a round answers one finding, or several answered by the same change — and a finding still open after its second goes to the operator in session: the finding, what was tried, and a proposition with the route it would take. A shape finding gets one round and is never escalated: still open after it, it rides.
+Commit the round, then re-vet: launch `/crucible` in a fresh `Reviewer` child with the round's range and the unit's verified list as its **re-vet**, so it reads only the fix's diff, reruns every verified witness and re-mutates the criteria the round touched — or, for a shape round, whether its finding still stands and every criterion whose lines it touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets two rounds at most — a round answers one finding, or several answered by the same change — and a finding still open after its second goes to the operator in session: the finding, what was tried, and a proposition with the route it would take. A shape finding gets one round and is never escalated: still open after it, it rides.
 
 **Done when** every acting finding is closed by a red mutation, escalated with a proposition, or recorded as accepted open, and every shape round is closed or riding.
 
