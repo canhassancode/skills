@@ -19,10 +19,13 @@ It never posts. A finding has no home here — the caller owns the sink, a fix r
 | the **diff range** | `<base>...<head>` — the change under review | `/build`, as the unit's previous head or the branch point; `/review`, as the pull request's own range |
 | the **contract** | scenarios with outcomes, criteria with their command, interfaces, decisions, out-of-scope and boundaries | the ticket's body, or the pull request's body and its linked issues |
 | **settled threads** | review comments already answered | the caller; step 6 suppresses against them the way it suppresses out-of-scope entries |
+| the **re-vet** | the fix round's range and the unit's verified list — present only after a fix round | `/build`, after each fix round |
 
 The range and the contract arrive together, and with them the run's **fit** where the caller derived one — the witness and command paired to each criterion the diff owns. Where the caller passes no contract, resolve one from issue references in the commits or a path it named; where none exists, review without one.
 
 Falsification edits the working tree and runs the repo's commands, so the caller points the run at a worktree it may mutate — the build's own, or `/review`'s throwaway one. Where it cannot mutate, say so rather than reading the diff and calling it reviewed.
+
+**A re-vet reads only the fix.** The unit was vetted once; a re-vet is not a second review of it. Rerun every verified witness's command and confirm it green, re-place the mutation only for the criteria whose lines the fix touched, run steps 3 to 5 over the fix's hunks alone, then steps 6 and 7 as written. A fix that changes a named scenario's outcome is returned as **contract-change**, never widened into a full re-vet.
 
 ## Procedure
 
@@ -62,7 +65,7 @@ A red mutation proves the witness, not the criterion. Walk each criterion's path
 
 Each is a **behaviour** finding: `found at` the line that skips the check, `belongs to` the unit whose change put it there.
 
-Then read the path through the inputs production can send that the witness does not: several rows, rows written before the change, a row or version production can lack, two rows sharing a key, two calls at once, a malformed id. This step reads; it does not mutate. A case that breaks a criterion is a **behaviour** finding, placed and attributed as above; a case outside the contract is **contract-change**, routed to `/align`; a case judged safe returns as a **note** with its evidence — the line that handles it and why it holds.
+Then read the path through the inputs production can send that the witness does not: several rows, rows written before the change, a row or version production can lack, two rows sharing a key, two calls at once, a malformed id. This step reads; it does not mutate. A case that breaks a criterion is a **behaviour** finding, placed and attributed as above; a case outside the contract with one safe outcome — no partial write, idempotent on retry, a refusal — is a **behaviour** finding, P1, resolution `open`; a case whose outcome is a choice is **product-call**; a case whose handling changes a named scenario's outcome is **contract-change**, routed to `/align`; a case judged safe returns as a **note** with its evidence — the line that handles it and why it holds.
 
 **Done when** every criterion's path — the primary and every fallback — has been walked, and every input case the path can receive is a finding or a note.
 
@@ -116,7 +119,7 @@ Beside both, return the **notes**: step 1's `unwitnessed — absence recorded`, 
 **Resolution.** Classify the route, because the caller's sink differs:
 
 - **open** — behaviour, claim and test findings act, and a small style one contained in its unit gets one round; the caller returns them to a fresh builder invocation;
-- **contract-change** — a scenario the contract never named: the contract is short, and the fix is an `/align` pass on the ticket, never a fix round;
+- **contract-change** — handling the case changes a named scenario's outcome: the contract is wrong, and the fix is an `/align` pass on the ticket, never a fix round. An unnamed case with one safe outcome is `open`, not this;
 - **product-call** — the review cannot decide because the answer is the operator's: surface it in session, and the parent records the answer as a decision row or an out-of-scope entry;
 - **suppressed** — named against its entry, above.
 
@@ -128,5 +131,5 @@ A finding you cannot decide is never resolved by guessing. Surface it, and let t
 
 - `/build` — the caller that returns findings to a fresh builder invocation and records them in the run's comment.
 - `/review` — the voice and posting layer; a finding becomes a comment there, never here.
-- `/align` — where a finding that names a new scenario goes.
+- `/align` — where a finding that changes a named scenario's outcome goes.
 - `/code-review` — deprecated into `/crucible`; the baselines in [BASELINES.md](./BASELINES.md) were its three axes and are the survivor.
