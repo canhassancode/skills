@@ -7,6 +7,8 @@ status: accepted
 Supersedes [ADR-0007](./0007-align-build-and-one-review-policy.md) in part: its `/build` shapes — direct
 and layered — and its three seats. Fires ADR-0007's own deferred trigger: `/code-review` retires.
 
+**Amended 2026-10-07.** The review is sized. `/cut` stamps each slice small, medium or large, and a small or medium ticket is reviewed once, by crucible over the whole branch, rather than between every unit; only a large ticket keeps crucible per unit, and adds the whole-branch review on top. Every size gets the whole-branch review before the pull request opens. Across eleven forge builds, the fixed per-unit floor cost a 512-line pull request 16 children and 32 minutes. No crucible pass ever saw how units interact, and at least six of the sixteen findings crucible missed against Greptile's first round sat exactly there. The loop's other rules stand: fresh children, one writer per checkout, the parent never builds, and review is never self-review.
+
 ## Context
 
 Stage 3's two skills never ran. `/build` was invoked twice, both on itself, and stopped at its first
