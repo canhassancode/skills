@@ -89,7 +89,7 @@ Every site the change invalidated is a finding, classed by what the site is:
 
 ### 5. Read the diff's surplus
 
-Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, reported with the nearest thing that could have claimed it, so the operator sees it on the pull request.
+Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, reported with the nearest thing that could have claimed it; the caller records it.
 
 **Done when** every hunk the diff adds is mapped or reported.
 
