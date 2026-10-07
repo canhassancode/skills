@@ -29,7 +29,7 @@ Each decided by `<command>`.
 
 # Premises
 
-- <A fact about code, data or runtime the slice rests on> — <the probe: a `path:line @ sha` permalink with the symbol, or the command and the output line that settled it>.
+- <A fact about code, data or runtime the slice rests on> — <the probe: a `path:line @ sha` permalink with the symbol, the command and the output line that settled it, or for an outside fact its source with link, version and date>.
 
 # Boundaries
 

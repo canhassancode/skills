@@ -131,7 +131,7 @@ It returns **Findings** — class, severity, where it was found, the unit it bel
 | finding | route |
 | --- | --- |
 | behaviour · claim · test — P0/P1 | a fresh fix child, §4.4 |
-| shape — P2 | recorded in the comment, never a fix round |
+| shape — P2 | recorded in the comment; a small style finding rides in the next acting fix round that touches its unit, never a round of its own |
 | an out-of-scope row | suppressed, citing the row |
 | a path whose handling changes a named scenario's outcome | a contract change: `/align`, never a fix round |
 | a product call with a safe default — refuse, fail closed, leave the ticket parked | decided by the run, recorded under the pull request's **Decided limits** |

@@ -89,7 +89,7 @@ Every site the change invalidated is a finding, classed by what the site is:
 
 ### 5. Read the diff's surplus
 
-Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, reported with the nearest thing that could have claimed it, so the operator sees it on the pull request.
+Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, reported with the nearest thing that could have claimed it; the caller records it.
 
 **Done when** every hunk the diff adds is mapped or reported.
 
@@ -117,7 +117,7 @@ Beside the findings, return the **verified list**: one line per criterion whose 
 
 Beside both, return the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe — `case → evidence`, the line that handles it and why it holds. A note is neither a finding nor work; it is the answer ready for when a reviewer asks about that input.
 
-**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, recorded and never fixed in the loop. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
+**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never earns a fix round of its own; a small style one may ride in a round an acting finding already opened. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
 
 **Severity.** P2 is shape's home. P1 is a criterion not met, a witness that does not hold, or a claim the change invalidated. P0 is reserved for a finding that breaks the contract elsewhere — a regression in behaviour the unit claims not to touch, or a consumer left broken.
 

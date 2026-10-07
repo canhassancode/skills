@@ -1,6 +1,6 @@
 # Readiness check
 
-The twelve-row test a body passes before it takes a takeable stamp. Failing any row refuses the stamp.
+The fourteen-row test a body passes before it takes a takeable stamp. Failing any row refuses the stamp.
 
 Three readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build`; `/diagnose`'s Phase 6 stamp applies it to the ticket the diagnosis leaves behind, before that ticket takes `ready-to-build`. The check runs quietly: the operator hears only the rows that fail.
 
@@ -11,15 +11,17 @@ Three readers: `/cut` applies it to every slice it stamps; `/align`'s close appl
 | 3 | Scenarios | numbered from 1; each names who, the starting state, the trigger and what is observed |
 | 4 | Acceptance criteria | each falsifiable, naming its scenario and witness, decided by a named command; every scenario has one |
 | 5 | Terms | every project term is in `CONTEXT.md` or glossed where it first appears |
-| 6 | Decisions | each binds this body and carries its reason; none contradicts the body of a ticket it is blocked by |
-| 7 | Premises | every fact about code, data or runtime cites a probe pinned to the sha — a `path:line @ sha` with its symbol, or a command with its output; "pass 2" is not a probe |
-| 8 | Live prerequisites | every **Live** criterion's fixture, credentials and outside-write permission are provisioned, or routed as a task |
-| 9 | Boundaries | always / ask first / never |
-| 10 | Blocked by | each a real ticket, matching the native edges |
-| 11 | Unresolved | `None.` — any entry refuses the stamp |
-| 12 | Axes | every one of the nine marked, with the coverage line totalling the list |
+| 6 | Interfaces | every row owned or consumed, no orphan |
+| 7 | Decisions | each binds this body and carries its reason; none contradicts the body of a ticket it is blocked by |
+| 8 | Premises | every fact about code, data or runtime cites a probe pinned to the sha — a `path:line @ sha` with its symbol, or a command with its output — and every outside fact cites its source with link, version and date; "pass 2" is not a probe |
+| 9 | Live prerequisites | every **Live** criterion's fixture, credentials and outside-write permission are provisioned, or routed as a task |
+| 10 | Out of scope | each entry with the reason it was rejected |
+| 11 | Boundaries | always / ask first / never |
+| 12 | Blocked by | each a real ticket, matching the native edges |
+| 13 | Unresolved | `None.` — any entry refuses the stamp |
+| 14 | Axes | every one of the nine marked, with the coverage line totalling the list |
 
-Row 12 reads the axes on the alignment body's coverage line — **Axes:** n decision · n N/A — which totals the nine: happy path · limits · failure · misuse · concurrency and idempotency · permissions · observability · rollback · cost. A slice reads the marks rather than re-filling them.
+Row 14 reads the axes on the alignment body's coverage line — **Axes:** n decision · n N/A — which totals the nine: happy path · limits · failure · misuse · concurrency and idempotency · permissions · observability · rollback · cost. A slice reads the marks rather than re-filling them.
 
 **Container route.** Every slice passes on its own. The spec node is checked as a map only: every scenario assigned to exactly one slice, every shared piece naming the slice that builds it and the slices that use it, no label. A shared piece whose `built by` names no slice refuses the stamp.
 

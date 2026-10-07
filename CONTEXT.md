@@ -40,7 +40,7 @@ The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to 
 _Avoid_: breakdown, split.
 
 **Readiness check**:
-The twelve-row test a body passes before `ready-to-build`: a header carrying the verified sha and the size; what it builds in plain sentences; numbered scenarios with a starting state, trigger and outcome; criteria falsifiable, traced to a scenario, with their command; every project term defined; each decision with its reason and none undoing a blocker; every premise probed and pinned to the sha; every live criterion's prerequisites provisioned; boundaries (always / ask first / never); native blockers naming real tickets; no unresolved entries; and every axis marked. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it quietly whenever it stamps a takeable state, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
+The fourteen-row test a body passes before `ready-to-build`: a header carrying the verified sha and the size; what it builds in plain sentences; numbered scenarios with a starting state, trigger and outcome; criteria falsifiable, traced to a scenario, with their command; every project term defined; every interface owned or consumed; each decision with its reason and none undoing a blocker; every premise probed and pinned to the sha, or sourced; every live criterion's prerequisites provisioned; out-of-scope with reasons; boundaries (always / ask first / never); native blockers naming real tickets; no unresolved entries; and every axis marked. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it quietly whenever it stamps a takeable state, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
 _Avoid_: gate, definition of done.
 
 **Scenario**:
@@ -76,7 +76,7 @@ The **policy** that vets a diff before it goes anywhere: a **Unit**'s delta as t
 _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code review, linting.
 
 **Finding**:
-One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act; shape is recorded, never fixed in the loop. Resolved findings are counted in the run's comment and never transcribed into the pull request.
+One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act; a small style finding rides in a fix round an acting finding opened, never one of its own. Resolved findings are counted in the run's comment and never transcribed into the pull request.
 _Avoid_: comment, defect, issue.
 
 **Spec**:

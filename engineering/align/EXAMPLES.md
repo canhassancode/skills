@@ -21,6 +21,8 @@ Sam's first card is declined. They stay on the basket, try a second card, and it
 
 ❓ **When Sam's second card goes through, should an order exist for the declined attempt at all?**
 
+**Impact** - 11 of the 80 declined checkouts in the last 30 days retried and succeeded (`payment_attempts`); each left a declined order beside a live one, and support can't tell which is the customer's.
+
 ➡️ **No — no order until a payment succeeds.** A declined payment isn't an order, and reusing the row leaves a total and a status that disagree the moment the basket changes between attempts.
 
 ↳ `apps/api/src/checkout/basket.ts:88` writes the order at submit, before any payment call.
