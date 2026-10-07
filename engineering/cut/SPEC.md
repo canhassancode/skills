@@ -1,9 +1,9 @@
 # Spec body
 
-The map a cut publishes when it makes several slices: the scenario-to-slice assignment and the shared interfaces with their consumers. The node's title is the outcome, sentence case; its body carries no criteria, no boundaries and no workflow label — `ready-to-build` means *the body carries the contract*, and a spec's body carries the map instead.
+The map a cut publishes when it makes several slices: which slice makes each scenario pass, the order they build in, and the pieces more than one slice shares. The node's title is the outcome, sentence case; its body carries no criteria, no boundaries and no workflow label — `ready-to-build` means *the body carries the contract*, and a spec's body carries the map instead. Plain words, as in [TICKET.md](TICKET.md); a section with nothing in it is left out, except `Unresolved`.
 
 ```markdown
-> Alignment: #<n>
+> Alignment: #<n> · Verified against: `<sha>`
 
 <One line: what is true after every slice ships.>
 
@@ -13,28 +13,34 @@ The alignment's `# Problem statement`, transcribed verbatim.
 
 # Scenarios
 
-| scenario | slice | blocked by |
+| # | scenario | slice |
 | --- | --- | --- |
+| 1 | **<A name in plain words.>** <Who, the starting state, the trigger> — <what they observe>. | #<n> |
 
-# Interfaces
+# Order
 
-The rows for pieces with one builder and at least one user, each naming the slice that builds it and the slices that use it. A piece with no user belongs in the slice that builds it.
+<Two sentences: which slice goes first and why, which can run side by side.>
 
-| name | shape | built by | used by |
+# Shared pieces
+
+| piece | shape | built by | used by |
 | --- | --- | --- | --- |
 
 # Decisions
 
-| decision | taken | rejected | because |
-| --- | --- | --- | --- |
+- **<A choice that binds more than one slice.>** <Why, in one line.>
+
+# Premises
+
+- <A fact more than one slice rests on> — <its probe, pinned to the sha>.
 
 # Out of scope
 
-Numbered, each with the reason it was rejected.
+1. <What, and why not.>
 
 # Unresolved
 
-Empty, or the route that settles each entry.
-
-# Sources
+None.
 ```
+
+A piece only one slice uses belongs in that slice, not here. A decision or premise only one slice rests on lives in that slice.

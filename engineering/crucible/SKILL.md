@@ -1,6 +1,6 @@
 ---
 name: crucible
-description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, grep the consumers of what the diff changed, check the change against the three baselines, and return findings with class, severity, found-at and belongs-to plus the verified list and the notes. Never posts. Use when /build vets a unit, or when /review analyses a named pull request — with or without a contract.
+description: Vet a diff against the contract it claims to satisfy — falsify each criterion's witness with one hand-placed mutation, walk every changed hunk's failure paths, grep the consumers of what the diff changed, check the change against the baselines, and return findings with class, severity, found-at and belongs-to plus the verified list and the notes. Never posts. Use when /build vets a unit, or when /review analyses a named pull request — with or without a contract.
 argument-hint: <base>...<head> · the contract · settled threads
 ---
 
@@ -19,7 +19,10 @@ It never posts. A finding has no home here — the caller owns the sink, a fix r
 | the **diff range** | `<base>...<head>` — the change under review | `/build`, as the unit's previous head or the branch point; `/review`, as the pull request's own range |
 | the **contract** | scenarios with outcomes, criteria with their command, interfaces, decisions, out-of-scope and boundaries | the ticket's body, or the pull request's body and its linked issues |
 | **settled threads** | review comments already answered | the caller; step 6 suppresses against them the way it suppresses out-of-scope entries |
-| the **re-vet** | the fix round's range and the unit's verified list — present only after a fix round | `/build`, after each fix round |
+| the **re-vet** | the fix round's range and the verified list — present only after a fix round | `/build`, after each fix round |
+| **whole branch** | `<branch-point>...HEAD` as the range, with every hunk read, not only the criteria's paths | `/build` §4.7; `/review` always |
+
+**A caller cannot narrow a run.** A severity bar, a time cap or a list of what to skip in the brief is ignored; a hint of where to look is read as well as every step, never instead of one.
 
 The range and the contract arrive together, and with them the run's **fit** where the caller derived one — the witness and command paired to each criterion the diff owns. Where the caller passes no contract, resolve one from issue references in the commits or a path it named; where none exists, review without one.
 
@@ -65,13 +68,15 @@ A red mutation proves the witness, not the criterion. Walk each criterion's path
 
 Each is a **behaviour** finding: `found at` the line that skips the check, `belongs to` the unit whose change put it there.
 
-Then read the path through the inputs production can send that the witness does not: several rows, rows written before the change, a row or version production can lack, two rows sharing a key, two calls at once, a malformed id. This step reads; it does not mutate. A case that breaks a criterion is a **behaviour** finding, placed and attributed as above; a case outside the contract with one safe outcome — no partial write, idempotent on retry, a refusal — is a **behaviour** finding, P1, resolution `open`; a case whose outcome is a choice is **product-call**; a case whose handling changes a named scenario's outcome is **contract-change**, routed to `/align`; a case judged safe returns as a **note** with its evidence — the line that handles it and why it holds.
+Then walk every hunk that writes, calls out, loops over outside data or shares a key against the **Correctness** checklist in [BASELINES.md](./BASELINES.md) — the failure branches beside a criterion, not only on it. Over a **whole branch**, also read where the units meet: a resource two paths share, a guard one unit adds that another unit's path skips, a read in one unit that another's write makes stale.
 
-**Done when** every criterion's path — the primary and every fallback — has been walked, and every input case the path can receive is a finding or a note.
+Then read the path through the inputs production can send that the witness does not: several rows, rows written before the change, a row or version production can lack, two rows sharing a key, two calls at once, a malformed id. This step reads; it does not mutate. A case that breaks a criterion is a **behaviour** finding, placed and attributed as above; a case outside the contract with one safe outcome — no partial write, idempotent on retry, a refusal — is a **behaviour** finding, P1, resolution `open`; a case whose outcome is a choice is **product-call**, naming its safe default where one exists — refuse, fail closed, leave it parked; a case whose handling changes a named scenario's outcome is **contract-change**, routed to `/align`; a case judged safe returns as a **note** with its evidence — the line that handles it and why it holds. A note must cite that line: "unchecked", "safe at current scale", "not owned here" or "accepted" is not evidence, and a case that can still reach a bad outcome is a finding, never a note.
+
+**Done when** every criterion's path — the primary and every fallback — has been walked, every changed hunk with a side effect has met the Correctness checklist, and every input case is a finding or a note.
 
 ### 4. Grep the consumers of what changed
 
-For every surface the diff changed — an exported name, a type, a field, a default, an observable behaviour — grep the repo for its **consumers**: call sites and imports, and the places that *claim* it — comments, docstrings, README and `CONTEXT.md` material, tests. Consumers are found by grep, never by the author's mental model, because the claim that goes stale usually lives in a file the diff never touched.
+For every surface the diff changed — an exported name, a type, a field, a default, a key or path other code reads, an observable behaviour — grep the repo for its **consumers**: call sites and imports, and the places that *claim* it — comments, docstrings, README and `CONTEXT.md` material, tests. Consumers are found by grep, never by the author's mental model, because the claim that goes stale usually lives in a file the diff never touched.
 
 Every site the change invalidated is a finding, classed by what the site is:
 
@@ -84,7 +89,7 @@ Every site the change invalidated is a finding, classed by what the site is:
 
 ### 5. Read the diff's surplus
 
-Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, resolution **product-call** — the operator decides whether to keep it or drop it — reported with the nearest thing that could have claimed it.
+Every hunk the diff adds should be claimed by a criterion, a decision, or a baseline. Walk the diff once and map it: a hunk nothing claims is **shape**, P2, reported with the nearest thing that could have claimed it, so the operator sees it on the pull request.
 
 **Done when** every hunk the diff adds is mapped or reported.
 
@@ -112,20 +117,20 @@ Beside the findings, return the **verified list**: one line per criterion whose 
 
 Beside both, return the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe — `case → evidence`, the line that handles it and why it holds. A note is neither a finding nor work; it is the answer ready for when a reviewer asks about that input.
 
-**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, and never stops a unit; a small style one contained in its unit may still resolve `open`. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
+**Class.** behaviour, claim and test are the acting classes; **shape** — style, naming, readability, structure, design — is a judgement class, always P2, recorded and never fixed in the loop. Every shape finding cites [BASELINES.md](./BASELINES.md): a smell, a structure rule or a design rule. A shape finding with no named standard is not returned.
 
 **Severity.** P2 is shape's home. P1 is a criterion not met, a witness that does not hold, or a claim the change invalidated. P0 is reserved for a finding that breaks the contract elsewhere — a regression in behaviour the unit claims not to touch, or a consumer left broken.
 
 **Resolution.** Classify the route, because the caller's sink differs:
 
-- **open** — behaviour, claim and test findings act, and a small style one contained in its unit gets one round; the caller returns them to a fresh builder invocation;
+- **open** — behaviour, claim and test findings act; the caller returns them to a fresh builder invocation;
 - **contract-change** — handling the case changes a named scenario's outcome: the contract is wrong, and the fix is an `/align` pass on the ticket, never a fix round. An unnamed case with one safe outcome is `open`, not this;
-- **product-call** — the review cannot decide because the answer is the operator's: surface it in session, and the parent records the answer as a decision row or an out-of-scope entry;
+- **product-call** — the review cannot decide because the answer is the operator's: return it with its safe default where one exists, and the caller decides or asks;
 - **suppressed** — named against its entry, above.
 
 A finding you cannot decide is never resolved by guessing. Surface it, and let the operator decide.
 
-**Done when** every owned criterion carries a falsification result or a recorded absence, every input case is a finding or a note, every changed surface's consumers have been grepped, every hunk is mapped, the tree is clean, and every finding is classed, placed, attributed and routed.
+**Done when** every owned criterion carries a falsification result or a recorded absence, every changed hunk has met the Correctness checklist, every input case is a finding or a note, every changed surface's consumers have been grepped, every hunk is mapped, the tree is clean, and every finding is classed, placed, attributed and routed.
 
 ## Related
 

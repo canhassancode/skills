@@ -13,7 +13,7 @@ Two units, both gated, the pull request opened at the end.
 
 **Loop**  `mix format --check-formatted` · `mix test <file>` · `mix test` · CI green — proven at `4e7a1c9`, tooling `2f9c1ab`
 **Units**  `a1b2c3d` emit one SearchMatchEvent per matching commit → a committed listing matching one saved search emits one event · `e4f5a6b` render the listing once in the digest → the next daily digest carries the listing once
-**Gate**  one event per match → red · digest carries it once → red · findings: behaviour P0 ×0 · claim P1 ×1 (resolved) · test P1 ×0 · shape P2 ×1 (riding)
+**Gate**  one event per match → red · digest carries it once → red · findings: behaviour P0 ×0 · claim P1 ×1 (resolved) · test P1 ×0 · shape P2 ×1 (recorded)
 **Blocked**  —
 **Resume**  nothing — complete
 ````
@@ -49,7 +49,7 @@ The parent's window filled during the second unit, so what was green was committ
 
 **Loop**  `mix format --check-formatted` · `mix test <file>` · `mix test` · CI green — proven at `4e7a1c9`, tooling `2f9c1ab`
 **Units**  `b2c3d4e` suppress the digest entry for a search whose fingerprint already matched → a search that matches nothing stays quiet
-**Gate**  stays quiet → red · findings: behaviour P0 ×0 · claim P1 ×0 · test P1 ×0 · shape P2 ×1 (riding)
+**Gate**  stays quiet → red · findings: behaviour P0 ×0 · claim P1 ×0 · test P1 ×0 · shape P2 ×1 (recorded)
 **Blocked**  —
 **Resume**  unit 2b — `SavedSearch.Notifier` must suppress the digest when the fingerprint repeats, not only when the query returns nothing; `mix test test/digest/quiet_test.exs` is red
 ````

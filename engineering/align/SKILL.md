@@ -1,53 +1,50 @@
 ---
 name: align
-description: Accepting a users new feature, requirements, general idea, ticket, PR comments and challenging against the existing domain, sharpening terminology, and making updates to artefacts and documentation (CONTEXT.md, ADRs, Sequence Diagrams). Use when users want to stress-test and align on their project's language and documented decisions.
+description: Accepting a users new feature, requirements, general idea, ticket, PR comments and challenging against the existing domain, sharpening terminology, and making updates to artefacts and documentation (CONTEXT.md, ADRs). Use when users want to stress-test and align on their project's language and documented decisions.
 argument-hint: <new feature | ticket-ref | requirements | pr comments | general idea>
 ---
 
 ## The pass
 
-A _pass_ is one session, and it runs in four parts — **playback, rounds, design, close** — then stops. You are pairing through discovery: every reply follows [EXAMPLES.md](EXAMPLES.md), and every choice of wording is there to leave the user well-equipped.
+A _pass_ is one session: a conversation that settles one area so a build can run without stopping to ask. Every reply follows [EXAMPLES.md](EXAMPLES.md). Read [grilling/SKILL.md](../grilling/SKILL.md) and [domain-modeling/SKILL.md](../domain-modeling/SKILL.md) before the first question — their rules govern every round.
 
-1. **Gather.** Fan out to sub-agents for the facts the pass turns on — at most two at a time, each returning its conclusion with `file:line`, not the files it read. From pass 2 onwards, read the ticket body only; fetch a pass comment when a question needs it. Questions wait for the research that answers them, and the round never waits for the slowest source.
-2. **Playback.** Before any question, say back what exists today, what is being asked, and one diagram of today's flow, in plain words and with the room it needs to be understood. Close it with the pass's scope in one line: the one area this pass settles, sized to fit a ~100K-token session, with everything else sent to Unresolved carrying its route. The playback is done when the user has confirmed or corrected it.
-3. **Rounds.** Run `/grilling`'s round shape — read [grilling/SKILL.md](../grilling/SKILL.md): one scenario per round and the questions it raises. Run `/domain-modeling` alongside it — challenge against the glossary, sharpen fuzzy language, cross-reference against code, update `CONTEXT.md` inline, offer ADRs. A question whose answer is a shape, not a fact or a choice, is not argued in prose: it exits as a **prototype** route, run inline where the operator is present, or recorded in Unresolved. Rounds end when the scope's behaviour is settled.
-4. **Design.** Run `/codebase-design` with the user, one interface at a time: its signature as code, a caller using it, its invariants and error modes, and a sequence diagram where the flow changes. Ask about each before showing the next. The design is done when every interface the scope touches has been shown and agreed.
-5. **Close.** Route the output by the table below, then stop. The next pass is `/align <ref>` in a fresh session.
+1. **Gather.** Fan out to sub-agents for the facts the pass turns on — at most two at a time, each returning its conclusion with `file:line`, not the files it read. From pass 2 onwards, read the ticket body only; fetch a pass comment when a question needs it.
+2. **Playback.** Before the first question, say back in one short paragraph what exists today and what is being asked, then the pass's scope in one line — the one area it settles, sized to a ~100K-token session, everything else sent to Unresolved with its route. The playback is done when the user confirms or corrects it.
+3. **Rounds.** Run `/grilling`: one scenario, one question, one recommendation, then wait. Answer the user's own questions before asking the next. Challenge as grilling says — an answer that clashes with the code, `CONTEXT.md`, an ADR or something said earlier is put back with the evidence before it is recorded.
+4. **Walk.** Before any interface is agreed, a sub-agent walks the code the change will run through, with the inputs production can send: rows written before the change, two calls at once, a missing or malformed value, every tracker and platform the code serves. A case with one safe outcome becomes a decision row; a case that is a real choice becomes the next round's question, told as a concrete example. Every fact the contract rests on becomes a **premise** with its probe — a `path:line @ sha` with its symbol, or a command and its output. A premise reading cannot settle — whether a socket mounts, whether old records hold the field — is run, not argued: it takes the **prototype** route as a throwaway spike, and the spike's output is its probe.
+5. **Design.** Only for an interface the change adds or reshapes: its signature as code and one caller, one interface at a time, asked about before the next. Nothing else is shown.
+6. **Close.** Show the shared understanding in a few lines and ask the user to confirm it, then route the output by the table below, and stop. The next pass is `/align <ref>` in a fresh session.
 
-**The round.** Two to four questions, each carrying one recommendation. In playback and rounds, the names of functions, columns and ids sit on the fact line; in design they are the subject. Every waivable case carries an impact line under its question — what goes wrong, for whom, and how many — counted from data where it is reachable, otherwise `not counted`, with the reason and the question left open. When no fact settles a question, its `↳` line names the **Route** instead, and the entry lands in Unresolved with it.
+**Show, don't diagram.** A scenario carries the explanation: who, what they do, what happens. Draw a diagram only when the user asks. When the user would need to see the thing to judge it — a layout, a CLI's output, a flow they would click through — offer a **prototype** instead.
 
-**The route.** Every Unresolved entry names one **Route** and what it leaves behind: **research** — a fact read from primary sources by a `/research` sub-agent, at most two at a time, landing as a cited note; **prototype** — a shape reacted to via `/prototype`, landing as a throwaway branch linked from the pass comment; **task** — work that must happen before the discussion can move (provisioning, moving data so its shape can be seen), landing as a fact row; **pass** — more rounds in a fresh session; **decide** — a yes owed outside the room, `/propose`'s. Each entry carries its route's owner and where the artefact lands. An entry with no route from the ladder is thin, not fog.
+**The route.** Every Unresolved entry names one **Route** and what it leaves behind: **research** — a fact read from primary sources by a `/research` sub-agent, landing as a cited note; **prototype** — a shape to react to or a premise to run, via `/prototype`, landing as a throwaway branch linked from the pass comment; **task** — work that must happen before the discussion can move (provisioning a fixture, credentials, a permission), landing as a fact row; **pass** — more rounds in a fresh session; **decide** — a yes owed outside the room, `/propose`'s. Each entry carries its owner and where the artefact lands.
 
-**The short pass.** A build that finds a gap routes it back to `/align` as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close below runs in full either way. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
+**The short pass.** A build that finds a gap routes it back as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close runs in full. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
 
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
 
+## Writing
+
+Nothing is written without a yes for that item. A term goes into `CONTEXT.md` only after it is proposed as its own one-line question; an ADR is written only after domain-modeling's three criteria hold and it is put as its own question — never bundled into a "write all of these". The ticket body and the pass comment are shown before they post. A route answer is never write permission.
+
 ## At session close - route the output
-An alignment is a _thinking_ artefact, not by default a spec or a build. The close has five exits — `needs-alignment`, `needs-info`, `ready-to-propose`, `ready-to-cut`, `ready-to-build` — and the row it takes is read from the body, never guessed from the conversation. The exits are:
+
+An alignment is a _thinking_ artefact, not by default a spec or a build. The row the close takes is read from the body, never guessed from the conversation:
 
 | the pass ends on | Verdict | Destination | Ticket state | Next |
 | --- | --- | --- | --- | --- |
 | the body already carries the contract | aligned | `tickets` | `ready-to-build` | `/build` |
 | the contract is settled but the cut is owed | aligned | `tickets` | `ready-to-cut` | `/cut` → one ticket, or slice tickets at `ready-to-build` → `/build` |
 | a yes is owed outside the room | aligned | `proposal` | `ready-to-propose` | `/propose` → `awaiting-decision` → yes: `ready-to-cut` · change: `needs-alignment` with the objections · no: `wontfix` |
-| the deliverable is the decision itself | aligned | ADR, or nothing | none — the ticket closes | write the ADR, update `CONTEXT.md`, stop |
-| decisions still open | fog | unchanged | `needs-alignment` | clear the named routes — research · prototype · task · pass · decide — then `/align <ref>` |
-| unresolved items with no route from the ladder, axes unmarked, or no decisions recorded | thin | unchanged | `needs-alignment` | record what is missing, then `/align <ref>` |
-| what is open is a fact, not a decision | fog | unchanged | `needs-info` | clear the fact with a **research** route (`/research`, a sub-agent, the vendor's docs), then `/align <ref>` |
-| the work is not worth doing | dropped | nothing | none — the ticket closes | record the reason in one paragraph, close `wontfix` where a ticket exists, stop |
+| the deliverable is the decision itself | aligned | ADR, or nothing | none — the ticket closes | the ADR the user said yes to, `CONTEXT.md`, stop |
+| decisions still open | fog | unchanged | `needs-alignment` | clear the named routes, then `/align <ref>` |
+| unresolved items with no route, axes unmarked, or no decisions recorded | thin | unchanged | `needs-alignment` | record what is missing, then `/align <ref>` |
+| what is open is a fact, not a decision | fog | unchanged | `needs-info` | clear it with a **research** route, then `/align <ref>` |
+| the work is not worth doing | dropped | nothing | none — the ticket closes | the reason in one paragraph, close `wontfix` where a ticket exists, stop |
 
-**The close writes four things and refuses more**: the ticket's body and its pass comment, the ADR where one is owed, `CONTEXT.md` inline, and the artefact a **Route** produced — a cited research note or a throwaway prototype branch, linked from the pass comment. A decision-support artefact settles a question rather than delivering the cut: where it lands is asked like any other repo writing, and the files a ticket delivers still land after the cut and the readiness check. A route answer is never write permission: `/align` creates no node on its own, and no node is written without its body shown and confirmed first.
+The body carries the pass count, the verdict, the destination, the sha it was verified against, the premises with their probes, the unresolved items with their routes, and the next act. A pass comment carries only what moved in that pass.
 
-The body carries the pass count, the verdict, the destination, what the pass was verified against, the unresolved items with their routes, and the next act. A pass comment carries only what moved in that pass.
-
-A contract that takes either takeable exit — `ready-to-cut` or `ready-to-build` — passes the eleven rows in [READINESS.md](../cut/READINESS.md) before the stamp; a failed row keeps the work at `needs-alignment` with the failing rows named, so `/cut` never reads a body still carrying fog.
-
-Where the body lists slices, the close dry-runs the cut's assignment by hand before it stamps a takeable state — every scenario landing in exactly one slice, every slice naming the scenario it makes pass — and shows the slice table, one row per slice, in the map's own signature, so the operator sees the assignment before the stamp rather than in a refusal afterwards:
-
-| slice | scenarios | blocked by |
-| --- | --- | --- |
-
-`/cut` still owns the split; the run decides nothing. A scenario in no slice or two, or a slice naming no scenario, refuses the stamp the way a failed readiness row does: the work stays at `needs-alignment` with the failing rows named.
+A contract that takes `ready-to-cut` or `ready-to-build` passes [READINESS.md](../cut/READINESS.md) first. The check runs quietly: the user hears only a failing row, and a failed row keeps the work at `needs-alignment` with that row named. Assigning scenarios to slices is `/cut`'s.
 
 ## Additional Files
 **Examples**: See [EXAMPLES.md](EXAMPLES.md)

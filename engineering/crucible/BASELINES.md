@@ -1,8 +1,23 @@
 # Baselines
 
-Three fixed standards the `shape`, `behaviour` and `claim` classes are checked against when the contract is silent. Ported from `/code-review`, whose Standards, Structure and Design axes were their home; that skill is deprecated into `/crucible`, and this file is the survivor.
+Fixed standards the `behaviour`, `claim` and `shape` classes are checked against when the contract is silent. Correctness is crucible's own; Standards, Structure and Design were `/code-review`'s axes, and that skill is deprecated into `/crucible`.
 
-Three rules bind all three:
+## Correctness
+
+Walked against every changed hunk that writes, calls out, loops over outside data or shares a key — the failure paths a reviewer of the whole branch finds and a criterion's witness never exercises. Each hit is a **behaviour** finding, never a judgement call.
+
+- **Partial failure** — a throw at step k of a sequence of side effects: what is left half-written, and is a retry idempotent?
+- **One bad item** — in a loop over external items, does one malformed or failing item abort the rest?
+- **Crash between effect and record** — the side effect happened but its record did not, or the other way round: what does the next run do?
+- **Stale read** — a value read, then written back after something else may have changed it.
+- **Shared key or path** — two jobs, runs or lanes writing the same file, branch, row or lock.
+- **Caps and pages** — a list call with a page size or limit the code treats as the whole set.
+- **Missing, deleted or malformed** — null, a deleted user or record, an unexpected shape from an outside API.
+- **Success without error** — an API that reports failure in a flag or body rather than by throwing, read as success.
+- **Trust boundary** — untrusted code, files or input reaching an unsandboxed process, a secret, or a log.
+- **Swallowed failure** — an error caught and dropped where the caller or the operator needed to know.
+
+The rules below bind the other three:
 
 - **The repo overrides.** A documented repo standard, or a deliberate exception in `DESIGN.md`, always wins over a baseline; where the repo endorses something a baseline would flag, suppress it.
 - **Judgement, always.** Each item is a labelled heuristic — *possible Feature Envy*, *possible missed simplification* — never a hard violation, except where a section says otherwise.
