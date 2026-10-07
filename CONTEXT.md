@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Align**:
-The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: a playback of the problem the operator confirms first, then rounds of one named **Scenario** and the questions it raises, each whole on its own with a recommendation and a plain-English reason, then the design shown interface by interface — facts looked up rather than asked, decisions kept with the operator. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
+The planning lane's entrance, and its only mode — a multi-pass session that turns an idea into a contract stage 2 can cut work from. Retargets the `grilling` interview: a short playback the operator confirms first, then one question at a time, each told through a concrete **Scenario** with a recommendation, every answer checked against the code and what was said before; a walk of the code the change will run through, so each premise is probed rather than assumed; and only the interfaces the change adds or reshapes shown — facts looked up or run rather than asked, decisions kept with the operator. Runs against an **Alignment artefact** the pass maintains in the ticket's body, and closes each **Pass** with a **Verdict**. Supersedes `grilling` and `grill-me`.
 _Avoid_: grilling, interview, discovery.
 
 **Pass**:
@@ -24,11 +24,11 @@ The judgement an `/align` pass closes with — **aligned** (the gate is met; the
 _Avoid_: confidence, "feels complete".
 
 **Route**:
-The one named act that settles an Unresolved entry, carried by the entry itself: **research** (a fact read from primary sources by a `/research` sub-agent, at most two at a time, landing as a cited note), **prototype** (a shape reacted to via `/prototype`, landing as a throwaway branch linked from the pass comment), **task** (work that must happen before the discussion can move, landing as a fact row), **pass** (more rounds in a fresh session), **decide** (a yes owed outside the room, `/propose`'s). Each entry names its route's owner and where the artefact lands; fog is every unresolved entry carrying one, and an entry without one is thin. A route is content, not a label — the ticket's state stays the one the next act gives it.
+The one named act that settles an Unresolved entry, carried by the entry itself: **research** (a fact read from primary sources by a `/research` sub-agent, at most two at a time, landing as a cited note), **prototype** (a shape reacted to, or a premise run as a spike, via `/prototype`, landing as a throwaway branch linked from the pass comment), **task** (work that must happen before the discussion can move, landing as a fact row), **pass** (more rounds in a fresh session), **decide** (a yes owed outside the room, `/propose`'s). Each entry names its route's owner and where the artefact lands; fog is every unresolved entry carrying one, and an entry without one is thin. A route is content, not a label — the ticket's state stays the one the next act gives it.
 _Avoid_: ticket type, label — a route is an act; whether it needs a tracker node of its own is a size question, not a kind.
 
 **Alignment artefact**:
-What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decision table with its rejected alternatives, the axis marks, out-of-scope, and the unresolved list with its **Route**s, and the **Destination** — tickets, a proposal, an ADR, or nothing. Each **Pass** also posts a **comment** carrying only what moved: that pass's verdict and delta, each changed decision as a one-line row, and a diagram per flow the pass touched. A decision whose argument outgrows its row earns an **ADR** on the alignment branch, never comment prose. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
+What `/align` maintains in the ticket's **body** — the residue of the conversation, not its transcript. Holds the named **Scenario**s and their outcomes, the settled interfaces, the decisions with their reasons, the premises with their probes pinned to the sha it was verified against, the axis marks, out-of-scope, and the unresolved list with its **Route**s, and the **Destination** — tickets, a proposal, an ADR, or nothing. Each **Pass** also posts a **comment** carrying only what moved: that pass's verdict and delta, and each changed decision as a one-line row. A decision whose argument outgrows its row is offered as an **ADR**, written only once the operator says yes to it, never comment prose. The body is the current truth and stays true to the intention being aligned; the comments are how it got there, and stage 2 reads the body rather than rewriting it.
 _Avoid_: transcript, notes, grilling notes.
 
 **Destination**:
@@ -40,7 +40,7 @@ The stage-2 act — `/cut` reads an aligned body, assigns every **Scenario** to 
 _Avoid_: breakdown, split.
 
 **Readiness check**:
-The eleven-row test a body passes before `ready-to-build`: a paragraph on what this builds, built from the node's own scenarios and surface; scenarios with outcomes; criteria falsifiable, traced to a scenario, with their command and evidence; every interface owned or consumed; each settled decision with its rejected alternative; out-of-scope with reasons; boundaries (always / ask first / never); no unresolved entries; sources that resolve; native blockers naming real tickets; and every axis marked, the coverage line totalling the list. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it when a single-deliverable contract graduates, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
+The twelve-row test a body passes before `ready-to-build`: a header carrying the verified sha and the size; what it builds in plain sentences; numbered scenarios with a starting state, trigger and outcome; criteria falsifiable, traced to a scenario, with their command; every project term defined; each decision with its reason and none undoing a blocker; every premise probed and pinned to the sha; every live criterion's prerequisites provisioned; boundaries (always / ask first / never); native blockers naming real tickets; no unresolved entries; and every axis marked. Its home is `engineering/cut/READINESS.md`; `/cut` applies it to every slice, `/align`'s close applies it quietly whenever it stamps a takeable state, and `/diagnose`'s Phase 6 stamp applies it to the ticket a diagnosis leaves behind before it can take `ready-to-build`. Failing any row refuses the stamp.
 _Avoid_: gate, definition of done.
 
 **Scenario**:
@@ -56,7 +56,7 @@ The build's quantum — the work one fresh **Builder** invocation takes: a crite
 _Avoid_: layer, chunk — a **Ticket** is a slice, and this is the code's quantum inside one.
 
 **Build**:
-Stage 3 — the act that turns a cut **Ticket** into working code: one branch, a sequential loop of **Unit**s, each in a fresh **Builder** invocation, each vetted by **Review** between units, handed back with the commands that show each criterion working. The parent session — the Delegator — holds the contract and the run's one comment rather than a diff, and never builds. One writer per checkout. Succeeds `/implement`, now deprecated.
+Stage 3 — the act that turns a cut **Ticket** into working code: one branch, a sequential loop of **Unit**s, each in a fresh **Builder** invocation, vetted by **Review** once over the whole branch — and per unit as well for a large ticket — the ceremony set by the ticket's size, handed back with the commands that show each criterion working. The parent session — the Delegator — holds the contract and the run's one comment rather than a diff, and never builds. One writer per checkout. Succeeds `/implement`, now deprecated.
 _Avoid_: implement, execute, run.
 
 **Builder**:
@@ -76,7 +76,7 @@ The **policy** that vets a diff before it goes anywhere: a **Unit**'s delta as t
 _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code review, linting.
 
 **Finding**:
-One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act — beyond one **Build** fix round for a small style finding contained in its unit. Resolved findings are counted in the run's comment and never transcribed into the pull request.
+One question **Review** asks, carrying the evidence that raised it: its class, its severity, `found at`, the unit it belongs to, and its resolution. Classes are **behaviour**, **claim**, **test** and **shape**; severities are P0–P2, and only behaviour, claim and test act; shape is recorded, never fixed in the loop. Resolved findings are counted in the run's comment and never transcribed into the pull request.
 _Avoid_: comment, defect, issue.
 
 **Spec**:
@@ -84,7 +84,7 @@ The container's body, cut by `/cut` when an alignment settles into more than one
 _Avoid_: PRD, requirements doc; and *destination* — the exit is the **Destination**, and a container rides inside its **tickets** value.
 
 **Ticket**:
-A tracer-bullet vertical slice cut from an **Alignment artefact**'s body by **Cut**, or from the **Spec** that parents it — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). It carries its contract's material verbatim — its **Scenario**s, its acceptance criteria, the interfaces it owns, the diagram it changes, the decisions that bind it, and what was decided against — and opens with a paragraph on what it builds written from its own scenarios. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
+A tracer-bullet vertical slice cut from an **Alignment artefact**'s body by **Cut**, or from the **Spec** that parents it — a narrow but complete path through every layer — declaring its **blocking edges** (the tickets that must close before it can start). It carries its contract's material verbatim — its **Scenario**s numbered from 1, its acceptance criteria, the decisions and premises that bind it, the interfaces it owns, and what was decided against — in plain words, opening with what it builds, and stamped with its size: small, medium or large. The **frontier** is every ticket whose blockers are closed: the work takeable now. Supersedes the old *issue* (which was GitHub/Linear-biased).
 _Avoid_: issue, story, slice.
 
 **Proposal**:

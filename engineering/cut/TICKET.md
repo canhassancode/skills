@@ -4,58 +4,67 @@ One sentence, affirmative, specific, sentence case, no internal names — *Carou
 
 # Slice body
 
+Write it for a colleague who has never seen the alignment: plain words, the behaviour first, every project term either in `CONTEXT.md` or glossed where it first appears. A section with nothing in it is left out — except `Blocked by` and `Unresolved`, which always appear and say `None.`
+
 ```markdown
-> Spec: #<n> · Alignment: #<n>
+> Spec: #<n> · Alignment: #<n> · Verified against: `<sha>` · Size: <small | medium | large>
 
 # What this builds
 
-One paragraph, built from this slice's own scenarios: what its surface does after it ships, and what it cannot do today.
+Two or three sentences: what the slice does once it ships, and what is true today.
 
 # Scenarios
 
-| scenario | outcome |
-| --- | --- |
+1. **<A name in plain words.>** <Who, the starting state, the trigger> — <what they observe>.
 
 # Acceptance criteria
 
-- [ ] Each falsifiable, traced to the scenario it makes pass, with the command that decides it and the evidence that counts as passing.
+Each decided by `<command>`.
 
-# Interfaces
-
-| name | signature | inputs | outputs | owned | consumed |
-| --- | --- | --- | --- | --- | --- |
-
-A row owned here defines the contract; a row consumed here depends on another node's.
+- [ ] C1 · S1 · `<witness>`: <what the witness shows, in one line>.
 
 # Decisions
 
-| decision | taken | rejected | because | source |
-| --- | --- | --- | --- | --- |
+- **<The choice, as a sentence.>** <Why, in one line — the rejected alternative named where it helps.>
 
-# Diagram
+# Premises
 
-Where the slice changes one: the flow, with the part it owns named.
-
-# Where the work lands
-
-| surface | pattern |
-| --- | --- |
+- <A fact about code, data or runtime the slice rests on> — <the probe: a `path:line @ sha` permalink with the symbol, or the command and the output line that settled it>.
 
 # Boundaries
 
-**Always** · **Ask first** · **Never**
+**Always** <…> · **Ask first** <…> · **Never** <…>
 
 # Out of scope
 
-Numbered, each with the reason it was rejected.
+1. <What, and why not.>
+
+# Interfaces
+
+<details><summary>Owned and consumed</summary>
+
+| name | shape | owned | read by |
+| --- | --- | --- | --- |
+
+</details>
 
 # Blocked by
 
-Each a real ticket, its native edge set.
+<Each a real ticket, matching its native edges — or None.>
 
 # Unresolved
 
-Empty, or the route that settles each entry.
-
-# Sources
+None.
 ```
+
+**Scenarios** are numbered from 1 in each slice; the spec's table maps them back. **Criteria** name the scenario they make pass. A criterion only a real system can decide is written `C2 · S1 · **Live**: <what is run> Passing: <the evidence>`, and its prerequisites — fixture, credentials, permission to write outside the repo — are provisioned before the build, or routed as a task.
+
+**Premises** are pinned to the `Verified against` sha, never to a pass. A line number drifts; the sha says exactly what was read, and `/build` re-probes any premise whose file has changed since.
+
+**Size** is stamped by the cut and sets how much ceremony `/build` spends:
+
+| size | when |
+| --- | --- |
+| small | at most 2 criteria, no live criterion, and no interface another slice reads |
+| medium | at most 6 criteria, and at most two interfaces other slices read |
+| large | anything else |

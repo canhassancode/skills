@@ -25,7 +25,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | Skill | Why it diverges |
 |---|---|
 | `triage` | The Linear adapter and the markdown-ticket flow are local. |
-| `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. |
+| `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. One question at a time and the challenge rule are local — upstream asks the whole frontier per round. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
 | `tdd`, `domain-modeling`, `prototype`, `improve-codebase-architecture`, `codebase-design` | Local domain-doc conventions (`CONTEXT.md`, `docs/adr/`) and British English. |
 | `grill-me` | Local description and the second-brain sweep; the body is still upstream's one-line delegation. |
@@ -42,9 +42,9 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
-| `crucible` | No upstream counterpart — the only review policy; falsification, the consumer grep and the three baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
+| `crucible` | No upstream counterpart — the only review policy; falsification, the correctness walk, the consumer grep and the baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
-| `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started by `build`'s last act on the pull request it opened, or by hand on any other. |
+| `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started in a fresh session on the pull request `build` hands back, or on any other. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
 The experiment bench sits outside these tables until it ships: `in-progress/system-map` is the one unregistered directory (`## The count`), forked from the work `claude-code-config` repo — diff against that, not this remote.

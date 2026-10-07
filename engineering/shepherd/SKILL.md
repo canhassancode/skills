@@ -15,8 +15,7 @@ or escalated when it changes the contract. It never merges.
 threads to triage; crucible stays the only gate each fix passes, and the score the bot carries is a
 signal, not proof — a colleague has already shown it wrong.
 
-`/build`'s last act starts this run on the pull request it opened; the operator can start it on any other
-by hand.
+The operator starts it in a fresh session — on the pull request `/build` hands back, or on any other.
 
 ## What the run carries
 
@@ -140,7 +139,7 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 ## Related
 
-- `/build` — the stage before this one; its last act starts this run on the pull request it opened.
+- `/build` — the stage before this one; its hand-back names the pull request to start this run on.
 - `/crucible` — the only gate each fix passes.
 - `/tdd` — the cycles inside a fix.
 - `/align` — where a contract change goes once the operator has answered the escalation.

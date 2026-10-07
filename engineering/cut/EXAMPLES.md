@@ -5,114 +5,99 @@ One alignment (#228) cut into a spec node and three slices. The spec body follow
 ## The spec node — `Saved-search alerts` (#231)
 
 ````markdown
-> Alignment: #228
+> Alignment: #228 · Verified against: `3f9c2ab`
 
-Every saved search alerts the shopper when a matching listing lands.
+Every saved search alerts the shopper once when a matching listing lands, and stops when they delete it.
 
 # What this builds
 
-Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits; the searches they abandon keep running and keep alerting. A saved search should watch for them, alert once when a match lands, and stop when the shopper deletes it.
+Shoppers who watch for a kind of listing re-run the same search by hand and miss what lands between visits. A saved search watches for them, puts one row in the daily digest when a match lands, and goes quiet when they delete it.
 
 # Scenarios
 
-| scenario | slice | blocked by |
+| # | scenario | slice |
 | --- | --- | --- |
-| S1 a shopper saves a search and a matching listing lands | #232 | — |
-| S2 a search that matches nothing stays quiet | #233 | #232 |
-| S3 a shopper deletes a search and its alerts stop | #234 | #232 |
+| 1 | **A match lands.** A shopper has saved "road bikes under £500"; when a matching listing is published, the next digest shows it once. | #232 |
+| 2 | **A second match the same day.** Another match within 24 hours adds no second row for that search. | #232 |
+| 3 | **Nothing matches.** A search with no matches adds no row, and the shopper's other searches still appear. | #233 |
+| 4 | **The shopper deletes the search.** Listings published after the delete never appear; one matched before it still does. | #234 |
 
-# Interfaces
+# Order
 
-| name | shape | built by | used by |
+#232 goes first — it builds the saved search and the match event. #233 and #234 both build on it and can run side by side.
+
+# Shared pieces
+
+| piece | shape | built by | used by |
 | --- | --- | --- | --- |
 | `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | #232 | #233 |
 | `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | #232 | #234 |
 
 # Decisions
 
-| decision | taken | rejected | because |
-| --- | --- | --- | --- |
-| the alert channel | the existing daily digest | push | no client carries it, and it costs a permission the feature does not need |
-| the dedupe window | 24 hours per search | one alert per listing | a busy search would flood the digest |
+- **Alerts go in the existing daily digest, not push.** No client supports push, and it needs a permission this feature doesn't.
+
+# Premises
+
+- Listings publish through one path, `ListingService.commit/1` — [listing.ex:88 @ 3f9c2ab](https://github.com/acme/market/blob/3f9c2ab/lib/listings/listing.ex#L88).
 
 # Out of scope
 
-1. Saved searches on sold listings — the index drops them at sale; resurrecting one is a separate domain decision, not a filter.
+1. Alerts on sold listings — the index drops them at sale; bringing one back is its own decision.
 
 # Unresolved
 
 None.
-
-# Sources
-
-- Alignment #228, pass 3 — the `SearchMatchEvent` shape, the digest decision.
 ````
 
 ## Slice #232 — `A saved search alerts once when a matching listing lands`
 
 ````markdown
-> Spec: #231 · Alignment: #228
+> Spec: #231 · Alignment: #228 · Verified against: `3f9c2ab` · Size: medium
 
 # What this builds
 
-A shopper who saves a search gets one digest row when a matching listing lands. Today the search is re-run by hand, and there is no saved search to match against.
+A shopper who saves a search gets one row in their daily digest when a matching listing is published. Today they re-run the search by hand and miss what lands between visits.
 
 # Scenarios
 
-| scenario | outcome |
-| --- | --- |
-| S1 a shopper saves a search and a matching listing lands | the next daily digest carries the listing once |
+1. **A match lands.** A shopper has saved "road bikes under £500". When a matching listing is published, the next morning's digest shows it once.
+2. **A second match the same day.** When another matching listing is published within 24 hours, the digest still shows one row for that search, not two.
 
 # Acceptance criteria
 
-- [ ] A committed listing matching one saved search emits one `SearchMatchEvent` — `mix test test/saved_search/match_test.exs` → `1 test, 0 failures`
-- [ ] A second matching listing inside 24 hours adds no second digest row — `mix test test/saved_search/dedupe_test.exs` → green
+Each decided by `mix test`.
 
-# Interfaces
-
-| name | signature | inputs | outputs | owned | consumed |
-| --- | --- | --- | --- | --- | --- |
-| `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | the committed listing | the digest row | yes | — |
-| `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | the saved query, the account | matching ids | yes | — |
+- [ ] C1 · S1 · `test/saved_search/match_test.exs`: a published listing matching one saved search emits one `SearchMatchEvent`.
+- [ ] C2 · S2 · `test/saved_search/dedupe_test.exs`: a second match inside 24 hours adds no second digest row.
 
 # Decisions
 
-| decision | taken | rejected | because | source |
-| --- | --- | --- | --- | --- |
-| the alert channel | the existing daily digest | push | no client carries it, and it costs a permission the feature does not need | #228 · pass 3 |
-| the dedupe window | 24 hours per search | one alert per listing | a busy search would flood the digest | #228 · pass 3 |
+- **One alert per search per 24 hours, not one per listing.** A busy search would flood the digest.
 
-# Diagram
+# Premises
 
-The match path this slice owns — `ListingCommitted` to `SearchMatchEvent`; the digest's send path is out of frame.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant L as ListingService
-    participant SS as SavedSearch
-    participant D as Digest
-    L->>SS: listingCommitted(listing)
-    SS->>SS: match(saved query)
-    SS->>D: SearchMatchEvent(listing, search)
-```
-
-# Where the work lands
-
-| surface | pattern |
-| --- | --- |
-| `lib/listings/saved_search.ex` | one module per aggregate; `match/2` is pure |
-| `test/saved_search/match_test.exs` | a committed listing in, an event out |
+- Listings publish through one path, `ListingService.commit/1` — [listing.ex:88 @ 3f9c2ab](https://github.com/acme/market/blob/3f9c2ab/lib/listings/listing.ex#L88).
+- The digest already takes event rows, `Digest.add/2` — [digest.ex:41 @ 3f9c2ab](https://github.com/acme/market/blob/3f9c2ab/lib/digest/digest.ex#L41).
 
 # Boundaries
 
-**Always** — copy the saved query verbatim into the event; the digest re-reads nothing.
-**Ask first** — a change to `SearchMatchEvent`'s shape; #233 and the digest both consume it.
-**Never** — widen the match window to make a test pass; the window is the contract.
+**Always** copy the saved query into the event; the digest re-reads nothing. · **Ask first** before changing `SearchMatchEvent`'s shape — #233 reads it. · **Never** widen the 24-hour window to make a test pass.
 
 # Out of scope
 
-1. Ranking the matches — the digest orders by recency, and a relevance order is its own decision.
+1. Ranking matches — the digest orders by recency; relevance is its own decision.
+
+# Interfaces
+
+<details><summary>Owned and consumed</summary>
+
+| name | shape | owned | read by |
+| --- | --- | --- | --- |
+| `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | here | #233 |
+| `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | here | #234 |
+
+</details>
 
 # Blocked by
 
@@ -121,63 +106,38 @@ None.
 # Unresolved
 
 None.
-
-# Sources
-
-- Alignment #228, pass 3 — the `SearchMatchEvent` shape and the digest decision.
-- `lib/listings/listing.ex:88` — the commit path the event hangs off.
 ````
 
 ## Slice #233 — `A saved search that matches nothing sends no digest row`
 
-Its `# Diagram` row is absent because the slice changes no diagram; the rest of the body is the same shape.
-
 ````markdown
-> Spec: #231 · Alignment: #228
+> Spec: #231 · Alignment: #228 · Verified against: `3f9c2ab` · Size: small
 
 # What this builds
 
-A search that matches nothing sends no digest row, and the account's other searches still send theirs. Today nothing is saved, so the digest cannot tell a quiet search from an absent one.
+A search that matches nothing adds no row to the digest, and the shopper's other searches still send theirs. Today nothing is saved, so there is no quiet search to tell apart.
 
 # Scenarios
 
-| scenario | outcome |
-| --- | --- |
-| S2 a search that matches nothing stays quiet | no digest row appears, and the digest still sends for the account's other searches |
+1. **Nothing matches.** A shopper has two saved searches. When a listing is published that matches only the second, the digest shows one row for the second and nothing for the first.
 
 # Acceptance criteria
 
-- [ ] A committed listing matching no saved search emits no `SearchMatchEvent` — `mix test test/saved_search/no_match_test.exs` → green
-- [ ] An account with one matchless search and one match still receives the digest for the match — `mix test test/digest/partial_test.exs` → green
+Each decided by `mix test`.
 
-# Interfaces
-
-| name | signature | inputs | outputs | owned | consumed |
-| --- | --- | --- | --- | --- | --- |
-| `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | the committed listing | — | — | yes |
+- [ ] C1 · S1 · `test/digest/partial_test.exs`: an account with one matchless search and one match receives exactly one digest row, for the match.
 
 # Decisions
 
-| decision | taken | rejected | because | source |
-| --- | --- | --- | --- | --- |
-| an empty match set | skip the search, send the rest | suppress the whole digest | a quiet search would silence the account's other alerts | #228 · pass 3 |
-
-# Where the work lands
-
-| surface | pattern |
-| --- | --- |
-| `lib/listings/saved_search.ex` | `match/2` returns `[]`; the digest filters, never branches on nil |
-| `test/saved_search/no_match_test.exs` | a committed listing in, no event out |
+- **A quiet search is skipped, not the whole digest.** Suppressing the digest would silence the shopper's other alerts.
 
 # Boundaries
 
-**Always** — keep the digest's send decision per account, not per search.
-**Ask first** — a change to how the digest collects events; it is shared with #232.
-**Never** — invent a placeholder row to keep the digest's shape.
+**Always** decide sending per account, not per search. · **Ask first** before changing how the digest collects events — #232 shares it. · **Never** add a placeholder row to keep the digest's shape.
 
 # Out of scope
 
-1. Notifying that a search has gone quiet — a notification about the absence of notifications.
+1. Telling the shopper a search has gone quiet — a notification about the absence of notifications.
 
 # Blocked by
 
@@ -186,60 +146,44 @@ A search that matches nothing sends no digest row, and the account's other searc
 # Unresolved
 
 None.
-
-# Sources
-
-- Alignment #228, pass 3 — the empty-match decision.
 ````
 
 ## Slice #234 — `Deleting a saved search stops its alerts`
 
 ````markdown
-> Spec: #231 · Alignment: #228
+> Spec: #231 · Alignment: #228 · Verified against: `3f9c2ab` · Size: small
 
 # What this builds
 
-Deleting a saved search stops its alerts from the moment the delete commits. Today there is no saved search to delete, so nothing to stop and nothing watching.
+Deleting a saved search stops its alerts from the moment the delete commits. Today there is no saved search to delete.
 
 # Scenarios
 
-| scenario | outcome |
-| --- | --- |
-| S3 a shopper deletes a search and its alerts stop | no digest row for that search after the delete commits |
+1. **The shopper deletes the search.** A shopper deletes "road bikes under £500". A matching listing published afterwards never reaches their digest.
+2. **A match was already waiting.** A listing matched an hour before the delete; the next digest still shows it.
 
 # Acceptance criteria
 
-- [ ] A deleted search emits no `SearchMatchEvent` for a listing committed afterwards — `mix test test/saved_search/delete_test.exs` → green
-- [ ] A listing committed before the delete still appears in the next digest — `mix test test/digest/pending_test.exs` → green
+Each decided by `mix test`.
 
-# Interfaces
-
-| name | signature | inputs | outputs | owned | consumed |
-| --- | --- | --- | --- | --- | --- |
-| `SavedSearchStore` | `delete(id)` | the search id | the search is gone | — | yes |
+- [ ] C1 · S1 · `test/saved_search/delete_test.exs`: after `delete/1`, a matching published listing emits no `SearchMatchEvent`.
+- [ ] C2 · S2 · `test/digest/pending_test.exs`: a match recorded before the delete still appears in the next digest.
 
 # Decisions
 
-| decision | taken | rejected | because | source |
-| --- | --- | --- | --- | --- |
-| a pending match at delete time | the digest still sends it | drop it with the search | the match happened before the delete, and dropping it loses an alert the shopper already earned | #228 · pass 3 |
+- **A match made before the delete still sends.** The shopper earned that alert before deleting.
 
-# Where the work lands
+# Premises
 
-| surface | pattern |
-| --- | --- |
-| `lib/listings/saved_search.ex` | `delete/1` commits, then the match reader stops seeing the row |
-| `test/saved_search/delete_test.exs` | delete, commit a listing, no event |
+- The digest reads saved searches when it assembles, not when it matches — [digest.ex:58 @ 3f9c2ab](https://github.com/acme/market/blob/3f9c2ab/lib/digest/digest.ex#L58) (`Digest.assemble/1`).
 
 # Boundaries
 
-**Always** — read the search set at digest assembly, not at match time.
-**Ask first** — a change to the delete path's ordering; #232's dedupe reads the same rows.
-**Never** — soft-delete to keep the tests green; the contract says the alerts stop.
+**Always** read the search set when the digest assembles. · **Ask first** before reordering the delete path — #232's dedupe reads the same rows. · **Never** soft-delete to keep tests green; the alerts stop.
 
 # Out of scope
 
-1. Undo a delete — a restore is a new search with a new id.
+1. Undoing a delete — a restore is a new search with a new id.
 
 # Blocked by
 
@@ -248,8 +192,4 @@ Deleting a saved search stops its alerts from the moment the delete commits. Tod
 # Unresolved
 
 None.
-
-# Sources
-
-- Alignment #228, pass 3 — the pending-match decision.
 ````

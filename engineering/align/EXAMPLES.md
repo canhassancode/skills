@@ -3,53 +3,67 @@
 ## Playback
 
 ```markdown
-**Today** - A customer submits a basket and the API service creates an order straight away. No payment is taken at checkout; someone settles each order by hand afterwards.
+Today a customer submits a basket and the API creates an order straight away; nobody takes payment at checkout, and someone settles each order by hand later. You want a card payment at checkout, so an order only exists once it's paid for.
 
-**The ask** - Take a card payment at checkout, so an order only exists once it has been paid for.
-
-**Diagram** - < today's flow, as a sequence diagram >
-
-**This pass settles** - what a successful card payment and a declined card do to checkout. Refunds and saved cards go to Unresolved, each with its route.
+**This pass settles:** what a successful card and a declined card do to checkout. Refunds and saved cards go to Unresolved with their routes.
 
 Is that the problem as you see it?
 ```
 
-## Round
+## A round
+
+One scenario, one question, one recommendation. The fact it rests on sits under it; options appear only when the choices genuinely differ.
 
 ```markdown
 **A declined card, then a second card**
 
-A customer's first card is declined. They stay on the basket, try a second card, and it goes through. Today the order row is written when the basket is submitted, before any payment call, so the declined attempt already has an order sitting behind it.
+Sam's first card is declined. They stay on the basket, try a second card, and it goes through. Today the order row is written when the basket is submitted, before any payment call — so Sam's declined attempt already has an order behind it.
 
----
+❓ **When Sam's second card goes through, should an order exist for the declined attempt at all?**
 
-❓ **Q1** - **What a declined retry leaves behind**: when a customer's first card is declined and their second is accepted, does the second attempt reuse the order row the first one wrote, write a new row, or does no order exist until a payment succeeds?
+➡️ **No — no order until a payment succeeds.** A declined payment isn't an order, and reusing the row leaves a total and a status that disagree the moment the basket changes between attempts.
 
-**Impact** - 11 of the 80 declined checkouts in the last 30 days retry and succeed, counted from `payment_attempts`: each leaves a declined attempt beside a live order for one basket, and support has no way to say which row is the customer's.
-
-➡️ **No order until payment succeeds** - a declined payment is not an order, and reusing the row leaves a total and a status that disagree the moment the basket changes between attempts.
-
-↳ `apps/api/src/checkout/basket.ts:88` mints an order at submit, before any payment call.
-
-- **A.** One row per basket; the second attempt updates it.
-- **B.** One row per attempt; abandoned rows are swept later.
-- **C.** No order row until payment succeeds.
-
----
-
-❓ **Q2** - **What the customer sees after a decline**: when the first card is declined, does the customer stay on the basket with the decline reason shown, or go to a separate retry page?
-
-➡️ **Stay on the basket** - the basket is already the page they trust, and a retry page is a second place the basket's contents could drift.
-
-↳ `apps/web/src/checkout/Basket.tsx:120` already renders an inline error slot, unused today.
+↳ `apps/api/src/checkout/basket.ts:88` writes the order at submit, before any payment call.
 ```
 
-## Design
+## A challenge
+
+An answer that clashes with the code, `CONTEXT.md` or something said earlier goes back with the evidence before it is recorded.
+
+```markdown
+You said a decline should keep the order as `pending` so support can see it — but earlier you said no order exists until payment succeeds, and `orders.status` has no `pending` today (`apps/api/src/orders/order.ts:14`). Those can't both hold.
+
+❓ **Which wins: no order until payment, or a pending order support can see?**
+
+➡️ **No order until payment; support reads declines from `payment_attempts`.** It already records every attempt (`apps/api/src/payments/attempt.ts:9`), so support loses nothing.
+```
+
+An anecdote is not evidence: "I've never seen it fail" keeps the safeguard and asks for the count.
+
+## A term
+
+A word goes into `CONTEXT.md` only as its own question, in the user's own words first.
+
+```markdown
+❓ **Add to CONTEXT.md: "Payment attempt — one charge tried against one card for one basket; a basket can have many"?**
+
+➡️ **Yes** — you've used "attempt" all session, and it's the word `payment_attempts` already uses.
+```
+
+## An ADR
+
+Only when domain-modeling's three criteria hold, and always its own question.
+
+```markdown
+❓ **Record an ADR: "An order exists only after a successful payment"?** It's hard to reverse once refunds hang off orders, a future reader will wonder why orders aren't written at submit, and it beat a real alternative (one row per basket).
+
+➡️ **Yes.** I'll show you the text before writing it.
+```
+
+## Design — only for an interface the change adds or reshapes
 
 ````markdown
-**Design - the payment gate**
-
-Checkout asks one module whether a basket may become an order. The provider, its retries and its webhooks sit behind it, so checkout never learns which provider is in use.
+Checkout asks one module whether a basket may become an order. The provider sits behind it, so checkout never learns which provider is in use.
 
 ```ts
 interface PaymentGate {
@@ -59,76 +73,57 @@ interface PaymentGate {
 type ChargeResult =
   | { kind: 'paid'; orderId: OrderId }
   | { kind: 'declined'; reason: DeclineReason }
-```
 
-A caller:
-
-```ts
 const result: ChargeResult = await paymentGate.charge(basket.id, card)
-if (result.kind === 'declined') return showDecline(result.reason)
-return redirectToOrder(result.orderId)
 ```
 
-**Invariants** - an `OrderId` exists only on `paid`. **Errors** - a provider timeout returns `declined` with reason `unavailable`; `charge` never throws.
+❓ **Should `charge` write the order itself on `paid`, or leave that to checkout?**
 
-**Diagram** - < the checkout flow through `PaymentGate`, where it changes >
+➡️ **The gate writes it** — the order and its payment land together or not at all.
 
----
-
-❓ **Q1** - **Whether the gate writes the order**: does `PaymentGate.charge` write the order row itself on `paid`, or return and leave checkout to write it?
-
-➡️ **The gate writes it** - an order and its payment then land together or not at all, and no caller can hold a `paid` result with no order behind it.
-
-↳ `apps/api/src/orders/orderRepo.ts:12` exposes `create` to any caller today; nothing ties it to a payment.
+↳ `apps/api/src/orders/orderRepo.ts:12` lets any caller `create` an order today.
 ````
+
+## The close
+
+```markdown
+Here's what we've agreed:
+
+- No order exists until a payment succeeds; a declined attempt leaves only a `payment_attempts` row.
+- Sam stays on the basket after a decline, with the reason shown.
+- `PaymentGate.charge` writes the order on `paid`.
+
+Unresolved: refunds (pass), saved cards (pass).
+
+Is that our shared understanding? If so, I'll update the ticket to `ready-to-cut` — here's the body.
+```
 
 # 2. Example routes
 
 A question no fact settles and no choice moves is not argued — it leaves the round as a route.
 
-In the round:
+**Something to see.** The user can't judge the declined-card screen from prose:
 
-❓ **Q3** - **What the declined card screen looks like**: when the payment is declined and the customer stays on the basket, what does the basket show?
+```markdown
+❓ **Want a prototype of the declined-card screen?** Three variants on a throwaway branch, switchable in the browser.
 
-➡️ **Prototype it rather than describe it** - the screen is the decision, and prose has already produced three pictures of it in this session.
+➡️ **Yes** — the screen is the decision, and words have already produced three pictures of it.
+```
 
-↳ `apps/web/src/checkout/Basket.tsx:120` has an unused inline error slot; **Route: prototype** against `/prototype`'s UI branch.
+**A premise to run.** The walk finds the build would depend on something reading can't prove:
+
+```markdown
+The webhook handler assumes the provider retries a failed delivery. Its docs say "at least once" but not for how long, and our handler drops anything older than an hour (`apps/api/src/payments/webhook.ts:31`).
+
+➡️ **Spike it before we agree the handler** — a throwaway branch that fails a webhook in the provider's sandbox and logs every retry for a day. Its log becomes the premise's probe.
+```
 
 In Unresolved:
 
 - **The declined card screen's shape** — **Route: prototype**. Owner: the operator. Artefact: `prototype/decline-screen`, linked from the pass comment.
-- **Whether the provider retries a failed webhook** — **Route: research**. Owner: a `/research` sub-agent, at most two at a time. Artefact: a cited note where the repo keeps notes.
+- **How long the provider retries a webhook** — **Route: prototype** (spike). Owner: a sub-agent. Artefact: `prototype/webhook-retries` and its log, cited as the premise's probe.
 
-# 3. Example Diagrams
-
-## Sequence diagrams (mermaid)
-
-Always `autonumber`, immediately after the opening line. Participants declared with the DDD role they play, grouped by bounded context.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    box "Publishing"
-        actor U as Publisher
-        participant PC as PostCarousel
-        participant C as Carousel
-        participant R as CarouselRepo
-    end
-    box "TikTok (external)"
-        participant T as TikTokAPI
-    end
-    U->>PC: submit(images, caption)
-    PC->>C: create(images, 3:4)
-    C-->>PC: ok | ratio_mismatch
-    PC->>R: save(carousel)
-    PC->>T: createCarousel(images, caption)
-    T-->>PC: 201
-    PC-->>U: published
-```
-
-Use `alt/else` blocks where necessary. Keep the diagrams concise and easy to understand. Deep diagrams only come from a specific request from the user.
-
-# 4. Alignment Artefacts
+# 3. Alignment Artefacts
 
 ## Captured ticket (multiple passes)
 Alignment passes aren't always one session, in a bigger plan, create an artefact ticket in the following shape:
@@ -160,7 +155,10 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 ### Body
 
-**Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha or ref>`
+Plain words, as in [TICKET.md](../cut/TICKET.md): a section with nothing in it is left out, except `Unresolved`.
+
+```markdown
+**Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha>`
 
 > If dropped: the reason, in one paragraph, at the top.
 
@@ -168,19 +166,38 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 [ One paragraph on the why; a placeholder's triage notes fold in here at pass 1. ]
 
 # Problem statement
-[ One paragraph with a scenario to make this easy to understand by human readers and AI. ]
+[ One paragraph, told through one concrete scenario. ]
 
 # Scenarios
 
-| scenario | outcome |
-| --- | --- |
-| [ Named and concrete — one walk through the system. ] | [ The observable result that ends it, or the unresolved item that stays. ] |
+1. **[ A name in plain words. ]** [ Who, the starting state, the trigger ] — [ what they observe ].
+
+# Acceptance criteria
+
+Each decided by `[ command ]`.
+
+- [ ] C1 · S1 · `[ witness ]`: [ what the witness shows ].
 
 # Decisions
 
-| decision | taken | rejected | because | source |
-| --- | --- | --- | --- | --- |
-| [ What was settled. ] | [ The choice. ] | [ The alternative, and why it lost. ] | [ The reason the choice holds. ] | [ The pass it came from. ] |
+- **[ The choice, as a sentence. ]** [ Why, in one line — the rejected alternative named where it helps. ]
+
+# Premises
+
+- [ A fact about code, data or runtime ] — [ `path:line @ sha` with its symbol, or the command and its output ].
+
+# Interfaces
+
+| name | signature | owned | consumed |
+| --- | --- | --- | --- |
+
+# Boundaries
+
+**Always** · **Ask first** · **Never**
+
+# Out of scope
+
+1. [ What, and why not. ]
 
 # Axes
 
@@ -198,33 +215,11 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 | rollback | | |
 | cost | | |
 
-# Diagram
-[ The flow this change moves through, where one changed. ]
-
-# Interfaces
-
-| name | signature | owned | consumed |
-| --- | --- | --- | --- |
-| [ The interface. ] | [ Its exact shape. ] | [ Who defines it. ] | [ Who reads it. ] |
-
-# Acceptance criteria
-
-- [ ] [ Each falsifiable, traced to the scenario it makes pass, with the command that decides it and the evidence that counts as passing. ]
-
-# Boundaries
-
-**Always** · **Ask first** · **Never**
-
 # Unresolved
-[ Empty, or one **Route** per entry from the ladder — research · prototype · task · pass · decide — with its owner and where the artefact lands. ]
+[ None, or one **Route** per entry — research · prototype · task · pass · decide — with its owner and where the artefact lands. ]
 
-# Out of scope
-[ Numbered, short, each with the reason it was rejected. ]
-
-# Sources
-[ Each resolving — link, version, date. ]
-
-**Next:** [ The act this close hands to — `/cut`, `/propose`, `/build`, `/align <ref>`, or `stop`. ]
+**Next:** [ `/cut`, `/propose`, `/build`, `/align <ref>`, or `stop`. ]
+```
 
 ### Comment (passes)
 - If alignment proceeds past one session and requires more depth, each comment adds what was discovered in that pass.
@@ -232,16 +227,16 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 - Each pass is minimal, showing only what was discovered, the body is the alignment truth.
 
 ```markdown
-**Pass N e.g. Pass 1 · Verdict: < aligned | fog | dropped | thin >**
+**Pass N · Verdict: < aligned | fog | dropped | thin >**
 
 # Aligned on
 [ Concise bullet point list ]
 
 # Outstanding
-[ Short bullet point list on what is in the fog, what is blocked, what is preventing this from moving to ready-to-cut or ready-to-build ]
+[ What is still open, and what stops this moving to ready-to-cut or ready-to-build ]
 
 # Sources
-[ Short bullet point list on any relevant sources from this pass ]    
+[ Research notes, prototype branches, spikes from this pass ]
 ```
 
 ## Placeholder (written by `/triage`)

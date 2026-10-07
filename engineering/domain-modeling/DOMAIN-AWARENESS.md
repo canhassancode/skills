@@ -8,7 +8,9 @@ Consumer rules for any skill that explores a codebase. Producer rules (writing `
 - **`CONTEXT-MAP.md`** at the repo root if it exists — it points at one `CONTEXT.md` per context. Read each one relevant to the topic.
 - **`docs/adr/`** — read ADRs that touch the area you're about to work in. In multi-context repos, also check `src/<context>/docs/adr/` for context-scoped decisions.
 
-If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The producer skill (`/align`) creates them lazily when terms or decisions actually get resolved.
+If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The producer skill (`/align`) creates them lazily when terms or decisions actually get resolved, and only after the user says yes.
+
+A consumer never writes `CONTEXT.md` or an ADR. When the work turns up a term or a decision worth recording, raise it in the final report as a question for the user.
 
 ## File structure
 
