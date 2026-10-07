@@ -10,6 +10,14 @@ Narrows [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md)'s single-
 
 **Amended 2026-09-29 (#128).** A slice's `# What this builds` is written from that slice's own scenarios rather than transcribed from the alignment's problem statement: the parent paragraph describes the programme, so copying it into every slice told a cold reader nothing about the slice. The transclusion rule below still governs every row it lists — scenarios, criteria, interfaces, diagram, decisions, rejections are copied, not re-described. Only the opening paragraph is written rather than copied, and a **Spec** node keeps the parent's paragraph verbatim because it covers every slice.
 
+**Amended 2026-10-07.** A slice is transcribed for a cold reader rather than copied row for row:
+- its scenarios are renumbered from 1 and written in plain words, with who, the starting state, the trigger and what is observed;
+- it carries only the decisions and premises it rests on, each premise pinned to the alignment's `Verified against` sha in place of the old Sources rows;
+- it has no diagram unless one is asked for, and leaves out any section with nothing in it;
+- it is stamped with its size.
+
+The verbatim rule had made tickets hard to read. Forge #53 spent 41% of its words on decisions and 10.5% on scenarios and criteria, its scenarios started at S11 and pointed at an alignment the reader didn't have, and it contradicted the blocker it depended on. Every other rule below stands: the criteria, interfaces, decisions and rejections a slice carries still come from the contract, and the cut still decides nothing.
+
 ## Context
 
 ADR-0005 ended the planning lane's *by construction* guarantee and left stage 2 undesigned: "whatever cuts the work reads the body. Open: whether stage 2 subsumes `/to-spec` and `/to-tickets` or sits beside them."
