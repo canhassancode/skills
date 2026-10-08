@@ -18,6 +18,8 @@ Narrows [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md)'s single-
 
 The verbatim rule had made tickets hard to read. Forge #53 spent 41% of its words on decisions and 10.5% on scenarios and criteria, its scenarios started at S11 and pointed at an alignment the reader didn't have, and it contradicted the blocker it depended on. Every other rule below stands: the criteria, interfaces, decisions and rejections a slice carries still come from the contract, and the cut still decides nothing.
 
+**Amended 2026-10-08 (#139).** Where an alignment has slice comments, `/align` makes the scenario-to-slice assignment and `/cut` reads it: each slice comment is transcribed into its slice, scenarios as numbered there, with the header, `# What this builds`, `# Blocked by`, `# Unresolved` and the shared decisions and premises it rests on added. A `contract` cell reading `owed` refuses the cut. The cut still decides nothing; it has less left to assign.
+
 ## Context
 
 ADR-0005 ended the planning lane's *by construction* guarantee and left stage 2 undesigned: "whatever cuts the work reads the body. Open: whether stage 2 subsumes `/to-spec` and `/to-tickets` or sits beside them."

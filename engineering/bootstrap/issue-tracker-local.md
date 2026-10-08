@@ -19,6 +19,15 @@ Create a new file under `.scratch/<feature-slug>/` (creating the directory if ne
 
 Read the file at the referenced path. The user will normally pass the path or the issue number directly.
 
+## Slice comments
+
+`/align` keeps each slice's contract in its own file once an alignment has more than one slice, because a file has no comment ids. The semantics live in the skill; these are the operations.
+
+- **Post** — write `.scratch/<feature-slug>/slices/NN-<slug>.md`, numbered from `01`.
+- **Edit in place** — rewrite that file.
+- **Link** — the file's path relative to the alignment file, in the Slices table's `contract` column.
+- **Read** — read the file at the linked path.
+
 ## Publishing a cut
 
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.

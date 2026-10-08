@@ -8,6 +8,8 @@ status: accepted
 
 Supersedes [ADR-0002](./0002-triage-free-planning-lane.md)'s *by construction* claim.
 
+**Amended 2026-10-08 (#139).** Once an alignment has more than one slice, the body no longer carries the whole state: each slice's scenarios, criteria, decisions, premises, boundaries and interfaces live in its own **slice comment**, edited in place and linked from the body's Slices table, and the body keeps what the slices share. GitHub caps an issue body at 65,536 characters; canhassancode/forge#78 reached 69,137 at pass 8 with 6 of 17 slices written. Keeping the contract in the body until it overflowed was the alternative, and it forces a migration mid-alignment. `/align` still owns the alignment state.
+
 **Amended 2026-09-23.** The four-pass claim below retires with the term: no skill ever executed it, `grill-with-docs` was the only home it ever had, and upstream never carried it. Removed from `CONTEXT.md` and `CLAUDE.md`; `/triage`'s own reference goes with its round.
 
 ## Context
