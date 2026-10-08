@@ -41,12 +41,11 @@ Each decided by `<command>`.
 
 # Interfaces
 
-<details><summary>Owned and consumed</summary>
-
 | name | shape | owned | read by |
 | --- | --- | --- | --- |
+| <each interface from the contract this slice owns or reads> | <signature> | here · #<ref> | #<ref> · None |
 
-</details>
+<Or None., when the slice touches no shared interface.>
 
 # Blocked by
 

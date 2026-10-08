@@ -90,14 +90,10 @@ Each decided by `mix test`.
 
 # Interfaces
 
-<details><summary>Owned and consumed</summary>
-
 | name | shape | owned | read by |
 | --- | --- | --- | --- |
 | `SearchMatchEvent` | `(listing_id, saved_search_id, matched_at)` | here | #233 |
 | `SavedSearchStore` | `find(query)`, `list(account_id)`, `delete(id)` | here | #234 |
-
-</details>
 
 # Blocked by
 
