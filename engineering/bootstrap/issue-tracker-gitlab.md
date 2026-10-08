@@ -35,6 +35,15 @@ Create a GitLab issue.
 
 Run `glab issue view <number> --comments`.
 
+## Slice comments
+
+`/align` keeps each slice's contract in its own note once an alignment has more than one slice. The semantics live in the skill; these are the operations.
+
+- **Post** — `glab issue note <n> --message "..."`, then read its id from `glab api "projects/:id/issues/<n>/notes?sort=desc&per_page=1"`.
+- **Edit in place** — `glab api -X PUT projects/:id/issues/<n>/notes/<note_id> -f body="..."`.
+- **Link** — the issue's URL ending `#note_<note_id>`, in the Slices table's `contract` column.
+- **Read** — `glab api projects/:id/issues/<n>/notes/<note_id>`.
+
 ## Publishing a cut
 
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.

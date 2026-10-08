@@ -2,7 +2,7 @@
 
 The fourteen-row test a body passes before it takes a takeable stamp. Failing any row refuses the stamp.
 
-Three readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build`; `/diagnose`'s Phase 6 stamp applies it to the ticket the diagnosis leaves behind, before that ticket takes `ready-to-build`. The check runs quietly: the operator hears only the rows that fail.
+Three readers: `/cut` applies it to every slice it stamps; `/align`'s close applies it to the whole contract whenever it stamps a takeable state — `ready-to-cut` or `ready-to-build` — and where the alignment has slice comments, rows 3–11 and 13 to each slice comment and row 14 to the body; `/diagnose`'s Phase 6 stamp applies it to the ticket the diagnosis leaves behind, before that ticket takes `ready-to-build`. The check runs quietly: the operator hears only the rows that fail.
 
 | # | row | the check |
 | --- | --- | --- |

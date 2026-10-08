@@ -33,6 +33,15 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 - Won't-do → native `Canceled` state.
 - Duplicate → `save_issue` with `duplicateOf: <survivor>`, the native duplicate relation, then `save_comment` naming the survivor's `CAR-###`.
 
+## Slice comments
+
+`/align` keeps each slice's contract in its own comment once an alignment has more than one slice. The semantics live in the skill; these are the operations.
+
+- **Post** — `save_comment` on the alignment issue. Its result carries the comment's id and URL.
+- **Edit in place** — `save_comment` with that id.
+- **Link** — the comment's URL, in the Slices table's `contract` column.
+- **Read** — `list_comments`, matched by id.
+
 ## Publishing a cut
 
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.

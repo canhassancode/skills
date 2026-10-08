@@ -157,7 +157,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 
 ### Body
 
-Plain words, as in [TICKET.md](../cut/TICKET.md): a section with nothing in it is left out, except `Unresolved`.
+Plain words, as in [TICKET.md](../cut/TICKET.md): a section with nothing in it is left out, except `Unresolved`. With more than one slice, `# Scenarios`, `# Acceptance criteria`, `# Interfaces` and `# Boundaries` live in the slice comments, and `# Slices` takes their place.
 
 ```markdown
 **Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha>`
@@ -169,6 +169,12 @@ Plain words, as in [TICKET.md](../cut/TICKET.md): a section with nothing in it i
 
 # Problem statement
 [ One paragraph, told through one concrete scenario. ]
+
+# Slices
+
+| # | slice | contract |
+| --- | --- | --- |
+| 1 | [ The slice title, as in TICKET.md. ] | [ the tracker's link to its slice comment, or `owed` ] |
 
 # Scenarios
 
@@ -223,10 +229,51 @@ Each decided by `[ command ]`.
 **Next:** [ `/cut`, `/propose`, `/build`, `/align <ref>`, or `stop`. ]
 ```
 
+The Slices table needs only these three columns; an alignment adds its own.
+
+### Slice comment
+
+One per slice, posted and edited in place through the tracker's slice comment operations. Its sections are [TICKET.md](../cut/TICKET.md)'s from `# Scenarios` through `# Interfaces`, scenarios numbered from 1; `/cut` adds the header, `# What this builds`, `# Blocked by` and `# Unresolved`.
+
+```markdown
+# Slice N · [ The slice title. ]
+
+# Scenarios
+
+1. **[ A name in plain words. ]** [ Who, the starting state, the trigger ] — [ what they observe ].
+
+# Acceptance criteria
+
+Each decided by `[ command ]`.
+
+- [ ] C1 · S1 · `[ witness ]`: [ what the witness shows ].
+
+# Decisions
+
+- **[ A choice that binds this slice. ]** [ Why, in one line. ]
+
+# Premises
+
+- [ A fact this slice rests on ] — [ its probe, pinned to the sha ].
+
+# Boundaries
+
+**Always** · **Ask first** · **Never**
+
+# Out of scope
+
+1. [ What, and why not. ]
+
+# Interfaces
+
+| name | shape | owned | read by |
+| --- | --- | --- | --- |
+```
+
 ### Comment (passes)
 - If alignment proceeds past one session and requires more depth, each comment adds what was discovered in that pass.
 - If body already exists on ticket created by someone else or some other route, place the body as is in a comment.
-- Each pass is minimal, showing only what was discovered, the body is the alignment truth.
+- Each pass is minimal, showing only what was discovered, the body and its slice comments are the alignment truth.
 
 ```markdown
 **Pass N · Verdict: < aligned | fog | dropped | thin >**

@@ -69,6 +69,15 @@ Create a GitHub issue.
 
 Run `gh issue view <number> --comments`.
 
+## Slice comments
+
+`/align` keeps each slice's contract in its own comment once an alignment has more than one slice. The semantics live in the skill; these are the operations.
+
+- **Post** — `gh issue comment <n> --body-file -`. It prints the comment's URL, ending `#issuecomment-<id>`.
+- **Edit in place** — `gh api -X PATCH repos/<owner>/<repo>/issues/comments/<id> -F body=@<file>`.
+- **Link** — the comment's URL, in the Slices table's `contract` column.
+- **Read** — `gh api repos/<owner>/<repo>/issues/comments/<id> --jq .body`.
+
 ## Publishing a cut
 
 `/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
