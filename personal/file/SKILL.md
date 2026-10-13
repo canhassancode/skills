@@ -5,7 +5,11 @@ description: File a personal document or an atomic self-fact into the Obsidian v
 
 # File
 
-Files one **matter** — a document/record or an atomic self-fact — into a domain folder (`Personal/`, `Employment/`, `Ventures/`) or `Profile/`. The subject is **your own life**, not the world (that is `/ingest`). Read `~/Obsidian/CONTEXT.md` (the domain model) and `~/Obsidian/CONVENTIONS.md` (formatting) first.
+Files one **matter** — a document/record or an atomic self-fact — into a domain folder or `Profile/`. The subject is **your own life**, not the world (that is `/ingest`).
+
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
+Then read `$VAULT_ROOT/CONTEXT.md` (the domain model) and `$VAULT_ROOT/CONVENTIONS.md` (formatting). The domains `Personal/`, `Employment/`, `Ventures/` and `Profile/` named below are the default example only — where they differ, the domains in the vault's own `CONTEXT.md` win.
 
 ## Intake types
 
@@ -14,7 +18,7 @@ Files one **matter** — a document/record or an atomic self-fact — into a dom
 
 ## Drain the Inbox
 
-`/file` with no target: take the **top item in `~/Obsidian/Inbox/`** — one per invocation, the queue drains by being worked. Four outcomes:
+`/file` with no target: take the **top item in `$VAULT_ROOT/Inbox/`** — one per invocation, the queue drains by being worked. Four outcomes:
 
 - **Your own record or self-fact** — file it, below.
 - **External reading about the world** (article, video, book) — hand to `/ingest`.
@@ -26,7 +30,7 @@ The capture's kind picks the drain; these are peers, not a pipeline.
 ## Pipeline
 
 1. **Read** the intake. OCR any scanned PDF on the way in ([OCR.md](OCR.md)). Done when every page of every raw is text, not image.
-2. **Classify** — which domain (`Personal` / `Employment` / `Ventures`) or `Profile`, and is this a **matter** or a **fact**?
+2. **Classify** — which domain (by default `Personal` / `Employment` / `Ventures`) or `Profile`, and is this a **matter** or a **fact**?
 3. **Content-class gate** — Class A is **third-party** secrets, PII, and financials, plus verbatim proprietary source: drop or pseudonymise. **Your own** sensitive data — your price, MPAN, policy numbers — is B-private and **kept**; the vault is end-to-end encrypted. So a vendor's name and their figures go; yours stay.
    - Raw storage: your own document is kept under the matter's `raw/`. A third-party-sensitive document gets **no raw** — derived note only.
 4. **Reconcile, then judge.** Dedupe against what is already filed. Resolve each **fact** to one of **add / skip / update / retire**: *skip* a reworded duplicate, *retire* a stale fact by stamping it superseded with today's date rather than deleting it. Then **propose** the target page(s), what each gains, and the reconciliation. The user judges. This is the throttle — a few high-signal writes, never blind capture.
@@ -34,7 +38,7 @@ The capture's kind picks the drain; these are peers, not a pipeline.
 6. **Write** what was agreed:
    - A **matter note** carries the [spine](#the-frontmatter-spine), links its raws, and keeps full B-private fidelity — intent, who, decisions, the values you will look up.
    - A **fact** updates its `Profile/` page or domain note with provenance (source + date) and any supersession stamp.
-   - **Append a link on the domain hub** (`Home.md`, `Finances.md`, …). Hub links are load-bearing: grep finds a known term, the hub carries a half-remembered one.
+   - **Append a link on the domain hub** (`Home.md`, `Finances.md`, … are the default example; the vault's `CONTEXT.md` names its own hubs). Hub links are load-bearing: grep finds a known term, the hub carries a half-remembered one.
 7. **Report** which pages changed.
 
 ## Facts change — supersede, don't append
