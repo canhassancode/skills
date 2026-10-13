@@ -5,7 +5,9 @@ description: Process a source — article, video, or book — into the Obsidian 
 
 # Ingest
 
-Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/Library/CLAUDE.md` (the wiki schema), `~/Obsidian/CONTEXT.md`, and `~/Obsidian/CONVENTIONS.md` (formatting) first.
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
+Processes one source into the Library (`$VAULT_ROOT/Library/`). Read `$VAULT_ROOT/Library/CLAUDE.md` (the wiki schema), `$VAULT_ROOT/CONTEXT.md`, and `$VAULT_ROOT/CONVENTIONS.md` (formatting) first.
 
 ## Source types
 
@@ -21,10 +23,10 @@ Processes one source into the Library (`~/Obsidian/Library/`). Read `~/Obsidian/
 
 ## Drain the Inbox
 
-`/ingest` with no source given: read the **top item in `~/Obsidian/Inbox/`**. One item per invocation — the queue drains by being worked, not by being triaged. Three outcomes:
+`/ingest` with no source given: read the **top item in `$VAULT_ROOT/Inbox/`**. One item per invocation — the queue drains by being worked, not by being triaged. Three outcomes:
 
 - **An external source** (article, video, book) — ingest it as one of the three types above.
-- **One of Hassan's own ideas** — **stop. Do not ingest and do not bin.** Hand it to `/align` (foggy, needs a pass) or `/grilling` (settles in one sitting), which file it into `~/Obsidian/Ideas/` and delete the Inbox item themselves. `/ingest` and `/align` are peer drains on the Inbox, not a pipeline — the capture's kind picks the drain. An idea is not an ingested item: the Library's subject is the world, so the only outcomes available here would be misfiling it or losing it.
+- **One of Hassan's own ideas** — **stop. Do not ingest and do not bin.** Hand it to `/align` (foggy, needs a pass) or `/grilling` (settles in one sitting), which file it into `$VAULT_ROOT/Ideas/` and delete the Inbox item themselves. `/ingest` and `/align` are peer drains on the Inbox, not a pipeline — the capture's kind picks the drain. An idea is not an ingested item: the Library's subject is the world, so the only outcomes available here would be misfiling it or losing it.
 - **Neither** — bin it.
 
 ## Pipeline
