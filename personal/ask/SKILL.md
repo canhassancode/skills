@@ -6,12 +6,12 @@ disable-model-invocation: true
 
 # Ask
 
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
 Queries the vault at minimal token cost. Two corpora, but they are **not** what decides the route:
 
 - **Library** (`$VAULT_ROOT/Library/`) — subject = *the world*: consumed sources, references, learnings. It is the LLM Wiki: pre-synthesised, index-first. Schema: `$VAULT_ROOT/Library/CLAUDE.md`.
 - **Profile / Personal** (`$VAULT_ROOT/Profile/`, `$VAULT_ROOT/Personal/`) — subject = *Hassan*: self-model, people, goals, career, health. Hand-edited, no index.
-
-**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
 
 If you file an answer back as a page, conform to `$VAULT_ROOT/CONVENTIONS.md`.
 

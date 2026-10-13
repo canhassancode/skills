@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Observe
 
-`/observe <free text>` appends **one timestamped line** to `$VAULT_ROOT/Profile/observations.md`.
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
 
-**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+`/observe <free text>` appends **one timestamped line** to `$VAULT_ROOT/Profile/observations.md`.
 
 That is the whole skill. No hubs, no template, no three-file model.
 

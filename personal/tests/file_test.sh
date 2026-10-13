@@ -1,8 +1,8 @@
 #!/bin/sh
 # /file's vault contract.
 #   c2: VAULT_ROOT defaults to ~/Obsidian, and every vault path is built from it.
-#   c3: the domain folders and hubs are a default example; the vault's own
-#       $VAULT_ROOT/CONTEXT.md decides the real domains.
+#   c3: one Domains paragraph words the domain folders and hubs as a default
+#       example and defers to the vault's own $VAULT_ROOT/CONTEXT.md.
 f=personal/file/SKILL.md
 status=0
 fail() { echo "FAIL $f: $1"; status=1; }
@@ -15,10 +15,15 @@ case "$1" in
     grep -qF '$VAULT_ROOT/Inbox/' "$f" || fail "Inbox is not built from \$VAULT_ROOT"
     ;;
   c3)
-    grep -qF '$VAULT_ROOT/CONTEXT.md' "$f" || fail "domain model is not read from \$VAULT_ROOT/CONTEXT.md"
-    grep 'Ventures' "$f" | grep -q 'default example' || fail "domain folders are not worded as the default example"
-    grep 'Home.md' "$f" | grep -q 'default example' || fail "hubs are not worded as the default example"
-    grep -q "domains in the vault's own \`CONTEXT.md\` win" "$f" || fail "does not defer to the vault's CONTEXT.md"
+    d=$(grep '^\*\*Domains\.\*\*' "$f")
+    [ -n "$d" ] || fail "no Domains paragraph"
+    has() { printf '%s\n' "$d" | grep -qF "$1" || fail "Domains paragraph lacks: $1"; }
+    has 'Ventures/'
+    has 'Home.md'
+    has 'Finances.md'
+    has 'default example'
+    has '$VAULT_ROOT/CONTEXT.md'
+    has "domains in the vault's own \`CONTEXT.md\` win"
     ;;
   *) echo "usage: $0 c2|c3"; exit 2 ;;
 esac

@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Retro
 
-Drains `$VAULT_ROOT/Profile/observations.md`. `/observe` fills it; this empties it.
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
 
-**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+Drains `$VAULT_ROOT/Profile/observations.md`. `/observe` fills it; this empties it.
 
 **The whole file by default.** A single observation may be passed as an argument, but the default is the whole file, and that is load-bearing: the repeat signal — the same friction written down three times in different words — is only visible with the items side by side.
 
