@@ -38,6 +38,8 @@ Read the contract, and the run's **fit** where the caller passes one. Each crite
 
 A criterion the diff owns with no witness is a **test** finding: the criterion cannot be shown, so it cannot be accepted. Do not invent the witness for the author.
 
+Only where the caller passed a fit, a criterion that names one test — a title in double quotes right after its `: ` — whose command runs the whole witness file with no `whole file: <reason>` is a **test** finding, P1, naming the criterion: a sibling test going red would stand in for its witness. A **Live** criterion is never flagged; it carries no path and no title. Without a fit — `/review` with none, `/diagnose`'s Phase 6 — no narrowing finding is raised: the contract's one command is all there is.
+
 The one honest exception is a repo whose fit recorded **absence** — no suite, no typecheck, no CI. There the criterion has nowhere to be witnessed, the absence is already a fact, and the criterion is returned as a note — `unwitnessed — absence recorded` — never as a finding or as work. The verification left on such a repo is the operator's own run at hand-back.
 
 The contract's **decisions** and **axis marks** bind the same way: each one this diff touches gets a witness — a test, an observable, or a rule in [BASELINES.md](./BASELINES.md) — and one that cannot be witnessed is a finding, because a recorded limit with nothing behind it is unvettable.
@@ -49,7 +51,7 @@ The contract's **decisions** and **axis marks** bind the same way: each one this
 The gate is not "the tests pass" — it is "the criterion's own witness goes red when the behaviour it claims is gone". So place the failure yourself, **one hand-placed mutation per criterion**:
 
 1. With the tree clean at the diff's head — `git diff --quiet`, or the mutation's result is not yours — remove exactly the behaviour the criterion claims: invert its guard, drop its call, hardcode its result, and nothing else.
-2. Run the **witness**, not the suite. Read the result.
+2. Run the **witness**, not the suite — the criterion's command as given, never narrowed or widened here. Read the result.
 3. Restore the mutation exactly, and re-run to confirm green before moving on. When the last mutation is restored the tree is clean again, and the return says so.
 
 | result | what it means | the finding |
