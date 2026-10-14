@@ -9,7 +9,7 @@ Three readers: `/cut` applies it to every slice it stamps; `/align`'s close appl
 | 1 | Header | `Verified against` names a sha; a slice also carries its **Size** by [TICKET.md](TICKET.md)'s rule |
 | 2 | What this builds | two or three plain sentences: what it does once it ships, and what is true today |
 | 3 | Scenarios | numbered from 1; each names who, the starting state, the trigger and what is observed |
-| 4 | Acceptance criteria | each falsifiable, naming its scenario and witness, decided by a named command; every scenario has one |
+| 4 | Acceptance criteria | one ``Each decided by `<command>`.`` line decides every criterion, and a check that needs another command becomes a test under it or its own ticket; every list item is `` - [ ] Cn · Sn[, Sn] · `path`[, `path`]: what it shows `` — backticked paths followed immediately by `: `, with a test title written after the colon, never between; a **Live** criterion reads `**Live**: <what is run> Passing: <evidence>`; each falsifiable, and every scenario has one |
 | 5 | Terms | every project term is in `CONTEXT.md` or glossed where it first appears |
 | 6 | Interfaces | every row owned or consumed, no orphan |
 | 7 | Decisions | each binds this body and carries its reason; none contradicts the body of a ticket it is blocked by |
