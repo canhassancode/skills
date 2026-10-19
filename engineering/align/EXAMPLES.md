@@ -160,7 +160,7 @@ A good title contains the thing you would grep for: a component, endpoint, file,
 Plain words, as in [TICKET.md](../cut/TICKET.md): a section with nothing in it is left out, except `Unresolved`. With more than one slice, `# Scenarios`, `# Acceptance criteria`, `# Interfaces` and `# Boundaries` live in the slice comments, and `# Slices` takes their place.
 
 ```markdown
-**Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha>`
+**Passes: N · Verdict: < aligned | fog | dropped | thin > · Destination: < tickets | proposal | ADR | nothing > · Verified against:** `<sha>` **· Docs:** `docs/<ref>` · < draft pull request link, once the close opens it >
 
 > If dropped: the reason, in one paragraph, at the top.
 

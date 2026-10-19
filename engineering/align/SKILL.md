@@ -13,7 +13,7 @@ A _pass_ is one session: a conversation that settles one area so a build can run
 3. **Rounds.** Run `/grilling`: one scenario, one question, one recommendation, then wait. Answer the user's own questions before asking the next. When a choice's stakes can be counted from data, add an impact line under the question — what goes wrong, for whom, and how many; when they can't be counted, leave it out. Challenge as grilling says — an answer that clashes with the code, `CONTEXT.md`, an ADR or something said earlier is put back with the evidence before it is recorded.
 4. **Walk.** Before any interface is agreed, a sub-agent walks the code the change will run through, with the inputs production can send: rows written before the change, two calls at once, a missing or malformed value, every tracker and platform the code serves. A case with one safe outcome becomes a decision row; a case that is a real choice becomes the next round's question, told as a concrete example. Every fact the contract rests on becomes a **premise** with its probe — a `path:line @ sha` with its symbol, a command and its output, or for an outside fact its source with link, version and date. A premise reading cannot settle — whether a socket mounts, whether old records hold the field — is run, not argued: it takes the **prototype** route as a throwaway spike, and the spike's output is its probe.
 5. **Design.** Only for an interface the change adds or reshapes: its signature as code, one caller, and its invariants and error modes, one interface at a time, asked about before the next. Nothing else is shown.
-6. **Close.** Show the shared understanding in a few lines and ask the user to confirm it, then route the output by the table below, and stop. The next pass is `/align <ref>` in a fresh session.
+6. **Close.** Show the shared understanding in a few lines and ask the user to confirm it, then route the output by the table below, open the docs branch's draft pull request where the row takes one, and stop. The next pass is `/align <ref>` in a fresh session.
 
 **Show, don't diagram.** A scenario carries the explanation: who, what they do, what happens. Draw a diagram only when the user asks. When the user would need to see the thing to judge it — a layout, a CLI's output, a flow they would click through — offer a **prototype** instead.
 
@@ -26,6 +26,8 @@ A _pass_ is one session: a conversation that settles one area so a build can run
 ## Writing
 
 Nothing is written without a yes for that item. A term goes into `CONTEXT.md` only after it is proposed as its own one-line question; an ADR is written only after domain-modeling's three criteria hold and it is put as its own question — never bundled into a "write all of these". The ticket body and the pass comment are shown before they post. A route answer is never write permission.
+
+**The docs branch.** Every doc a pass writes — a `CONTEXT.md` term, an ADR, a research note — lands on `docs/<ref>`, cut from the default branch by the first write and checked out again by every later pass; the body's `Docs` field names it, and a pass that writes no doc has no branch. Each yes is committed on the branch as it is written, so no doc is ever left untracked, and every close pushes it. A close at `ready-to-cut`, `ready-to-build` or an ADR opens the branch as a draft pull request to the default branch and links it from `Docs`; the user merges it, never the pass.
 
 ## At session close - route the output
 
