@@ -23,6 +23,8 @@ require "the list item grammar" '`` - [ ] Cn · Sn[, Sn] · `path`[, `path`]: wh
 require "paths followed immediately by a colon" 'backticked paths followed immediately by `: `'
 require "test title after the colon, never between" 'with a test title written after the colon, never between'
 require "the Live grammar" 'a **Live** criterion reads `**Live**: <what is run> Passing: <evidence>`'
+require "a witness is a test file the Each command runs or a Live criterion" "a criterion's witness is a test file the Each command runs or a **Live** criterion"
+require "a bare file or a code shape no command turns red fails the row" 'a bare file or a code shape no command turns red fails the row'
 require "each falsifiable" 'each falsifiable'
 require "every scenario has one" 'every scenario has one'
 
