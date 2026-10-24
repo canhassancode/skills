@@ -22,6 +22,7 @@ Two or three sentences: what the slice does once it ships, and what is true toda
 Each decided by `<command>`.
 
 - [ ] C1 · S1 · `<witness>`: <what the witness shows, in one line>.
+- [ ] C2 · S1 · `<witness>`: "<test title>" <what that test shows, in one line>.
 
 # Decisions
 

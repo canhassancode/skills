@@ -38,7 +38,7 @@ Derive the mechanics from the repo on every run, never from a cache — a cache 
 | field | what it holds |
 | --- | --- |
 | **loop** | typecheck, focused tests, the suite — the commands every unit runs |
-| **criteria** | one command per criterion, each with its witness |
+| **criteria** | one command per criterion, each with its witness — narrowed to the criterion's test, or `whole file: <reason>` |
 | **secrets** | the path a secret lives at, never the value |
 | **children** | the harness's two spawn calls, probed once before the loop |
 | **proven** | the base commit and the tooling hash the commands ran against — lockfiles and tool config, hashed with the shell's own tool |
@@ -49,7 +49,7 @@ Then run them at the base commit. One of three honest outcomes comes back:
 - **Unavailable** — a command, a service, a secret or the harness's spawn call is missing. **Stop before writing anything to the tree**: name what is needed and where it lives (a secret's path, never its value), ask the operator, and leave the block on the ticket as §6's comment. An unavailable dependency is never worked around, and once it is supplied a fresh session resumes here.
 - **Green** — record the base commit and the suite's duration: the baseline every unit is measured against.
 
-A witness is derived from the criterion.
+A witness is derived from the criterion. Where a criterion names one test — a title in double quotes right after its `: ` — narrow its command to that test with the runner's own selector — its flag for running one test by name — so a sibling test going red cannot stand in for it. With two witness paths, narrow in the file that holds the title. Where the runner has no such selector, the command runs the whole file and the fit records why: `<criterion> → <witness> → <command> · whole file: <reason>`.
 
 **Re-probe what drifted.** The contract's premises were read at its `Verified against` sha. List the files they cite and check them against the base:
 
@@ -91,7 +91,7 @@ Unit <n> of <m> — <one line> · Ticket: #<n>
 You build one unit of this ticket. Read the contract on the ticket; the criteria below are yours, verbatim.
 
 Owns: <criterion>, <criterion>
-Witness and command: <criterion> → <witness> → <command>
+Witness and command: <criterion> → <witness> → <command>[ · whole file: <reason>]
 The loop: <typecheck>, <focused tests>, <suite> — proven green at <commit>.
 Secrets live at: <paths> — never a value. If one is unreadable, stop and say so.
 
@@ -120,7 +120,7 @@ A Builder ends when it judges the unit done — green, committed, tree clean, th
 
 A small or medium ticket skips this step for each unit: its Review runs once, over the whole branch, at §4.7. A large ticket vets every unit here.
 
-Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns. It falsifies every owned witness with one hand-placed mutation, and it never posts. The brief passes the range and the contract and nothing that narrows them: no severity bar, no time cap, no list of what to skip. A hint of where to look adds to crucible's steps; it never replaces one.
+Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns, each with its `whole file: <reason>` where the fit recorded one. It falsifies every owned witness with one hand-placed mutation, and it never posts. The brief passes the range and the contract and nothing that narrows them: no severity bar, no time cap, no list of what to skip. A hint of where to look adds to crucible's steps; it never replaces one.
 
 It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red` — and the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe, with its evidence. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
 
@@ -159,7 +159,7 @@ second attempt. Do not widen scope — a finding that changes a named scenario's
 </fix-brief>
 ```
 
-Commit the round, then re-vet: launch `/crucible` in a fresh `Reviewer` child with the round's range and the verified list as its **re-vet**, so it reads only the fix's diff, reruns every verified witness and re-mutates the criteria the round touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets the rounds its size allows — one for small, two otherwise — and a round answers every finding the same change answers: claim findings travel together in one round. A finding still open after its last round joins the list put to the operator before §5: the finding, what was tried, and a proposition with the route it would take.
+Commit the round, then re-vet: launch `/crucible` in a fresh `Reviewer` child with the round's range, the verified list and the fit's criteria entries, `whole file: <reason>` included, as its **re-vet**, so it reads only the fix's diff, reruns every verified witness and re-mutates the criteria the round touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets the rounds its size allows — one for small, two otherwise — and a round answers every finding the same change answers: claim findings travel together in one round. A finding still open after its last round joins the list put to the operator before §5: the finding, what was tried, and a proposition with the route it would take.
 
 **Done when** every acting finding is closed by a red mutation, on the operator's list with a proposition, or recorded as accepted open.
 
@@ -173,7 +173,7 @@ When a window fills mid-unit — the Delegator's or a Builder's — what is gree
 
 ### 4.7 Review the whole branch
 
-Every unit vetted alone misses what only shows when they meet. Once the last unit closes, launch `/crucible` in a fresh `Reviewer` child over the **whole branch**, `<branch-point>...HEAD`, with the contract — for a small or medium ticket this is the Review, falsification included; for a large one it adds what only the whole branch shows to the per-unit reviews. Its findings route by §4.3 and fix by §4.4.
+Every unit vetted alone misses what only shows when they meet. Once the last unit closes, launch `/crucible` in a fresh `Reviewer` child over the **whole branch**, `<branch-point>...HEAD`, with the contract and the fit's criteria entries, `whole file: <reason>` included — for a small or medium ticket this is the Review, falsification included; for a large one it adds what only the whole branch shows to the per-unit reviews. Its findings route by §4.3 and fix by §4.4.
 
 Then put the operator's list — open product calls, findings past their last round — to them once, in session, and record each answer as a decision row or an accepted-open entry.
 
