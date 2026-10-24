@@ -5,7 +5,13 @@ description: File a personal document or an atomic self-fact into the Obsidian v
 
 # File
 
-Files one **matter** — a document/record or an atomic self-fact — into a domain folder (`Personal/`, `Employment/`, `Ventures/`) or `Profile/`. The subject is **your own life**, not the world (that is `/ingest`). Read `~/Obsidian/CONTEXT.md` (the domain model) and `~/Obsidian/CONVENTIONS.md` (formatting) first.
+Files one **matter** — a document/record or an atomic self-fact — into a domain folder or `Profile/`. The subject is **your own life**, not the world (that is `/ingest`).
+
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
+Then read `$VAULT_ROOT/CONVENTIONS.md` (formatting).
+
+**Domains.** The domain folders `Personal/`, `Employment/`, `Ventures/` and `Profile/`, and the hubs `Home.md` and `Finances.md`, named below are the default example only. Read `$VAULT_ROOT/CONTEXT.md` (the domain model) for the vault's real domains and hubs: where they differ, the domains in the vault's own `CONTEXT.md` win.
 
 ## Intake types
 
@@ -14,7 +20,7 @@ Files one **matter** — a document/record or an atomic self-fact — into a dom
 
 ## Drain the Inbox
 
-`/file` with no target: take the **top item in `~/Obsidian/Inbox/`** — one per invocation, the queue drains by being worked. Four outcomes:
+`/file` with no target: take the **top item in `$VAULT_ROOT/Inbox/`** — one per invocation, the queue drains by being worked. Four outcomes:
 
 - **Your own record or self-fact** — file it, below.
 - **External reading about the world** (article, video, book) — hand to `/ingest`.
