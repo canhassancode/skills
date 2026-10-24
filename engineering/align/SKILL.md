@@ -19,9 +19,11 @@ A _pass_ is one session: a conversation that settles one area so a build can run
 
 **The route.** Every Unresolved entry names one **Route** and what it leaves behind: **research** — a fact read from primary sources by a `/research` sub-agent, landing as a cited note; **prototype** — a shape to react to or a premise to run, via `/prototype`, landing as a throwaway branch linked from the pass comment; **task** — work that must happen before the discussion can move (provisioning a fixture, credentials, a permission), landing as a fact row; **pass** — more rounds in a fresh session; **decide** — a yes owed outside the room, `/propose`'s. Each entry carries its owner and where the artefact lands.
 
-**The short pass.** A build that finds a gap routes it back as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close runs in full. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops.
+**The short pass.** A build that finds a gap routes it back as a contract change, and the pass it runs is short by default: one round, where every answer takes one of three exits — fixed in this ticket, out of scope, a new ticket — and the close runs in full. A full pass runs instead when the answer would change another slice's promise. An item left open lands in Unresolved, so the ticket returns to `needs-alignment` and the build stops. Out of scope is the short pass's exit; a full pass takes it only with that yes, as the close below says.
 
 **Pass 1 on a placeholder.** A ticket queued by `/triage` carries no `Passes:` header — the shape is in [EXAMPLES.md](EXAMPLES.md). The first pass folds its Triage notes into Background, then writes the header and the rest of the rows.
+
+**Pass 1 with no ticket.** A pass started from free text creates one alignment ticket, sized to the ask, not to the pass: the area this pass settles, and each area playback deferred as an `owed` slice or an Unresolved entry with its route. No area the user asked about is left without a ticket to hold it.
 
 ## Writing
 
@@ -31,7 +33,9 @@ Nothing is written without a yes for that item. A term goes into `CONTEXT.md` on
 
 ## At session close - route the output
 
-An alignment is a _thinking_ artefact, not by default a spec or a build. The row the close takes is read from the body, never guessed from the conversation:
+An alignment is a _thinking_ artefact, not by default a spec or a build. The row the close takes is read from the body, never guessed from the conversation.
+
+**Playback's Unresolved at the close.** This check runs before the row is read, because the pass that wrote the body cannot be trusted to have kept it. Every entry playback sent to Unresolved is still in Unresolved, is an `owed` slice, or leaves on the user's explicit yes to drop it. Moving one to Out of scope is its own question, one entry at a time, never bundled into the close's confirmation. An entry missing without that yes goes back into Unresolved, and the work stays at `needs-alignment`. Then the row:
 
 | the pass ends on | Verdict | Destination | Ticket state | Next |
 | --- | --- | --- | --- | --- |

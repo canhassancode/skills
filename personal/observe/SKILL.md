@@ -1,19 +1,21 @@
 ---
 name: observe
-description: Append one timestamped observation to ~/Obsidian/Profile/observations.md — something noticed about how the work goes, a correction that keeps recurring, a tool that keeps misfiring. Use when the user runs /observe.
+description: Append one timestamped observation to Profile/observations.md in the vault — something noticed about how the work goes, a correction that keeps recurring, a tool that keeps misfiring. Use when the user runs /observe.
 disable-model-invocation: true
 ---
 
 # Observe
 
-`/observe <free text>` appends **one timestamped line** to `~/Obsidian/Profile/observations.md`.
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
+`/observe <free text>` appends **one timestamped line** to `$VAULT_ROOT/Profile/observations.md`.
 
 That is the whole skill. No hubs, no template, no three-file model.
 
 ## Procedure
 
 1. Get the date and time: `date +%F`, `date +%H:%M`.
-2. Append one line to `~/Obsidian/Profile/observations.md`, creating the file if it is missing:
+2. Append one line to `$VAULT_ROOT/Profile/observations.md`, creating the file if it is missing:
 
    ```
    - YYYY-MM-DD HH:MM — <the observation, as given>

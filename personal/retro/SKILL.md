@@ -1,12 +1,14 @@
 ---
 name: retro
-description: Drain ~/Obsidian/Profile/observations.md — read the observations back, take them one at a time, and turn each into a change made in the same sitting. Use when the user runs /retro.
+description: Drain Profile/observations.md in the vault — read the observations back, take them one at a time, and turn each into a change made in the same sitting. Use when the user runs /retro.
 disable-model-invocation: true
 ---
 
 # Retro
 
-Drains `~/Obsidian/Profile/observations.md`. `/observe` fills it; this empties it.
+**The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
+
+Drains `$VAULT_ROOT/Profile/observations.md`. `/observe` fills it; this empties it.
 
 **The whole file by default.** A single observation may be passed as an argument, but the default is the whole file, and that is load-bearing: the repeat signal — the same friction written down three times in different words — is only visible with the items side by side.
 
@@ -33,4 +35,4 @@ These are illustrations, not a lookup table. A table would ossify the routes; th
 
 ## Multi-repo by construction
 
-One sitting routinely commits to `~/Repos/skills`, `~/dotfiles` and `~/Obsidian`. Do not assume the session is inside one project or that the working directory is the target; resolve each change's repo from the change itself, and commit in each repo it touches.
+One sitting routinely commits to `~/Repos/skills`, `~/dotfiles` and `$VAULT_ROOT`. Do not assume the session is inside one project or that the working directory is the target; resolve each change's repo from the change itself, and commit in each repo it touches.
