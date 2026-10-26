@@ -22,12 +22,14 @@ In a deep-module repo the test shape is a diamond. The bulk sits at each module'
 |---|---|---|
 | What the module returns or becomes for a given input or state | Module acceptance | `<module>/<module>.acceptance.test.ts` |
 | "always", "never", "for any", "at most once", an invariant over sequences | Property | `<module>/<module>.properties.test.ts` |
-| How a third party answers: status codes, error mapping, payload shape | Contract | `test-support/<port>.contract.ts` plus one `*.contract.test.ts` per implementation |
+| How a third party answers: status codes, error mapping, payload shape | Contract | `<port>.contract.ts` beside the repo's fakes, plus one `*.contract.test.ts` per implementation |
 | A user can get from page A to outcome B through the real wiring | End-to-end | `e2e/<journey>.spec.ts` |
 
 The tester writes no scratch unit tests. They belong to the implementer.
 
 ## Layout
+
+An example, for a repo with no tests yet. Where the repo already has a layout, use it; only the suffixes are fixed.
 
 ```
 src/billing/
@@ -50,6 +52,8 @@ The file suffix is the lock: `.acceptance.`, `.properties.`, `.contract.` and th
 Only ports: anything crossing the network or the process boundary (payment provider, clock, randomness, email). Storage gets a real in-memory implementation that the production adapter must also satisfy. Nothing inside the module is ever mocked.
 
 ## Speed budget per layer
+
+Defaults where the repo sets none. A repo with stricter budgets keeps them.
 
 | Layer | Environment | Per-test timeout |
 |---|---|---|

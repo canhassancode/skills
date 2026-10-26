@@ -18,18 +18,25 @@ Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%) and Konstantino
 
 If either is missing, stop and say which.
 
+## Conventions
+
+Three are fixed, because the lock depends on them: the locked file suffixes (`.acceptance.`, `.properties.`, `.contract.`, an `e2e/` directory), titles equal to the behaviour lines, and the `test: lock` commit.
+
+Everything else follows the repo: the runner, `it` or `test`, where tests and fakes live, factory and file naming, how timeouts are set. The references' examples are Vitest in one layout; translate them, don't import them. Fall back to the examples only where the repo has no tests yet.
+
 ## Steps
 
-1. **Place each behaviour line on a layer** using [references/layers.md](references/layers.md). Most go to module acceptance.
-2. **Name each test with its behaviour line, word for word.** [references/naming.md](references/naming.md).
-3. **Write the tests** using the reference for each layer:
+1. **Read the repo's conventions**: two or three existing test files, the test config and wherever fakes or helpers live. Note what you'll follow in the report.
+2. **Place each behaviour line on a layer** using [references/layers.md](references/layers.md). Most go to module acceptance.
+3. **Name each test with its behaviour line, word for word.** [references/naming.md](references/naming.md).
+4. **Write the tests** using the reference for each layer:
    - [references/acceptance.md](references/acceptance.md)
    - [references/properties.md](references/properties.md)
    - [references/contract.md](references/contract.md)
    - [references/end-to-end.md](references/end-to-end.md)
-4. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it.
-5. **Run them and confirm every test is red for the right reason**: an assertion failure, or the stub's not-implemented error, raised through the public interface. A compile error, missing import, missing fixture or timeout is the wrong reason; fix the test.
-6. **Return the report** below. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
+5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it.
+6. **Run them and confirm every test is red for the right reason**: an assertion failure, or the stub's not-implemented error, raised through the public interface. A compile error, missing import, missing fixture or timeout is the wrong reason; fix the test.
+7. **Return the report** below. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
 
 ## When a behaviour can't be tested
 
@@ -38,6 +45,8 @@ If a behaviour line can't be observed through the approved interface, don't reac
 ## Report
 
 ```
+Conventions followed: <runner, test function, test and fake locations — or "none found, used the reference examples">
+
 | Behaviour | Layer | File | Red because |
 |---|---|---|---|
 | <behaviour line> | acceptance | src/billing/billing.acceptance.test.ts | expected { state: 'active' … }, received not implemented |

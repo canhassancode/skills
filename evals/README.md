@@ -6,6 +6,7 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 |---|---|
 | `tester-writes-locked-tests` | Titles are the spec's behaviour lines word for word, the invariant goes to a property file, no internal mocks or weak oracles, red reasons reported, no commit |
 | `tester-reports-interface-gap` | A behaviour the interface can't observe is reported as a gap, not patched by changing the interface |
+| `tester-follows-repo-conventions` | In a repo using top-level `test()`, `__tests__/` and fakes in `src/testing/`, the locked tests follow that layout and reuse its fakes, keeping the `.acceptance.` suffix |
 | `tester-triggers-on-spec` | `tester` fires on "write the tests from the agreed spec" |
 | `tester-skips-bug-fix` | `tester` stays quiet on a flaky-test fix |
 

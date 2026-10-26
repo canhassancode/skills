@@ -8,22 +8,7 @@ Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` dire
 
 ## 1. The hook: blocks the edit as it happens
 
-[`scripts/guard-locked-tests.sh`](../scripts/guard-locked-tests.sh) is a `PreToolUse` hook. It refuses `Edit`, `Write`, `MultiEdit` and `NotebookEdit` on a locked path, and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). Reads and test runs pass through.
-
-`/build` registers it in its frontmatter. To lock a repo outside `/build`, add it to the project's `.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
-        "hooks": [{ "type": "command", "command": "<path to skills>/engineering/tester/scripts/guard-locked-tests.sh" }]
-      }
-    ]
-  }
-}
-```
+`locked-test-guard.sh` is a global `PreToolUse` hook in `canhassancode/dotfiles` (`claude/hooks/`), wired in `claude/settings.json` on `Edit|Write|MultiEdit|NotebookEdit|Bash`. It refuses edits to a locked path and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). Reads and test runs pass through. It is always on and only ever matches the suffixes, so a repo without locked tests never sees it.
 
 A shell has too many ways to write a file for a pattern to catch them all. The hook is the fast signal, not the guarantee.
 
@@ -41,7 +26,7 @@ Only a behaviour change licenses it: the spec's behaviour line is edited or remo
 
 ## Timeouts
 
-A slow test fails, which fails CI. Set the budgets from [layers.md](layers.md) in config, not in each test:
+A slow test fails, which fails CI. Set the budgets from [layers.md](layers.md) in config, not in each test, using the repo's own runner and folders. In Vitest:
 
 ```ts
 import { defineConfig } from 'vitest/config'

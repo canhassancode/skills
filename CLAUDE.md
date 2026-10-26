@@ -44,7 +44,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
 | `crucible` | No upstream counterpart — the only review policy; falsification, the correctness walk, the consumer grep and the baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
-| `tester` | No upstream counterpart — writes the locked acceptance, property, contract and end-to-end tests from an approved spec and interface, before implementation; its references hold the test conventions and its scripts the lock. |
+| `tester` | No upstream counterpart — writes the locked acceptance, property, contract and end-to-end tests from an approved spec and interface, before implementation; its references hold the test principles and its script the lock check; the edit hook lives in dotfiles. |
 | `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started in a fresh session on the pull request `build` hands back, or on any other. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
