@@ -100,6 +100,48 @@ Dates are publication dates; "today" for this note is 2026-10-26.
 - **Traceability evidence:** mandatory per-line requirement citations (REQ IDs) enabled automated hallucination detection at 86–88% with 0% false positives on two models, while lowering output determinism (d ≈ −0.7); artefact-level (Spec Kit) or post-hoc trace maps detected 0% [measured, single-author preprint, N=20 and N=50 tasks] ([Panda, Citation Discipline in SDD, 2026-06-28](https://arxiv.org/abs/2606.30689)).
 - **Human-engineering provenance:** IV&V is V&V performed with technical, managerial and financial independence from the developer (IEEE 1012, as described by [NASA IV&V](https://www.nasa.gov/ivv-overview) and [US DOL](https://www.dol.gov/sites/dolgov/files/ETA/advisories/UIPL/1998/UIPL38-98.html)); verification checks specified requirements are met, validation checks intended use. ISO/IEC/IEEE 29148 lists "traceable" among requirement quality characteristics ([secondary summary](https://publish.obsidian.md/petermilovcik/1+Notes/IEEE+29148); standard text not accessed). No source found that ties IV&V's three independence dimensions to LLM reviewers empirically; the agent sources address only *context* independence, not model-family independence.
 
+## Persisted cross-session artefacts — worked examples
+
+### Long-running coding harness (initialiser → coding agent)
+
+- **Roles:** an initialiser agent runs once and expands the user's prompt into a comprehensive feature requirements file; a coding agent runs every later session in a fresh context. The two differ only in their initial prompt — system prompt, tools and harness are identical [first-party] ([Effective harnesses](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)).
+- **Feature list (JSON):** entries carry `category`, `description`, `steps` (test steps) and `passes`; all start `false` ("over 200 features" for the claude.ai clone). Coding agents may change only `passes`: "It is unacceptable to remove or edit tests because this could lead to missing or buggy functionality." JSON was chosen because the model is less likely to inappropriately overwrite it than Markdown [first-party] (same source). The source's prose says "feature list" while its example transcript reads `tests.json`.
+- **`claude-progress.txt`:** a log of what each agent has done [first-party] (same source).
+- **Git:** an initial commit of the scaffold, then a commit per change with descriptive messages so bad changes can be reverted [first-party] (same source).
+- **`init.sh`:** starts the development server and supports a basic end-to-end check [first-party] (same source).
+- **Session startup:** `pwd`; read git log and progress file; read the feature list and pick the highest-priority failing feature; run `init.sh` and a basic end-to-end test to catch broken or undocumented state before new work [first-party] (same source).
+- **Failures the artefacts target:** one-shotting and running out of context mid-feature, leaving work half-done and undocumented; later agents declaring the project finished early; features marked complete without end-to-end testing until browser automation was required [first-party, observed, unquantified] (same source).
+- **Stated limits:** no quantitative results on whether later sessions kept to the spec; unclear whether a single general agent beats a multi-agent setup; optimised for full-stack web apps [first-party] (same source).
+
+### Planner → generator → evaluator harness
+
+- **Planner:** expands a 1–4 sentence prompt into a product spec (features, user stories, data model, visual design language), deliberately high-level so wrong technical detail does not cascade [first-party] ([Harness design](https://www.anthropic.com/engineering/harness-design-long-running-apps)).
+- **Sprint contract:** before each sprint the generator proposed what it would build and how success would be verified; the evaluator reviewed it until both agreed (sprint 3: 27 criteria). Removed in the later Opus 4.6 harness in favour of one end-of-build evaluation [first-party] (same source).
+- **File-based communication:** one agent writes a file; the other replies in the same file or a new one [first-party] (same source).
+- **Reset handoff:** with Sonnet 4.5, context resets started a fresh agent with a structured handoff carrying "the previous agent's state and the next steps"; dropped for automatic compaction from Opus 4.5 [first-party] (same source).
+
+### Research system (single writer, parallel readers)
+
+- 3–5 subagents run in parallel with their own context windows and return condensed results (e.g. a list of companies); the post gives no return size [first-party] ([Research system](https://www.anthropic.com/engineering/multi-agent-research-system)). The 1,000–2,000-token figure comes from [Effective context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), not this post.
+- Larger outputs: subagents "call tools to store their work in external systems" and pass lightweight references back; the post says this suits code, reports and data visualisations [first-party] (same source).
+- The lead agent alone writes the final answer; a separate CitationAgent then places citations [first-party] (same source). The post does not discuss read vs write parallelism explicitly; that framing is LangChain's and Cognition's.
+
+### Reader/writer in coding
+
+- Neither Anthropic coding harness uses parallel readers feeding one writer. Both are sequential relays — one agent writes at a time and persisted files carry the work forward [first-party] ([Effective harnesses](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents); [Harness design](https://www.anthropic.com/engineering/harness-design-long-running-apps)). "Most coding tasks involve fewer truly parallelizable tasks than research" [first-party] ([Research system](https://www.anthropic.com/engineering/multi-agent-research-system)).
+
+### When context becomes an artefact
+
+- No source gives a token threshold (100k or otherwise) for moving context into a persisted artefact.
+- Closest: the research lead saves its plan to memory because context beyond 200,000 tokens is truncated; near the limit agents summarise finished phases, store essentials externally, and spawn fresh subagents with handoffs [first-party] ([Research system](https://www.anthropic.com/engineering/multi-agent-research-system)). Claude Code's docs state degradation "as it fills" without a number ([best practices](https://code.claude.com/docs/en/best-practices)). The reset trigger was model-dependent (Sonnet 4.5 vs Opus 4.5) ([Harness design](https://www.anthropic.com/engineering/harness-design-long-running-apps)).
+
+### Did implementation follow through on the spec?
+
+- **Partly, unmeasured.** The first planner harness's spec ran to 16 features across ten sprints and the generator built most of it; without the planner the generator under-scoped [first-party, single runs] ([Harness design](https://www.anthropic.com/engineering/harness-design-long-running-apps)).
+- **Drift observed:** in the DAW run, QA found clips could not be dragged, instrument and effects panels missing or display-only, and recording stub-only, noting "the spec explicitly calls for them"; the generator "was still liable to miss details or stub features when left to its own devices" [first-party] (same source).
+- **The drift was caught by the independent evaluator, not prevented by the generator;** the evaluator itself needed several tuning rounds and still missed deeper bugs [first-party] (same source).
+- Consistent with: agents not following all spec instructions ([Böckeler](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)) and "disobey task specification" at 11.8% of multi-agent failures [measured] ([Cemri et al.](https://arxiv.org/html/2503.13657v3)).
+
 ## Where sources disagree
 
 | Question | Position A | Position B | Scope / reconciliation |
@@ -116,6 +158,8 @@ Dates are publication dates; "today" for this note is 2026-10-26.
 - **Vendor-internal measurements, not independently reproduced:** Anthropic's 90.2%, 15x, 80% variance, 29/39/84% context-management numbers; Cognition's 2 bugs/PR and 58% severe; Anthropic harness costs (single runs).
 - **Asserted but unmeasured:** that a fresh session after spec-writing beats continuing (supported only by analogy to Laban et al.); the specific content list for a spec (files, interfaces, out-of-scope, verification step); that recording "what has been ruled out" prevents duplicated work; that spec-driven tooling (Spec Kit, Kiro) improves outcomes — no metrics published by GitHub or AWS; that human phase gates improve outcomes for agent pipelines.
 - **No study found** that measures intent drift end-to-end from exploration through spec to merged code, or that compares same-model vs different-model reviewers on code-review recall. The traceability preprint (Panda 2026) is small and single-author.
+- **No token threshold** is published for converting context into a persisted artefact; the only number is the research system's 200k truncation limit.
+- **No follow-through rate** is published for implementation agents executing a spec persisted by an earlier agent; Anthropic's harness posts report single runs and observed drift only.
 - **Fast-moving:** guidance has already been revised by model releases (resets → compaction; sprint contracts → single end pass; Cognition's 2025 → 2026 position). Anthropic: "Every component in a harness encodes an assumption about what the model can't do on its own" and these go stale ([Harness design](https://www.anthropic.com/engineering/harness-design-long-running-apps)).
 - **Not accessed:** OpenAI "Harness engineering" (403), NEJM full text (403 — figures from AHRQ and secondary summaries consistent with the abstract), ISO 29148 and IEEE 1012 normative text.
 
