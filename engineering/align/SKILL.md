@@ -2,6 +2,7 @@
 name: align
 description: Accepting a users new feature, requirements, general idea, ticket, PR comments and challenging against the existing domain, sharpening terminology, and making updates to artefacts and documentation (CONTEXT.md, ADRs). Use when users want to stress-test and align on their project's language and documented decisions.
 argument-hint: <new feature | ticket-ref | requirements | pr comments | general idea>
+disable-model-invocation: true
 ---
 
 ## The pass
