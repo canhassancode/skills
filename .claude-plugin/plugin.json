@@ -22,6 +22,7 @@
     "./engineering/review",
     "./engineering/shepherd",
     "./engineering/tdd",
+    "./engineering/tester",
     "./engineering/triage",
     "./personal/ask",
     "./personal/file",
