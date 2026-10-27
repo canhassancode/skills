@@ -9,6 +9,8 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `tester-follows-repo-conventions` | In a repo using top-level `test()`, `__tests__/` and fakes in `src/testing/`, the locked tests follow that layout and reuse its fakes, keeping the `.acceptance.` suffix |
 | `tester-triggers-on-spec` | `tester` fires on "write the tests from the agreed spec" |
 | `tester-skips-bug-fix` | `tester` stays quiet on a flaky-test fix |
+| `align-tiers-before-asking` | A four-capability ask with an unknown webhook fact gets a tier on both axes and one question with a recommendation, and nothing is written |
+| `align-stops-on-one-sentence-diff` | A rename is called a one-sentence diff and stops: no spec, no red team, no question round |
 
 ## Running
 
@@ -22,6 +24,12 @@ The triggering cases are only meaningful single-arm, because the no-plugin arm c
 
 ```sh
 claude plugin eval . --case 'tester-triggers-*' --case 'tester-skips-*' --ablation none
+```
+
+The `align` cases invoke `/align` by name, so they are single-arm too:
+
+```sh
+claude plugin eval . --case 'align-*' --scaffold --ablation none --allow-tools Write Edit
 ```
 
 Results land in `evals/results/`, which is ignored.

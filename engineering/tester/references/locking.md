@@ -8,7 +8,7 @@ Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` dire
 
 ## 1. The hook: blocks the edit as it happens
 
-`locked-test-guard.sh` is a global `PreToolUse` hook in `canhassancode/dotfiles` (`claude/hooks/`), wired in `claude/settings.json` on `Edit|Write|MultiEdit|NotebookEdit|Bash`. It refuses edits to a locked path and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). Reads and test runs pass through. It is always on and only ever matches the suffixes, so a repo without locked tests never sees it.
+`locked-test-guard.sh` is a global `PreToolUse` hook in `canhassancode/dotfiles` (`claude/hooks/`), wired in `claude/settings.json` on `Edit|Write|MultiEdit|NotebookEdit|Bash`. It refuses edits to a locked path git already tracks, and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). A new locked file is untracked, so `/tester` can write it; reads and test runs pass through. It is always on and only ever matches the suffixes, so a repo without locked tests never sees it.
 
 A shell has too many ways to write a file for a pattern to catch them all. The hook is the fast signal, not the guarantee.
 
@@ -22,7 +22,7 @@ A locked test can be wrong. Without a way out, the implementer is pushed to game
 
 ## Changing a locked test legitimately
 
-Only a behaviour change licenses it: the spec's behaviour line is edited or removed. The route is the same as the first time — update the spec, run `/tester` for the affected lines, the human approves, and a new `test: lock` commit moves the baseline. Refactors and new features never change existing locked tests.
+Only a behaviour change licenses it: the spec's behaviour line is edited or removed. The human removes the stale file themselves (`! git rm <file>`), which untracks it. Then the route is the same as the first time — update the spec, run `/tester` for the affected lines, the human approves, and a new `test: lock` commit moves the baseline. Refactors and new features never change existing locked tests.
 
 ## Timeouts
 

@@ -34,7 +34,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
-| `align` | No upstream counterpart — supersedes `grilling` and `grill-me`. Owns the planning lane's entry — four entries, one of them a refusal — the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
+| `align` | No upstream counterpart — the planning lane's entry: tier, red team, spec, interface and locked tests, using `grilling` and `domain-modeling` as its rules; owns `docs/specs/` and the `needs-alignment` state (ADR-0005, ADR-0011). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `propose` | No upstream counterpart — the planning lane's ask-someone-first destination: publishes the argued proposal, leaves the ticket `awaiting-decision`, routes on the answer (ADR-0006). |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |

@@ -28,7 +28,7 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — settle an idea, a feature, a ticket or work already in flight into an agreed contract before planning (feasibility, scenarios, interfaces, domain language, out-of-scope), one pass at a time, one question at a time, challenging answers against the code; walks the code the change will run through and pins every premise to a sha; questions no fact settles exit as routes — research, prototype, task, pass or decide
+- [align](engineering/align/SKILL.md) — plan a change before it's built: tier it by size and uncertainty, send unknowns to spike, research or prototype, red-team the idea in a fresh context, grill a parent or child spec into `docs/specs/`, then for a child approve its interface and lock its tests with `tester`
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
 - [build](engineering/build/SKILL.md) — stage 3: build a cut ticket as a sequential loop of fresh-child units, sized small, medium or large, falsified by `crucible` and reviewed once over the whole branch, ended by the pull request whose table carries every criterion's command and result; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
