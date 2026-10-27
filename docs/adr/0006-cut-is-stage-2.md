@@ -6,6 +6,8 @@ status: accepted
 
 Narrows [ADR-0004](./0004-specifier-is-the-sole-author-of-criteria.md)'s single-author claim about acceptance criteria. Leaves [ADR-0005](./0005-align-owns-the-planning-entry.md)'s stage-2 question open rather than closing it.
 
+**Superseded in part by [ADR-0011](./0011-locked-tests-replace-the-contract-pipeline.md), 2026-10-27.** `/cut` no longer transcribes a contract into `ready-to-build` slices or refuses the set as one act. It publishes a parent spec's children as sub-issues at `needs-alignment` with draft behaviour lines, proposes a fold, split or reorder for any child that fails `align`'s size and vertical rules, and leaves each child's interface and tests to its own `/align`. The parent-as-container rule from ADR-0008 stands. The amendments below describe the old pipeline.
+
 **Amended by [ADR-0008](./0008-the-spec-node-parents-its-slices.md).** A container where the tracker has native sub-issues is a spec node that parents the slices, carries no workflow label, and closes when its last slice closes. `**Destination:**` names tickets, a proposal, an ADR, or nothing — a project is the container inside the tickets exit.
 
 **Amended 2026-09-29 (#128).** A slice's `# What this builds` is written from that slice's own scenarios rather than transcribed from the alignment's problem statement: the parent paragraph describes the programme, so copying it into every slice told a cold reader nothing about the slice. The transclusion rule below still governs every row it lists — scenarios, criteria, interfaces, diagram, decisions, rejections are copied, not re-described. Only the opening paragraph is written rather than copied, and a **Spec** node keeps the parent's paragraph verbatim because it covers every slice.

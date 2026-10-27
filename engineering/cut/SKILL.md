@@ -1,50 +1,27 @@
 ---
 name: cut
-description: Cut a settled alignment into a spec node and slices that carry their own contract.
-argument-hint: <ticket-ref | current conversation>
+description: Publish a parent spec's children as sub-issues — each a vertical capability with its goal and draft behaviour lines — ready for their own align. Use when a parent ticket is ready-to-cut, or a child's align has reshaped the plan.
+argument-hint: <parent-ticket-ref>
 disable-model-invocation: true
 ---
 
 # Cut
 
-`/cut` reads a settled alignment's **body** and the **slice comments** its Slices table links — the pass comments are only the delta — and turns it into slices a builder can pick up cold. It transcribes the contract's rows: it decides nothing, invents no row, and writes no node until the whole set passes.
+Turn a parent spec's Children list into tickets a person or an agent can pick up cold, each one aligned just before it is built.
 
-One slice, and the ticket graduates in place. Several, and a **Spec** node parents them: it carries the map — the scenario-to-slice assignment, the shared interfaces and their consumers — and wears no label. [SPEC.md](SPEC.md) is the map's shape; [TICKET.md](TICKET.md) is a slice's.
+Origin: Anthropic's long-running harness (one user-visible feature per session) and OpenAI's ExecPlans (milestones that are independently verifiable).
 
-The roles in this skill are canonical; the label strings are the repo's — read [`docs/agents/triage-labels.md`](../../docs/agents/triage-labels.md) and apply its strings. The operations live in [`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md) (*publishing a cut*). Nothing global is read at run time.
+Children are drafts. Their interface and tests come later, through `/align <child>`, because a quarter of later slices in this library's trackers changed contract after a sibling merged.
 
-# Procedures
+## Steps
 
-1. **Read.** Fetch the alignment ticket's body, the slice comments its `contract` column links, and its pass comments. A body still carrying fog, or a `contract` cell reading `owed`, is not a cut's input: it wears `needs-alignment`, and the next act is another `/align` pass.
-   A body whose `Docs` field links a pull request that is not merged is not a cut's input either: stop before Assign, name the pull request, change no label — the next act is the user's merge, then `/cut` again.
+1. **Read** the parent ticket and its spec: on `spec/<capability>` while its pull request is open, on the default branch once merged.
+2. **Draft** each child in the Children list: its title, a goal line a stranger could follow, up to six draft behaviour lines drawn only from the parent's Goal, Journeys and Rules, and the earlier siblings it needs. Something the parent doesn't cover is a question for the user, not a line.
+3. **Check** each child against [align's size and vertical rules](../align/references/tiers.md#size), and the set against the parent: together the children walk every journey, and the last one completes them. For each child that fails, propose the fix — fold, split or reorder — with the reason. The user decides, and the spec's Children list is edited to match. Only a wrong Goal, Shape or Rules sends the parent back to `needs-alignment`.
+4. **Show** the set as [EXAMPLES.md](EXAMPLES.md) does. Nothing is created before a yes.
+5. **Publish**, in build order: each child as a sub-issue at `needs-alignment`, its blocking edges set as it lands. The operations are in [`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md).
+6. **Close.** Commit any Children list edit to the spec's open pull request, or a new one once it has merged; push, and mark it ready. Update the parent's children checklist, drop `ready-to-cut`, post the session comment, and name the next act: merge the spec, then `/align <first child>`.
 
-   ```sh
-   gh pr view <docs-pr> --json state --jq .state
-   ```
-2. **Assign.** Every scenario lands in exactly one slice; every interface row is owned or consumed; every decision binds the slices it touches. A slice that cannot name the scenario it makes pass is horizontal work wearing a ticket's clothes — a branch, not a tracker node. Each slice takes a title in the shape [TICKET.md](TICKET.md) gives, a body transcribed from the contract — its scenarios renumbered from 1, only the decisions and premises it rests on, the alignment's `Verified against` sha — opened by a `# What this builds` written from the slice's own scenarios, its **Size** by TICKET.md's rule, and its blocking edges. Read each blocker's body against the slice's decisions: a slice that would undo what its blocker builds is a contract to re-align, not a cut. Where the alignment has slice comments, the assignment is already made: each slice's body is its comment transcribed, its scenarios as numbered there, with the header, `# What this builds`, `# Blocked by`, `# Unresolved` and the body's shared decisions and premises it rests on added.
-3. **Check.** Apply [READINESS.md](READINESS.md) to every slice. One unwritable slice, or one failed row, **refuses the cut as one act**: write nothing, publish none of the passing slices, and return the work to `needs-alignment` with the failing rows named. Never fill the gap with prose at the cut.
-4. **Show.** Present the set: every slice's body, every blocking edge, the map where there is one. Ask the operator to confirm the set. Nothing is created before that confirmation — the cut is atomic.
-5. **Create.** Publish in one pass. One slice: the alignment ticket graduates in place, keeping its number and its body, and takes `ready-to-build`. Several: create the spec node first, unlabelled, then each slice as its child at `ready-to-build`, its native blocking edges set as it lands. The alignment ticket drops `ready-to-cut` as the set publishes:
+The parent wears no label after the cut; it stays open until its last child merges.
 
-   ```sh
-   gh issue edit <alignment> --remove-label "ready-to-cut"
-   ```
-6. **Close.** Close the alignment ticket with one comment naming the slices — carrying the map where no spec node was created. The cut is done when every slice exists and the ticket's body and its slice comments are the frozen record.
-
-# Labels
-
-| node | state |
-| --- | --- |
-| a slice | `ready-to-build` — stamped only after its own readiness check passes |
-| the spec node | none — its body is a map, so no takeable claim is true of it |
-| the alignment ticket, one-slice route | `ready-to-build`, replacing `ready-to-cut` |
-| refused work | `needs-alignment`, the failing rows named |
-
-# Relationships
-
-- A spec node exists only where the tracker has a native container. Where it has none, the slices are top-level with native blocking edges and the closing comment carries the map.
-- A spec parents its slices; nothing else nests. Slices are peers — ordering is a blocking edge, never a parent.
-
-# Additional files
-
-**Examples**: See [EXAMPLES.md](EXAMPLES.md).
+Run `/cut <parent>` again whenever a child's align splits, folds or drops it: it compares the Children list with the open sub-issues and proposes the edits.

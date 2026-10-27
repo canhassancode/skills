@@ -73,24 +73,25 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
 4. **Analyse — invoke `/crucible`** from inside the worktree, handing it exactly
    three things:
    - the **diff range** `<baseRefOid>...<headRefOid>` — the PR's own;
-   - the **contract** the PR carries: its body and linked issues; where it
-     carries none, hand it nothing — crucible resolves what the commits point at
-     and reports the gate that did not run;
+   - the **spec path** — the `docs/specs/<capability>.md` the PR's linked
+     ticket points at; where there is none, hand it nothing and crucible runs
+     the steps that don't need one;
    - **settled threads** — the published threads and Hassan's pending drafts, so
      nothing already answered is raised again.
-   The procedure is crucible's, not this skill's: the baselines, the
-   falsification, the consumer grep and the surplus pass are never re-derived
-   here. It returns the findings, the verified list **and** the notes — step
-   1's `unwitnessed — absence recorded`, and one per input case step 3 judged
-   safe with its evidence.
+   The procedure is crucible's, not this skill's: the lock check, the diff
+   mutation, the walk, the rules and the consumer grep are never re-derived
+   here. It returns the Lock, Mutation, Prune and Survivors lines, the findings
+   **and** the notes.
 5. **Draft & decide — independently.** Turn `/crucible`'s findings into a
    review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
    carrying a file path and line number, and form the skill's **own** verdict from
    those findings alone. Hassan's pending draft comments do **not** feed this
    decision — the skill reaches its conclusion blind to them, so the two can be
    compared honestly.
-   - **No blocking issues** → `APPROVE`, citing the verified list where the PR
-     carries a contract; where it does not, say which gate did not run.
+   Survivors and the prune list become questions and suggestions, never blockers.
+   - **No finding routed `fix`, `spec-change` or `product-call`** → `APPROVE`,
+     citing the Lock and Mutation lines; without a spec, say which steps did
+     not run.
    - **Anything worth flagging** → `COMMENT`. Never `REQUEST_CHANGES`.
 6. **Reconcile & confirm.** Present, side by side: the skill's verdict + its new
    inline comments, and Hassan's existing pending comments (plus any pending

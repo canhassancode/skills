@@ -1,12 +1,12 @@
 # Issue tracker: Local Markdown
 
-Issues and specs for this repo live as markdown files in `.scratch/`.
+Issues for this repo live as markdown files in `.scratch/`.
 
 ## Conventions
 
 - One feature per directory: `.scratch/<feature-slug>/`
-- The spec is `.scratch/<feature-slug>/spec.md`
-- Implementation issues are `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`
+- Specs live in the repo at `docs/specs/<capability>.md`, owned by `/align`; a ticket file holds its goal line and the spec's path
+- Tickets are `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`
 - Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
 - A duplicate sets `Status: closed` and adds a `Duplicate of: <path>` line near the top, naming the survivor's file
@@ -19,20 +19,10 @@ Create a new file under `.scratch/<feature-slug>/` (creating the directory if ne
 
 Read the file at the referenced path. The user will normally pass the path or the issue number directly.
 
-## Slice comments
-
-`/align` keeps each slice's contract in its own file once an alignment has more than one slice, because a file has no comment ids. The semantics live in the skill; these are the operations.
-
-- **Post** — write `.scratch/<feature-slug>/slices/NN-<slug>.md`, numbered from `01`.
-- **Edit in place** — rewrite that file.
-- **Link** — the file's path relative to the alignment file, in the Slices table's `contract` column.
-- **Read** — read the file at the linked path.
-
 ## Publishing a cut
 
-`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+`/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **One slice** — the alignment file graduates in place: swap its `Status: ready-to-cut` line for `Status: ready-to-build`. Its body already carries the contract; nothing is rewritten.
-- **Several slices** — write `.scratch/<feature-slug>/spec.md` from the spec body: the map, with no status. Write each slice as `.scratch/<feature-slug>/issues/NN-<slug>.md` with the slice body, `Status: ready-to-build`, and its top link row pointing at `spec.md`.
-- **Blocking edges** — a `Blocked by: NN, NN` line near the top of the slice. A ticket is unblocked when every file it lists is `resolved`.
-- **Close the alignment ticket** — set its `Status:` to `closed` and append a `## Cut` note naming the slice files, once every slice exists.
+- **Each child** — `.scratch/<feature-slug>/issues/NN-<slug>.md`, in build order, with `Status: needs-alignment` and a `Parent: <parent file>` line near the top.
+- **Blocking edges** — a `Blocked by: NN, NN` line near the top of the child. A ticket is unblocked when every file it lists is `resolved`.
+- **The parent** — drops its `Status:` line once every child exists; its checklist names each child file, and it stays open until the last one is `resolved`.

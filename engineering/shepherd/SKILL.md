@@ -8,8 +8,8 @@ argument-hint: <pr-ref>
 
 The stage after **Build**. `/shepherd <pr-ref>` owns one pull request from open to ready to merge: it
 waits for the review bot's round to finish, triages every outside comment as a thread, and acts — fixed
-through a fresh unit and crucible, answered with evidence, put to the operator when a colleague wrote it,
-or escalated when it changes the contract. It never merges.
+through a fresh builder and crucible, answered with evidence, put to the operator when a colleague wrote it,
+or escalated when it changes the spec. It never merges.
 
 **Outside review is input, never a second gate.** The bot's findings and colleagues' comments enter as
 threads to triage; crucible stays the only gate each fix passes, and the score the bot carries is a
@@ -21,9 +21,9 @@ The operator starts it in a fresh session — on the pull request `/build` hands
 
 | input | what it is | who resolves it |
 | --- | --- | --- |
-| **the contract** | the linked ticket's body — scenarios, criteria, decisions, boundaries | the pull request's ticket |
+| **the spec** | the `docs/specs/<capability>.md` the linked ticket points at — goal, behaviour lines, out of scope, decisions — and its locked tests | the pull request's ticket |
 | **the round** | the review bot's pass over the pull request, ended by §2's done signal | the review bot |
-| **the crucible note** | an input case judged safe, with its evidence — what a reply quotes in §5 | the fresh unit's vetting |
+| **crucible's notes** | an input case judged safe, with the line that makes it safe — what a reply quotes in §5 | crucible's vetting |
 
 Two shapes belong to this skill, and everywhere it writes them they take the same form:
 
@@ -37,15 +37,15 @@ Two shapes belong to this skill, and everywhere it writes them they take the sam
 
 ### 1. Open the watch
 
-Resolve the pull request and read the contract it closes — the ticket's body, never the pull request's
-own summary. One pull request, one contract: a change to what it promises is §7's escalation, never a
+Resolve the pull request and read the spec it closes — never the pull request's own summary. One pull
+request, one spec: a change to what it promises is §7's escalation, never a
 quiet rewrite here.
 
 ```sh
 gh pr view <n> --repo <owner>/<repo> --json number,title,body,url,reviewDecision
 ```
 
-**Done when** the pull request, its contract and the repository's code-owner rule are in hand.
+**Done when** the pull request, its spec and the repository's code-owner rule are in hand.
 
 ### 2. Wait for the round
 
@@ -66,19 +66,20 @@ exactly one route:
 
 | the thread | the route |
 | --- | --- |
-| a finding inside the contract | a fix through a fresh unit and crucible — §4 |
-| a finding the contract already decides | an answer with the evidence — §5 |
+| a finding inside the spec | a fix through a fresh builder and crucible — §4 |
+| a finding the spec already decides | an answer with the evidence — §5 |
 | a colleague's comment | a reply put to the operator — §6 |
-| a finding that changes the contract | a decision escalation — §7 |
+| a finding that changes the spec or a locked test | a decision escalation — §7 |
 
 **Done when** every thread in the round carries one route.
 
-### 4. Fix inside the contract
+### 4. Fix inside the spec
 
-A fix is a fresh **Builder** invocation carrying the finding as its brief, then `/crucible` in a child of
-its own — never a parent edit in this session, and never the review bot's word as the gate. The loop is
-`/build`'s: `/tdd` the fix, one commit, crucible vets the criterion it names, and the re-review is asked
-for in a trigger comment only after the vetting is green.
+A fix is a fresh builder carrying the finding in `/build`'s fix brief
+([briefs.md](../build/references/briefs.md#fix)), then `/crucible` over the fix's commits in a subagent of
+its own — never a parent edit in this session, and never the review bot's word as the gate. Locked files
+stay read-only; one commit, the lock check and the full suite green, and the re-review is asked for in a
+trigger comment only after the vetting is green.
 
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.
@@ -90,9 +91,9 @@ escalation: the finding, what was tried, and the route it would take.
 
 ### 5. Answer with evidence
 
-A finding the contract already decides is answered, not fixed: reply on the bot's thread with the
-evidence — the crucible note's safe input case and its proof, the decision row, or the out-of-scope
-entry — and resolve the thread.
+A finding the spec already decides is answered, not fixed: reply on the bot's thread with the
+evidence — crucible's note and the line that makes the case safe, the Decisions entry, or the Out of
+scope line — and resolve the thread.
 
 ```sh
 gh api repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="<the evidence>"
@@ -110,14 +111,14 @@ yes.
 
 **Done when** the reply carries the operator's yes, or the thread waits with the question outstanding.
 
-### 7. Escalate a contract change
+### 7. Escalate a spec change
 
-A finding that changes what the contract promises — a scenario it never named, a decision it settled the
+A finding that changes what the spec promises — a behaviour it never named, a locked test that looks wrong, a decision it settled the
 other way, scope it excludes — is neither fixed nor answered here. It goes to the operator as a decision
 escalation, one line and one link, and the run keeps to the threads it can still close while that answer
 is owed.
 
-**Done when** the escalation is in session and no fix has touched the contract.
+**Done when** the escalation is in session and no fix has touched the spec or a locked file.
 
 ### 8. The stop rule
 
@@ -133,13 +134,12 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 ## Boundaries
 
-**Always** — read the contract before every fix · fix through a fresh unit and crucible · reply to the review bot with evidence · keep each fix inside the contract.
+**Always** — read the spec before every fix · fix through a fresh builder and crucible · reply to the review bot with evidence · keep each fix inside the spec.
 **Ask first** — any reply to a colleague · requesting colleague review · stopping below the top score.
-**Never** — merge · post to a colleague without a yes · a fix without a fresh unit and crucible.
+**Never** — merge · post to a colleague without a yes · a fix without a fresh builder and crucible · edit a locked file.
 
 ## Related
 
 - `/build` — the stage before this one; its hand-back names the pull request to start this run on.
 - `/crucible` — the only gate each fix passes.
-- `/tdd` — the cycles inside a fix.
-- `/align` — where a contract change goes once the operator has answered the escalation.
+- `/align` — where a spec change goes once the operator has answered the escalation.

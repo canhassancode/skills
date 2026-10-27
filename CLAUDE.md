@@ -34,16 +34,18 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
-| `align` | No upstream counterpart — supersedes `grilling` and `grill-me`. Owns the planning lane's entry — four entries, one of them a refusal — the write ask, and the `needs-alignment` state (ADR-0005, ADR-0007). |
+| `align` | No upstream counterpart — the planning lane's entry: tier, red team, spec, interface and locked tests, using `grilling` and `domain-modeling` as its rules; owns `docs/specs/` and the `needs-alignment` state (ADR-0005, ADR-0011). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `propose` | No upstream counterpart — the planning lane's ask-someone-first destination: publishes the argued proposal, leaves the ticket `awaiting-decision`, routes on the answer (ADR-0006). |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
-| `cut` | No upstream counterpart — stage 2: turns an aligned contract into vertical slices that carry their own context, and closes or graduates the alignment ticket (ADR-0006). |
-| `build` | No upstream counterpart — stage 3's run: the contract, the fit, the sequential loop of fresh-child units, crucible as the gate, and the pull request with its criteria table. |
-| `crucible` | No upstream counterpart — the only review policy; falsification, the correctness walk, the consumer grep and the baselines; `/review` invokes it, completing ADR-0007's deferred retirement (ADR-0009). |
+| `cut` | No upstream counterpart — publishes a parent spec's children as sub-issues at `needs-alignment`, each a vertical capability with draft behaviour lines, checked against the parent's journeys by `align`'s own size rule (ADR-0006, ADR-0011). |
+| `spike` | No upstream counterpart — `align`'s run-it route: one question answered by throwaway code inside a timebox, with sandbox credentials only, returning the answer and its evidence. |
+| `build` | No upstream counterpart — makes a child's locked tests green through sequential fresh builders, one commit per unit, vets with crucible, verifies on the running app and marks `align`'s draft pull request ready; stops on a wrong locked test instead of working around it (ADR-0011). |
+| `crucible` | No upstream counterpart — the only review policy: lock check, diff-scoped mutation and the scratch-test prune list, the correctness walk, `CLAUDE.md` rules, the consumer grep and the baselines; `/build`, `/review` and `/shepherd` invoke it (ADR-0009, ADR-0011). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
+| `tester` | No upstream counterpart — writes the locked acceptance, property, contract and end-to-end tests from an approved spec and interface, before implementation; its references hold the test principles and its script the lock check; the edit hook lives in dotfiles. |
 | `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started in a fresh session on the pull request `build` hands back, or on any other. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
@@ -59,9 +61,9 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 ## The count
 
-**30 skill directories live in this library; 29 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
+**32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 29 registered, **15 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
+Of the 31 registered, **16 carry `disable-model-invocation: true` and 15 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 

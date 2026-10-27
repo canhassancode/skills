@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
+Issues for this repo live as GitHub issues; specs live in the repo at `docs/specs/`. Use the `gh` CLI for all operations.
 
 ## Conventions
 
@@ -29,12 +29,12 @@ declare -A canonical=(
   [bug]="d73a4a:Something is broken"
   [enhancement]="a2eeef:New feature or improvement"
   [needs-triage]="fbca04:Maintainer needs to evaluate"
-  [needs-alignment]="5319e7:Planning lane: the body is not yet the contract"
+  [needs-alignment]="5319e7:Planning lane: the spec, interface or locked tests are still owed"
   [needs-info]="d4c5f9:Waiting on reporter"
   [ready-to-propose]="d876e3:Planning lane: a formal proposal is owed"
   [awaiting-decision]="bfd4f2:Planning lane: the proposal is out"
-  [ready-to-cut]="0052cc:Planning lane: the contract is done; the slices are owed"
-  [ready-to-build]="2cbe4e:Cut and published; takeable now"
+  [ready-to-cut]="0052cc:Planning lane: the parent spec is agreed; its children are owed"
+  [ready-to-build]="2cbe4e:Locked tests committed; takeable now"
   [wontfix]="cccccc:Will not be actioned"
 )
 for label in "${!canonical[@]}"; do
@@ -69,20 +69,10 @@ Create a GitHub issue.
 
 Run `gh issue view <number> --comments`.
 
-## Slice comments
-
-`/align` keeps each slice's contract in its own comment once an alignment has more than one slice. The semantics live in the skill; these are the operations.
-
-- **Post** — `gh issue comment <n> --body-file -`. It prints the comment's URL, ending `#issuecomment-<id>`.
-- **Edit in place** — `gh api -X PATCH repos/<owner>/<repo>/issues/comments/<id> -F body=@<file>`.
-- **Link** — the comment's URL, in the Slices table's `contract` column.
-- **Read** — `gh api repos/<owner>/<repo>/issues/comments/<id> --jq .body`.
-
 ## Publishing a cut
 
-`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+`/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **One slice** — the alignment ticket graduates in place: `gh issue edit <n> --remove-label ready-to-cut --add-label ready-to-build`. Its body already carries the contract; nothing is rewritten.
-- **Several slices** — create the spec node first, with no label: `gh issue create --title "<spec title>" --body-file - <<'EOF' … EOF`. Then each slice as its native sub-issue: `gh issue create --title "<slice title>" --body-file - --parent <spec> --label ready-to-build`. The alignment ticket drops `ready-to-cut` as the set publishes: `gh issue edit <alignment> --remove-label ready-to-cut`.
-- **Blocking edges** — native issue dependencies, set as each slice lands: `gh issue create … --blocked-by <n>,<n>`. The slice's `# Blocked by` row repeats them for a cold reader; the native edge is the live gate.
-- **Close the alignment ticket** — `gh issue close <alignment> --comment "Cut into #232, #233, #234"`, once every slice exists.
+- **Each child** — a native sub-issue of the parent, in build order: `gh issue create --title "<child title>" --body-file - --parent <parent> --label needs-alignment --blocked-by <n>,<n>`. The body's `Blocked by` line repeats the edges for a cold reader; the native edge is the live gate.
+- **The parent** — drops its label once every child exists: `gh issue edit <parent> --remove-label ready-to-cut`. Its body's checklist names each child; it stays open until the last one merges.
+- **The spec pull request** — `gh pr ready <n>` once any Children list edit is pushed. Merging is the user's.

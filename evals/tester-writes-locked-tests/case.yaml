@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: tester-writes-locked-tests
+description: Given an approved spec and stub interface, tester writes behaviour-named tests on the right layers, without mocking internals, and does not commit.
+tags: [tester, writing]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent]

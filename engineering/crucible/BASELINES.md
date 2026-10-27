@@ -1,10 +1,10 @@
 # Baselines
 
-Fixed standards the `behaviour`, `claim` and `shape` classes are checked against when the contract is silent. Correctness is crucible's own; Standards, Structure and Design were `/code-review`'s axes, and that skill is deprecated into `/crucible`.
+Fixed standards crucible checks a diff against where the spec and `CLAUDE.md` are silent. A Correctness hit is a finding. Standards, Structure and Design were `/code-review`'s axes, deprecated into `/crucible`; a hit there is a note, except where a section names a rule as hard.
 
 ## Correctness
 
-Walked against every changed hunk that writes, calls out, loops over outside data or shares a key — the failure paths a reviewer of the whole branch finds and a criterion's witness never exercises. Each hit is a **behaviour** finding, never a judgement call.
+Walked against every changed hunk that writes, calls out, loops over outside data or shares a key — the failure paths a reviewer of the whole branch finds and the locked tests never exercise. Each hit is a **behaviour** finding, never a judgement call.
 
 - **Partial failure** — a throw at step k of a sequence of side effects: what is left half-written, and is a retry idempotent?
 - **One bad item** — in a loop over external items, does one malformed or failing item abort the rest?
