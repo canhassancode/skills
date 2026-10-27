@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: crucible-flags-shaped-to-tests
+description: Every locked test passes, but the implementation branches on the test's own input of 1200 grams; crucible returns it as a finding.
+tags: [crucible]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Write, Edit]

@@ -1,259 +1,34 @@
 ---
 name: build
-description: Build a cut ticket as a sequential loop of fresh-child units, gated by crucible, ended by its pull request.
-argument-hint: <ticket-ref>
+description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and open the pull request — or stop and say which locked test is wrong. Use when a child ticket is ready-to-build.
+argument-hint: <child-ticket-ref>
 disable-model-invocation: true
 ---
 
 # Build
 
-Stage 3. `/build <ticket-ref>` reads a cut ticket's **contract**, fits the repo's own loop, and builds the ticket as a **sequential** loop of **Units** — each one in a fresh **Builder** child, each green and committed before the next begins — vetted by the **Review** in a child of its own. It ends with the branch pushed and the pull request open, its table showing every criterion's command and result.
+Turn a child's locked failing tests green without touching them, prove the change on the running app, and hand back a pull request a human can check in minutes.
 
-**Size sets the ceremony.** The ticket's header carries its **Size**, stamped by `/cut` ([TICKET.md](../cut/TICKET.md)); a ticket with none is sized by the same rule at §1. A simple ticket is built simply:
+Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%), ImpossibleBench (read-only tests plus "stop and say so" took cheating from 54% to 9%) and Anthropic's long-running harness (fresh sessions carried by commits; end-to-end checks before "done").
 
-| size | units | review | fix rounds per finding |
-| --- | --- | --- | --- |
-| small | one | one crucible over the whole branch | one |
-| medium | at most two | one crucible over the whole branch | two |
-| large | as many as coherence needs | crucible per unit, then one over the whole branch | two |
+This session is the **Delegator**: it holds the spec, the unit list and the results, never a diff, so it stays small however big the child is. Every unit is a fresh subagent, one at a time; one writer per checkout. The briefs are in [references/briefs.md](references/briefs.md).
 
-The parent session — the **Delegator** — holds the contract, the unit list and the run's one comment, never a diff. Code in this window is the failure this skill closes: the parent delegates every unit and never edits the tree. One writer per checkout, always — a Builder and the Review never hold the tree at the same time.
+## Steps
 
-Fresh children come from the harness, named in one line: pi's `subagent` with the `Builder` and `Reviewer` agents, Claude Code's `Agent` tool. A harness that cannot spawn one is an **unavailable** dependency like any other, and the run stops before writing (§2).
+1. **Read** the ticket, the spec on `feat/<capability>` and its `test: lock` commit. Rebase onto the base branch, then run [the lock check](../tester/scripts/check-locked-tests.sh) and the locked tests: every one red for the reason tester reported. Anything green, or red for another reason, stops the build.
+2. **Fit** the loop from the repo, not memory: typecheck, lint, the locked command, the full suite and the spec's `## Verify` start command. Run each once at the base. A missing command is recorded as absent; a missing service or credential is a stop (step 6).
+3. **Plan units.** Group the locked tests into units a fresh child can turn green, ordered so each starts from the last one's green tree. A child that needs more than a few units goes back to `/cut`.
+4. **Build each unit** with a fresh builder. It commits once, on a real green, and hands back the commit and the command's output. Check that output yourself before the next unit.
+5. **Vet and verify**, both in fresh subagents and neither the builder:
+   - `/crucible` over `<lock-sha>...HEAD` with the spec path. Delete the scratch tests on its prune list in one commit, `test: prune scratch tests`.
+   - The verifier with the spec's `## Verify` steps only, never the diff or the tests.
 
-Run it against a ticket at `ready-to-build`; with no ticket there is nothing to build. Tickets are read through the tracker adapter — run `/bootstrap` if `docs/agents/issue-tracker.md` is missing. Depending on the issue tracker, assign to me, move to in progress if the issue tracker allows (e.g. Linear not Github).
+   Send every acting finding and failed verify step to one fix round in a fresh builder, which commits on top. Re-run the lock check, the suite, the verifier's failed steps and crucible over the fix commit. Anything still open, or that would change a behaviour line, goes to the user as one list.
+6. **Stop instead of working around** — a locked test that looks wrong, an interface that can't satisfy a line, missing access, or a fix that would change the spec. Post the stop report from [EXAMPLES.md](EXAMPLES.md); a wrong test or interface moves the ticket to `needs-alignment`, missing access leaves it at `ready-to-build`.
+7. **Open** the pull request as [EXAMPLES.md](EXAMPLES.md) does: behaviour lines with their tests, the Verify checklist with its evidence and an unchecked box for each step not run in session, Decided limits, and what was pruned. Drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
 
-## 1. Read the contract
+When this window fills, the green units are already committed: push, write the Resume line and stop. A fresh `/build` reads the comment and starts at the next unit.
 
-Fetch the ticket and read its body: the paragraph on what it builds, the scenarios and their outcomes, the acceptance criteria, the interfaces it owns and consumes, the decisions and premises that bind it, what it decided against, its blocking edges, and its header — the sha it was verified against and its size. The ticket is read-only to this run; the one comment in §6 is all this skill writes to it.
+## Never
 
-Every criterion carries the command that decides it and the evidence that counts as passing. The fit pairs each with its **witness** — the test or observable that shows it. A criterion the fit cannot pair is a **gap** (§2), never a hand-back.
-
-**Done when** every criterion traces to a scenario and names its command.
-
-## 2. Fit the repo, then prove the loop at the base
-
-Derive the mechanics from the repo on every run, never from a cache — a cache applies yesterday's mechanics to today's repo. Read `CONTEXT.md` and `CLAUDE.md`, the CI config, the scripts in `package.json` / `Makefile` / `justfile`, lockfiles, `.env.example`, and the tests that already exist. One pass: what is not there is *absent*.
-
-| field | what it holds |
-| --- | --- |
-| **loop** | typecheck, focused tests, the suite — the commands every unit runs |
-| **criteria** | one command per criterion, each with its witness — narrowed to the criterion's test, or `whole file: <reason>` |
-| **secrets** | the path a secret lives at, never the value |
-| **children** | the harness's two spawn calls, probed once before the loop |
-| **proven** | the base commit and the tooling hash the commands ran against — lockfiles and tool config, hashed with the shell's own tool |
-
-Then run them at the base commit. One of three honest outcomes comes back:
-
-- **Absent** — no suite, no typecheck, no CI. Absence is a recorded fact and the run proceeds: the operator's own run at hand-back is the verification such a repo has left.
-- **Unavailable** — a command, a service, a secret or the harness's spawn call is missing. **Stop before writing anything to the tree**: name what is needed and where it lives (a secret's path, never its value), ask the operator, and leave the block on the ticket as §6's comment. An unavailable dependency is never worked around, and once it is supplied a fresh session resumes here.
-- **Green** — record the base commit and the suite's duration: the baseline every unit is measured against.
-
-A witness is derived from the criterion. Where a criterion names one test — a title in double quotes right after its `: ` — narrow its command to that test with the runner's own selector — its flag for running one test by name — so a sibling test going red cannot stand in for it. With two witness paths, narrow in the file that holds the title. Where the runner has no such selector, the command runs the whole file and the fit records why: `<criterion> → <witness> → <command> · whole file: <reason>`.
-
-**Re-probe what drifted.** The contract's premises were read at its `Verified against` sha. List the files they cite and check them against the base:
-
-```sh
-git diff --name-only <verified-sha> HEAD -- <the files the premises cite>
-```
-
-Nothing listed: every premise holds. A file listed: re-run that premise's probe. A premise that no longer holds is a contract change — route it to `/align`'s short pass and stop before writing to the tree. A **Live** criterion whose prerequisites are missing is **unavailable**, above.
-
-A criterion the fit cannot pair is a **gap**. The run collects every gap — from the fit or from the cut — and puts the set to the operator once, in session, with a proposition: proceed and record it open, or stop. On a yes the criterion is **accepted open** — owned by no unit, recorded `accepted open — <why>` in §6's Gate line and in the pull request's table; on a no the run stops with the gap on the ticket as §6's comment. The run never refuses on contract shape; the operator may.
-
-**Done when** every criterion is paired with a witness and a command, both run at the base, or is a gap put to the operator — and the outcome is one of the three.
-
-## 3. Cut the ticket into units
-
-The run owns one checkout for the whole ticket — a worktree off the base, or the session's own — where the units, the Review and the push all happen. Create its branch before the first unit: `feat/<n>-<slug>`, off the trunk or off the branch the ticket was cut against.
-
-A **Unit** is a criterion, or a coherent group of them, that one fresh Builder can hold end to end. Size caps the count: a small ticket is one unit, a medium ticket at most two. Cut by coherence, never horizontally: work that cannot name the criterion it makes pass is not a unit, and the window is a stop-rule rather than a cutter.
-
-Order the units so each begins from the last one's green tree — a schema before its consumers, a shared type before the code that calls it. Every criterion that is not a gap belongs to exactly one unit.
-
-A ticket that will not cut into units one Builder can hold is not this run's to shrink: cut what cuts, and put the remainder to the operator as a gap, on §2's terms.
-
-**Done when** every criterion that is not a gap has exactly one unit, in an order where each unit starts from a green tree.
-
-## 4. Run the loop
-
-One unit at a time, in order. The moves below repeat until the units are done.
-
-### 4.1 Brief a fresh Builder
-
-Spawn a fresh child with the brief below. It carries the contract by reference and the unit's material verbatim — never a restatement of the whole contract — and its first line is the unit's identity, so every surface names the unit rather than repeating the agent.
-
-```text
-Unit <n> of <m> — <one line> · Ticket: #<n>
-
-<builder-brief>
-
-You build one unit of this ticket. Read the contract on the ticket; the criteria below are yours, verbatim.
-
-Owns: <criterion>, <criterion>
-Witness and command: <criterion> → <witness> → <command>[ · whole file: <reason>]
-The loop: <typecheck>, <focused tests>, <suite> — proven green at <commit>.
-Secrets live at: <paths> — never a value. If one is unreadable, stop and say so.
-
-TDD the unit — /tdd, or the project's equivalent — and commit once, when every criterion you own is
-green and its command has run. One unit, one commit: its subject names the criteria it makes pass, and
-that commit is your hand-back. A fix round adds one on top (§4.4) — three commits at most for one unit.
-Commit on a real green, never on your say-so. Where the fit recorded absence there is no cycle to run
-and the unit still closes on one commit — the operator's run is the verification.
-
-Change only what this unit's criteria need. End at a clean tree with your commits in hand: the parent
-pushes and opens, and the Review is a separate child.
-
-If your window fills before the unit is done, commit what is green, leave the tree clean, and hand back
-what is done and what remains.
-
-Hand back: the commit, the criterion's command with its output quoted, the loop's results, and
-confirmation the tree is clean.
-</builder-brief>
-```
-
-A Builder ends when it judges the unit done — green, committed, tree clean, the criterion's command run and quoted. Any other hand-back is a brief that failed: re-brief a fresh child rather than resuming that one.
-
-**Done when** the unit's commit is in and the tree is clean.
-
-### 4.2 Vet with the Review
-
-A small or medium ticket skips this step for each unit: its Review runs once, over the whole branch, at §4.7. A large ticket vets every unit here.
-
-Launch `/crucible` in a fresh `Reviewer` child — never in this window — giving it the unit's diff range `<base>...<head>` (the previous unit's head, or the branch point for the first unit), the ticket's contract, and the witness and command of every criterion the unit owns, each with its `whole file: <reason>` where the fit recorded one. It falsifies every owned witness with one hand-placed mutation, and it never posts. The brief passes the range and the contract and nothing that narrows them: no severity bar, no time cap, no list of what to skip. A hint of where to look adds to crucible's steps; it never replaces one.
-
-It returns **Findings** — class, severity, where it was found, the unit it belongs to, its resolution — and the **verified list**: one line per owned criterion, `criterion → mutation → red` — and the **notes**: step 1's `unwitnessed — absence recorded`, and one per input case step 3 judged safe, with its evidence. Without that list the unit is not vetted: a green suite and a Builder's word are not the gate. A review that could not mutate the tree says so, and the unit stays open.
-
-**Done when** every criterion the unit owns carries a falsification result and the findings are in hand.
-
-### 4.3 Route the findings
-
-| finding | route |
-| --- | --- |
-| behaviour · claim · test — P0/P1 | a fresh fix child, §4.4 |
-| shape — P2 | recorded in the comment; a small style finding rides in the next acting fix round that touches its unit, never a round of its own |
-| an out-of-scope row | suppressed, citing the row |
-| a path whose handling changes a named scenario's outcome | a contract change: `/align`, never a fix round |
-| a product call with a safe default — refuse, fail closed, leave the ticket parked | decided by the run, recorded under the pull request's **Decided limits** |
-| any other product call | collected, and put to the operator once, as one list, before §5 |
-
-**Done when** every finding has a route and none is left unplaced.
-
-### 4.4 Fix, within the size's rounds
-
-A fix is a new Builder child carrying the findings as its brief, never a resumed one:
-
-```text
-<fix-brief>
-
-<Unit <n> of <m> | Whole branch> · Ticket: #<n> · Round <n> of <1 for small, else 2> — <the findings this round answers>
-
-The Review returned findings against this work. Each is a question with its evidence; answer it in the
-code — the fix lands wherever the finding lives, which may be outside this unit's diff.
-
-<the findings verbatim>
-
-Same boundary as the unit brief: /tdd where a test is the answer, one commit for the round, tree clean, no
-push. Round two varies the route: a second attempt that repeats the first one's failed route is not a
-second attempt. Do not widen scope — a finding that changes a named scenario's outcome is not yours to fix; say so and stop.
-</fix-brief>
-```
-
-Commit the round, then re-vet: launch `/crucible` in a fresh `Reviewer` child with the round's range, the verified list and the fit's criteria entries, `whole file: <reason>` included, as its **re-vet**, so it reads only the fix's diff, reruns every verified witness and re-mutates the criteria the round touched: a round that does not turn that mutation red did not close the finding, and a round that widens scope is a contract change wearing a fix's clothes. Each acting finding gets the rounds its size allows — one for small, two otherwise — and a round answers every finding the same change answers: claim findings travel together in one round. A finding still open after its last round joins the list put to the operator before §5: the finding, what was tried, and a proposition with the route it would take.
-
-**Done when** every acting finding is closed by a red mutation, on the operator's list with a proposition, or recorded as accepted open.
-
-### 4.5 Close the unit
-
-A unit closes when the tree is clean and its commits are in; on a large ticket, also when every criterion it owns is red-mutated in the verified list or explicitly accepted by the operator. A criterion accepted open is named as accepted in the comment and in the pull request's table.
-
-### 4.6 The stop rule
-
-When a window fills mid-unit — the Delegator's or a Builder's — what is green is committed, the tree is left clean, the comment (§6) records the resume point, and the remainder becomes a unit of its own for a fresh session. Push the branch so the green commits are on the remote, and open nothing.
-
-### 4.7 Review the whole branch
-
-Every unit vetted alone misses what only shows when they meet. Once the last unit closes, launch `/crucible` in a fresh `Reviewer` child over the **whole branch**, `<branch-point>...HEAD`, with the contract and the fit's criteria entries, `whole file: <reason>` included — for a small or medium ticket this is the Review, falsification included; for a large one it adds what only the whole branch shows to the per-unit reviews. Its findings route by §4.3 and fix by §4.4.
-
-Then put the operator's list — open product calls, findings past their last round — to them once, in session, and record each answer as a decision row or an accepted-open entry.
-
-**Done when** the whole-branch findings are closed or accepted and the operator's list is answered.
-
-## 5. Push and open the pull request
-
-Once the whole branch is reviewed, push the branch and open the pull request. The ticket drops `ready-to-build` as the pull request opens:
-
-```sh
-git push -u origin <branch>
-gh pr create --title "<type>: <subject> (#<n>)" --body-file -
-gh issue edit <n> --remove-label "ready-to-build"
-```
-
-The title opens with the conventional type prefix — `feat`, `fix`, `hotfix`, `refactor`, `chore`, `docs`. The whole title stays within 70 characters, so `<subject>` is trimmed to fit.
-
-The body carries every criterion, the command that decides it, and the result that was actually run:
-
-```markdown
-## Summary
-
-- <what the branch does, in the contract's language>
-
-## Criteria
-
-| criterion | command | result |
-| --- | --- | --- |
-| <the criterion, short> | `<the command>` | <green — n tests · accepted open> |
-
-## Decided limits
-
-<every decision row, out-of-scope entry, accepted-open criterion and product call this run decided — one line each, with its source — so a reviewer reads the decision instead of re-raising it>
-
-## How to see it running
-
-<the server or container command, the screens — or "no runnable surface">
-
-Closes #<n>
-```
-
-The rows are the run's own evidence: one per criterion, each with the command that was actually run. The pull request opens when the loop has finished — never with a P0, or a P1 neither closed nor explicitly accepted, still standing — and never as a force push.
-
-**Done when** the pull request is open and its table has a row for every criterion in the contract.
-
-## 6. Write the run's one comment
-
-One comment per session, appended to the ticket and never edited. It is the run's durable memory: a fresh session reads it and resumes from it.
-
-```markdown
-### Build — session <n>, <date>
-
-**Loop**  <typecheck> · <focused> · <suite> · CI <status | absent> — proven at `<commit>`, tooling `<hash>`
-**Units**  `<sha>` <subject> → <criterion> · `<sha>` <subject> → <criterion>
-**Gate**  <criterion> → red · <criterion> → accepted open — <why> · findings: behaviour P0 ×0 · claim P1 ×1 (resolved) · test P1 ×0 · shape P2 ×2 (recorded)
-**Blocked**  —
-**Resume**  <the next unit, or `nothing — complete`>
-```
-
-Every field keeps its line: nothing blocked writes `—`, nothing left writes `nothing — complete`, and a criterion accepted open is written `→ accepted open — <why>`. The resume line names the next unit, or its remainder, precisely enough that a fresh session starts there without reading the diff. Worked comments are in [EXAMPLES.md](./EXAMPLES.md).
-
-**Done when** the comment is on the ticket and it is the only one this session wrote.
-
-## 7. Hand back
-
-Give the operator the pull request, the `/shepherd <pr>` to run in a fresh session once the review bot has replied, and, per criterion, the command they can run to see the work. Where the change has a runnable surface, name the server, container or screen to start, so the ticket is seen rather than asserted — "it works" is not a hand-back.
-
-**Done when** the pull request, the per-criterion commands and the running thing are in the operator's hands.
-
-## Boundaries
-
-**Always** — read the contract before writing · prove the loop at the base · one writer per checkout · commit on a real green · leave the tree clean · escalate with a proposition.
-**Ask first** — an unavailable loop dependency · a fix that would change the contract · a finding unclosed after its last round · a product call with no safe default — the last two once, as one list.
-**Never** — a second writer in the checkout · a witness invented to fit the code · working around a missing service · writing to the ticket beyond one comment per session · a commit tagged with a criterion id · a pull request opened while a P0 or an unaccepted P1 stands · a done without the command's output · writing an ADR or a `CONTEXT.md` term — raise it in the hand-back instead.
-
-## Related
-
-- `/crucible` — the **Review** every unit passes through.
-- `/tdd` — the cycles inside a unit.
-- `/commit` — one per unit; a round's commit rides on top.
-- `/align` — where a finding that names a scenario goes, and where a ticket that will not cut into units goes.
-- `/cut` — the stage before this one.
-- `/shepherd` — the stage after this one, run in a fresh session on the pull request this run opened.
+Edit a locked file · run two writers in one checkout · read `.env`, `.mcp.json` or production credentials · open a pull request with a failing locked test, a changed lock or an unanswered acting finding · put criterion codes in commits or test names.

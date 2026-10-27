@@ -1,55 +1,75 @@
-# Worked build comments
+# Build examples
 
-The comment `/build` leaves on the ticket — one per session, appended, never edited — worked twice:
-a run that finished, and a run the stop rule ended. Both follow [SKILL.md](SKILL.md) §6 verbatim.
-The ticket is #232, the slice `/cut` cut from [cut/EXAMPLES.md](../cut/EXAMPLES.md).
+The ticket is #42, *Buy a label*, a child of #40 *ShipCo integration*. Its spec is `docs/specs/buy-a-label.md` on `feat/buy-a-label`, with four behaviour lines locked at `9c41e2a`.
 
-## A single-session build
+## The unit plan
 
-Two units, both gated, the pull request opened at the end.
+What the Delegator holds, and all it holds:
 
-````markdown
-### Build — session 1, 2026-09-24
+```markdown
+Lock 9c41e2a · loop: pnpm typecheck · pnpm lint · pnpm test src/shipping · pnpm test
 
-**Loop**  `mix format --check-formatted` · `mix test <file>` · `mix test` · CI green — proven at `4e7a1c9`, tooling `2f9c1ab`
-**Units**  `a1b2c3d` emit one SearchMatchEvent per matching commit → a committed listing matching one saved search emits one event · `e4f5a6b` render the listing once in the digest → the next daily digest carries the listing once
-**Gate**  one event per match → red · digest carries it once → red · findings: behaviour P0 ×0 · claim P1 ×1 (resolved) · test P1 ×0 · shape P2 ×1 (recorded)
-**Blocked**  —
-**Resume**  nothing — complete
-````
+1. Buying stores the label — "A valid rate buys a label and stores the tracking number on the order." · "An expired rate is reported as rate_expired and nothing is stored."
+2. Retries and outages — "Buying twice for the same order returns the first label and charges once." · "ShipCo being down is reported as unavailable after retries and nothing is stored."
+```
 
-The pull request it opened:
+## A stop report
 
-````markdown
+Posted on the ticket when a unit stops; the ticket moves to `needs-alignment`.
+
+```markdown
+### Build stopped — 2026-10-28
+
+**Test**  `src/shipping/shipping.properties.test.ts` › "Buying twice for the same order returns the first label and charges once."
+**Expects**  the second call's label to deep-equal the first, `createdAt` included.
+**Why it can't pass**  ShipCo's 409 answer carries no `createdAt` (spike, Decisions 2026-10-21), so the refetched label has the fetch time. The spec says "returns the first label"; it doesn't say which fields.
+**Proposal**  compare `id` and `trackingNumber` only. Changing the line needs `/align #42` and a relock.
+**Green so far**  `b7d3f10` unit 1 — pushed.
+```
+
+## The pull request
+
+```markdown
 ## Summary
 
-- A committed listing matching one saved search emits one `SearchMatchEvent`
-- The next daily digest carries that listing once
+Buy a ShipCo label for the chosen rate and store its tracking number on the order. Closes #42.
 
-## Criteria
+## Behaviour
 
-| criterion | command | result |
-| --- | --- | --- |
-| a committed listing matching one saved search emits one event | `mix test test/saved_search/match_test.exs` | green — 1 test, 0 failures |
-| the next daily digest carries the listing once | `mix test test/digest/search_alert_test.exs` | green — 1 test, 0 failures |
+| Behaviour | Test | Result |
+|---|---|---|
+| A valid rate buys a label and stores the tracking number on the order. | `shipping.acceptance.test.ts` | green |
+| Buying twice for the same order returns the first label and charges once. | `shipping.properties.test.ts` | green, 100 runs |
+| An expired rate is reported as rate_expired and nothing is stored. | `shipping.acceptance.test.ts` | green |
+| ShipCo being down is reported as unavailable after retries and nothing is stored. | `shipping.acceptance.test.ts` | green |
 
-## How to see it running
+Lock check: unchanged since `9c41e2a`. Full suite: 412 passed.
 
-`mix phx.server`, then save a search for `croydon` and run `mix run priv/repo/commit_listing.exs croydon`; the next digest preview shows the listing once.
+## Verify
 
-Closes #232
-````
+- [x] POST /api/orders/123/label `{"rateId":"r_1"}` → 201, tracking `SC48213` (output below)
+- [x] /orders/123 shows "Tracking: SC48213" under Shipping (`verify/order-123.png`)
+- [ ] A ShipCo outage shows "Shipping is unavailable, try again" — not run in session: the sandbox has no way to force a 503. Reviewer: `SHIPCO_BASE_URL=http://localhost:9 pnpm dev`, then buy a label on /orders/123.
 
-## A stop-rule hand-back
+## Decided limits
 
-The parent's window filled during the second unit, so what was green was committed and the remainder became a unit of its own.
+- Label PDF rendering is out of scope (spec).
+- A 409 from ShipCo fetches the existing label instead of retrying (spec Decisions, 2026-10-21).
 
-````markdown
-### Build — session 1, 2026-09-24
+## Pruned
 
-**Loop**  `mix format --check-formatted` · `mix test <file>` · `mix test` · CI green — proven at `4e7a1c9`, tooling `2f9c1ab`
-**Units**  `b2c3d4e` suppress the digest entry for a search whose fingerprint already matched → a search that matches nothing stays quiet
-**Gate**  stays quiet → red · findings: behaviour P0 ×0 · claim P1 ×0 · test P1 ×0 · shape P2 ×1 (recorded)
-**Blocked**  —
-**Resume**  unit 2b — `SavedSearch.Notifier` must suppress the digest when the fingerprint repeats, not only when the query returns nothing; `mix test test/digest/quiet_test.exs` is red
-````
+Crucible removed 3 of 5 scratch tests that caught nothing the locked tests miss; kept `mapCarrierError.test.ts` (2 unique kills).
+```
+
+## The session comment
+
+```markdown
+### Build — 2026-10-28
+
+**Units**  `b7d3f10` buy and store a label · `e1a90c4` replay a purchase and survive outages
+**Vet**  crucible: 1 behaviour finding fixed in `5f2c7d8`, 3 scratch tests pruned · verify: 2 of 3 passed, 1 left for the reviewer
+**PR**  #57
+**Resume**  nothing — complete
+```
+
+A run that filled its window instead ends `**Resume**  unit 2 of 2, from b7d3f10`.

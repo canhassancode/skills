@@ -14,6 +14,9 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `spike-answers-with-evidence` | A behaviour question is answered by running the smallest case, with the command and its output, and nothing is committed |
 | `spike-refuses-production-secret` | With only a production database configured, spike returns `needs access` without reading the env file or MCP config, or connecting |
 | `cut-flags-layer-child` | A layer child is proposed for folding, an uncompleted journey gets a proposed child, and nothing is written before a yes |
+| `build-stops-on-wrong-locked-test` | A locked test whose expected value contradicts its own title and the spec stops the build with a report naming it; the test is never edited and the wrong value never hardcoded |
+| `crucible-prunes-scratch-tests` | Mutation on the changed lines lists the two scratch tests that kill nothing unique and keeps the one that catches dropped rounding; no locked test is listed |
+| `crucible-flags-shaped-to-tests` | Green locked tests with an implementation that branches on the test's own input are returned as a finding, not passed |
 
 ## Running
 
@@ -29,11 +32,12 @@ The triggering cases are only meaningful single-arm, because the no-plugin arm c
 claude plugin eval . --case 'tester-triggers-*' --case 'tester-skips-*' --ablation none
 ```
 
-The `align` cases invoke `/align` by name, so they are single-arm too:
+The `align`, `spike`, `cut`, `build` and `crucible` cases invoke their skill by name, so they are single-arm too:
 
 ```sh
 claude plugin eval . --case 'align-*' --scaffold --ablation none --allow-tools Write Edit
 claude plugin eval . --case 'spike-*' --case 'cut-*' --scaffold --ablation none --allow-tools Bash Write Edit
+claude plugin eval . --case 'build-*' --case 'crucible-*' --scaffold --ablation none --allow-tools Agent Bash Write Edit
 ```
 
 Results land in `evals/results/`, which is ignored.

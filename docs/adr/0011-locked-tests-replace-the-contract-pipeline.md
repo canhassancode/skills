@@ -22,7 +22,8 @@ The four skills are rewritten from scratch; only the names are kept.
 
 ## Consequences
 
-- `/build` no longer needs crucible's witness falsification to judge done: green locked tests are done. Crucible's remaining job is review and scratch-test pruning by mutation kills.
+- `/build` no longer needs crucible's witness falsification. It keeps ADR-0009's sequential fresh-child loop, because a whole capability rarely fits one session's context, but a unit is now a group of locked tests and each commits on green. Crucible runs once over the branch: the lock check, mutation on the changed lines with a prune list of scratch tests that kill nothing unique, the correctness walk, `CLAUDE.md` rules and the consumer grep.
+- Green tests aren't the whole of done. A child spec carries a `## Verify` section agreed at `/align`; a fresh verifier that never sees the code runs it on the app, and any step it can't run becomes an unchecked box in the pull request.
 - Skills that reference the old four (`review`, `shepherd`, `propose`, `triage`, `bootstrap`, `diagnose`, `domain-modeling`) need repointing when the rewrite lands.
 - `tdd` overlaps with `tester`'s references; decide whether it is deprecated once both are in use.
 - Success is measured by the `evals/` suite and by running the flow on one small and one large real feature.

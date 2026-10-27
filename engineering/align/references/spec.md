@@ -29,6 +29,11 @@ Label PDF rendering.
 ## Done when
 `pnpm test src/shipping` and `pnpm test:contract carrier` pass.
 
+## Verify
+- Start: `pnpm dev` (port 3000), sandbox key from `SHIPCO_API_KEY`
+- POST /api/orders/123/label `{"rateId":"r_1"}` → 201 with a tracking number; GET /api/orders/123 shows it
+- /orders/123 shows "Tracking: SC…" under Shipping
+
 ## Decisions
 - 2026-10-21 Q: Retry a 409 from ShipCo? → A: No; it means the label exists, so fetch it (spike).
 ```
@@ -73,6 +78,7 @@ Returns, customs, multi-parcel shipments, a second carrier.
 - **Context**: the files, the existing pattern to copy and the merged siblings it needs. Name a pattern by its file, not by its name.
 - **Out of scope**: every area the conversation touched and left out, each with a reason if it isn't obvious.
 - **Done when**: commands that run, not prose.
+- **Verify** (child only): how a person sees it working on the running app — the start command with the credentials it needs, then each request or page and what it shows. Agreed with the user, because `/build` runs these steps without reading the code and leaves an unchecked box for any it can't. A child with nothing to run writes `none — <why>`.
 - **Rules** (parent only): cross-cutting requirements every child inherits without restating them.
 - **Journeys** (parent only): one or two end-to-end paths, written once at parent level.
 - **Children** (parent only): a name and one line each, in build order. `/cut` turns them into tickets with their behaviour lines; each child's interface and tests come back through `/align` just before it is built.
@@ -82,6 +88,7 @@ Returns, customs, multi-parcel shipments, a second carrier.
 
 - Small specs win: shorter, well-scoped issues are the ones that get merged (Sayagh, Dec 2025); focused prompts beat long ones on every model tested (Chroma, Jul 2025).
 - Goal, context, constraints and a runnable done-when: OpenAI's Codex guidance and Claude Code best practices.
+- Verify on the running app: Anthropic's long-running harness found agents marked features done without testing them end to end, and checking as a user "dramatically improved" results; tests with fakes at ports pass while nothing is wired in.
 - Behaviour and boundaries, not patterns: repo context files cut success by 0.5–2 points (Gloaguen et al., Feb 2026).
 - The Decisions log: Spec Kit's Clarifications and OpenAI's ExecPlan Decision Log.
 - Locking just in time, not up front: in this library's own trackers, 25% of later slices had their contract change after a sibling merged, and 14% were dropped, folded or re-cut (forge and skills issues, measured 2026-10-27).
