@@ -144,6 +144,10 @@ _Avoid_: calling it a brief or a spec; it is the queue's shape.
 **Surface**:
 A concrete code location a piece of work claims to touch — a function, endpoint, resolver, type. Concrete enough to open in an editor. Branches (feature flags, env gates, A/B switches) that gate a surface are part of the surface, not separate from it.
 
+**Target**:
+Where a change will actually run: the exact artifact CI installs, the production data. A local copy of either is a **stand-in**, and a number measured on a stand-in doesn't hold for the target.
+_Avoid_: live surface, prod (when CI is meant).
+
 **Consumer**:
 A concrete code location that reads a field, type, or behaviour being changed. Found by grep, not by trusting the author's mental model.
 
