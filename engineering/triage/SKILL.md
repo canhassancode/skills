@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Triage
 
-Queue inbound work. Triage **classifies and routes**: it writes no brief, runs no pass, and stamps no state a builder can take. The pass that turns a placeholder into a contract is `/align`'s.
+Queue inbound work. Triage **classifies and routes**: it writes no spec, runs no `/align`, and stamps no state a builder can take. Turning a placeholder into a spec and locked tests is `/align`'s.
 
-A ticket wearing `ready-to-propose`, `awaiting-decision`, `ready-to-cut` or `ready-to-build` is planning work, not inbound — leave it alone. `needs-alignment` is the one state the two lanes share: triage queues into it, and an `/align` pass is what clears it. A body already carrying the contract's rows is planning work whatever it wears — say so and stop, rather than re-queuing it.
+A ticket wearing `ready-to-propose`, `awaiting-decision`, `ready-to-cut` or `ready-to-build` is planning work, not inbound — leave it alone. `needs-alignment` is the one state the two lanes share: triage queues into it, and `/align` is what clears it. A body already linking a spec is planning work whatever it wears — say so and stop, rather than re-queuing it.
 
 ## Roles
 
@@ -18,7 +18,7 @@ Two **category** roles — `bug` and `enhancement`. Every queued issue carries e
 | --- | --- | --- |
 | `needs-triage` | classified, route named, waiting to be picked up | a comment naming the route |
 | `needs-info` | blocked on a fact from outside the room | the notes below |
-| `needs-alignment` | a pass is owed | the placeholder body |
+| `needs-alignment` | an `/align` is owed | the placeholder body |
 | `wontfix` | not worth doing | the reason, then close |
 
 Human-only work wears `needs-alignment` too: delegability is a body fact, so no state carries it.
@@ -40,7 +40,7 @@ These roles are canonical; the label strings are the repo's. Read `docs/agents/t
    | a wide or unreproducible fault | `bug` + `needs-alignment` | the placeholder body |
 
    Triage invokes no other skill — the route is a name, not a session.
-3. **Recommend, then wait.** Category, state, reasoning, and the codebase summary. The maintainer directs; work that needs fleshing out is a pass, and a pass is `/align`'s.
+3. **Recommend, then wait.** Category, state, reasoning, and the codebase summary. The maintainer directs; work that needs fleshing out is `/align`'s.
 4. **Write.** Show the body and confirm it before it is written — a route answer is never write permission. Apply the category and the state, and say why on the ticket itself: the placeholder carries the reasoning when one is written, the notes otherwise. Close the issue only on `wontfix`, with the reason, or as a duplicate of the ticket with the richest context — the survivor, whose triage notes receive the closed ticket's unique facts.
 
 ## What needs attention
@@ -57,7 +57,7 @@ Query the tracker and present three buckets, oldest first: unlabelled, `needs-tr
 4. **Write.** Apply each row's category and state after, with the write the Roles table gives that state. Close each duplicate and family member with the repo's duplicate command, its comment naming the survivor, and fold its unique facts into the survivor's triage notes. A family survivor carries a `needs-alignment` placeholder listing every member along with what only that member said; a survivor already carrying one gets the new members appended, not a second placeholder.
 5. **Report.** The before → after count, the failed rows, and the next-up queue: `/diagnose` routes first, then `/align` survivors oldest first.
 
-The sweep runs no pass, stamps no `ready-to-*` state, and creates no Linear labels, states or Projects. It reads open tickets only, so a re-run resumes from live state.
+The sweep runs no `/align`, stamps no `ready-to-*` state, and creates no Linear labels, states or Projects. It reads open tickets only, so a re-run resumes from live state.
 
 ## A markdown ticket
 
@@ -70,7 +70,18 @@ Treat a path to a `.md` file as the issue body. Read it — parsing any frontmat
 
 ### The placeholder
 
-The alignment body's degenerate case: **Background**, **Problem statement**, **Triage notes**, and no `Passes:` header. Write it only where the body cannot already answer the first two. `/align`'s first pass replaces the notes and folds their text into Background. The template sits beside the alignment body in [EXAMPLES.md](../align/EXAMPLES.md).
+An inbound ticket's queue form, written only where the body cannot already answer the first two sections. `/align` reads it as the ask, then replaces the body with the goal line and the spec's link.
+
+```markdown
+## Background
+Who hit it, where, and what happens today.
+
+## Problem statement
+What should happen instead, in one or two sentences.
+
+## Triage notes
+The route, the code paths the trace found, and any duplicate or family members with what only they said.
+```
 
 ### The needs-info notes
 

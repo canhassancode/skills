@@ -1,6 +1,6 @@
 # Issue tracker: GitLab
 
-Issues and specs for this repo live as GitLab issues. Use the [`glab`](https://gitlab.com/gitlab-org/cli) CLI for all operations.
+Issues for this repo live as GitLab issues; specs live in the repo at `docs/specs/`. Use the [`glab`](https://gitlab.com/gitlab-org/cli) CLI for all operations.
 
 ## Conventions
 
@@ -35,20 +35,11 @@ Create a GitLab issue.
 
 Run `glab issue view <number> --comments`.
 
-## Slice comments
-
-`/align` keeps each slice's contract in its own note once an alignment has more than one slice. The semantics live in the skill; these are the operations.
-
-- **Post** — `glab issue note <n> --message "..."`, then read its id from `glab api "projects/:id/issues/<n>/notes?sort=desc&per_page=1"`.
-- **Edit in place** — `glab api -X PUT projects/:id/issues/<n>/notes/<note_id> -f body="..."`.
-- **Link** — the issue's URL ending `#note_<note_id>`, in the Slices table's `contract` column.
-- **Read** — `glab api projects/:id/issues/<n>/notes/<note_id>`.
-
 ## Publishing a cut
 
-`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+`/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **One slice** — the alignment issue graduates in place: `glab issue update <n> --label ready-to-build --unlabel ready-to-cut`. Its body already carries the contract; nothing is rewritten.
-- **Several slices** — where the tier has a native hierarchy (an epic, or child work items), the container is that node and the slices are created under it; otherwise no spec node is created, the slices are top-level, and the closing note carries the map. Either way each slice carries `ready-to-build`. The alignment issue drops `ready-to-cut` as the set publishes: `glab issue update <alignment> --unlabel ready-to-cut`.
-- **Blocking edges** — GitLab's native blocking link, posted as a note on the slice: `/blocked_by #<n>`. On the free tier, fall back to a `Blocked by: #<n>` line in the description.
-- **Close the alignment issue** — `glab issue note <alignment> --message "Cut into #232, #233, #234"`, then `glab issue close <alignment>`, once every slice exists.
+- **Each child** — an issue labelled `needs-alignment`, in build order: `glab issue create --title "<child title>" --description "..." --label needs-alignment`. Where the tier has child work items, create it under the parent; otherwise it is top-level and the parent's checklist is the only link.
+- **Blocking edges** — GitLab's native blocking link, posted as a note on the child: `/blocked_by #<n>`. On the free tier, fall back to a `Blocked by: #<n>` line in the description.
+- **The parent** — drops its label once every child exists: `glab issue update <parent> --unlabel ready-to-cut`. Its description's checklist names each child; it stays open until the last one merges.
+- **The spec merge request** — `glab mr update <n> --ready` once any Children list edit is pushed. Merging is the user's.

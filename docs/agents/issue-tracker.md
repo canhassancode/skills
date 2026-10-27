@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
+Issues for this repo live as GitHub issues; specs live in the repo at `docs/specs/`. Use the `gh` CLI for all operations.
 
 ## Conventions
 
@@ -29,12 +29,12 @@ declare -A canonical=(
   [bug]="d73a4a:Something is broken"
   [enhancement]="a2eeef:New feature or improvement"
   [needs-triage]="fbca04:Maintainer needs to evaluate"
-  [needs-alignment]="5319e7:Planning lane: the body is not yet the contract"
+  [needs-alignment]="5319e7:Planning lane: the spec, interface or locked tests are still owed"
   [needs-info]="d4c5f9:Waiting on reporter"
   [ready-to-propose]="d876e3:Planning lane: a formal proposal is owed"
   [awaiting-decision]="bfd4f2:Planning lane: the proposal is out"
-  [ready-to-cut]="0052cc:Planning lane: the contract is done; the slices are owed"
-  [ready-to-build]="2cbe4e:Cut and published; takeable now"
+  [ready-to-cut]="0052cc:Planning lane: the parent spec is agreed; its children are owed"
+  [ready-to-build]="2cbe4e:Locked tests committed; takeable now"
   [wontfix]="cccccc:Will not be actioned"
 )
 for label in "${!canonical[@]}"; do
@@ -68,15 +68,6 @@ Create a GitHub issue.
 ## When a skill says "fetch the relevant ticket"
 
 Run `gh issue view <number> --comments`.
-
-## Slice comments
-
-`/align` keeps each slice's contract in its own comment once an alignment has more than one slice. The semantics live in the skill; these are the operations.
-
-- **Post** — `gh issue comment <n> --body-file -`. It prints the comment's URL, ending `#issuecomment-<id>`.
-- **Edit in place** — `gh api -X PATCH repos/<owner>/<repo>/issues/comments/<id> -F body=@<file>`.
-- **Link** — the comment's URL, in the Slices table's `contract` column.
-- **Read** — `gh api repos/<owner>/<repo>/issues/comments/<id> --jq .body`.
 
 ## Publishing a cut
 

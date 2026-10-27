@@ -4,7 +4,7 @@ Fixed standards crucible checks a diff against where the spec and `CLAUDE.md` ar
 
 ## Correctness
 
-Walked against every changed hunk that writes, calls out, loops over outside data or shares a key — the failure paths a reviewer of the whole branch finds and a criterion's witness never exercises. Each hit is a **behaviour** finding, never a judgement call.
+Walked against every changed hunk that writes, calls out, loops over outside data or shares a key — the failure paths a reviewer of the whole branch finds and the locked tests never exercise. Each hit is a **behaviour** finding, never a judgement call.
 
 - **Partial failure** — a throw at step k of a sequence of side effects: what is left half-written, and is a retry idempotent?
 - **One bad item** — in a loop over external items, does one malformed or failing item abort the rest?

@@ -1,6 +1,6 @@
 # Issue tracker: Linear
 
-Issues and specs for this repo live in **Linear**. All operations go through the **Linear MCP** (`linear-server` tools) — there is no CLI.
+Issues for this repo live in **Linear**; specs live in the repo at `docs/specs/`. All operations go through the **Linear MCP** (`linear-server` tools) — there is no CLI.
 
 Linear is almost always a **shared team workspace**. The governing principle is **adopt-don't-impose**: map onto the taxonomy the team already has, and **never create labels, workflow states, or Projects that don't already exist**. On first use, call `list_teams`, `list_issue_statuses`, and `list_issue_labels` to read the current taxonomy before writing. This file carries both lanes' conventions.
 
@@ -33,31 +33,22 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 - Won't-do → native `Canceled` state.
 - Duplicate → `save_issue` with `duplicateOf: <survivor>`, the native duplicate relation, then `save_comment` naming the survivor's `CAR-###`.
 
-## Slice comments
-
-`/align` keeps each slice's contract in its own comment once an alignment has more than one slice. The semantics live in the skill; these are the operations.
-
-- **Post** — `save_comment` on the alignment issue. Its result carries the comment's id and URL.
-- **Edit in place** — `save_comment` with that id.
-- **Link** — the comment's URL, in the Slices table's `contract` column.
-- **Read** — `list_comments`, matched by id.
-
 ## Publishing a cut
 
-`/cut` transcribes a settled alignment into slices. The semantics live in the skill; these are the operations.
+`/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **One slice** — the alignment issue graduates in place: `save_issue` with the body unchanged and `ready-to-cut` swapped for `ready-to-build`.
-- **Several slices** — the spec is the **Project** that carries the map: `save_project`, carrying no planning label. Each slice is an issue created into that Project (`save_issue` with the Project set) and labelled `ready-to-build`. The alignment issue drops `ready-to-cut` as the set publishes: `save_issue` with `ready-to-cut` removed.
-- **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each slice lands; the slice's `# Blocked by` row repeats the identifiers for a cold reader.
-- **Close the alignment issue** — `save_comment` naming the slices and their `CAR-###` identifiers, then move the issue to `Done`, once every slice exists.
+- **Each child** — a sub-issue of the parent, in build order: `save_issue` with the parent set and the `needs-alignment` label.
+- **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each child lands; the body's `Blocked by` line repeats the identifiers for a cold reader.
+- **The parent** — drops `ready-to-cut` once every child exists: `save_issue` with the label removed. It stays open until the last child merges.
+- **The spec pull request** — lives on the code host, not Linear: mark it ready there once any Children list edit is pushed. Merging is the user's.
 
 ## Pull requests as a triage surface
 
-N/A. Linear has no PR concept, and the planning lane doesn't triage — its work is cut from an aligned contract, not classified.
+N/A. Linear has no PR concept, and the planning lane doesn't triage — its work is cut from an agreed parent spec, not classified.
 
 ## When a skill says "publish to the issue tracker"
 
-`save_issue` (or `save_project` for a spec).
+`save_issue`.
 
 ## When a skill says "fetch the relevant ticket"
 

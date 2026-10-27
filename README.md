@@ -42,16 +42,16 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
-- [propose](engineering/propose/SKILL.md) — turn a settled alignment into an argued proposal for a decision-maker and publish it to the tracker, leaving the ticket at `awaiting-decision`
+- [propose](engineering/propose/SKILL.md) — turn an aligned spec into an argued proposal for a decision-maker and publish it to the tracker, leaving the ticket at `awaiting-decision` until the answer goes back to `align`
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `align`'s prototype route can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `crucible` against a fixed point
-- [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds: triage each thread, fix inside the contract through a fresh unit and `crucible`, reply with evidence, and ask before colleague review; started in a fresh session on the pull request `build` hands back, or on any other
+- [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds: triage each thread, fix inside the spec through a fresh builder and `crucible`, reply with evidence, and ask before colleague review; started in a fresh session on the pull request `build` hands back, or on any other
 - [spike](engineering/spike/SKILL.md) — answer one question about how something behaves by running the smallest throwaway code, inside a 15-minute timebox with sandbox credentials only, and return the answer with its command and output
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
 - [tester](engineering/tester/SKILL.md) — write the locked tests from an approved spec and interface before implementation: behaviour-named acceptance tests, properties, contract suites and the odd journey, each proven red for the right reason
-- [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; `/triage sweep` groups a whole backlog into duplicates and families; the passing is `/align`'s
+- [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; `/triage sweep` groups a whole backlog into duplicates and families; turning it into a spec is `/align`'s
 
 ## `productivity/` — meta-skills for working with me and Claude
 
@@ -95,7 +95,7 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 The ones I reach for most:
 
 - `align` before any non-trivial change
-- **Planned work:** `align` — one pass or several, until the body is a contract → `cut` into slices → `build` each slice → `review`. An alignment that needs someone else's yes routes through `propose` first, and comes back to `ready-to-cut` on a yes. A question that is a fact or a shape leaves a pass as a route — `research` or `prototype` — and comes back folded into the next one.
+- **Planned work:** `align` — tier, red team, spec, interface, locked tests → `build` → `shepherd`. Bigger than a session: `align` a parent spec → `cut` its children → `align` and `build` each in turn. An unknown goes to `spike`, `research` or `prototype` and lands in the spec's Decisions; a yes owed outside the room goes through `propose` and back to `align`.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
-- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `build` the ticket → `tdd` / `diagnose`.
+- **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `diagnose` for a confined bug, `align` for the rest → `build`.
 - `diagnose` for anything broken; `crucible` for my own branch, `review` for posting on someone else's PR
