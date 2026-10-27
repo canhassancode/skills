@@ -11,7 +11,7 @@ Turn an ask into a spec, an approved interface and locked failing tests, so the 
 
 Origin: Shape Up's shaping (appetite, no-gos and rabbit holes settled before the bet) and Liu et al. 2026 (a reviewed plan helps; a poor plan does worse than none).
 
-Every question follows [grilling](../grilling/SKILL.md). Every term and ADR follows [domain-modeling](../domain-modeling/SKILL.md). Facts come from subagents, never from the user. Every reply follows [EXAMPLES.md](EXAMPLES.md).
+Every question follows [grilling](../grilling/SKILL.md). Every term and ADR follows [domain-modeling](../domain-modeling/SKILL.md). Facts come from subagents, never from the user, and every number follows [references/spec.md](references/spec.md)'s Numbers rule. Never open `.env`, `.mcp.json` or other config holding credentials, not even to find a connection. Every reply follows [EXAMPLES.md](EXAMPLES.md).
 
 ## Steps
 
@@ -24,7 +24,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 4. **Domain.** Each new term and each ADR is its own yes.
 5. **Interface** (child only). Propose signatures with [codebase-design](../codebase-design/SKILL.md): the code, one caller and the error kinds, one interface at a time. On a yes, commit them as stubs that compile and throw: `feat: stub <capability> interface`.
 6. **Tests** (child only). Run `/tester` and show its report. An interface gap goes back to step 5. On a yes, commit `test: lock <capability> tests`.
-7. **Close.** Write the spec into the ticket body, push the branch if there is one, post the session comment and set the label.
+7. **Close.** Check every number by [references/spec.md](references/spec.md)'s Numbers rule, then write the spec into the ticket body, push the branch if there is one, post the session comment and set the label.
 
 | Ends on | Label | Next |
 |---|---|---|
