@@ -13,7 +13,7 @@ Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%) and Konstantino
 
 ## Inputs
 
-- The spec: its `## Behaviour` lines are the test titles.
+- The spec, which is the ticket's body: its `## Behaviour` lines are the test titles.
 - The approved interface: the public signatures and ports, committed as stubs that compile and throw.
 
 If either is missing, stop and say which.

@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p docs/specs src/billing src/ports
+mkdir -p .scratch/billing/issues src/billing src/ports
 
-cat > docs/specs/billing.md <<'MD'
+cat > .scratch/billing/issues/01-billing.md <<'MD'
 # Billing
+
+Status: ready-to-build
 
 ## Behaviour
 

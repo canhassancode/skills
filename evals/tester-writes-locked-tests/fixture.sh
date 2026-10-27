@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p docs/specs src/billing src/ports test-support
+mkdir -p .scratch/billing/issues src/billing src/ports test-support
 
 cat > package.json <<'JSON'
 {
@@ -13,8 +13,10 @@ cat > package.json <<'JSON'
 }
 JSON
 
-cat > docs/specs/billing.md <<'MD'
+cat > .scratch/billing/issues/01-billing.md <<'MD'
 # Billing
+
+Status: ready-to-build
 
 ## Behaviour
 

@@ -5,8 +5,8 @@ Issues for this repo live as markdown files in `.scratch/`.
 ## Conventions
 
 - One feature per directory: `.scratch/<feature-slug>/`
-- Specs live in the repo at `docs/specs/<capability>.md`, owned by `/align`; a ticket file holds its goal line and the spec's path
-- Tickets are `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`
+- A spec is its ticket file's body: everything between the header lines and `## Comments`, replaced whole when `/align` writes it
+- Tickets are `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`; a parent's ticket is `.scratch/<feature-slug>/<feature-slug>.md`
 - Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
 - A duplicate sets `Status: closed` and adds a `Duplicate of: <path>` line near the top, naming the survivor's file
@@ -25,4 +25,4 @@ Read the file at the referenced path. The user will normally pass the path or th
 
 - **Each child** — `.scratch/<feature-slug>/issues/NN-<slug>.md`, in build order, with `Status: needs-alignment` and a `Parent: <parent file>` line near the top.
 - **Blocking edges** — a `Blocked by: NN, NN` line near the top of the child. A ticket is unblocked when every file it lists is `resolved`.
-- **The parent** — drops its `Status:` line once every child exists; its checklist names each child file, and it stays open until the last one is `resolved`.
+- **The parent** — drops its `Status:` line once every child exists; its spec's Children list becomes a checklist naming each child file, and it stays open until the last one is `resolved`.

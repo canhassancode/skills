@@ -5,14 +5,16 @@ commit() {
   git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit --quiet -m "$1"
 }
 
-mkdir -p docs/specs src
+mkdir -p .scratch/price/issues src
 
 cat > package.json <<'JSON'
 { "name": "price-fixture", "private": true, "type": "module", "scripts": { "test": "node --test" } }
 JSON
 
-cat > docs/specs/price.md <<'MD'
+cat > .scratch/price/issues/01-price.md <<'MD'
 # Apply a discount
+
+Status: ready-to-build
 
 ## Goal
 Apply a percentage discount to a price held in pence.
@@ -49,7 +51,7 @@ test('A discount above 100% is refused.', () => {
 JS
 
 git init --quiet --initial-branch=feat/price
-git add package.json docs/specs/price.md src/price.js src/price.acceptance.test.js
+git add package.json .scratch/price/issues/01-price.md src/price.js src/price.acceptance.test.js
 commit "test: lock price tests"
 
 cat > src/price.js <<'JS'

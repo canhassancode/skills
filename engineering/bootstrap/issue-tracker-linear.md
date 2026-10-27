@@ -1,6 +1,6 @@
 # Issue tracker: Linear
 
-Issues for this repo live in **Linear**; specs live in the repo at `docs/specs/`. All operations go through the **Linear MCP** (`linear-server` tools) — there is no CLI.
+Issues for this repo live in **Linear**; a spec is its ticket's description. All operations go through the **Linear MCP** (`linear-server` tools) — there is no CLI.
 
 Linear is almost always a **shared team workspace**. The governing principle is **adopt-don't-impose**: map onto the taxonomy the team already has, and **never create labels, workflow states, or Projects that don't already exist**. On first use, call `list_teams`, `list_issue_statuses`, and `list_issue_labels` to read the current taxonomy before writing. This file carries both lanes' conventions.
 
@@ -29,6 +29,7 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 
 - **Agent-grabbable state**: apply the `ready-to-build` label — the planning lane's takeable state.
 - **Read an issue**: `get_issue` for the body, `list_comments` for the discussion.
+- **Write a spec**: `save_issue` with `description` set to the whole spec, replacing what was there.
 - **Reference** issues by their `CAR-###` identifier (or URL), not `#N`.
 - Won't-do → native `Canceled` state.
 - Duplicate → `save_issue` with `duplicateOf: <survivor>`, the native duplicate relation, then `save_comment` naming the survivor's `CAR-###`.
@@ -39,8 +40,7 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 
 - **Each child** — a sub-issue of the parent, in build order: `save_issue` with the parent set and the `needs-alignment` label.
 - **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each child lands; the body's `Blocked by` line repeats the identifiers for a cold reader.
-- **The parent** — drops `ready-to-cut` once every child exists: `save_issue` with the label removed. It stays open until the last child merges.
-- **The spec pull request** — lives on the code host, not Linear: mark it ready there once any Children list edit is pushed. Merging is the user's.
+- **The parent** — drops `ready-to-cut` once every child exists: `save_issue` with the label removed. Its spec's Children list becomes a checklist naming each child's `CAR-###`; it stays open until the last child merges.
 
 ## Pull requests as a triage surface
 

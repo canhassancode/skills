@@ -15,12 +15,12 @@ Children are drafts. Their interface and tests come later, through `/align <chil
 
 ## Steps
 
-1. **Read** the parent ticket and its spec: on `spec/<capability>` while its pull request is open, on the default branch once merged.
+1. **Read** the parent ticket: its body is the spec.
 2. **Draft** each child in the Children list: its title, a goal line a stranger could follow, up to six draft behaviour lines drawn only from the parent's Goal, Journeys and Rules, and the earlier siblings it needs. Something the parent doesn't cover is a question for the user, not a line.
-3. **Check** each child against [align's size and vertical rules](../align/references/tiers.md#size), and the set against the parent: together the children walk every journey, and the last one completes them. For each child that fails, propose the fix — fold, split or reorder — with the reason. The user decides, and the spec's Children list is edited to match. Only a wrong Goal, Shape or Rules sends the parent back to `needs-alignment`.
+3. **Check** each child against [align's size and vertical rules](../align/references/tiers.md#size), and the set against the parent: together the children walk every journey, and the last one completes them. For each child that fails, propose the fix — fold, split or reorder — with the reason. The user decides, and the parent's Children list is edited to match. Only a wrong Goal, Shape or Rules sends the parent back to `needs-alignment`.
 4. **Show** the set as [EXAMPLES.md](EXAMPLES.md) does. Nothing is created before a yes.
 5. **Publish**, in build order: each child as a sub-issue at `needs-alignment`, its blocking edges set as it lands. The operations are in [`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md).
-6. **Close.** Commit any Children list edit to the spec's open pull request, or a new one once it has merged; push, and mark it ready. Update the parent's children checklist, drop `ready-to-cut`, post the session comment, and name the next act: merge the spec, then `/align <first child>`.
+6. **Close.** Rewrite the parent's Children list as a checklist of the published children, in build order, keeping the rest of its body. Drop `ready-to-cut`, post the session comment, and name the next act: `/align <first child>`.
 
 The parent wears no label after the cut; it stays open until its last child merges.
 

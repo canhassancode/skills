@@ -24,7 +24,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 4. **Domain.** Each new term and each ADR is its own yes.
 5. **Interface** (child only). Propose signatures with [codebase-design](../codebase-design/SKILL.md): the code, one caller and the error kinds, one interface at a time. On a yes, commit them as stubs that compile and throw: `feat: stub <capability> interface`.
 6. **Tests** (child only). Run `/tester` and show its report. An interface gap goes back to step 5. On a yes, commit `test: lock <capability> tests`.
-7. **Close.** Commit the spec, push, post the session comment and set the label.
+7. **Close.** Write the spec into the ticket body, push the branch if there is one, post the session comment and set the label.
 
 | Ends on | Label | Next |
 |---|---|---|
@@ -36,8 +36,8 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 
 ## Where it lives
 
-- **Spec**: `docs/specs/<capability>.md`, on `feat/<capability>` for a child, or `spec/<capability>` for a parent, opened as a draft pull request. Status never goes in the spec.
-- **Ticket body**: the goal in one line, the spec's link and, on a parent, its children. Nothing else, so it never outgrows the tracker.
+- **Spec**: the ticket body, on the parent's ticket for a parent and on its own ticket for a child. It replaces whatever the body held. Status never goes in it; the label holds that.
+- **Code** (child only): the stubs and locked tests on `feat/<capability>`, opened as a draft pull request that links the ticket. A parent has no branch.
 - **Session comment**: one per session, carrying only what moved.
 
 One child per session; the next starts fresh. A build that stops on a locked test comes back here: the spec changes first, the user removes the stale test, and step 6 runs for the changed lines only.

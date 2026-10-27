@@ -28,15 +28,15 @@ A fresh subagent briefed to argue against the ask before the spec is written, re
 _Avoid_: review, critique.
 
 **Spec**:
-The plan for one capability, at `docs/specs/<capability>.md` in the repo — never in the tracker, and never carrying status. Two shapes: a **Parent** and a **Child**. Settled questions live in its Decisions as dated `Q → A` lines. Supersedes the old *PRD* and the alignment body.
-_Avoid_: PRD, contract, body, requirements doc.
+The plan for one capability, held as its **Ticket**'s body and never carrying status. Two shapes: a **Parent** and a **Child**. Settled questions live in its Decisions as dated `Q → A` lines. Supersedes the old *PRD* and the alignment body.
+_Avoid_: PRD, contract, requirements doc.
 
 **Parent**:
-A spec too big for one session: the Goal, Out of scope, the Shape every child builds into, the Rules every child follows, and the Children list. It carries no interface and no tests, lives on `spec/<capability>` until merged, and its ticket wears `ready-to-cut` until `/cut` publishes the children.
+A spec too big for one session: the Goal, Out of scope, the Shape every child builds into, the Rules every child follows, and the Children list. It carries no interface and no tests, has no branch, and its ticket wears `ready-to-cut` until `/cut` publishes the children.
 _Avoid_: epic, container, project.
 
 **Child**:
-A spec that fits one session — one capability a user or caller could notice on its own, about six **Behaviour line**s, at most one public interface and one port. Carries Goal, Context, Interface, Behaviour, Out of scope, Done when, **Verify** and Decisions, on `feat/<capability>`. Vertical, never a layer.
+A spec that fits one session — one capability a user or caller could notice on its own, about six **Behaviour line**s, at most one public interface and one port. Carries Goal, Context, Interface, Behaviour, Out of scope, Done when, **Verify** and Decisions; its stubs and locked tests live on `feat/<capability>`. Vertical, never a layer.
 _Avoid_: slice, story, task.
 
 **Behaviour line**:
@@ -96,7 +96,7 @@ A mutant on a changed line that no test kills — returned as a question about b
 _Avoid_: gap, missing test.
 
 **Ticket**:
-A tracker node. Its body holds the goal in one line, the spec's link and, on a parent, its children — nothing else, so it never outgrows the tracker. Its label is the work's state. The **frontier** is every ticket whose blockers are closed: the work takeable now.
+A tracker node. Its body is the **Spec**, a parent's or a child's, written by `/align`. Its label is the work's state. The **frontier** is every ticket whose blockers are closed: the work takeable now.
 _Avoid_: issue, story.
 
 **Session comment**:
@@ -138,7 +138,7 @@ Resuming a **Handoff** (`/receive`). Scoped to context transfer *within* a task 
 _Avoid_: "resume", "continue" — reserved session commands in Claude Code and pi.dev; a skill of either name is shadowed by the built-in.
 
 **Placeholder body**:
-An inbound ticket's queue form — Background, Problem statement and Triage notes. Written by **Triage** only where the body cannot already answer the first two; `/align` reads it as the ask, then replaces it with the goal line and the spec's link.
+An inbound ticket's queue form — Background, Problem statement and Triage notes. Written by **Triage** only where the body cannot already answer the first two; `/align` reads it as the ask, then replaces it with the spec.
 _Avoid_: calling it a brief or a spec; it is the queue's shape.
 
 **Surface**:

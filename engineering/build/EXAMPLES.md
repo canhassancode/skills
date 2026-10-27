@@ -1,6 +1,6 @@
 # Build examples
 
-The ticket is #42, *Buy a label*, a child of #40 *ShipCo integration*. Its spec is `docs/specs/buy-a-label.md` on `feat/buy-a-label`, with four behaviour lines locked at `9c41e2a`.
+The ticket is #42, *Buy a label*, a child of #40 *ShipCo integration*. Its body is the spec, with four behaviour lines locked at `9c41e2a` on `feat/buy-a-label`.
 
 ## The unit plan
 

@@ -5,14 +5,16 @@ commit() {
   git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit --quiet -m "$1"
 }
 
-mkdir -p docs/specs src
+mkdir -p .scratch/discount/issues src
 
 cat > package.json <<'JSON'
 { "name": "discount-fixture", "private": true, "type": "module", "scripts": { "test": "node --test" } }
 JSON
 
-cat > docs/specs/discount.md <<'MD'
+cat > .scratch/discount/issues/01-discount.md <<'MD'
 # Apply a discount
+
+Status: ready-to-build
 
 ## Goal
 Apply a percentage discount to a price held in pence.
@@ -38,7 +40,7 @@ export function applyDiscount(pence, percent) {
 JS
 
 git init --quiet --initial-branch=feat/discount
-git add package.json docs/specs/discount.md src/discount.js
+git add package.json .scratch/discount/issues/01-discount.md src/discount.js
 commit "feat: stub discount interface"
 
 cat > src/discount.acceptance.test.js <<'JS'
