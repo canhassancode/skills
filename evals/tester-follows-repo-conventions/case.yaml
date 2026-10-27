@@ -1,7 +1,7 @@
 schema_version: "1.1"
 name: tester-follows-repo-conventions
 description: In a repo whose tests use top-level test() in __tests__/ folders with fakes in src/testing/, tester follows that layout instead of the reference examples and keeps the locked suffix.
-tags: [tester]
+tags: [tester, writing]
 context:
   scaffold_script: fixture.sh
 execution:

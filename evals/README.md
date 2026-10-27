@@ -20,24 +20,28 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 
 ## Running
 
-Run from the plugin root (the worktree, on a branch) so the cases load that branch's skills. The writing cases need a fixture repo and file tools, and run with and without the plugin:
+Run from the plugin root (the worktree, on a branch) so the cases load that branch's skills. Give each command one filter: with `--case` repeated, only the last glob runs. Each case runs 3 times by default.
+
+The writing cases need a fixture repo and file tools, and run with and without the plugin:
 
 ```sh
-claude plugin eval . --case 'tester-writes-*' --case 'tester-reports-*' --case 'tester-follows-*' --scaffold --allow-tools Bash Write Edit
+claude plugin eval . --tag writing --scaffold --allow-tools Bash Write Edit
 ```
 
 The triggering cases are only meaningful single-arm, because the no-plugin arm can never fire the skill:
 
 ```sh
-claude plugin eval . --case 'tester-triggers-*' --case 'tester-skips-*' --ablation none
+claude plugin eval . --tag triggering --ablation none
 ```
 
 The `align`, `spike`, `cut`, `build` and `crucible` cases invoke their skill by name, so they are single-arm too:
 
 ```sh
-claude plugin eval . --case 'align-*' --scaffold --ablation none --allow-tools Write Edit
-claude plugin eval . --case 'spike-*' --case 'cut-*' --scaffold --ablation none --allow-tools Bash Write Edit
-claude plugin eval . --case 'build-*' --case 'crucible-*' --scaffold --ablation none --allow-tools Agent Bash Write Edit
+claude plugin eval . --tag align --scaffold --ablation none --allow-tools Write Edit
+claude plugin eval . --tag spike --scaffold --ablation none --allow-tools Bash Write Edit
+claude plugin eval . --tag cut --scaffold --ablation none --allow-tools Bash Write Edit
+claude plugin eval . --tag build --scaffold --ablation none --allow-tools Agent Bash Write Edit
+claude plugin eval . --tag crucible --scaffold --ablation none --allow-tools Agent Bash Write Edit
 ```
 
 Results land in `evals/results/`, which is ignored.
