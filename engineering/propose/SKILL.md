@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 The planning lane's one way of asking. Most alignments settle into work; some need someone else's yes first, and `/propose` is how that question gets asked well.
 
-It reads the **spec** the ticket links, not a conversation. The goal, the behaviour lines, the decisions, the red team's verdict and the out-of-scope list are already the argument — the proposal's job is to retell it for a reader who was not in the room. Do NOT interview; synthesise.
+It reads the **spec** in the ticket's body, not a conversation. The goal, the behaviour lines, the decisions, the red team's verdict and the out-of-scope list are already the argument — the proposal's job is to retell it for a reader who was not in the room. Do NOT interview; synthesise.
 
 A proposal is a request for a decision, not a build spec: a spec tells a builder *what to build*, a proposal persuades a decision-maker *what to do and why*.
 
@@ -19,7 +19,7 @@ The issue tracker and triage label vocabulary should have been provided to you �
 
 ## Procedure
 
-1. **Read the spec and identify the ask.** Fetch the ticket through the tracker adapter and read the spec its body links. The Decisions entries are the options and their trade-offs, and the question the close named is what a yes would settle. Name the audience — your manager, a stakeholder, a client — because how hard to argue and how much context to front-load depends on them. If it is unclear, ask the one question.
+1. **Read the spec and identify the ask.** Fetch the ticket through the tracker adapter; its body is the spec. The Decisions entries are the options and their trade-offs, and the question the close named is what a yes would settle. Name the audience — your manager, a stakeholder, a client — because how hard to argue and how much context to front-load depends on them. If it is unclear, ask the one question.
 
 2. **Ask where it lands.** A proposal is a decision document, so its home differs from a ticket's. Propose the tracker default and confirm:
    - **GitHub** → an **issue** (the decision doc, shared with whoever decides), or a comment on the ticket when the ask is small and the reader is already there.
