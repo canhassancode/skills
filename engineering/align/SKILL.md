@@ -16,7 +16,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 ## Steps
 
 1. **Tier.** Place the ask on [references/tiers.md](references/tiers.md) and confirm it.
-   - One-sentence diff: say so and stop.
+   - One-sentence diff: say so, name the diff and any risk in one line each, and stop. Propose nothing: no aliases, shims or follow-ups.
    - Foggy: send each unknown to `/spike`, `/research` or `/prototype`, one question each. Log each answer in Decisions, then re-tier.
    - A child of a cut parent: read the parent spec and skip to step 3.
 2. **Red team.** Brief a fresh subagent with [references/red-team.md](references/red-team.md). Show its verdict — go, shrink or no-go — and the user decides.
