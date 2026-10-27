@@ -1,0 +1,1 @@
+/align .scratch/order-history/order-history.md — we're mid-session: tiered as known and one child, the red team said go. We're on the spec now. Whether the migration builds the `orders (customer_id)` index concurrently or in a plain transaction rests on how many rows `orders` holds on production. Get that number for Context, then carry on.

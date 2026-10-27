@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: align-remeasures-stand-in-on-target
+description: An agreed parent spec rests on a line limit a spike read from a scratch install of the linter while CI installs a different pinned version; align measures it again on the pinned version before recording it.
+tags: [align, align-measured]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit]
