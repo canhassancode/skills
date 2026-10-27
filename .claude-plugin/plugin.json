@@ -21,6 +21,7 @@
     "./engineering/research",
     "./engineering/review",
     "./engineering/shepherd",
+    "./engineering/spike",
     "./engineering/tdd",
     "./engineering/tester",
     "./engineering/triage",
