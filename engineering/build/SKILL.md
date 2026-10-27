@@ -1,6 +1,6 @@
 ---
 name: build
-description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and open the pull request — or stop and say which locked test is wrong. Use when a child ticket is ready-to-build.
+description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark the pull request ready — or stop and say which locked test is wrong. Use when a child ticket is ready-to-build.
 argument-hint: <child-ticket-ref>
 disable-model-invocation: true
 ---
@@ -25,10 +25,10 @@ This session is the **Delegator**: it holds the spec, the unit list and the resu
 
    Send every acting finding and failed verify step to one fix round in a fresh builder, which commits on top. Re-run the lock check, the suite, the verifier's failed steps and crucible over the fix commit. Anything still open, or that would change a behaviour line, goes to the user as one list.
 6. **Stop instead of working around** — a locked test that looks wrong, an interface that can't satisfy a line, missing access, or a fix that would change the spec. Post the stop report from [EXAMPLES.md](EXAMPLES.md); a wrong test or interface moves the ticket to `needs-alignment`, missing access leaves it at `ready-to-build`.
-7. **Open** the pull request as [EXAMPLES.md](EXAMPLES.md) does: behaviour lines with their tests, the Verify checklist with its evidence and an unchecked box for each step not run in session, Decided limits, and what was pruned. Drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
+7. **Hand back** the draft pull request `/align` opened on the branch: rewrite its body as [EXAMPLES.md](EXAMPLES.md) does — behaviour lines with their tests, the Verify checklist with its evidence and an unchecked box for each step not run in session, Decided limits, and what was pruned — then mark it ready. Drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
 
 When this window fills, the green units are already committed: push, write the Resume line and stop. A fresh `/build` reads the comment and starts at the next unit.
 
 ## Never
 
-Edit a locked file · run two writers in one checkout · read `.env`, `.mcp.json` or production credentials · open a pull request with a failing locked test, a changed lock or an unanswered acting finding · put criterion codes in commits or test names.
+Edit a locked file · run two writers in one checkout · read `.env`, `.mcp.json` or production credentials · mark a pull request ready with a failing locked test, a changed lock or an unanswered acting finding · put criterion codes in commits or test names.
