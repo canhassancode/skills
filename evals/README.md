@@ -20,10 +20,10 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 
 ## Running
 
-The writing cases need a fixture repo and file tools:
+Run from the plugin root (the worktree, on a branch) so the cases load that branch's skills. The writing cases need a fixture repo and file tools, and run with and without the plugin:
 
 ```sh
-claude plugin eval . --case 'tester-*' --scaffold --allow-tools Bash Write Edit
+claude plugin eval . --case 'tester-writes-*' --case 'tester-reports-*' --case 'tester-follows-*' --scaffold --allow-tools Bash Write Edit
 ```
 
 The triggering cases are only meaningful single-arm, because the no-plugin arm can never fire the skill:
