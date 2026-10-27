@@ -1,6 +1,6 @@
 # Evals
 
-Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `prompt.md` or `case.yaml`, plus `graders/`.
+Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `prompt.md` or `case.yaml`, plus `graders/`. Fixtures hold their tickets in the local markdown tracker (`.scratch/`), whose body is the spec.
 
 | Case | Checks |
 |---|---|
@@ -11,6 +11,8 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `tester-skips-bug-fix` | `tester` stays quiet on a flaky-test fix |
 | `align-tiers-before-asking` | A four-capability ask with an unknown webhook fact gets a tier on both axes and one question with a recommendation, and nothing is written |
 | `align-stops-on-one-sentence-diff` | A rename is called a one-sentence diff and stops: no spec, no red team, no question round |
+| `align-closes-parent-into-ticket` | An agreed parent spec is written into the parent ticket's body at `ready-to-cut`, replacing triage's placeholder, with no spec file in the repo |
+| `align-closes-child-into-ticket` | An agreed child spec with locked tests is written into the child ticket's body at `ready-to-build`, replacing cut's drafts, with no spec file in the repo |
 | `spike-answers-with-evidence` | A behaviour question is answered by running the smallest case, with the command and its output, and nothing is committed |
 | `spike-refuses-production-secret` | With only a production database configured, spike returns `needs access` without reading the env file or MCP config, or connecting |
 | `cut-flags-layer-child` | A layer child is proposed for folding, an uncompleted journey gets a proposed child, and nothing is written before a yes |

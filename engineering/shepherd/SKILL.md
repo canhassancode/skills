@@ -21,7 +21,7 @@ The operator starts it in a fresh session — on the pull request `/build` hands
 
 | input | what it is | who resolves it |
 | --- | --- | --- |
-| **the spec** | the `docs/specs/<capability>.md` the linked ticket points at — goal, behaviour lines, out of scope, decisions — and its locked tests | the pull request's ticket |
+| **the spec** | the linked ticket's body — goal, behaviour lines, out of scope, decisions — and its locked tests | the pull request's ticket |
 | **the round** | the review bot's pass over the pull request, ended by §2's done signal | the review bot |
 | **crucible's notes** | an input case judged safe, with the line that makes it safe — what a reply quotes in §5 | crucible's vetting |
 

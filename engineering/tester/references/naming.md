@@ -1,6 +1,6 @@
 # Naming
 
-A locked test's title is its spec behaviour line, word for word. The `describe` is the module or port. Nothing else links spec to test: no codes, no IDs. A grep for the sentence finds both.
+A locked test's title is its spec behaviour line, word for word. The `describe` is the module or port. Nothing else links spec to test: no codes, no IDs. The sentence in the ticket's body, grepped in the repo, finds its test.
 
 ## The spec line is written to be a test title
 

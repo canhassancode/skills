@@ -70,7 +70,7 @@ Treat a path to a `.md` file as the issue body. Read it — parsing any frontmat
 
 ### The placeholder
 
-An inbound ticket's queue form, written only where the body cannot already answer the first two sections. `/align` reads it as the ask, then replaces the body with the goal line and the spec's link.
+An inbound ticket's queue form, written only where the body cannot already answer the first two sections. `/align` reads it as the ask, then replaces the body with the spec.
 
 ```markdown
 ## Background

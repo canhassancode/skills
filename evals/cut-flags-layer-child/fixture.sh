@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p docs/specs src/orders
+mkdir -p .scratch/shipco-integration src/orders
 
 cat > src/orders/order.ts <<'TS'
 export type OrderStatus = 'paid' | 'awaiting_label' | 'shipped' | 'delivered'
@@ -12,8 +12,10 @@ export type Order = {
 }
 TS
 
-cat > docs/specs/shipco-integration.md <<'MD'
+cat > .scratch/shipco-integration/shipco-integration.md <<'MD'
 # ShipCo integration
+
+Status: ready-to-cut
 
 ## Goal
 Customers buy a ShipCo label at checkout and see tracking on their order.
@@ -44,6 +46,6 @@ Returns, customs, multi-parcel shipments, a second carrier.
 - 2026-10-20 Q: Do ShipCo webhooks arrive signed? → A: Yes, HMAC-SHA256 (spike).
 MD
 
-git init --quiet --initial-branch=spec/shipco-integration
+git init --quiet --initial-branch=main
 git add --all
 git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit --quiet -m "docs: shipco integration parent spec"

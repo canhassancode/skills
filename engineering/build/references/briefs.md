@@ -1,11 +1,11 @@
 # Briefs
 
-Each subagent starts fresh and knows only its brief. Fill the angle brackets; pass the spec by path, never restated.
+Each subagent starts fresh and knows only its brief. Fill the angle brackets; pass the spec by its ticket, never restated. The ticket's body is the spec, read as `docs/agents/issue-tracker.md` says.
 
 ## Builder
 
 ```text
-Unit <n> of <m> — <one line> · Ticket #<n> · Spec: docs/specs/<capability>.md
+Unit <n> of <m> — <one line> · Spec: the body of ticket #<n>
 
 Make these locked tests green:
 - "<behaviour line>"
@@ -28,7 +28,7 @@ criterion codes. Hand back the commit sha, the locked command's output and `git 
 ## Fix
 
 ```text
-Fix round · Ticket #<n> · Spec: docs/specs/<capability>.md
+Fix round · Spec: the body of ticket #<n>
 
 <each finding or failed verify step, verbatim, with its file:line and evidence>
 
@@ -58,7 +58,7 @@ done. Never read .env, .mcp.json or production config. For each step return one 
 ## Crucible
 
 ```text
-/crucible <lock-sha>...HEAD docs/specs/<capability>.md
+/crucible <lock-sha>...HEAD #<n>
 ```
 
 Nothing narrows it: no severity bar, no list of what to skip.

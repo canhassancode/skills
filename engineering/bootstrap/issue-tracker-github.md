@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues for this repo live as GitHub issues; specs live in the repo at `docs/specs/`. Use the `gh` CLI for all operations.
+Issues for this repo live as GitHub issues; a spec is its ticket's body. Use the `gh` CLI for all operations.
 
 ## Conventions
 
@@ -10,6 +10,7 @@ Issues for this repo live as GitHub issues; specs live in the repo at `docs/spec
 - **Comment on an issue**: `gh issue comment <number> --body "..."`
 - **Apply / remove labels**: `gh issue edit <number> --add-label "..."` / `--remove-label "..."`
 - **Close**: `gh issue close <number> --comment "..."`
+- **Write a spec**: `gh issue edit <number> --body-file -`, replacing the whole body. Read it with `gh issue view <number> --json body --jq .body`.
 - **Mark duplicate**: `gh issue close <number> --duplicate-of <survivor> --comment "Duplicate of #<survivor>"`. The comment names the survivor, so reopening the issue and clearing the relation undoes it.
 - **Reference another issue**: write the number bare — `#42`, `Blocked by #42`, `Closes #42`. Never wrap it in backticks. GitHub auto-links a bare `#42`; a backticked one renders as a code span and the link dies. Backticks stay correct for code identifiers.
 
@@ -74,5 +75,4 @@ Run `gh issue view <number> --comments`.
 `/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
 - **Each child** — a native sub-issue of the parent, in build order: `gh issue create --title "<child title>" --body-file - --parent <parent> --label needs-alignment --blocked-by <n>,<n>`. The body's `Blocked by` line repeats the edges for a cold reader; the native edge is the live gate.
-- **The parent** — drops its label once every child exists: `gh issue edit <parent> --remove-label ready-to-cut`. Its body's checklist names each child; it stays open until the last one merges.
-- **The spec pull request** — `gh pr ready <n>` once any Children list edit is pushed. Merging is the user's.
+- **The parent** — drops its label once every child exists: `gh issue edit <parent> --remove-label ready-to-cut`. Its spec's Children list becomes a checklist naming each child; it stays open until the last one merges.

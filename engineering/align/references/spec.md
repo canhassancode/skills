@@ -1,11 +1,11 @@
 # Spec
 
-A spec lives at `docs/specs/<capability>.md`. Two shapes: a **parent** holds what its children share; a **child** is one capability for one session. Status never goes in a spec. The tracker holds it, because hand-kept status fields drift.
+A spec is its ticket's body: a parent's on the parent ticket, a child's on its own. Two shapes: a **parent** holds what its children share; a **child** is one capability for one session. Status never goes in a spec. The label holds it, because hand-kept status fields drift.
 
 ## Child
 
 ```markdown
-# Buy a label   (parent: docs/specs/shipco-integration.md)
+Parent: #40 · Branch: `feat/buy-a-label`, draft PR #43
 
 ## Goal
 Buy a label for a chosen rate and store its tracking number on the order.
@@ -41,8 +41,6 @@ Label PDF rendering.
 ## Parent
 
 ```markdown
-# ShipCo integration
-
 ## Goal
 Customers buy a ShipCo label at checkout and see tracking on their order.
 
@@ -64,8 +62,8 @@ Returns, customs, multi-parcel shipments, a second carrier.
 2. ShipCo reports delivery and the order shows delivered.
 
 ## Children, in build order
-1. Quote rates — show delivery options and prices for a basket.
-2. Buy a label — buy a label for a chosen rate and store its tracking number.
+- [ ] #41 Quote rates — show delivery options and prices for a basket.
+- [ ] #42 Buy a label — buy a label for a chosen rate and store its tracking number.
 
 ## Decisions
 - 2026-10-20 Q: Do ShipCo webhooks arrive signed? → A: Yes, HMAC-SHA256 (spike).
@@ -81,7 +79,7 @@ Returns, customs, multi-parcel shipments, a second carrier.
 - **Verify** (child only): how a person sees it working on the running app — the start command with the credentials it needs, then each request or page and what it shows. Agreed with the user, because `/build` runs these steps without reading the code and leaves an unchecked box for any it can't. A child with nothing to run writes `none — <why>`.
 - **Rules** (parent only): cross-cutting requirements every child inherits without restating them.
 - **Journeys** (parent only): one or two end-to-end paths, written once at parent level.
-- **Children** (parent only): a name and one line each, in build order. `/cut` turns them into tickets with their behaviour lines; each child's interface and tests come back through `/align` just before it is built.
+- **Children** (parent only): a name and one line each, in build order. `/cut` turns them into tickets with their behaviour lines and adds each one's ticket to its line, so the list is the parent's checklist; each child's interface and tests come back through `/align` just before it is built.
 - **Decisions**: dated `Q → A`, newest last, the route in brackets where one answered it. A decision that outlives the feature becomes an ADR.
 
 ## Evidence

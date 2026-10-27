@@ -114,16 +114,7 @@ Interface gaps: none.
 
 ## A ticket body
 
-The body never grows past this. A child's body is the same without the children.
-
-```markdown
-Customers buy a ShipCo label at checkout and see tracking on their order.
-
-Spec: [docs/specs/shipco-integration.md](…) · draft PR #40
-
-- [ ] #41 Quote rates
-- [ ] #42 Buy a label
-```
+The body is the spec, in [references/spec.md](references/spec.md)'s shape. Before align closes, it holds whatever arrived: triage's placeholder, or `/cut`'s goal line and draft behaviour lines. Align replaces it whole, never appends to it.
 
 ## A session comment
 

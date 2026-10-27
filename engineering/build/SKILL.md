@@ -15,12 +15,12 @@ This session is the **Delegator**: it holds the spec, the unit list and the resu
 
 ## Steps
 
-1. **Read** the ticket, the spec on `feat/<capability>` and its `test: lock` commit. Rebase onto the base branch, then run [the lock check](../tester/scripts/check-locked-tests.sh) and the locked tests: every one red for the reason tester reported. Anything green, or red for another reason, stops the build.
+1. **Read** the ticket, whose body is the spec, and the `test: lock` commit on `feat/<capability>`. Rebase onto the base branch, then run [the lock check](../tester/scripts/check-locked-tests.sh) and the locked tests: every one red for the reason tester reported. Anything green, or red for another reason, stops the build.
 2. **Fit** the loop from the repo, not memory: typecheck, lint, the locked command, the full suite and the spec's `## Verify` start command. Run each once at the base. A missing command is recorded as absent; a missing service or credential is a stop (step 6).
 3. **Plan units.** Group the locked tests into units a fresh child can turn green, ordered so each starts from the last one's green tree. A child that needs more than a few units goes back to `/cut`.
 4. **Build each unit** with a fresh builder. It commits once, on a real green, and hands back the commit and the command's output. Check that output yourself before the next unit.
 5. **Vet and verify**, both in fresh subagents and neither the builder:
-   - `/crucible` over `<lock-sha>...HEAD` with the spec path. Delete the scratch tests on its prune list in one commit, `test: prune scratch tests`.
+   - `/crucible` over `<lock-sha>...HEAD` with the ticket. Delete the scratch tests on its prune list in one commit, `test: prune scratch tests`.
    - The verifier with the spec's `## Verify` steps only, never the diff or the tests.
 
    Send every acting finding and failed verify step to one fix round in a fresh builder, which commits on top. Re-run the lock check, the suite, the verifier's failed steps and crucible over the fix commit. Anything still open, or that would change a behaviour line, goes to the user as one list.

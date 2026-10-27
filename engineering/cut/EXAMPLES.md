@@ -1,6 +1,6 @@
 # Cut examples
 
-The parent is #40, *ShipCo integration*, with its spec at `docs/specs/shipco-integration.md` on `spec/shipco-integration`.
+The parent is #40, *ShipCo integration*, with its spec in its body.
 
 ## A failed check
 
@@ -39,29 +39,31 @@ Behaviour lines are drafts; each child's `/align` settles them with its interfac
 
 ## A child's body
 
+The first sections of a child spec; `/align <child>` fills the rest.
+
 ```markdown
+Parent: #40 · Blocked by #41
+
+## Goal
 Buy a label for the chosen rate and store its tracking number on the order.
 
-Parent: #40 · Spec: [docs/specs/shipco-integration.md](../blob/main/docs/specs/shipco-integration.md)
-Blocked by #41
-
-**Draft behaviour** — `/align` settles these before the build.
+## Behaviour
+Drafts: `/align` settles these before the build.
 - A valid rate buys a label and stores the tracking number on the order.
 - Buying twice for the same order returns the first label and charges once.
 - An expired rate is reported as rate_expired and nothing is stored.
 ```
 
-## The parent's body after the cut
+## The parent's Children after the cut
+
+The rest of the parent's body is unchanged.
 
 ```markdown
-Customers buy a ShipCo label at checkout and see tracking on their order.
-
-Spec: [docs/specs/shipco-integration.md](../blob/main/docs/specs/shipco-integration.md)
-
-- [ ] #41 Quote rates
-- [ ] #42 Buy a label
-- [ ] #43 Track a shipment
-- [ ] #44 Mark delivered
+## Children, in build order
+- [ ] #41 Quote rates — show delivery options and prices for a basket.
+- [ ] #42 Buy a label — buy a label for the chosen rate and store its tracking number on the order.
+- [ ] #43 Track a shipment — the order page shows the tracking number and ShipCo's latest status.
+- [ ] #44 Mark delivered — a signed delivered webhook moves the order to delivered.
 ```
 
 ## The session comment
@@ -69,9 +71,9 @@ Spec: [docs/specs/shipco-integration.md](../blob/main/docs/specs/shipco-integrat
 ```markdown
 **Session 2 — cut**
 
-Moved: 4 children published at `needs-alignment` (#41–#44); "Shipments table" folded into Buy a label; "Mark delivered" added for journey 2 (`9c1e4b2`). Spec PR #39 marked ready.
+Moved: 4 children published at `needs-alignment` (#41–#44); "Shipments table" folded into Buy a label; "Mark delivered" added for journey 2; the Children list updated to match.
 
-Next: merge #39, then `/align #41`.
+Next: `/align #41`.
 ```
 
 ## A re-cut

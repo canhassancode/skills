@@ -73,9 +73,9 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
 4. **Analyse — invoke `/crucible`** from inside the worktree, handing it exactly
    three things:
    - the **diff range** `<baseRefOid>...<headRefOid>` — the PR's own;
-   - the **spec path** — the `docs/specs/<capability>.md` the PR's linked
-     ticket points at; where there is none, hand it nothing and crucible runs
-     the steps that don't need one;
+   - the **ticket** — the PR's linked ticket, whose body is the spec; where
+     there is none, hand it nothing and crucible runs the steps that don't
+     need one;
    - **settled threads** — the published threads and Hassan's pending drafts, so
      nothing already answered is raised again.
    The procedure is crucible's, not this skill's: the lock check, the diff

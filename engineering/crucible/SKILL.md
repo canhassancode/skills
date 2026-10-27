@@ -1,7 +1,7 @@
 ---
 name: crucible
 description: Vet a diff — confirm locked tests are untouched, mutate only the changed lines to see which tests earn their place, look for code shaped to test inputs, walk changed hunks for failure paths, check CLAUDE.md rules and grep the consumers of what changed. Returns findings, a prune list and survivors; never edits the caller's tree or posts. Use when /build vets its branch, or /review and /shepherd analyse a pull request.
-argument-hint: <base>...<head> [spec path]
+argument-hint: <base>...<head> [ticket ref]
 ---
 
 # Crucible
@@ -10,7 +10,7 @@ Say what in a diff is wrong, unproven or unearned, with evidence a reader can re
 
 Origin: Google's diff-scoped mutation testing (Petrović et al. 2021: one mutant per changed line took useful mutants from 15% to 89%) and Shi et al. 2014 (pruning a suite by killed mutants loses no fault detection; by coverage, up to 20.5%).
 
-Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. A spec is optional; without one, steps that need it say so and the rest run.
+Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body, and it is optional; without one, steps that need it say so and the rest run.
 
 ## Steps
 

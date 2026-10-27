@@ -1,6 +1,6 @@
 # Issue tracker: GitLab
 
-Issues for this repo live as GitLab issues; specs live in the repo at `docs/specs/`. Use the [`glab`](https://gitlab.com/gitlab-org/cli) CLI for all operations.
+Issues for this repo live as GitLab issues; a spec is its ticket's description. Use the [`glab`](https://gitlab.com/gitlab-org/cli) CLI for all operations.
 
 ## Conventions
 
@@ -10,6 +10,7 @@ Issues for this repo live as GitLab issues; specs live in the repo at `docs/spec
 - **Comment on an issue**: `glab issue note <number> --message "..."`. GitLab calls comments "notes".
 - **Apply / remove labels**: `glab issue update <number> --label "..."` / `--unlabel "..."`. Multiple labels can be comma-separated or by repeating the flag.
 - **Close**: `glab issue close <number>`. `glab issue close` does not accept a closing comment, so post the explanation first with `glab issue note <number> --message "..."`, then close.
+- **Write a spec**: `glab issue update <number> --description "..."`, replacing the whole description. Use a heredoc for the multi-line spec.
 - **Mark duplicate**: `glab issue note <number> --message "/duplicate #<survivor>"`. The `/duplicate` quick action closes the issue and links it to the survivor, and GitLab's system note names the survivor.
 - **Merge requests**: GitLab calls PRs "merge requests". Use `glab mr create`, `glab mr view`, `glab mr note`, etc. — the same shape as `gh pr ...` with `mr` in place of `pr` and `note`/`--message` in place of `comment`/`--body`.
 
@@ -41,5 +42,4 @@ Run `glab issue view <number> --comments`.
 
 - **Each child** — an issue labelled `needs-alignment`, in build order: `glab issue create --title "<child title>" --description "..." --label needs-alignment`. Where the tier has child work items, create it under the parent; otherwise it is top-level and the parent's checklist is the only link.
 - **Blocking edges** — GitLab's native blocking link, posted as a note on the child: `/blocked_by #<n>`. On the free tier, fall back to a `Blocked by: #<n>` line in the description.
-- **The parent** — drops its label once every child exists: `glab issue update <parent> --unlabel ready-to-cut`. Its description's checklist names each child; it stays open until the last one merges.
-- **The spec merge request** — `glab mr update <n> --ready` once any Children list edit is pushed. Merging is the user's.
+- **The parent** — drops its label once every child exists: `glab issue update <parent> --unlabel ready-to-cut`. Its spec's Children list becomes a checklist naming each child; it stays open until the last one merges.

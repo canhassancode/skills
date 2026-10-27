@@ -5,14 +5,16 @@ commit() {
   git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit --quiet -m "$1"
 }
 
-mkdir -p docs/specs src
+mkdir -p .scratch/postage/issues src
 
 cat > package.json <<'JSON'
 { "name": "postage-fixture", "private": true, "type": "module", "scripts": { "test": "node --test" } }
 JSON
 
-cat > docs/specs/postage.md <<'MD'
+cat > .scratch/postage/issues/01-postage.md <<'MD'
 # Postage by weight
+
+Status: ready-to-build
 
 ## Goal
 Charge postage by parcel weight.
@@ -46,7 +48,7 @@ test('A parcel over 1000 grams costs 495 pence.', () => {
 JS
 
 git init --quiet --initial-branch=feat/postage
-git add package.json docs/specs/postage.md src/postage.js src/postage.acceptance.test.js
+git add package.json .scratch/postage/issues/01-postage.md src/postage.js src/postage.acceptance.test.js
 commit "test: lock postage tests"
 
 cat > src/postage.js <<'JS'

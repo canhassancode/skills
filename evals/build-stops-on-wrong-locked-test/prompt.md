@@ -1,1 +1,1 @@
-/build the child spec is docs/specs/discount.md on this branch, locked at the last commit; there's no tracker or remote here, so report in this session instead of posting
+/build .scratch/discount/issues/01-discount.md — the ticket is a local markdown file and its body is the spec; the tests are locked at the last commit. There's no remote here, so report in this session instead of posting

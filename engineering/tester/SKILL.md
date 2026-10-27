@@ -13,7 +13,7 @@ Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%) and Konstantino
 
 ## Inputs
 
-- The spec: its `## Behaviour` lines are the test titles.
+- The spec, which is the ticket's body: its `## Behaviour` lines are the test titles.
 - The approved interface: the public signatures and ports, committed as stubs that compile and throw.
 
 If either is missing, stop and say which.
@@ -36,7 +36,7 @@ Everything else follows the repo: the runner, `it` or `test`, where tests and fa
    - [references/end-to-end.md](references/end-to-end.md)
 5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it.
 6. **Run them and confirm every test is red for the right reason**: an assertion failure, or the stub's not-implemented error, raised through the public interface. A compile error, missing import, missing fixture or timeout is the wrong reason; fix the test.
-7. **Return the report** below. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
+7. **Return the report** below, in its shape even when the tests couldn't run: each line still gets its layer and file, with `not run — <why>` as its red reason. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
 
 ## When a behaviour can't be tested
 
