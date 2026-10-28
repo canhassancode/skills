@@ -37,7 +37,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 ## Where it lives
 
 - **Spec**: the ticket body, on the parent's ticket for a parent and on its own ticket for a child. It replaces whatever the body held. Status never goes in it; the label holds that.
-- **Code** (child only): the stubs and locked tests on `feat/<capability>`, opened as a draft pull request that links the ticket. A parent has no branch.
+- **Code** (child only): the stubs and locked tests on `feat/<capability>`, opened as a draft pull request that links the ticket. A child spanning repos names each repo's branch and the merge order in its header line, by [references/spec.md](references/spec.md). A parent has no branch.
 - **Session comment**: one per session, carrying only what moved.
 
 One child per session; the next starts fresh. A build that stops on a locked test comes back here: the spec changes first, the user removes the stale test, and step 6 runs for the changed lines only.

@@ -25,7 +25,7 @@ This session is the **Delegator**: it holds the spec, the unit list and the resu
 
    Send every acting finding and failed verify step to one fix round in a fresh builder, which commits on top. Re-run the lock check, the suite, the verifier's failed steps and crucible over the fix commit. Anything still open, or that would change a behaviour line, goes to the user as one list.
 6. **Stop instead of working around** — a locked test that looks wrong, an interface that can't satisfy a line, missing access, or a fix that would change the spec. Post the stop report from [EXAMPLES.md](EXAMPLES.md); a wrong test or interface moves the ticket to `needs-alignment`, missing access leaves it at `ready-to-build`.
-7. **Hand back** the draft pull request `/align` opened on the branch: rewrite its body as [EXAMPLES.md](EXAMPLES.md) does — behaviour lines with their tests, the Verify checklist with its evidence and an unchecked box for each step not run in session, Decided limits, and what was pruned — then mark it ready. Drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
+7. **Hand back** a pull request for each branch in the spec's header line, opening any `/align` didn't: rewrite each body as [EXAMPLES.md](EXAMPLES.md) does — behaviour lines with their tests, the Verify checklist with its evidence and an unchecked box for each step not run in session, Decided limits, what was pruned, and the header's merge order where it gives one — then mark each ready. Drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
 
 When this window fills, the green units are already committed: push, write the Resume line and stop. A fresh `/build` reads the comment and starts at the next unit.
 
