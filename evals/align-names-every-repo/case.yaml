@@ -1,0 +1,25 @@
+schema_version: "1.1"
+name: align-names-every-repo
+description: An agreed child spec touches the api and admin repos and admin must merge first; align's close writes a header line naming both repos' branches in merge order.
+tags: [align]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 12
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Write, Edit]
+graders:
+  - name: "A child spec that touches more than one repo names each repo's branch in its header line."
+    type: regex
+    target: {source: file, path: .scratch/retire-coupons/issues/01-retire-coupons.md}
+    match: contains
+    pattern: "^(?:(?!## )[^\\n]*\\n)*?(?=[^\\n]*\\bapi\\b)(?=[^\\n]*\\badmin\\b)(?=[^\\n]*feat/retire-coupons)[^#\\n]"
+  - name: "When one repo must merge first, the header line gives the merge order."
+    type: llm
+    focus: {source: file, path: .scratch/retire-coupons/issues/01-retire-coupons.md}
+    criteria: |
+      The header lines are the lines between the `# Retire coupon codes` title and the first `## ` section heading.
+
+      PASS only if a header line names the admin repo's branch and the api repo's branch and says admin merges first, before api — by an explicit order such as "admin first, then api", "merge order: admin → api" or "admin merges before api".
+
+      FAIL if the merge order appears only in Context, Decisions or another section, if the header line lists both branches with no order, or if it puts api first.
