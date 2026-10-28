@@ -7,7 +7,7 @@ A good test fails when the behaviour changes and passes when only the structure 
 - **Strong oracle.** It asserts a value: `toEqual` on a return value or the state read back through the interface, or a specific error. Not existence, not a boolean, not a call, not a snapshot.
 - **Public interface only.** It imports from the module's `index.ts`, never from `internal/`.
 - **Fakes only at ports.** No `vi.mock` of anything inside the module under test.
-- **Decoded values, not the wire.** Pass the interface what the framework hands it after decoding: the object a JSON scalar or body parser produces, the number a query string becomes. Never `JSON.stringify` a value or copy the request body's encoding; a sample request in the spec shows the wire, not the argument.
+- **Decoded values, not the wire.** Pass the interface what the framework hands it after decoding: the object a JSON scalar or body parser produces, the value a validated or coerced query parameter becomes. Never `JSON.stringify` a value or copy the request body's encoding; a sample request in the spec shows the wire, not the argument.
 - **Arrange, act, assert, in that order.** One act per test. Fakes are only set up in arrange: which card declines, what time it is.
 - **Deterministic.** Fake clock, fixed seeds, no reliance on collection order, no real network.
 - **No waits.** No `setTimeout`, `sleep`, `page.waitForTimeout`. Poll for state or advance the fake clock.
