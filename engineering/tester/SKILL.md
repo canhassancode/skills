@@ -43,6 +43,8 @@ Everything else follows the repo: the runner, `it` or `test`, where tests and fa
 
 If a behaviour line can't be observed through the approved interface, don't reach into internals or invent a method. Report it as an interface gap; the interface goes back for approval.
 
+A value the behaviour depends on that neither the spec nor the repo gives is a spec gap, even when widening the interface could also supply it: the spec states the value or names where it comes from. It becomes an interface gap only once the spec has the fact and the approved interface still can't carry or observe it.
+
 ## Report
 
 ```
