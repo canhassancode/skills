@@ -23,7 +23,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 3. **Spec.** Grill until [references/spec.md](references/spec.md)'s template is full: a child spec if it fits one session, otherwise a parent spec. Each settled question is a dated `Q → A` in Decisions.
 4. **Domain.** Each new term and each ADR is its own yes.
 5. **Interface** (child only). Propose signatures with [codebase-design](../codebase-design/SKILL.md): the code, one caller and the error kinds, one interface at a time. On a yes, commit them as stubs that compile and throw: `feat: stub <capability> interface`.
-6. **Tests** (child only). Run `/tester` and show its report. An interface gap goes back to step 5. On a yes, commit `test: lock <capability> tests`.
+6. **Tests** (child only). Run `/tester` and show its report. Any gap blocks the lock: an interface gap goes to step 5, a spec gap to step 3, and a green or stale-lock gap to the user. On a yes with no gaps, commit `test: lock <capability> tests`.
 7. **Close.** Check every number by [references/spec.md](references/spec.md)'s Numbers rule, then write the spec into the ticket body, push the branch if there is one, post the session comment and set the label.
 
 | Ends on | Label | Next |

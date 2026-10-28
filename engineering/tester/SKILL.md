@@ -46,11 +46,16 @@ If a behaviour line can't be observed through the approved interface, don't reac
 
 ```
 Conventions followed: <runner, test function, test and fake locations — or "none found, used the reference examples">
+Typecheck: <command> — clean | <errors, each also a gap>
 
 | Behaviour | Layer | File | Red because |
 |---|---|---|---|
 | <behaviour line> | acceptance | src/billing/billing.acceptance.test.ts | expected { state: 'active' … }, received not implemented |
 
-Interface gaps: <none, or each behaviour and what the interface lacks>
+Gaps: <none, or one per line>
+- interface — <behaviour> — <what the interface lacks>
+- spec — <behaviour> — <the fact missing from spec and repo>
+- green — <behaviour> — passes against the stubs
+- stale lock — <file:line> — <the new line it contradicts>
 Command: <the one command that runs exactly these tests>
 ```

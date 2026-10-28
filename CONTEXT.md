@@ -47,6 +47,10 @@ _Avoid_: acceptance criterion, scenario, requirement.
 A test `/tester` writes from the approved spec and interface before any implementation, proven red for the right reason, approved by the operator and committed as `test: lock <capability> tests`. The file suffix is the lock — `.acceptance.`, `.properties.`, `.contract.`, or an `e2e/` directory. Read-only to everyone after that commit: a hook blocks edits as they happen, and the lock check fails the branch if one changed. An implementer who thinks one is wrong stops and says so.
 _Avoid_: witness, criterion, spec test.
 
+**Stale lock**:
+An earlier **Locked test** that contradicts a new spec or interface line. `/tester` reports it as a gap with its file and line; only the operator removes it (`! git rm`) before the line is relocked.
+_Avoid_: outdated test, conflicting test.
+
 **Scratch test**:
 A test the implementer writes outside the locked files while building. Kept only if it kills a mutant the locked tests miss; otherwise it goes on **crucible**'s **Prune list**.
 _Avoid_: unit test — the layer is named by who owns it, not by its scope.
