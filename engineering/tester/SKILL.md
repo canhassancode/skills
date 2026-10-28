@@ -34,9 +34,10 @@ Everything else follows the repo: the runner, `it` or `test`, where tests and fa
    - [references/properties.md](references/properties.md)
    - [references/contract.md](references/contract.md)
    - [references/end-to-end.md](references/end-to-end.md)
-5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it.
+5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it. Every argument is the value the framework has already decoded, never its wire encoding.
 6. **Run them and confirm every test is red for the right reason**: an assertion failure, or the stub's not-implemented error, raised through the public interface. A compile error, missing import, missing fixture or timeout is the wrong reason; fix the test.
-7. **Return the report** below, in its shape even when the tests couldn't run: each line still gets its layer and file, with `not run — <why>` as its red reason. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
+7. **Run the repo's typecheck over the tests.** A type error is fixed in the test, never silenced with a cast, `any` or an ignore comment. If only a fact the spec and repo don't give would fix it, such as which of the interface's values a behaviour line's term means, delete that test and report the line as a spec gap. If the typecheck can't run, the `Typecheck:` line says `not run — <why>`, never clean.
+8. **Return the report** below, in its shape even when the tests couldn't run: each line still gets its layer and file, with `not run — <why>` as its red reason. The `Typecheck:` and `Gaps:` lines are what `/align` blocks the lock on, so they reach the user word for word, whoever relays the report. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
 
 ## When a behaviour can't be tested
 
@@ -46,7 +47,7 @@ If a behaviour line can't be observed through the approved interface, don't reac
 
 ```
 Conventions followed: <runner, test function, test and fake locations — or "none found, used the reference examples">
-Typecheck: <command> — clean | <errors, each also a gap>
+Typecheck: <command> — clean | not run — <why> | <errors, each also a gap>
 
 | Behaviour | Layer | File | Red because |
 |---|---|---|---|
