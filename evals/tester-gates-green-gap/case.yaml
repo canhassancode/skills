@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: tester-gates-green-gap
+description: A test that passes against the stubs is reported as a green gap, not as a lock.
+tags: [tester, writing]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent]

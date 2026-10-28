@@ -9,6 +9,13 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `tester-follows-repo-conventions` | In a repo using top-level `test()`, `__tests__/` and fakes in `src/testing/`, the locked tests follow that layout and reuse its fakes, keeping the `.acceptance.` suffix |
 | `tester-triggers-on-spec` | `tester` fires on "write the tests from the agreed spec" |
 | `tester-skips-bug-fix` | `tester` stays quiet on a flaky-test fix |
+| `tester-gates-wire-encoding` | A GraphQL-style handler whose `JSON` scalar arrives decoded is tested with the decoded object, never a `JSON.stringify`'d string |
+| `tester-gates-spec-gap` | A late-fee line whose daily fee is in neither the spec nor the repo is reported as a spec gap, with no guessed test |
+| `tester-gates-green-gap` | A line the stub's default `[]` already satisfies is reported as a green gap, not as ready to lock |
+| `tester-gates-typecheck` | The report carries a `Typecheck:` line, no type error is silenced, and a "concession" line the `MemberType` union can't express is a spec gap |
+| `tester-gates-stale-lock` | An older locked test in another module that runs an export without the now-required `since` is reported as a stale lock at its file and line, and left in place |
+| `tester-gates-align-routes-interface-and-spec` | Asked to lock with an interface gap and a spec gap open, align refuses and sends them to step 5 and step 3 |
+| `tester-gates-align-routes-green-and-stale-lock` | Asked to lock with a green gap and a stale lock open, align refuses, puts both to the user and leaves the stale file for them to `! git rm` |
 | `align-tiers-before-asking` | A four-capability ask with an unknown webhook fact gets a tier on both axes and one question with a recommendation, and nothing is written |
 | `align-stops-on-one-sentence-diff` | A rename is called a one-sentence diff and stops: no spec, no red team, no question round |
 | `align-closes-parent-into-ticket` | An agreed parent spec is written into the parent ticket's body at `ready-to-cut`, replacing triage's placeholder, with no spec file in the repo |
@@ -49,6 +56,12 @@ claude plugin eval . --tag spike --scaffold --ablation none --allow-tools Bash W
 claude plugin eval . --tag cut --scaffold --ablation none --allow-tools Bash Write Edit
 claude plugin eval . --tag build --scaffold --ablation none --allow-tools Agent Bash Write Edit
 claude plugin eval . --tag crucible --scaffold --ablation none --allow-tools Agent Bash Write Edit
+```
+
+The `tester-gates-*` cases share one glob, across both tags, single-arm:
+
+```sh
+claude plugin eval . --case 'tester-gates-*' --ablation none --runs 1 --max-cost-usd 5 --scaffold --allow-tools Bash Write Edit
 ```
 
 Results land in `evals/results/`, which is ignored.
