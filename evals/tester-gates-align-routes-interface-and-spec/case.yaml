@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: tester-gates-align-routes-interface-and-spec
+description: "Align offers no lock while any gap stands, and sends each kind back: interface to step 5, spec to step 3, green and stale lock to the user."
+tags: [align]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash, Write, Edit]

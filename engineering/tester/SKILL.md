@@ -34,23 +34,33 @@ Everything else follows the repo: the runner, `it` or `test`, where tests and fa
    - [references/properties.md](references/properties.md)
    - [references/contract.md](references/contract.md)
    - [references/end-to-end.md](references/end-to-end.md)
-5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it.
+5. **Check each test against** [references/good-vs-bad.md](references/good-vs-bad.md) before running it. Every argument is the value the framework has already decoded, never its wire encoding.
 6. **Run them and confirm every test is red for the right reason**: an assertion failure, or the stub's not-implemented error, raised through the public interface. A compile error, missing import, missing fixture or timeout is the wrong reason; fix the test.
-7. **Return the report** below, in its shape even when the tests couldn't run: each line still gets its layer and file, with `not run — <why>` as its red reason. Do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
+7. **Run the repo's typecheck over the tests.** A type error is fixed in the test, never silenced with a cast, `any` or an ignore comment. If only a fact the spec and repo don't give would fix it, such as which of the interface's values a behaviour line's term means, delete that test and report the line as a spec gap. If the repo has a typecheck that can't run, such as for missing dependencies, the `Typecheck:` line says `not run — <why>`, never clean, and it is also a typecheck gap. A repo has a typecheck when it has a typecheck config, such as a `tsconfig.json`, or a typecheck script, whether or not its dependencies are installed; only a repo with neither reports `none in repo`, which passes like clean.
+8. **Return the report** below, in its shape even when the tests couldn't run: each line still gets its layer and file, with `not run — <why>` as its red reason. You run as a fork, so your invoker relays the report and tends to reword it; the `Typecheck:` and `Gaps:` lines are what `/align` blocks the lock on, so the report opens with the relay line that tells it to pass them on word for word. With any gap open, the tests can't lock until each gap is settled: the report says so, and neither you nor the invoker offers the `test: lock` commit or asks for approval to lock. With no gaps, do not commit — the invoker commits after the human approves, using `test: lock <capability> tests`. [references/locking.md](references/locking.md) covers what the lock enforces.
 
 ## When a behaviour can't be tested
 
 If a behaviour line can't be observed through the approved interface, don't reach into internals or invent a method. Report it as an interface gap; the interface goes back for approval.
 
+A value the behaviour depends on that neither the spec nor the repo gives is a spec gap, even when widening the interface could also supply it: the spec states the value or names where it comes from. It becomes an interface gap only once the spec has the fact and the approved interface still can't carry or observe it.
+
 ## Report
 
 ```
+Relay to the user as written: the Typecheck and Gaps lines below go word for word, never paraphrased or dropped. With any gap open, these tests can't lock until each gap is settled; don't offer the lock commit or ask for approval to lock.
 Conventions followed: <runner, test function, test and fake locations — or "none found, used the reference examples">
+Typecheck: <command> — clean | <errors, each also a gap> | not run — <why> | none in repo
 
 | Behaviour | Layer | File | Red because |
 |---|---|---|---|
 | <behaviour line> | acceptance | src/billing/billing.acceptance.test.ts | expected { state: 'active' … }, received not implemented |
 
-Interface gaps: <none, or each behaviour and what the interface lacks>
+Gaps: <none, or one per line>
+- interface — <behaviour> — <what the interface lacks>
+- spec — <behaviour> — <the fact missing from spec and repo>
+- green — <behaviour> — passes against the stubs
+- stale lock — <file:line> — <the new line it contradicts>
+- typecheck — <command> — <the error, or why it couldn't run>
 Command: <the one command that runs exactly these tests>
 ```

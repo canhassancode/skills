@@ -107,7 +107,7 @@ if (!label.ok && label.error.kind === 'rate_expired') return requote(order)
 | A valid rate buys a label and stores the tracking number on the order. | `src/shipping/shipping.acceptance.test.ts` | not implemented |
 | Buying twice for the same order returns the first label and charges once. | same | not implemented |
 
-Interface gaps: none.
+Gaps: none.
 
 ❓ **Lock them?**
 ```
