@@ -49,7 +49,8 @@ or the tests; don't read them.
 <the spec's ## Verify section, verbatim>
 
 Start the app with `timeout 600`, use only credentials already in the environment, and stop it when
-done. Never read .env, .mcp.json or production config. For each step return one of:
+done. Never read .env, .mcp.json or production config. Run each step exactly as written; never edit a
+file, workflow or setup to make a step pass. For each step return one of:
 - passed — the command and its output, or the screenshot path
 - failed — what you expected, what you saw, the output
 - changed — the step as written, what you ran instead and why; counts as failed
