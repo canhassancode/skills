@@ -52,6 +52,7 @@ Start the app with `timeout 600`, use only credentials already in the environmen
 done. Never read .env, .mcp.json or production config. For each step return one of:
 - passed — the command and its output, or the screenshot path
 - failed — what you expected, what you saw, the output
+- changed — the step as written, what you ran instead and why; counts as failed
 - not run — why (missing credential, service, browser), and the exact steps a reviewer would take
 ```
 

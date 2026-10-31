@@ -31,7 +31,9 @@ Findings are about correctness, the spec and the user's written rules, not taste
 Lock        unchanged since <sha> | changed: <files>
 Mutation    <killed>/<total> on changed lines, <tool>, <minutes> min | absent — <why> | budget hit — <what was skipped>
 Prune       <test file › name> — no unique kill    (or: none)
-Survivors   <file:line> <mutation> — <question>    (or: none)
+Survivors   <file:line> <mutation> — <question>
+            <file:line> <mutation> — equivalent: <why no input tells them apart>; tried <boundary input>
+            (or: none)
 
 Findings, each:
   class     behaviour | claim | rule | test
