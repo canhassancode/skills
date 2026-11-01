@@ -97,6 +97,14 @@ The README is the human-facing catalogue. It mirrors what's in plugin.json but a
 - Deprecated skills live in `## deprecated/` — name what superseded each
 - The `## My day-to-day` section is opinionated — update it only when the daily workflow actually changes, not every time a skill is added or retired
 
+## Evals
+
+Eval runs are non-deterministic, so one run below 1.00 is a reason to re-run, not a verdict.
+
+- **Locked cases** grade with `regex` or `tool_used`, never an `llm` judge, and must score 1.00 on every run. A locked case that misses is a build stop.
+- **Model-judged cases** (regression evals with an `llm` grader) that score below 1.00 are re-run alone with `--runs 3`. They pass at 2 of 3 runs or better. Anything less goes to the user with the failing final message and the judge votes.
+- A "scores 1.00 on every case" Done-when is read by these two rules.
+
 ## Issue tracker
 
 tracker: github
