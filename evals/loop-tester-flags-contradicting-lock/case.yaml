@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: loop-tester-flags-contradicting-lock
-description: A locked test expects full score and an empty list with a minor item open, against Decisions that count every open item and pass the list through; tester reports it as a spec gap, and a line no signature can return as an interface gap.
+description: A locked test expects full score and an empty list with a minor item open, against Decisions that count every open item and pass the list through; tester reports it as a stale lock or a spec gap, and a line no signature can return as an interface gap.
 tags: [tester, writing, loop]
 context:
   scaffold_script: fixture.sh
