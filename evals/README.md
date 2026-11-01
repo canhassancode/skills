@@ -37,6 +37,7 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `loop-align-checks-context-facts` | A Context line claiming the gateway refunds part of a charge is checked against the repo's full-refund `refund(chargeId)` and raised before the spec is approved |
 | `loop-verifier-reports-changed-step` | A Verify step's `npm start` with no start script is reported as failed, with what was expected and what was seen, or as changed, with what ran instead, counted as failed; no start script is added |
 | `loop-tester-flags-contradicting-lock` | A locked test expecting full score and an empty list with a minor item open, against Decisions that count every open item and pass the list through, is reported as a stale lock or spec gap and left untouched; a line no signature returns is an interface gap |
+| `loop-tester-prefers-plain-check` | In a skills repo whose locked tests are eval graders, a line the final message's text decides is locked as a `regex` or `tool_used` grader at the path the interface names, never an `llm` judge |
 
 ## Running
 
