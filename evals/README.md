@@ -31,6 +31,13 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `align-names-every-repo` | An agreed child spec spanning `api` and `admin`, where admin merges first, closes with a header line naming both repos' branches in merge order |
 | `crucible-prunes-scratch-tests` | Mutation on the changed lines lists the two scratch tests that kill nothing unique and keeps the one that catches dropped rounding; no locked test is listed |
 | `crucible-flags-shaped-to-tests` | Green locked tests with an implementation that branches on the test's own input are returned as a finding, not passed |
+| `loop-align-writes-spec-before-tester` | At step 6, the agreed child spec is written into the ticket body before tester runs |
+| `loop-build-merges-base-into-pushed-branch` | A pushed build branch whose base has moved on is brought up to date by merging main, never rebased or force-pushed |
+| `loop-crucible-equivalent-needs-reason` | The `>`/`>=` cap mutant is noted as equivalent with why no input tells them apart and the boundary input tried; the real lower-clamp survivor stays a question |
+| `loop-align-checks-context-facts` | A Context line claiming the gateway refunds part of a charge is checked against the repo's full-refund `refund(chargeId)` and raised before the spec is approved |
+| `loop-verifier-reports-changed-step` | A Verify step's `npm start` with no start script is reported as failed, with what was expected and what was seen, or as changed, with what ran instead, counted as failed; no start script is added |
+| `loop-tester-flags-contradicting-lock` | A locked test expecting full score and an empty list with a minor item open, against Decisions that count every open item and pass the list through, is reported as a stale lock or spec gap and left untouched; a line no signature returns is an interface gap |
+| `loop-tester-prefers-plain-check` | In a skills repo whose locked tests are eval graders, a line the final message's text decides is locked as a `regex` or `tool_used` grader at the path the interface names, never an `llm` judge |
 
 ## Running
 
@@ -62,6 +69,12 @@ The `tester-gates-*` cases share one glob, across both tags, single-arm:
 
 ```sh
 claude plugin eval . --case 'tester-gates-*' --ablation none --runs 1 --max-cost-usd 5 --scaffold --allow-tools Bash Write Edit
+```
+
+The `loop-*` cases share one glob, across their tags, single-arm:
+
+```sh
+claude plugin eval . --case 'loop-*' --ablation none --runs 1 --max-cost-usd 5 --scaffold --allow-tools Bash Write Edit
 ```
 
 Results land in `evals/results/`, which is ignored.
