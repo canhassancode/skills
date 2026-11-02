@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Operator**:
-The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, ticks the pull request's unchecked Verify boxes, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for, never a station it waits at.
+The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is that ruling, at hand-back.
 _Avoid_: user, developer, owner.
 
 **Align**:
@@ -56,7 +56,7 @@ A test the implementer writes outside the locked files while building. Kept only
 _Avoid_: unit test — the layer is named by who owns it, not by its scope.
 
 **Verify**:
-A child spec's section agreeing, at `/align`, how to see the change working on the running app — the start command, the endpoint, the page. `/build`'s **Verifier** runs it; a step it can't run becomes an unchecked box in the pull request for the operator. `none — <why>` is allowed.
+A child spec's section agreeing, at `/align`, how to see the change working on the running app — the start command, the endpoint, the page. `/align` opens the draft pull request with each step as an unchecked box; `/build`'s **Verifier** runs them, and a step it can't tick waits for the operator's ruling before the pull request goes ready. `none — <why>` is allowed.
 _Avoid_: QA, manual test, acceptance.
 
 **Cut**:
