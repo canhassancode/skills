@@ -61,6 +61,17 @@ Drafts: `/align` settles these before the build.
 ## Comments
 MD
 
+cat > src/shipping/quote-rates.js <<'JS'
+export async function quoteRates(basket) {
+  const response = await fetch('https://api.shipco.example/v2/rates', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ parcels: basket.parcels }),
+  })
+  return response.json()
+}
+JS
+
 cat > src/shipping/carrier.js <<'JS'
 export async function purchaseLabel(rateId) {
   const response = await fetch('https://api.shipco.example/v2/labels', {

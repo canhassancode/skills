@@ -35,6 +35,9 @@ Customers buy a ShipCo label at checkout and see tracking on their order.
 - [x] 01 Quote rates — show delivery options and prices for a basket.
 - [ ] 02 Buy a label — buy a label for a chosen rate and store its tracking number.
 
+## Decisions
+- 2026-10-30 Q: Retry a 409 from ShipCo? → A: No; it means the label exists, so fetch it (spike).
+
 ## Comments
 MD
 
@@ -51,9 +54,6 @@ Buy a label for a chosen rate and store its tracking number on the order.
 Drafts: `/align` settles these before the build.
 - A valid rate buys a label and stores the tracking number on the order.
 - An expired rate is reported as rate_expired and nothing is stored.
-
-## Decisions
-- 2026-10-30 Q: Retry a 409 from ShipCo? → A: No; it means the label exists, so fetch it (spike).
 
 ## Comments
 MD
