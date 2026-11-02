@@ -49,7 +49,8 @@ Lock check: unchanged since `9c41e2a`. Full suite: 412 passed.
 
 - [x] POST /api/orders/123/label `{"rateId":"r_1"}` → 201, tracking `SC48213` (output below)
 - [x] /orders/123 shows "Tracking: SC48213" under Shipping (`verify/order-123.png`)
-- [ ] A ShipCo outage shows "Shipping is unavailable, try again" — not run in session: the sandbox has no way to force a 503. Reviewer: `SHIPCO_BASE_URL=http://localhost:9 pnpm dev`, then buy a label on /orders/123.
+- [ ] A ShipCo outage shows "Shipping is unavailable, try again" — not run in session: the sandbox has no way to force a 503.
+  Ruling (operator, 2026-10-28): the reviewer checks it by hand — `SHIPCO_BASE_URL=http://localhost:9 pnpm dev`, then buy a label on /orders/123.
 
 ## Decided limits
 
@@ -59,6 +60,18 @@ Lock check: unchanged since `9c41e2a`. Full suite: 412 passed.
 ## Pruned
 
 Crucible removed 3 of 5 scratch tests that caught nothing the locked tests miss; kept `mapCarrierError.test.ts` (2 unique kills).
+```
+
+Align opened this body as a draft; build edits it in place and leaves it a draft until the outage step has its ruling.
+
+## The escalation
+
+Asked in session once the body is updated, every unchecked step in one message, before the pull request goes ready:
+
+```markdown
+One Verify step on #57 wasn't run, so the pull request stays a draft until you rule on it:
+
+- **ShipCo outage shows "Shipping is unavailable, try again"** — the sandbox has no way to force a 503. Can the reviewer check it by hand with `SHIPCO_BASE_URL=http://localhost:9 pnpm dev`, or should it run somewhere first?
 ```
 
 ## The session comment
@@ -73,3 +86,4 @@ Crucible removed 3 of 5 scratch tests that caught nothing the locked tests miss;
 ```
 
 A run that filled its window instead ends `**Resume**  unit 2 of 2, from b7d3f10`.
+One that ended with no ruling ends `**Resume**  awaiting a ruling on Verify step 3, the ShipCo outage — #57 stays a draft`.

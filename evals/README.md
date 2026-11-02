@@ -32,6 +32,11 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `cut-flags-layer-child` | A layer child is proposed for folding, an uncompleted journey gets a proposed child, and nothing is written before a yes |
 | `build-stops-on-wrong-locked-test` | A locked test whose expected value contradicts its own title and the spec stops the build with a report naming it; the test is never edited and the wrong value never hardcoded |
 | `align-names-every-repo` | An agreed child spec spanning `api` and `admin`, where admin merges first, closes with a header line naming both repos' branches in merge order |
+| `align-opens-draft-with-verify-boxes` | At close, align opens the draft pull request with the goal, each behaviour line red at the lock, every Verify step as an unchecked box and the decided limits |
+| `build-updates-draft-in-place` | At hand-back, build updates align's draft body in place, ticking each step it ran with its evidence and leaving the unrun step unchecked with its reason; the pull request stays a draft |
+| `build-escalates-unchecked-steps` | An unrun Verify step is put to the operator as a question and the pull request stays a draft |
+| `build-flips-after-ruling` | A ruled step stays unchecked with the operator's ruling under it, and the pull request goes ready |
+| `build-resumes-awaiting-ruling` | With no ruling by the end of the session, the pull request stays a draft, the ticket stays `ready-to-build` and the Resume line names the step |
 | `crucible-prunes-scratch-tests` | Mutation on the changed lines lists the two scratch tests that kill nothing unique and keeps the one that catches dropped rounding; no locked test is listed |
 | `crucible-flags-shaped-to-tests` | Green locked tests with an implementation that branches on the test's own input are returned as a finding, not passed |
 | `loop-align-writes-spec-before-tester` | At step 6, the agreed child spec is written into the ticket body before tester runs |
