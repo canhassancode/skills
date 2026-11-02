@@ -116,6 +116,36 @@ Gaps: none.
 
 The body is the spec, in [references/spec.md](references/spec.md)'s shape. Before align closes, it holds whatever arrived: triage's placeholder, or `/cut`'s goal line and draft behaviour lines. Align replaces it whole, never appends to it.
 
+## The draft pull request
+
+Build's [pull request](../build/EXAMPLES.md#the-pull-request), filled in with what align knows at the lock. Nothing is ticked: build ticks each step it runs.
+
+```markdown
+## Summary
+
+Buy a ShipCo label for the chosen rate and store its tracking number on the order. Closes #42.
+
+## Behaviour
+
+| Behaviour | Test | Result |
+|---|---|---|
+| A valid rate buys a label and stores the tracking number on the order. | `shipping.acceptance.test.ts` | red |
+| Buying twice for the same order returns the first label and charges once. | `shipping.properties.test.ts` | red |
+
+Locked at `d4e5f6a`.
+
+## Verify
+
+- [ ] POST /api/orders/123/label `{"rateId":"r_1"}` → 201 with a tracking number
+- [ ] /orders/123 shows the tracking number under Shipping
+- [ ] A ShipCo outage shows "Shipping is unavailable, try again"
+
+## Decided limits
+
+- Label PDF rendering is out of scope (spec).
+- A 409 from ShipCo fetches the existing label instead of retrying (spec Decisions, 2026-10-21).
+```
+
 ## A session comment
 
 One per session, carrying only what moved.
