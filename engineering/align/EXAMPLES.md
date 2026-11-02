@@ -114,7 +114,7 @@ Gaps: none.
 
 ## A ticket body
 
-The body is the spec, in [references/spec.md](references/spec.md)'s shape. Before align closes, it holds whatever arrived: triage's placeholder, or `/cut`'s goal line and draft behaviour lines. Align replaces it whole, never appends to it.
+The body is the spec, in [references/spec.md](references/spec.md)'s shape. Before align closes, it holds whatever arrived: triage's placeholder, or `/cut`'s goal line and draft behaviour lines. Align replaces it whole, except Decisions: each settled answer is appended there the moment it is settled, and the spec keeps every line already there.
 
 ## The draft pull request
 

@@ -19,7 +19,10 @@ Cases for `claude plugin eval` (Claude Code 2.1.269+). One directory per case: `
 | `align-tiers-before-asking` | A four-capability ask with an unknown webhook fact gets a tier on both axes and one question with a recommendation, and nothing is written |
 | `align-stops-on-one-sentence-diff` | A rename is called a one-sentence diff and stops: no spec, no red team, no question round |
 | `align-closes-parent-into-ticket` | An agreed parent spec is written into the parent ticket's body at `ready-to-cut`, replacing triage's placeholder, with no spec file in the repo |
-| `align-closes-child-into-ticket` | An agreed child spec with locked tests is written into the child ticket's body at `ready-to-build`, replacing cut's drafts, with no spec file in the repo |
+| `align-closes-child-into-ticket` | An agreed child spec with locked tests is written into the child ticket's body at `ready-to-build`, replacing cut's drafts and keeping the body's Decisions, with no spec file in the repo |
+| `align-writes-each-decision` | Mid-grilling a child, an answered question is written into the body's Decisions as a dated `Q → A` before the next question, keeping the earlier line, and nothing settled is asked again |
+| `align-child-keeps-settled` | A child never asks again whether a second purchase for the same order buys a second label, settled in its parent, and raises the code that contradicts it as a challenge citing `carrier.js` and its line |
+| `align-child-sizes-first` | A child whose parent implies about nine behaviour lines drafts them all and proposes a split, keeping buying in this session and the rest for `/cut`, before any grilling question |
 | `align-names-where-measured` | A quote-cache lifetime given with no source is recorded in the parent's body with the file it was measured in |
 | `align-remeasures-stand-in-on-target` | A line limit a spike read from a scratch install of the linter is measured again on the version CI pins, and the stand-in's figure is not recorded |
 | `align-measures-prod-through-catalogue` | A production table size is briefed to a subagent through the repo's read-only database MCP with catalogue reads only; no row reads, no `.env` or `.mcp.json` |

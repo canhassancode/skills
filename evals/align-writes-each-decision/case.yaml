@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: align-writes-each-decision
+description: Mid-grilling a child, an answered question is written as a dated Q → A into the ticket body's Decisions before the next question, keeping the earlier session's line.
+tags: [align]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit]

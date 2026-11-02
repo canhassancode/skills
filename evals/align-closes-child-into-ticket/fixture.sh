@@ -61,6 +61,9 @@ Drafts: `/align` settles these before the build.
 - A valid rate buys a label and stores the tracking number on the order.
 - Buying twice for the same order returns the first label and charges once.
 
+## Decisions
+- 2026-10-26 Q: Store the label PDF? → A: Out of scope; link only.
+
 ## Comments
 MD
 
