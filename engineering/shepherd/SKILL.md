@@ -67,9 +67,13 @@ exactly one route:
 | the thread | the route |
 | --- | --- |
 | a finding inside the spec | a fix through a fresh builder and crucible — §4 |
+| a finding on a behaviour line that has had its fix round | a rule question, no fix — §4 |
 | a finding the spec already decides | an answer with the evidence — §5 |
 | a colleague's comment | a reply put to the operator — §6 |
 | a finding that changes the spec or a locked test | a decision escalation — §7 |
+
+Read the `## Fix rounds` table and name each finding's behaviour line (§4) before routing it: a finding on
+a line that has had its round takes the rule question whichever other row it fits.
 
 **Done when** every thread in the round carries one route.
 
@@ -84,10 +88,26 @@ trigger comment only after the vetting is green.
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.
 
-A finding gets two fix rounds at most. One still open after its second goes to the operator as a decision
-escalation: the finding, what was tried, and the route it would take.
+Each behaviour line gets one fix round across build and shepherd — `/build`'s rule
+([SKILL.md](../build/SKILL.md), step 5), counted in the pull request's `## Fix rounds` table, which you read
+before any fix. Name each finding's `line` and `caused by` as crucible does
+([SKILL.md](../crucible/SKILL.md#return)): the behaviour line it threatens, quoted from the spec, and the
+`fix:` commit whose hunk its `file:line` sits in or depends on, found with `git log -L` or `git blame`. A
+finding counts against its `caused by` fix's line when it has one, else against its own `line`. A line with
+no round yet gets one: write its row `| <line> | <sha> (shepherd) | — |` once the fix commits.
 
-**Done when** the fix is committed, crucible has vetted it, and its tag is recorded.
+A finding on a line that already has a round, whether build's or shepherd's, stops that line: no builder,
+no fix. Write the date and the finding in its Stopped cell, then put one rule question to the operator as
+a decision escalation: the finding, every survivor crucible raised on that line, and a single sentence
+that quotes the stopped line word for word and ends in a question mark. The question goes in this
+session's last message, answered or not. A ruling that leaves every behaviour line's wording unchanged is
+added to the ticket's `## Decisions` and the run carries on with it as spec; one that rewrites a line is
+§7's escalation, to `/align`.
+
+A finding with `line none` and no `caused by` gets one fix round of its own, logged as `none`. Still open
+after it, it goes to the operator as an information escalation and stops nothing.
+
+**Done when** the fix is committed, crucible has vetted it, its tag is recorded and its Fix rounds row is written — or the line is stopped and its rule question asked.
 
 ### 5. Answer with evidence
 
@@ -136,7 +156,7 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 **Always** — read the spec before every fix · fix through a fresh builder and crucible · reply to the review bot with evidence · keep each fix inside the spec.
 **Ask first** — any reply to a colleague · requesting colleague review · stopping below the top score.
-**Never** — merge · post to a colleague without a yes · a fix without a fresh builder and crucible · edit a locked file.
+**Never** — merge · give a behaviour line a second fix round without a ruling · post to a colleague without a yes · a fix without a fresh builder and crucible · edit a locked file.
 
 ## Related
 
