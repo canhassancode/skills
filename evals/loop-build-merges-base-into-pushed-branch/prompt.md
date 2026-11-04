@@ -1,1 +1,0 @@
-/build .scratch/discount/issues/01-discount.md — the ticket is a local markdown file and its body is the spec; the tests are locked at the tip of feat/discount. That branch is already pushed to origin, and origin/main has moved on since the lock. There's no GitHub here, so report in this session instead of posting or opening a pull request.

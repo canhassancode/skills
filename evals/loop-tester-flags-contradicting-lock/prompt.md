@@ -1,1 +1,0 @@
-Write the locked tests for the readiness spec, the body of ticket .scratch/readiness/issues/01-readiness.md. Its first two behaviour lines are already locked; write tests for the rest. The interface is approved and committed as a stub.
