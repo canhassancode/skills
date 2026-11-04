@@ -14,7 +14,7 @@ Review comes first: steps 1–5 read the diff and run on every surface; mutation
 
 ## Steps
 
-1. **Lock.** Run [the lock check](../tester/scripts/check-locked-tests.sh) at the head. A changed locked file is a finding that blocks.
+1. **Lock.** When `<base>...<head>` holds a `test: lock` commit, run [the lock check](../tester/scripts/check-locked-tests.sh) at the head; a changed locked file is a finding that blocks. Without one, record `none — no lock commit`.
 2. **Shaped to the tests.** Look for code that branches on a locked test's fixture values or returns its expected outputs as literals. Each is a finding.
 3. **Walk** every changed hunk that writes, calls out, loops over outside data or shares a key against the Correctness list in [BASELINES.md](BASELINES.md), and the inputs production can send that the tests don't. A case that is safe is a note citing the line that makes it safe.
 4. **Rules.** Check changed lines against the global and repo `CLAUDE.md`, then BASELINES.md. A broken `CLAUDE.md` rule is a finding; a baseline smell is a note. Skip what lint and the typechecker already enforce.

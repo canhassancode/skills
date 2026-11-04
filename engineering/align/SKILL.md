@@ -17,7 +17,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 
 1. **Tier.** Place the ask on [references/tiers.md](references/tiers.md) and confirm it.
    - One-sentence diff: say so, name the diff and any risk in one line each, and stop. Propose nothing: no aliases, shims or follow-ups.
-   - Prose or settings ([the surface](references/tiers.md#surface)): steps 5 and 6 don't run. Once the spec is settled, the user picks: apply it here on their go, one commit at a time, then run `/crucible` over the branch, give its acting findings one fix round and open the pull request ready; or close at `ready-to-build` for build's light route.
+   - Prose or settings ([the medium](references/tiers.md#medium)): steps 5 and 6 don't run. Once the spec is settled, the user picks: apply it here on their go, one commit at a time, then run the spec's `## Verify` steps here, run `/crucible` over the branch, give its acting findings one fix round and open the pull request ready, or, when nothing is committed, post the Verify evidence on the ticket and close it; or close at `ready-to-build` for build's light route.
    - Foggy: send each unknown to `/spike`, `/research` or `/prototype`, one question each. Log each answer in Decisions, then re-tier.
    - A child of a cut parent: read the parent spec and the child's body, then skip to step 3. The parent's Decisions and Rules and the body's Decisions are settled: never ask, re-derive or restate them. Check each against the code it touches. Code that breaks one today, or data showing it can't hold, goes back as [a challenge](EXAMPLES.md#a-challenge): the decision and its evidence's `file:line` in the same paragraph. Never change the decision silently. Your first message drafts every behaviour line the child needs to meet its goal and the parent's Rules and Journeys, then checks them against [references/tiers.md](references/tiers.md#size)'s size rule before any grilling question. Over it, that message proposes a split, its only question: the piece built first stays in this session, and the rest are listed with the command that publishes them, `/cut <parent-ref>`.
 2. **Red team.** Brief a fresh subagent with [references/red-team.md](references/red-team.md). Show its verdict — go, shrink or no-go — and the user decides.
@@ -30,7 +30,7 @@ Every question follows [grilling](../grilling/SKILL.md). Every term and ADR foll
 | Ends on | Label | Next |
 |---|---|---|
 | a child with locked tests, or a prose or settings child to build elsewhere | `ready-to-build` | `/build <ref>` |
-| a prose or settings change applied here | none: its pull request closes the ticket | merge it |
+| a prose or settings change applied here | remove `needs-alignment`; its pull request closes the ticket | merge it |
 | a parent spec | `ready-to-cut` | `/cut <ref>` |
 | a yes owed outside the room | `ready-to-propose` | `/propose <ref>` |
 | a question still open | `needs-alignment`, naming it | its route, then `/align <ref>` |

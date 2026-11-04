@@ -1,6 +1,6 @@
 # Triage Labels
 
-The skills speak in terms of canonical roles across two lanes — the **inbound** lane, where **Triage** classifies work that arrived cold, and the **planning** lane, where **Align** creates work and holds it in `needs-alignment` until its tests are locked, or until it is a parent spec for `/cut` to split into children. This file maps those roles to the actual label strings used in this repo's issue tracker.
+The skills speak in terms of canonical roles across two lanes — the **inbound** lane, where **Triage** classifies work that arrived cold, and the **planning** lane, where **Align** creates work and holds it in `needs-alignment` until its tests are locked or its prose or settings spec is settled, or until it is a parent spec for `/cut` to split into children. This file maps those roles to the actual label strings used in this repo's issue tracker.
 
 | Label in mattpocock/skills | Label in our tracker | Meaning                                          |
 | -------------------------- | -------------------- | ------------------------------------------------ |

@@ -45,6 +45,8 @@ test-support/payment-gateway.contract.ts             locked
 e2e/subscribe.spec.ts                   locked
 ```
 
+A later child that adds to a port writes its cases in a new `<port>.<capability>.contract.ts` beside the first, never into a locked one.
+
 The file suffix is the lock: `.acceptance.`, `.properties.`, `.contract.` and the `e2e/` directory. Name files exactly this way or the lock misses them.
 
 ## What gets a fake
