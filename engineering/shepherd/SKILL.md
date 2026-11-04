@@ -105,10 +105,8 @@ session's last message, answered or not. A ruling that leaves every behaviour li
 added to the ticket's `## Decisions` and the run carries on with it as spec; one that rewrites a line is
 §7's escalation, to `/align`.
 
-A finding with `line none` and no `caused by` gets one fix round of its own, logged as
-`| none — <file:line> | <sha> (shepherd) | — |` with the finding's `file:line`. Still open after it —
-crucible raises that `file:line` again over the fix, or a `line none` finding caused by that round — it goes
-to the operator as an information escalation and stops nothing.
+A finding with `line none` gets one fix round of its own, logged as `| none | <sha> (shepherd) | — |`.
+Still open after it, it goes to the operator as an information escalation and stops nothing.
 
 **Done when** the fix is committed, crucible has vetted it, its tag is recorded and its Fix rounds row is written — or the line is stopped and its rule question asked.
 

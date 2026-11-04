@@ -62,7 +62,7 @@ Lock check: unchanged since `9c41e2a`. Full suite: 412 passed.
 | Behaviour line | Round | Stopped |
 |---|---|---|
 | Buying twice for the same order returns the first label and charges once. | `5f2c7d8` (crucible) | 2026-10-28 — second finding, a retry after a timeout charges again; ruled, Decisions 2026-10-28 |
-| none — `src/shipping/client.ts:22` | `a3d81e0` (crucible) | — |
+| none | `a3d81e0` (crucible) | — |
 
 ## Pruned
 
