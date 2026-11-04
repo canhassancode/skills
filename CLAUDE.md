@@ -102,8 +102,17 @@ The README is the human-facing catalogue. It mirrors what's in plugin.json but a
 Eval runs are non-deterministic, so one run below 1.00 is a reason to re-run, not a verdict.
 
 - **Locked cases** grade with `regex` or `tool_used`, never an `llm` judge, and must score 1.00 on every run. A locked case that misses is a build stop.
-- **Model-judged cases** (regression evals with an `llm` grader) that score below 1.00 are re-run alone with `--runs 3`. They pass at 2 of 3 runs or better. Anything less goes to the user with the failing final message and the judge votes.
+- **Model-judged cases** (regression evals with an `llm` grader) that score below 1.00 are re-run alone once. A second miss goes to the user with the failing final message and the judge votes.
 - A "scores 1.00 on every case" Done-when is read by these two rules.
+
+### Spend
+
+A build in this repo spends at most $5 on evals, across its builders, verifier, fix round and crucible.
+
+- Every eval command runs `--runs 1` and `--max-cost-usd` set to what is left of the $5.
+- During units and fix rounds, run only the cases for the lines being built. The touched skills' tags run once per branch, at hand-back, never per unit.
+- Crucible does not mutate skill prose (`SKILL.md`, `references/`, `EXAMPLES.md`); the locked cases are the gate. Its lock check, walk, rules and consumer grep still run.
+- A run that would go over the $5 stops the build and goes to the user with what has run and what is left.
 
 ## Issue tracker
 
