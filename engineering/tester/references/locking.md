@@ -4,11 +4,11 @@ Once the human approves the tests, they are committed as `test: lock <capability
 
 ## What is locked
 
-Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional.
+Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory, once it is committed. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional. Fakes, harnesses and fixtures never carry one: a later child extends them.
 
 ## 1. The hook: blocks the edit as it happens
 
-`locked-test-guard.sh` is a global `PreToolUse` hook in `canhassancode/dotfiles` (`claude/hooks/`), wired in `claude/settings.json` on `Edit|Write|MultiEdit|NotebookEdit|Bash`. It refuses edits to a locked path git already tracks, and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). A new locked file is untracked, so `/tester` can write it; reads and test runs pass through. It is always on and only ever matches the suffixes, so a repo without locked tests never sees it.
+`locked-test-guard.sh` is a global `PreToolUse` hook in `canhassancode/dotfiles` (`claude/hooks/`), wired in `claude/settings.json` on `Edit|Write|MultiEdit|NotebookEdit|Bash`. It refuses edits to a locked path committed at `HEAD`, and `Bash` commands that write to one (`sed -i`, redirection, `mv`, `rm`, `git checkout`, …). Until the lock commit a locked file is editable, staged or not, so `/tester` can write it and fix what lint, format or a secret scan flags; reads and test runs pass through. It is always on and only ever matches the suffixes, so a repo without locked tests never sees it.
 
 A shell has too many ways to write a file for a pattern to catch them all. The hook is the fast signal, not the guarantee.
 

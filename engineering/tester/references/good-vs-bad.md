@@ -4,7 +4,8 @@ A good test fails when the behaviour changes and passes when only the structure 
 
 ## Checklist
 
-- **Strong oracle.** It asserts a value: `toEqual` on a return value or the state read back through the interface, or a specific error. Not existence, not a boolean, not a call, not a snapshot.
+- **Strong oracle.** It asserts the value of every field the behaviour line names, on a return value or the state read back through the interface, or a specific error: `toEqual` when the line names the whole value, `toMatchObject` with the named fields when the object carries more. Not existence, not a boolean, not a call, not a snapshot.
+- **Only the line's fields.** A whole-object `toEqual` or a shared fixture locks fields the line doesn't name, so the next ticket that adds one has to relock a test that isn't its.
 - **Public interface only.** It imports from the module's `index.ts`, never from `internal/`.
 - **Fakes only at ports.** No `vi.mock` of anything inside the module under test.
 - **Decoded values, not the wire.** Pass the interface what the framework hands it after decoding: the object a JSON scalar or body parser produces, the value a validated or coerced query parameter becomes. Never `JSON.stringify` a value or copy the request body's encoding; a sample request in the spec shows the wire, not the argument.
@@ -60,9 +61,10 @@ it('subscribe calls the renewal calculator and saves', async () => {
 | Boolean only | `expect(isValid).toBe(true)` | the outcome the boolean stands for |
 | Call only | `toHaveBeenCalled…` on a mock | the state read back through the interface |
 | Snapshot only | `toMatchSnapshot()` | explicit fields that the behaviour line names |
-| Loose matcher | `toMatchObject` or `expect.anything()` where the spec names the value | `toEqual` with the value |
+| Loose matcher | `expect.anything()`, or a named field left out, where the spec names the value | every named field with its value |
+| Whole object | `toEqual` on an object or fixture carrying fields the line doesn't name | `toMatchObject` with the fields the line names |
 
-`toMatchObject` is right in one place: a contract test asserting a field the third party generates, such as `chargeId: expect.any(String)`.
+`expect.any(…)` is right in one place: a contract test asserting a field the third party generates, such as `chargeId: expect.any(String)`.
 
 ## Evidence
 

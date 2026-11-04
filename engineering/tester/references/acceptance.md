@@ -49,7 +49,7 @@ function createHarness(now: string): Harness {
 }
 ```
 
-Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there; it is test code and gets locked with the rest.
+Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there. A fake, a harness or a fixture never carries a locked suffix: a later child extends it, and the contract suite, not the lock, keeps it honest.
 
 ## Example
 
