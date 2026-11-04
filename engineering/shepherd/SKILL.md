@@ -93,8 +93,9 @@ Each behaviour line gets one fix round across build and shepherd — `/build`'s 
 before any fix. Name each finding's `line` and `caused by` as crucible does
 ([SKILL.md](../crucible/SKILL.md#return)): the behaviour line it threatens, quoted from the spec, and the
 `fix:` commit whose hunk its `file:line` sits in or depends on, found with `git log -L` or `git blame`. A
-finding counts against its `caused by` fix's line when it has one, else against its own `line`. A line with
-no round yet gets one: write its row `| <line> | <sha> (shepherd) | — |` once the fix commits.
+finding counts against its `caused by` fix's line; with no `caused by`, or one from a `none` round, it counts
+against its own `line`. A line with no round yet gets one: write its row `| <line> | <sha> (shepherd) | — |`
+once the fix commits.
 
 A finding on a line that already has a round, whether build's or shepherd's, stops that line: no builder,
 no fix. Write the date and the finding in its Stopped cell, then put one rule question to the operator as
@@ -104,8 +105,10 @@ session's last message, answered or not. A ruling that leaves every behaviour li
 added to the ticket's `## Decisions` and the run carries on with it as spec; one that rewrites a line is
 §7's escalation, to `/align`.
 
-A finding with `line none` and no `caused by` gets one fix round of its own, logged as `none`. Still open
-after it, it goes to the operator as an information escalation and stops nothing.
+A finding with `line none` and no `caused by` gets one fix round of its own, logged as
+`| none — <file:line> | <sha> (shepherd) | — |` with the finding's `file:line`. Still open after it —
+crucible raises that `file:line` again over the fix, or a `line none` finding caused by that round — it goes
+to the operator as an information escalation and stops nothing.
 
 **Done when** the fix is committed, crucible has vetted it, its tag is recorded and its Fix rounds row is written — or the line is stopped and its rule question asked.
 

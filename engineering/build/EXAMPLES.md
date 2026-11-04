@@ -62,7 +62,7 @@ Lock check: unchanged since `9c41e2a`. Full suite: 412 passed.
 | Behaviour line | Round | Stopped |
 |---|---|---|
 | Buying twice for the same order returns the first label and charges once. | `5f2c7d8` (crucible) | 2026-10-28 — second finding, a retry after a timeout charges again; ruled, Decisions 2026-10-28 |
-| none | `a3d81e0` (crucible) | — |
+| none — `src/shipping/client.ts:22` | `a3d81e0` (crucible) | — |
 
 ## Pruned
 
@@ -110,7 +110,7 @@ Hand-back list — open after its one fix round, threatens no behaviour line, st
 ### Build — 2026-10-28
 
 **Units**  `b7d3f10` buy and store a label · `e1a90c4` replay a purchase and survive outages
-**Vet**  crucible: 1 behaviour finding fixed in `5f2c7d8`, 3 scratch tests pruned · verify: 2 of 3 passed, 1 left for the reviewer
+**Vet**  crucible: 1 behaviour finding fixed in `5f2c7d8`, 1 with no line fixed in `a3d81e0`, 3 scratch tests pruned · verify: 2 of 3 passed, 1 left for the reviewer
 **Hand-back**  `src/shipping/client.ts:22` chunked responses skip the body cap
 **PR**  #57
 **Resume**  nothing — complete

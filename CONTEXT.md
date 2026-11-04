@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Operator**:
-The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is that ruling, at hand-back.
+The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each rule question a stopped fix loop raised before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is those rulings, at hand-back.
 _Avoid_: user, developer, owner.
 
 **Align**:
