@@ -4,7 +4,7 @@ Once the human approves the tests, they are committed as `test: lock <capability
 
 ## What is locked
 
-Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory, once it is committed. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional. Fakes, harnesses and fixtures never carry one: a later child extends them.
+Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory, once it is committed. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional. Fakes, harnesses and fixtures never carry one and live outside `e2e/`: a later child extends them.
 
 ## 1. The hook: blocks the edit as it happens
 

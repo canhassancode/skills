@@ -135,6 +135,6 @@ Required before declaring done:
 
 **If the diagnosis ends without a fix** there is no commit and no PR to carry the finding. Post it as a comment on the ticket instead: the winning hypothesis, the loop you built (the command, verbatim), and what you ruled out. The next session starts from the loop rather than rebuilding it.
 
-**Then label the ticket `needs-alignment`.** That comment is the handover: `/align` starts from the loop, writes the child spec and locks the regression test before anything is built. A diagnosis never stamps `ready-to-build`, because that label means locked tests are committed.
+**Then label the ticket `needs-alignment`.** That comment is the handover: `/align` starts from the loop, writes the child spec and locks the regression test before anything is built. A diagnosis never stamps `ready-to-build`, because a code fix's `ready-to-build` means locked tests are committed.
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-codebase-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.

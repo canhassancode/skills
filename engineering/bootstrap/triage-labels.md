@@ -10,7 +10,7 @@ The skills speak in terms of canonical roles across two lanes — the **inbound*
 | —                          | `ready-to-propose`   | Planning lane: a formal proposal is owed before work can go on |
 | —                          | `awaiting-decision`  | Planning lane: the proposal is out; a human decides |
 | —                          | `ready-to-cut`       | Planning lane: the parent spec is agreed; its children are owed |
-| —                          | `ready-to-build`     | Locked tests committed; takeable now |
+| —                          | `ready-to-build`     | Locked tests committed, or a prose or settings spec settled; takeable now |
 | `wontfix`                  | `wontfix`            | Will not be actioned                     |
 
 When a skill mentions a role (e.g. "stamp the takeable label"), use the corresponding label string from this table.

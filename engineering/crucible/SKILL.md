@@ -28,7 +28,7 @@ Review comes first: steps 1–5 read the diff and run on every surface; mutation
 ## Return
 
 ```text
-Lock        unchanged since <sha> | changed: <files>
+Lock        unchanged since <sha> | changed: <files> | none — no lock commit
 Mutation    <killed>/<total> on changed lines, <tool>, <minutes> min | absent — <why> | budget hit — <what was skipped>
 Prune       <test file › name> — no unique kill    (or: none)
 Survivors   <file:line> <mutation> — <question>
