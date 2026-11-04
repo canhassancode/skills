@@ -35,7 +35,7 @@ declare -A canonical=(
   [ready-to-propose]="d876e3:Planning lane: a formal proposal is owed"
   [awaiting-decision]="bfd4f2:Planning lane: the proposal is out"
   [ready-to-cut]="0052cc:Planning lane: the parent spec is agreed; its children are owed"
-  [ready-to-build]="2cbe4e:Locked tests committed; takeable now"
+  [ready-to-build]="2cbe4e:Locked tests or a settled prose or settings spec; takeable now"
   [wontfix]="cccccc:Will not be actioned"
 )
 for label in "${!canonical[@]}"; do

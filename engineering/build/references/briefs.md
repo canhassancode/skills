@@ -25,6 +25,18 @@ Commit once, when this unit's tests and the full suite are green: `feat: <what n
 criterion codes. Hand back the commit sha, the locked command's output and `git status` clean.
 ```
 
+## Light builder
+
+```text
+Light build · Spec: the body of ticket #<n>
+
+Make the change the spec's ## Behaviour describes, in the files its Context names. There are no
+locked tests. Follow CLAUDE.md. Never read .env, .mcp.json or production config. If the spec leaves a
+call open, stop and report it; don't decide it.
+
+Commit once: `<prefix>: <what changed>`. Hand back the commit sha and `git status` clean.
+```
+
 ## Fix
 
 ```text

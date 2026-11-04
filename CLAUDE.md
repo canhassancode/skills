@@ -42,8 +42,8 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
 | `cut` | No upstream counterpart — publishes a parent spec's children as sub-issues at `needs-alignment`, each a vertical capability with draft behaviour lines, checked against the parent's journeys by `align`'s own size rule (ADR-0006, ADR-0011). |
 | `spike` | No upstream counterpart — `align`'s run-it route: one question answered by throwaway code inside a timebox, with sandbox credentials only, returning the answer and its evidence. |
-| `build` | No upstream counterpart — makes a child's locked tests green through sequential fresh builders, one commit per unit, vets with crucible, verifies on the running app and marks `align`'s draft pull request ready; stops on a wrong locked test instead of working around it (ADR-0011). |
-| `crucible` | No upstream counterpart — the only review policy: lock check, diff-scoped mutation and the scratch-test prune list, the correctness walk, `CLAUDE.md` rules, the consumer grep and the baselines; `/build`, `/review` and `/shepherd` invoke it (ADR-0009, ADR-0011). |
+| `build` | No upstream counterpart — makes a child's locked tests green through sequential fresh builders, one commit per unit, vets with crucible, verifies on the running app and marks `align`'s draft pull request ready; stops on a wrong locked test instead of working around it; a prose or settings child takes the light route, one builder, one crucible review and one fix round (ADR-0011). |
+| `crucible` | No upstream counterpart — the only review policy: lock check, the correctness walk, `CLAUDE.md` rules, the consumer grep and the baselines first, then on code diff-scoped mutation and the scratch-test prune list; `/build`, `/review` and `/shepherd` invoke it (ADR-0009, ADR-0011). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
 | `tester` | No upstream counterpart — writes the locked acceptance, property, contract and end-to-end tests from an approved spec and interface, before implementation; its references hold the test principles and its script the lock check; the edit hook lives in dotfiles. |
 | `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds to the top score or a decision, crucible still the only gate; started in a fresh session on the pull request `build` hands back, or on any other. |
@@ -96,23 +96,6 @@ The README is the human-facing catalogue. It mirrors what's in plugin.json but a
 - Every registered skill gets a line in its category section
 - Deprecated skills live in `## deprecated/` — name what superseded each
 - The `## My day-to-day` section is opinionated — update it only when the daily workflow actually changes, not every time a skill is added or retired
-
-## Evals
-
-Eval runs are non-deterministic, so one run below 1.00 is a reason to re-run, not a verdict.
-
-- **Locked cases** grade with `regex` or `tool_used`, never an `llm` judge, and must score 1.00 on every run. A locked case that misses is a build stop.
-- **Model-judged cases** (regression evals with an `llm` grader) that score below 1.00 are re-run alone once. A second miss goes to the user with the failing final message and the judge votes.
-- A "scores 1.00 on every case" Done-when is read by these two rules.
-
-### Spend
-
-A build in this repo spends at most $5 on evals, across its builders, verifier, fix round and crucible.
-
-- Every eval command runs `--runs 1` and `--max-cost-usd` set to what is left of the $5.
-- During units and fix rounds, run only the cases for the lines being built. The touched skills' tags run once per branch, at hand-back, never per unit.
-- Crucible does not mutate skill prose (`SKILL.md`, `references/`, `EXAMPLES.md`); the locked cases are the gate. Its lock check, walk, rules and consumer grep still run.
-- A run that would go over the $5 stops the build and goes to the user with what has run and what is left.
 
 ## Issue tracker
 

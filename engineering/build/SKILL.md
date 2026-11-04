@@ -1,6 +1,6 @@
 ---
 name: build
-description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark a pull request for each branch in the spec's header line ready — or stop and say which locked test is wrong. Use when a child ticket is ready-to-build.
+description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark a pull request for each branch in the spec's header line ready — or stop and say which locked test is wrong. A prose or settings child takes a light route: one builder, one crucible review, one fix round. Use when a child ticket is ready-to-build.
 argument-hint: <child-ticket-ref>
 disable-model-invocation: true
 ---
@@ -12,6 +12,8 @@ Turn a child's locked failing tests green without touching them, prove the chang
 Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%), ImpossibleBench (read-only tests plus "stop and say so" took cheating from 54% to 9%) and Anthropic's long-running harness (fresh sessions carried by commits; end-to-end checks before "done").
 
 This session is the **Delegator**: it holds the spec, the unit list and the results, never a diff, so it stays small however big the child is. Every unit is a fresh subagent, one at a time; one writer per checkout. The briefs are in [references/briefs.md](references/briefs.md).
+
+A prose or settings child ([the medium](../align/references/tiers.md#medium)) takes the light route: no lock commit, no lock check and no locked tests. Step 1 reads the ticket and cuts `feat/<capability>` from the base, and steps 2–4 shrink to one light builder making the change, unless the spec splits it, and step 5 is one `/crucible` review over `<base>...HEAD` with one fix round for every acting finding, plus the verifier when the spec has `## Verify` steps. There is no `## Fix rounds` table; anything still open goes on the hand-back list. Steps 6 and 7 run as written, with step 7 opening one pull request for the `feat/<capability>` it cut, listing the behaviour lines without tests and no Fix rounds or Pruned sections, and naming merge as next, not `/shepherd`.
 
 ## Steps
 
