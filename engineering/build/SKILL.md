@@ -1,6 +1,6 @@
 ---
 name: build
-description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark a pull request for each branch in the spec's header line ready — or stop and say which locked test is wrong. A prose or settings child takes a light route: one builder, one crucible review, one fix round. Use when a child ticket is ready-to-build.
+description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark a pull request for each branch in the spec's header line ready — or stop and say which locked test is wrong. A prose or settings child takes the light route, with one builder, one crucible review and one fix round. Use when a child ticket is ready-to-build.
 argument-hint: <child-ticket-ref>
 disable-model-invocation: true
 ---
