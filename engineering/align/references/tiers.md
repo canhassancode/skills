@@ -13,10 +13,10 @@ Above the grid: **a one-sentence diff** needs no plan. Say so and stop.
 
 The surface decides what proves the change.
 
-| Surface | Proved by | Route |
-|---|---|---|
-| **Code**: app code, scripts, hooks | locked tests, written first | interface → `/tester` → `/build` |
-| **Prose and settings**: skills, docs, config | crucible's review | applied in the align session on the user's go, or `ready-to-build` for build's light route |
+| Surface | Proved by | Align does | Ends at |
+|---|---|---|---|
+| **Code**: app code, scripts, hooks | locked tests, written first | spec → interface → `/tester` → lock | `ready-to-build` → `/build` |
+| **Prose and settings**: skills, docs, config | crucible's review | spec | applied in the session on the user's go, then crucible, one fix round and a ready pull request; or `ready-to-build` → build's light route |
 
 A change that touches both is code. Prose and settings get no interface and no locked tests: a test of prose checks that a file says what it says.
 
