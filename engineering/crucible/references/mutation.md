@@ -25,6 +25,7 @@ Where the repo has StrykerJS, write a config in the throwaway worktree only, so 
 ```json
 {
   "testRunner": "vitest",
+  "coverageAnalysis": "perTest",
   "disableBail": true,
   "reporters": ["json"],
   "incremental": true,
@@ -36,7 +37,7 @@ Where the repo has StrykerJS, write a config in the throwaway worktree only, so 
 timeout 900 npx stryker run crucible.stryker.json --mutate "src/shipping/index.ts:12-40,src/shipping/carrier.ts:5-18"
 ```
 
-`disableBail` is what makes `killedBy` list every killing test, not just the first; without it, redundancy can't be measured. Read `reports/mutation/mutation.json`:
+`perTest` runs only the tests that cover each mutant. `disableBail` is what makes `killedBy` list every killing test, not just the first; without it, redundancy can't be measured. Read `reports/mutation/mutation.json`:
 
 - `files[path].mutants[]`: `id`, `location`, `status`, `killedBy` (test ids)
 - `testFiles[path].tests[]`: `id`, `name`
@@ -48,7 +49,7 @@ Count one mutant per changed line: where Stryker made several on a line, the lin
 Hand-place mutants, at most one per changed function and 20 in total:
 
 1. Remove one piece of behaviour the line carries: invert a condition, drop a call, return a constant, skip a write.
-2. Run the repo's test command with `timeout 120`, using a reporter that names failing tests (`--reporter=json` in Vitest and Jest).
+2. Run only the tests that cover the mutated file, with `timeout 120` and a reporter that names failing tests: `vitest related <file> --run --reporter=json`, `jest --findRelatedTests <file> --json`, or else the test files that import it.
 3. Record which tests went red, then restore the file.
 
 ## Budget

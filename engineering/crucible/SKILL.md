@@ -1,6 +1,6 @@
 ---
 name: crucible
-description: Vet a diff — confirm locked tests are untouched, mutate only the changed lines to see which tests earn their place, look for code shaped to test inputs, walk changed hunks for failure paths, check CLAUDE.md rules and grep the consumers of what changed. Returns findings, a prune list and survivors; never edits the caller's tree or posts. Use when /build vets its branch, or /review and /shepherd analyse a pull request.
+description: Review a diff — confirm locked tests are untouched, look for code shaped to test inputs, walk changed hunks for failure paths, check CLAUDE.md rules and grep the consumers of what changed, then on code mutate only the changed lines to see which tests earn their place. Returns findings, a prune list and survivors; never edits the caller's tree or posts. Use when /build vets its branch, or /review and /shepherd analyse a pull request.
 argument-hint: <base>...<head> [ticket ref]
 ---
 
@@ -10,18 +10,18 @@ Say what in a diff is wrong, unproven or unearned, with evidence a reader can re
 
 Origin: Google's diff-scoped mutation testing (Petrović et al. 2021: one mutant per changed line took useful mutants from 15% to 89%) and Shi et al. 2014 (pruning a suite by killed mutants loses no fault detection; by coverage, up to 20.5%).
 
-Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body, and it is optional; without one, steps that need it say so and the rest run.
+Review comes first: steps 1–5 read the diff and run on every surface; mutation follows, on code only. Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body, and it is optional; without one, steps that need it say so and the rest run.
 
 ## Steps
 
 1. **Lock.** Run [the lock check](../tester/scripts/check-locked-tests.sh) at the head. A changed locked file is a finding that blocks.
-2. **Mutate the diff** in a throwaway worktree, never the caller's, as [references/mutation.md](references/mutation.md) says: Stryker over the changed line ranges, or hand-placed mutants, inside its budget. No runnable tests: record `mutation: absent — <why>`.
-3. **Prune.** From the kill data, keep a scratch test only if it kills a mutant that the locked tests and the tests already kept miss. Every other test this diff added outside the locked files goes on the prune list. Locked tests and tests older than the diff are never listed.
-4. **Survivors.** Each mutant on a changed line that no test kills is a question — is this behaviour the spec doesn't name? — never a test to write; an equivalent line with its reason and boundary input is not a question. Skip logging, config and messages.
-5. **Shaped to the tests.** Look for code that branches on a locked test's fixture values or returns its expected outputs as literals. Each is a finding.
-6. **Walk** every changed hunk that writes, calls out, loops over outside data or shares a key against the Correctness list in [BASELINES.md](BASELINES.md), and the inputs production can send that the tests don't. A case that is safe is a note citing the line that makes it safe.
-7. **Rules.** Check changed lines against the global and repo `CLAUDE.md`, then BASELINES.md. A broken `CLAUDE.md` rule is a finding; a baseline smell is a note. Skip what lint and the typechecker already enforce.
-8. **Consumers.** For each changed export, type, field, default or behaviour, grep its callers and the prose that describes it. A site the change broke is a finding.
+2. **Shaped to the tests.** Look for code that branches on a locked test's fixture values or returns its expected outputs as literals. Each is a finding.
+3. **Walk** every changed hunk that writes, calls out, loops over outside data or shares a key against the Correctness list in [BASELINES.md](BASELINES.md), and the inputs production can send that the tests don't. A case that is safe is a note citing the line that makes it safe.
+4. **Rules.** Check changed lines against the global and repo `CLAUDE.md`, then BASELINES.md. A broken `CLAUDE.md` rule is a finding; a baseline smell is a note. Skip what lint and the typechecker already enforce.
+5. **Consumers.** For each changed export, type, field, default or behaviour, grep its callers and the prose that describes it. A site the change broke is a finding.
+6. **Mutate the diff** in a throwaway worktree, never the caller's, as [references/mutation.md](references/mutation.md) says: Stryker over the changed line ranges, or hand-placed mutants, inside its budget. A diff of prose or settings only, or no runnable tests: record `mutation: absent — <why>` and skip to step 9.
+7. **Prune.** From the kill data, keep a scratch test only if it kills a mutant that the locked tests and the tests already kept miss. Every other test this diff added outside the locked files goes on the prune list. Locked tests and tests older than the diff are never listed.
+8. **Survivors.** Each mutant on a changed line that no test kills is a question — is this behaviour the spec doesn't name? — never a test to write; an equivalent line with its reason and boundary input is not a question. Skip logging, config and messages.
 9. **Suppress** anything the spec's Out of scope or Decisions already settled, or the caller's settled threads, citing it.
 10. **Return**, using the format below. Remove the throwaway worktree.
 
