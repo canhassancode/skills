@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: loop-breaker-logs-kept-ruling
+description: The user rules on the stopped refusal line without changing its wording; build logs the ruling to the ticket's Decisions and carries on in the same session.
+tags: [build]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash, Write, Edit]

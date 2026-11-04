@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Operator**:
-The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is that ruling, at hand-back.
+The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each rule question a stopped fix loop raised before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is those rulings, at hand-back.
 _Avoid_: user, developer, owner.
 
 **Align**:
@@ -64,7 +64,7 @@ _Avoid_: QA, manual test, acceptance.
 _Avoid_: breakdown, split, slicing.
 
 **Build**:
-The act that makes a child's locked tests green: one branch, a sequential loop of **Unit**s, each in a fresh **Builder**, then **crucible** once over the branch, the **Verifier** on the running app, one fix round, and the pull request. The parent session — the **Delegator** — holds the spec, the unit list and the results, never a diff. One writer per checkout. Stops instead of working around a wrong locked test, an interface gap, missing access or a spec change. Succeeds `/implement`, now deprecated.
+The act that makes a child's locked tests green: one branch, a sequential loop of **Unit**s, each in a fresh **Builder**, then **crucible** once over the branch, the **Verifier** on the running app, one fix round per behaviour line, and the pull request. The parent session — the **Delegator** — holds the spec, the unit list and the results, never a diff. One writer per checkout. Stops instead of working around a wrong locked test, an interface gap, missing access or a spec change. Succeeds `/implement`, now deprecated.
 _Avoid_: implement, execute, run.
 
 **Fit**:

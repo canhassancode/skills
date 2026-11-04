@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: loop-breaker-hands-back-lineless-finding
+description: A finding that threatens no behaviour line is still open after its one fix round; build puts it on the hand-back list and carries on without patching it again.
+tags: [build]
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash, Write, Edit]
