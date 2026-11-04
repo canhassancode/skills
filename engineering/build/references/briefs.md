@@ -28,7 +28,7 @@ criterion codes. Hand back the commit sha, the locked command's output and `git 
 ## Fix
 
 ```text
-Fix round · Spec: the body of ticket #<n>
+Fix round · "<behaviour line>" | no behaviour line · Spec: the body of ticket #<n>
 
 <each finding or failed verify step, verbatim, with its file:line and evidence>
 

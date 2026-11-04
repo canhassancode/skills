@@ -40,9 +40,13 @@ Findings, each:
   at        file:line
   question  one sentence
   evidence  the mutant, command and output, grep hits, or the rule quoted
+  line      <the behaviour line it threatens, word for word> | none
+  caused by <the fix commit whose hunk it sits in or depends on> | none
   route     fix | spec-change | product-call — <safe default> | suppressed — <source>
 
 Notes       <case> → <file:line that handles it>; shape smells, each citing its baseline
 ```
+
+`line` is quoted from the spec's `## Behaviour`; with no spec, or no line the finding threatens, it is `none`. `caused by` is the `fix:` commit in the range whose changed hunk the finding sits in or depends on, found with `git log -L` or `git blame` over its `at`.
 
 `fix` is the caller's to act on. `spec-change` means acting would change a behaviour line, so it goes to `/align`. `product-call` is the user's decision.

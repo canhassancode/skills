@@ -64,7 +64,7 @@ _Avoid_: QA, manual test, acceptance.
 _Avoid_: breakdown, split, slicing.
 
 **Build**:
-The act that makes a child's locked tests green: one branch, a sequential loop of **Unit**s, each in a fresh **Builder**, then **crucible** once over the branch, the **Verifier** on the running app, one fix round, and the pull request. The parent session — the **Delegator** — holds the spec, the unit list and the results, never a diff. One writer per checkout. Stops instead of working around a wrong locked test, an interface gap, missing access or a spec change. Succeeds `/implement`, now deprecated.
+The act that makes a child's locked tests green: one branch, a sequential loop of **Unit**s, each in a fresh **Builder**, then **crucible** once over the branch, the **Verifier** on the running app, one fix round per behaviour line, and the pull request. The parent session — the **Delegator** — holds the spec, the unit list and the results, never a diff. One writer per checkout. Stops instead of working around a wrong locked test, an interface gap, missing access or a spec change. Succeeds `/implement`, now deprecated.
 _Avoid_: implement, execute, run.
 
 **Fit**:
