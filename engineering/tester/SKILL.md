@@ -63,4 +63,5 @@ Gaps: <none, or one per line>
 - stale lock — <file:line> — <the new line it contradicts>
 - typecheck — <command> — <the error, or why it couldn't run>
 Command: <the one command that runs exactly these tests>
+Files: <every test, fake, harness and fixture you wrote or changed, one per line>
 ```

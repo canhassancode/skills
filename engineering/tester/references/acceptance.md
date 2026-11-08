@@ -57,8 +57,8 @@ Fakes live in `test-support/` and are shared with the contract suite, which keep
 import { describe, expect, it } from 'vitest'
 import { createBilling, type Billing } from '../billing'
 import { createFakePaymentGateway, type FakePaymentGateway } from '../../test-support/fake-payment-gateway'
-import { createFixedClock, type FixedClock } from '../../test-support/fixed-clock'
-import { createMemorySubscriptionStore } from '../../test-support/memory-subscription-store'
+import { createFixedClock, type FixedClock } from '../../test-support/fixed-clock.acceptance'
+import { createMemorySubscriptionStore } from '../../test-support/memory-subscription-store.acceptance'
 
 describe('billing', () => {
   it('subscribing with an accepted card activates the plan, renewing one calendar month on', async () => {

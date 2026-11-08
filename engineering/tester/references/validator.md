@@ -6,16 +6,18 @@ Red shows a test runs, not that it can pass. A stub throws on its first call, so
 
 ## Set up
 
-The tests aren't committed yet, so the scratch worktree gets a copy of them:
+The tests aren't committed yet, so the scratch worktree gets a copy of what tester's `Files:` line names, and drops what was deleted before the lock. Write those paths to `<files>`, one per line, outside the repo, then run this from the repo root, on a re-run too, so each run starts from fresh code:
 
 ```sh
-scratch="$TMPDIR/validator-<short-sha>"
-git worktree add --detach "$scratch" HEAD
-{ git diff --name-only --diff-filter=d HEAD; git ls-files -o --exclude-standard; } > "$scratch.files"
-tar -cf - -T "$scratch.files" | tar -xf - -C "$scratch"
+scratch="${TMPDIR:-/tmp}/validator-<short-sha>"
+git worktree remove --force "$scratch" 2>/dev/null
+git worktree add --detach "$scratch" HEAD &&
+  tar --verbatim-files-from -cf - -T <files> | tar -xf - -C "$scratch" &&
+  git diff --name-only --no-renames -z --diff-filter=D HEAD | xargs -0 -r git -C "$scratch" rm -qf -- &&
+  git -C "$scratch" add -A
 ```
 
-Install the repo's dependencies in the scratch worktree, then send the brief.
+The `git add` is the baseline the void check compares against. Install the repo's dependencies in the scratch worktree, then send the brief.
 
 ## The brief
 
@@ -26,7 +28,7 @@ You are checking tests written before any implementation exists.
 
 Scratch copy: <scratch path>. Use absolute paths or cd there in each command.
 Spec: <the ticket body>
-Locked command: <the command from tester's report>
+Locked command: <the command from tester's report; on a re-run, only the fixed tests>
 
 Write quick, throwaway code from the spec and the interface that turns these tests green honestly. It will be deleted, so quality doesn't matter, only that it does what the spec says. Then report what stays red.
 
@@ -49,10 +51,10 @@ Anything else the agent notices, such as a detail the spec left undecided, stays
 
 ## Act on the report
 
-Before removing the scratch worktree, compare every copied file with the original. A difference voids the run:
+Before removing the scratch worktree, list what the agent changed. Any output voids the run, including an older fake or harness tester didn't write:
 
 ```sh
-while read -r file; do cmp "$file" "$scratch/$file"; done < "$scratch.files"
+git -C "$scratch" diff --name-only | grep -Ei -e '\.(test|spec|acceptance|properties|contract)\.|(^|/)e2e/|fake|harness|fixture|test-support' ; git -C "$scratch" diff --name-only | grep -Fxf <files>
 ```
 
 | Result | Route |
@@ -60,14 +62,14 @@ while read -r file; do cmp "$file" "$scratch/$file"; done < "$scratch.files"
 | `red` | `/tester` gets the test, the assertion, the actual value and the reasoning, never the throwaway code, and makes one fix. The validator then re-runs only the fixed tests, under the same limit, from fresh code. |
 | Still `red` after that fix | The user: the test and its evidence. Nothing locks. |
 | `outside interface` | Align's interface step: the approved interface can't carry the line. Nothing locks. |
-| `timed out`, or a void run | The user. Running out of time is never a pass. Nothing locks. |
-| No blockers | Commit `test: lock <capability> tests` with no approval question. `Unproven` titles go in the session comment. |
+| `timed out`, a void run, a failed install or no test run at all | The user. None of these is ever a pass. Nothing locks. |
+| No blockers | Commit `test: lock <capability> tests` with no approval question. `Unproven` titles and the `not run` count go in the session comment. |
 
-Finish with `git worktree remove --force "$scratch"`, then delete `$scratch.files`.
+Finish with `git worktree remove --force "$scratch"`.
 
 ## Evidence
 
-- Replay on brigade's lock commits: throwaway code exposed the known defect on the exact tests for 3 of 4 tickets, and named the fourth as a gap in the interface; no other test was flagged across the 175 run, at about 88k tokens and 2:39–4:53 per ticket (#185).
+- Replay on brigade's lock commits: throwaway code exposed the known defect on the exact tests for 3 of 4 tickets, and named the fourth's gap, which it could only pass by adding an argument outside the interface; no other test was flagged across the 175 run, at about 88k tokens and 2:39–4:53 per ticket (#185).
 - Validity is the variable: TDFlow, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid, and "no correction mechanism" named as the main weakness, https://arxiv.org/abs/2510.23761.
 - Refining test oracles against a generated implementation helped on every benchmark, and agent deliberation alone did nothing on the hard one: Nexus, https://arxiv.org/abs/2510.26423.
 - Reading can't catch this: all six test defects in brigade's build stops passed the operator's review (#185). Authors of independent versions share misreadings of one specification (Knight & Leveson, 1986), so a clean run proves one reading can pass, not that the tests are right.
