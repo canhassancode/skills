@@ -1,6 +1,6 @@
 # Locking
 
-Once the human approves the tests, they are committed as `test: lock <capability> tests` and the implementer can read them but never change them. Three mechanisms lock them, each catching what the one before misses.
+Once [the validator](validator.md) finds no blockers, the tests are committed as `test: lock <capability> tests` and the implementer can read them but never change them. Three mechanisms lock them, each catching what the one before misses.
 
 ## What is locked
 
@@ -22,7 +22,7 @@ A locked test can be wrong. Without a way out, the implementer is pushed to game
 
 ## Changing a locked test legitimately
 
-Only a behaviour change licenses it: the spec's behaviour line is edited or removed. The human removes the stale file themselves (`! git rm <file>`), which untracks it. Then the route is the same as the first time — update the spec, run `/tester` for the affected lines, the human approves, and a new `test: lock` commit moves the baseline. Refactors and new features never change existing locked tests.
+Only a behaviour change licenses it: the spec's behaviour line is edited or removed. The human removes the stale file themselves (`! git rm <file>`), which untracks it. Then the route is the same as the first time — update the spec, run `/tester` for the affected lines, run the validator, and a new `test: lock` commit moves the baseline. Refactors and new features never change existing locked tests.
 
 ## Timeouts
 

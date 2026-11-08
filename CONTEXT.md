@@ -8,7 +8,7 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Operator**:
-The human the lane serves: approves the spec, the interface and the locked tests, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each rule question a stopped fix loop raised before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is those rulings, at hand-back.
+The human the lane serves: approves the spec and the interface, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each rule question a stopped fix loop raised before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is those rulings, at hand-back.
 _Avoid_: user, developer, owner.
 
 **Align**:
@@ -44,8 +44,12 @@ One sentence in a child's Behaviour section, saying what the capability does in 
 _Avoid_: acceptance criterion, scenario, requirement.
 
 **Locked test**:
-A test `/tester` writes from the approved spec and interface before any implementation, proven red for the right reason, approved by the operator and committed as `test: lock <capability> tests`. The file suffix is the lock — `.acceptance.`, `.properties.`, `.contract.`, or an `e2e/` directory. Read-only to everyone after that commit: a hook blocks edits as they happen, and the lock check fails the branch if one changed. An implementer who thinks one is wrong stops and says so.
+A test `/tester` writes from the approved spec and interface before any implementation, proven red for the right reason, run by the **Validator** and committed as `test: lock <capability> tests`. The file suffix is the lock — `.acceptance.`, `.properties.`, `.contract.`, or an `e2e/` directory. Read-only to everyone after that commit: a hook blocks edits as they happen, and the lock check fails the branch if one changed. An implementer who thinks one is wrong stops and says so.
 _Avoid_: witness, criterion, spec test.
+
+**Validator**:
+A fresh agent that, before the lock, writes throwaway code from the spec and interface and runs the tests against it, to show they can pass; its code is deleted and it never edits a test. Home: `engineering/tester/references/validator.md`.
+_Avoid_: verifier, which checks the running app after a build.
 
 **Stale lock**:
 An earlier **Locked test** that contradicts a new spec or interface line. `/tester` reports it as a gap with its file and line; only the operator removes it (`! git rm`) before the line is relocked.
