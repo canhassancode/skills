@@ -94,5 +94,5 @@ Run the file. Each test must fail with `createBilling is not implemented` or an 
 
 ## Evidence
 
-- Spec-derived tests written before the code: TDFlow, 94.3% vs 68.0% with LLM-written tests, https://arxiv.org/html/2510.23761v1; independent tests detected faults 25% vs 14% after seeing faulty code, https://arxiv.org/abs/2607.05139.
+- Valid tests as the oracle: TDFlow, 94.3% with gold-validated tests from the fix's own pull request, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid, https://arxiv.org/html/2510.23761v1; independent tests detected faults 25% vs 14% after seeing faulty code, https://arxiv.org/abs/2607.05139.
 - A wrong test pushes even an honest model towards a "cheat" — Mendelsohn's ImpossibleBench audit, 2026-10-12.

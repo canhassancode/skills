@@ -7,9 +7,9 @@ background: false
 
 # Tester
 
-Write the tests the implementation must turn green, from the spec and the approved interface only. Never read or write implementation code: a test written after seeing the code catches faults 14% of the time against 25% when written independently.
+Write the tests the implementation must turn green, from the spec and the approved interface only. Never read or write implementation code: a test written after seeing faulty code catches faults 14% of the time against 25% when written independently.
 
-Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%) and Konstantinou et al. 2026 (independence of context, not of model).
+Origin: TDFlow (valid tests as the oracle: 94.3% with gold-validated tests, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid) and Konstantinou et al. 2026 (independence of context, not of model).
 
 ## Inputs
 

@@ -30,6 +30,6 @@ The four skills are rewritten from scratch; only the names are kept.
 
 ## Basis
 
-- Independent, spec-first tests: TDFlow (94.3% vs 68.0%); independent tests caught faults 25% vs 14% (Konstantinou et al., 2026).
+- Valid tests as the oracle: TDFlow (94.3% with gold-validated tests, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid); independent tests caught faults 25% vs 14% after faulty code (Konstantinou et al., 2026).
 - Locking and the exit: ImpossibleBench (Zhong, Raghunathan & Carlini, ICLR 2026).
 - Planning tiers: Claude Code's "if you could describe the diff in one sentence, skip the plan"; spikes from XP; appetite and no-gos from Shape Up.

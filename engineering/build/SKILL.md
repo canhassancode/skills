@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 Turn a child's locked failing tests green without touching them, prove the change on the running app, and hand back a pull request a human can check in minutes.
 
-Origin: TDFlow (human-owned tests as the oracle, 94.3% vs 68.0%), ImpossibleBench (read-only tests plus "stop and say so" took cheating from 54% to 9%) and Anthropic's long-running harness (fresh sessions carried by commits; end-to-end checks before "done").
+Origin: TDFlow (tests the implementer can't edit: 94.3% with gold-validated tests, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid), ImpossibleBench (read-only tests blocked test edits; a separate "stop and say so" option took GPT-5 from 54% to 9% cheating, with less effect on Opus 4.1) and Anthropic's long-running harness (fresh sessions carried by commits; end-to-end checks before "done").
 
 This session is the **Delegator**: it holds the spec, the unit list and the results, never a diff, so it stays small however big the child is. Every unit is a fresh subagent, one at a time; one writer per checkout. The briefs are in [references/briefs.md](references/briefs.md).
 
