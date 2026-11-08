@@ -4,7 +4,7 @@ Once [the validator](validator.md) finds no blockers, the tests are committed as
 
 ## What is locked
 
-Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory, once it is committed. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional. Fakes, harnesses and fixtures never carry one and live outside `e2e/`: a later child extends them.
+Any path matching `.acceptance.`, `.properties.`, `.contract.` or an `e2e/` directory, once it is committed. The file suffix is the lock, so [layers.md](layers.md)'s naming is not optional. A harness or fixture in its own file takes a locked suffix, such as `harness.acceptance.ts`: a builder who could edit one could turn a test green without building the behaviour. A later child that needs more writes its own beside it. A fake carries a suffix unless a contract suite covers it; a covered fake lives outside `e2e/` and a later child extends it, because the locked suite keeps it honest.
 
 ## 1. The hook: blocks the edit as it happens
 
