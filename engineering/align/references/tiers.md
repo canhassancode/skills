@@ -15,7 +15,7 @@ The medium, what the change is made of, decides what proves it.
 
 | Medium | Proved by | Align does | Ends at |
 |---|---|---|---|
-| **Code**: app code, scripts, hooks | locked tests, written first | spec → interface → `/tester` → lock | `ready-to-build` → `/build` |
+| **Code**: app code, scripts, hooks | locked tests, written first | spec → interface → `/tester` → validator → lock | `ready-to-build` → `/build` |
 | **Prose and settings**: skills, docs, config | crucible's review | spec | applied in the session on the user's go, then crucible, one fix round and a ready pull request; or `ready-to-build` → build's light route |
 
 A change that touches both is code. Prose and settings get no interface and no locked tests: a test of prose checks that a file says what it says.

@@ -109,7 +109,7 @@ if (!label.ok && label.error.kind === 'rate_expired') return requote(order)
 
 Gaps: none.
 
-❓ **Lock them?**
+Validator: 4/4 green against throwaway code, no blockers. Locked at `d4e5f6a`.
 ```
 
 ## A ticket body

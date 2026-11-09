@@ -49,7 +49,7 @@ function createHarness(now: string): Harness {
 }
 ```
 
-Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there. A fake, a harness or a fixture never carries a locked suffix: a later child extends it, and the contract suite, not the lock, keeps it honest.
+Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there. A fake covered by a contract suite carries no locked suffix: a later child extends it, and the suite, not the lock, keeps it honest. A harness or fixture in its own file, or a fake no suite covers, takes one ([locking.md](locking.md)).
 
 ## Example
 
@@ -57,8 +57,8 @@ Fakes live in `test-support/` and are shared with the contract suite, which keep
 import { describe, expect, it } from 'vitest'
 import { createBilling, type Billing } from '../billing'
 import { createFakePaymentGateway, type FakePaymentGateway } from '../../test-support/fake-payment-gateway'
-import { createFixedClock, type FixedClock } from '../../test-support/fixed-clock'
-import { createMemorySubscriptionStore } from '../../test-support/memory-subscription-store'
+import { createFixedClock, type FixedClock } from '../../test-support/fixed-clock.acceptance'
+import { createMemorySubscriptionStore } from '../../test-support/memory-subscription-store.acceptance'
 
 describe('billing', () => {
   it('subscribing with an accepted card activates the plan, renewing one calendar month on', async () => {
@@ -94,5 +94,5 @@ Run the file. Each test must fail with `createBilling is not implemented` or an 
 
 ## Evidence
 
-- Spec-derived tests written before the code: TDFlow, 94.3% vs 68.0% with LLM-written tests, https://arxiv.org/html/2510.23761v1; independent tests detected faults 25% vs 14% after seeing faulty code, https://arxiv.org/abs/2607.05139.
+- Valid tests as the oracle: TDFlow, 94.3% with gold-validated tests from the fix's own pull request, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid, https://arxiv.org/html/2510.23761v1; independent tests detected faults 25% vs 14% after seeing faulty code, https://arxiv.org/abs/2607.05139.
 - A wrong test pushes even an honest model towards a "cheat" — Mendelsohn's ImpossibleBench audit, 2026-10-12.
