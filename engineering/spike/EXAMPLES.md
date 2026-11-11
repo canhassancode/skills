@@ -33,8 +33,24 @@ The caller logs: `2026-10-21 Q: Retry a 409 from ShipCo? → A: No; it means the
 ## Needs access
 
 ```markdown
-**Q:** How many orders in staging have more than one parcel?
+**Q:** How many orders have more than one parcel?
 
-**A:** needs access: a staging read-only database role. Only a production URL is configured, and it wasn't used.
+**A:** needs access: a read-only route to the production database. Only a read-write URL is configured, and it wasn't used.
 **Took:** 1 minute.
+```
+
+## A sample
+
+```markdown
+**Q:** What forms do ShipCo's delivery windows take on our last month of labels?
+
+**A:** Three — `dd/mm/yyyy` (247 of 405), `mm/yyyy` (121) and `yyyy` (37).
+
+**Evidence**
+$ explain_query, then execute_sql on the read-only MCP
+select window_format(delivery_window), count(*) from labels where created_at > now() - interval '30 days' group by 1 limit 500
+dd/mm/yyyy 247 · mm/yyyy 121 · yyyy 37
+
+**Doesn't tell us:** whether older labels carry a fourth form.
+**Took:** 4 minutes. Scratch deleted.
 ```

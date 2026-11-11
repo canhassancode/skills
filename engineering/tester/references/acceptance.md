@@ -49,7 +49,7 @@ function createHarness(now: string): Harness {
 }
 ```
 
-Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there. A fake covered by a contract suite carries no locked suffix: a later child extends it, and the suite, not the lock, keeps it honest. A harness or fixture in its own file, or a fake no suite covers, takes one ([locking.md](locking.md)).
+Fakes live in `test-support/` and are shared with the contract suite, which keeps them honest. If a fake doesn't exist yet, write it there. A fake that stands in for a supplier answers with the recorded responses the spec's Context names, one for each case the behaviour lines tell apart; a case with no recorded response is a spec gap, never a body you make up. A fake covered by a contract suite carries no locked suffix: a later child extends it, and the suite, not the lock, keeps it honest. A harness or fixture in its own file, or a fake no suite covers, takes one ([locking.md](locking.md)).
 
 ## Example
 
