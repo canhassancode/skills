@@ -100,14 +100,24 @@ if (!label.ok && label.error.kind === 'rate_expired') return requote(order)
 ## The tests
 
 ```markdown
-`/tester` wrote 4 locked tests, all red for the right reason:
+4 tests in 1 file. 4 fail as they should. Nothing needs you.
 
-| Behaviour | File | Red because |
-|---|---|---|
-| A valid rate buys a label and stores the tracking number on the order. | `src/shipping/shipping.acceptance.test.ts` | not implemented |
-| Buying twice for the same order returns the first label and charges once. | same | not implemented |
+**Your call**
+- nothing
 
-Gaps: none.
+**These tests won't catch**
+- Checkout never calling the label purchase: the tests buy a label directly, not through Pay. Verify step 1 catches it.
+
+**What each test checks**
+
+`src/shipping/shipping.acceptance.test.ts`
+- A valid rate buys a label and stores the tracking number on the order.
+  Tried with: Sam paying for an order with a Royal Mail rate quoted a minute ago. Should show: one label bought, and its tracking number on the order.
+- Buying twice for the same order returns the first label and charges once.
+  Tried with: Sam clicking Pay twice after a timeout. Should show: the same label both times, and ShipCo charged once.
+
+Typecheck: `npm run typecheck` — clean
+Gaps: none
 
 Validator: 4/4 green against throwaway code, no blockers. Locked at `d4e5f6a`.
 ```

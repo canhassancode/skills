@@ -83,7 +83,9 @@ A fix is a fresh builder carrying the finding in `/build`'s fix brief
 ([briefs.md](../build/references/briefs.md#fix)), then `/crucible` over the fix's commits in a subagent of
 its own — never a parent edit in this session, and never the review bot's word as the gate. Locked files
 stay read-only; one commit, the lock check and the full suite green, and the re-review is asked for in a
-trigger comment only after the vetting is green.
+trigger comment only after the vetting is green. A fix that changes what a `## Verify` step exercises
+re-runs that step through `/build`'s verifier brief and replaces its evidence in the pull request body
+with the new commit's; a step it can't run is unticked and put to the operator.
 
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.
