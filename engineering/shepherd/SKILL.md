@@ -1,6 +1,6 @@
 ---
 name: shepherd
-description: Take one open pull request through the review bot's rounds to the top score or a decision — triage each thread, fix through crucible, reply with evidence, and ask before colleague review.
+description: Take one open pull request through the review bot's rounds until every thread is settled or a decision is owed — triage each thread, fix through crucible, reply with evidence, and ask before colleague review.
 argument-hint: <pr-ref>
 ---
 
@@ -85,7 +85,9 @@ its own — never a parent edit in this session, and never the review bot's word
 stay read-only; one commit, the lock check and the full suite green, and the re-review is asked for in a
 trigger comment only after the vetting is green. A fix that changes what a `## Verify` step exercises
 re-runs that step through `/build`'s verifier brief and replaces its evidence in the pull request body
-with the new commit's; a step it can't run is unticked and put to the operator.
+with the new commit's; a step it can't run is unticked and put to the operator. Every fix ends by writing
+the body's Summary and Decided limits again from the diff as it now stands, and crucible reads the body
+against the whole pull request's diff, `<base>...HEAD`, never the fix's commits alone: a body that still describes an earlier round is what colleagues send back most.
 
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.
@@ -145,11 +147,9 @@ is owed.
 
 ### 8. The stop rule
 
-At **5/5** with every thread fixed or answered, the operator is asked before any colleague review request — one action escalation. Nothing is requested until they answer, and a repository that requests code owners when a pull request goes ready does so on its own; asking for anyone else waits on the operator.
+The run is done when a round closes with every thread fixed or answered, whatever the score. The operator is then asked before any colleague review request — one action escalation that gives the score as it stands. Nothing is requested until they answer, and a repository that requests code owners when a pull request goes ready does so on its own; asking for anyone else waits on the operator.
 
-Short of the top score with nothing left to fix, or five re-reviews run — the cap — the run sends a
-decision escalation naming which of the two it is and stops. A score that reaches the top while a thread
-is still open does not close the run, and stopping below it is the operator's call.
+No re-review is asked for to lift a score when no thread is open: the bot gives its top score to pull requests colleagues go on to block, so the score proves nothing a settled thread doesn't. Two re-reviews are the cap; threads still open after them go to the operator as a decision escalation and the run stops.
 
 The finished pull request is the operator's to merge; this run never merges it.
 
@@ -158,7 +158,7 @@ The finished pull request is the operator's to merge; this run never merges it.
 ## Boundaries
 
 **Always** — read the spec before every fix · fix through a fresh builder and crucible · reply to the review bot with evidence · keep each fix inside the spec.
-**Ask first** — any reply to a colleague · requesting colleague review · stopping below the top score.
+**Ask first** — any reply to a colleague · requesting colleague review.
 **Never** — merge · give a behaviour line a second fix round without a ruling · post to a colleague without a yes · a fix without a fresh builder and crucible · edit a locked file.
 
 ## Related

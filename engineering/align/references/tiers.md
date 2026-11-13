@@ -7,7 +7,7 @@ Two questions set the route: does it fit one session, and does anyone know enoug
 | **Fits one session** | Child spec → interface → tests | Explore, then a child spec |
 | **Bigger** | Parent spec → `/cut` | Explore, then a parent spec |
 
-Above the grid: **a one-sentence diff** needs no plan. Say so and stop.
+Above the grid: **a one-sentence diff** needs no plan. Say so and stop. So does a change to one or two files with nothing left to decide: align says so and stops, and the change is made in an ordinary session and reviewed by `/crucible`, with no spec and no locked tests.
 
 ## Medium
 
@@ -27,7 +27,10 @@ A child fits one session when:
 - it is one capability a user or caller could notice on its own;
 - its behaviour fits in about six lines;
 - it adds to at most one public interface and one port;
-- it is roughly 1–3 human-hours of work.
+- it is roughly 1–3 human-hours of work;
+- its diff is about 200 lines outside tests and fixtures.
+
+Estimate the last from the files the change will touch, correct it once the interface is approved, and write it in the child's header line. It is a budget to aim at, set here because a pull request is too late to find out: `/crucible` reports the real figure against it and suggests a split when it runs well over, and never blocks on it.
 
 Anything bigger is a parent. A parent's children are vertical: each one is observable alone, never a layer.
 
@@ -47,6 +50,9 @@ Each route gets one question and returns one answer, which lands in Decisions. A
 
 - The one-sentence rule: Claude Code best practices, "if you could describe the diff in one sentence, skip the plan".
 - Session size: METR's 80% time horizon, about 1–3 human-hours for 2026 frontier models; success falls with file count (SWE-bench Pro).
+- No spec for one or two files: a 50-ticket benchmark found a spec raised merge rates on large tickets (80% against 50%) and not on 1–2 file ones, where no spec was fastest (Uvik, Nov 2026; a consultancy benchmark, not peer-reviewed).
+- The 200-line budget: on two work repos, a first review asked for changes on 7% of pull requests under 200 added lines, 19% of those from 200 to 800 and 42% of those over 800 (153 pull requests, measured on: GitHub reviews, 2026-07-01 to 2026-11-13). That count included tests and fixtures; the budget leaves them out because recorded supplier responses alone run to 1,500 lines.
+- Sittings: 64 of 96 align sessions on work repos peaked above 120k tokens of context, median 150k, and 12 were compacted (measured on: session transcripts, 2026-10-08 to 2026-11-13; some also ran a build in the same window).
 - One feature per session: Anthropic, *Effective harnesses for long-running agents*, Nov 2025.
 - The uncertainty axis and the grid are synthesis, not measured.
 - The medium axis: on skill prose the loop cost about 3x a direct change, plus $2–48 of evals per build, and its useful catches came from crucible reading the diff; on code it cost about 2.8x and caught authorisation and validation bugs before merge (#179, measured on: transcripts and git, 2026-10-01 to 2026-11-04). Error analysis before evals for prompts: Husain and Shankar; no evals in mattpocock/skills (`docs/research/process-tiering-for-agent-builds.md`).

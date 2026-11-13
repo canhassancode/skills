@@ -16,7 +16,7 @@ The planning lane's entrance: tier the ask, red-team it, agree a **Spec**, and â
 _Avoid_: grilling, interview, discovery, pass.
 
 **Tier**:
-Where an ask sits on two questions: does it fit one session, and does anyone know enough to spec it? Size decides **Parent** or **Child**; uncertainty decides whether to explore first. Above the grid, a one-sentence diff needs no plan. Home: `engineering/align/references/tiers.md`.
+Where an ask sits on two questions: does it fit one session, and does anyone know enough to spec it? Size decides **Parent** or **Child**; uncertainty decides whether to explore first. Above the grid, a one-sentence diff needs no plan, nor does a change to one or two files with nothing left to decide. Home: `engineering/align/references/tiers.md`.
 _Avoid_: complexity, t-shirt size.
 
 **Spike**:
@@ -108,7 +108,7 @@ A tracker node. Its body is the **Spec**, a parent's or a child's, written by `/
 _Avoid_: issue, story.
 
 **Session comment**:
-The one comment each `/align`, `/cut` or `/build` session posts on its ticket, carrying only what moved. A build's ends with a Resume line when its window filled or a Verify step is still awaiting a ruling.
+The one comment each `/align`, `/cut` or `/build` session posts on its ticket, carrying only what moved. An align sitting that stops before the close ends with a Resume line naming the sitting the next session starts at. A build's ends with a Resume line when its window filled or a Verify step is still awaiting a ruling.
 _Avoid_: log, transcript, status update.
 
 **Proposal**:

@@ -10,7 +10,7 @@ Say what in a diff is wrong, unproven or unearned, with evidence a reader can re
 
 Origin: Google's diff-scoped mutation testing (Petrović et al. 2021: one mutant per changed line took useful mutants from 15% to 89%) and Shi et al. 2014 (pruning a suite by killed mutants loses no fault detection; by coverage, up to 20.5%).
 
-Review comes first: steps 1–5 read the diff and run on every surface; mutation follows, on code only. Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body, and it is optional; without one, steps that need it say so and the rest run.
+Review comes first: steps 1–7 read the diff and run on every surface; mutation follows, on code only. Findings are about correctness, the spec and the user's written rules, not taste: a reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body, and it is optional; without one, steps that need it say so and the rest run.
 
 ## Steps
 
@@ -19,16 +19,19 @@ Review comes first: steps 1–5 read the diff and run on every surface; mutation
 3. **Walk** every changed hunk that writes, calls out, loops over outside data or shares a key against the Correctness list in [BASELINES.md](BASELINES.md), and the inputs production can send that the tests don't. A case that is safe is a note citing the line that makes it safe.
 4. **Rules.** Check changed lines against the global and repo `CLAUDE.md`, then BASELINES.md. A broken `CLAUDE.md` rule is a finding; a baseline smell is a note. Skip what lint and the typechecker already enforce.
 5. **Consumers.** For each changed export, type, field, default or behaviour, grep its callers and the prose that describes it, here and in each sibling repo the spec's header line or Context names that is checked out beside this one. A site the change broke is a finding; a named sibling that isn't there is a note, `consumers: <repo> not checked`.
-6. **Mutate the diff** in a throwaway worktree, never the caller's, as [references/mutation.md](references/mutation.md) says: Stryker over the changed line ranges, or hand-placed mutants, inside its budget. A diff of prose or settings only, or no runnable tests: record `mutation: absent — <why>` and skip to step 9.
-7. **Prune.** From the kill data, keep a scratch test only if it kills a mutant that the locked tests and the tests already kept miss. Every other test this diff added outside the locked files goes on the prune list. Locked tests and tests older than the diff are never listed.
-8. **Survivors.** Each mutant on a changed line that no test kills is a question — is this behaviour the spec doesn't name? — never a test to write; an equivalent line with its reason and boundary input is not a question. Skip logging, config and messages.
-9. **Suppress** anything the spec's Out of scope or Decisions already settled, or the caller's settled threads, citing it.
-10. **Return**, using the format below. Remove the throwaway worktree.
+6. **Claims.** For each changed hunk that leans on a fact outside the diff, such as how many rows a table holds, what shape stored data or a supplier's answer takes, or who else calls a thing, find the spec line that carries its `checked on:` or `measured on:`. A fact the spec marks `unchecked`, checked only on a stand-in, or doesn't carry at all is a finding of class `claim`: name the read that would settle it and never run a production read yourself. When the caller passes a pull request, each sentence in its body that says what the change does, not why, is read against the pull request's whole diff, and one that diff doesn't bear out is a finding of class `claim` too.
+7. **Size.** Count the added lines outside tests and fixtures, a changed line counting as added, over the range you were given and over the whole pull request when the caller passes one, and set them beside the estimate in the spec's header line. More than half as much again is a note that names where the diff could split, never a finding.
+8. **Mutate the diff** in a throwaway worktree, never the caller's, as [references/mutation.md](references/mutation.md) says: Stryker over the changed line ranges, or hand-placed mutants, inside its budget. A diff of prose or settings only, or no runnable tests: record `mutation: absent — <why>` and skip to step 11.
+9. **Prune.** From the kill data, keep a scratch test only if it kills a mutant that the locked tests and the tests already kept miss. Every other test this diff added outside the locked files goes on the prune list. Locked tests and tests older than the diff are never listed.
+10. **Survivors.** Each mutant on a changed line that no test kills is a question — is this behaviour the spec doesn't name? — never a test to write; an equivalent line with its reason and boundary input is not a question. Skip logging, config and messages.
+11. **Suppress** anything the spec's Out of scope or Decisions already settled, or the caller's settled threads, citing it.
+12. **Return**, using the format below. Remove the throwaway worktree.
 
 ## Return
 
 ```text
 Lock        unchanged since <sha> | changed: <files> | none — no lock commit
+Size        <n> lines outside tests and fixtures (<n> across the pull request) against ~<estimate> | no estimate
 Mutation    <killed>/<total> on changed lines, <tool>, <minutes> min | absent — <why> | budget hit — <what was skipped>
 Prune       <test file › name> — no unique kill    (or: none)
 Survivors   <file:line> <mutation> — <question>
