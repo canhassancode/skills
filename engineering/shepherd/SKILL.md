@@ -87,7 +87,7 @@ trigger comment only after the vetting is green. A fix that changes what a `## V
 re-runs that step through `/build`'s verifier brief and replaces its evidence in the pull request body
 with the new commit's; a step it can't run is unticked and put to the operator. Every fix ends by writing
 the body's Summary and Decided limits again from the diff as it now stands, and crucible reads the body
-against the diff: a body that still describes an earlier round is what colleagues send back most.
+against the whole pull request's diff, `<base>...HEAD`, never the fix's commits alone: a body that still describes an earlier round is what colleagues send back most.
 
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.

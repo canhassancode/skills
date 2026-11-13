@@ -7,7 +7,7 @@ Two questions set the route: does it fit one session, and does anyone know enoug
 | **Fits one session** | Child spec → interface → tests | Explore, then a child spec |
 | **Bigger** | Parent spec → `/cut` | Explore, then a parent spec |
 
-Above the grid: **a one-sentence diff** needs no plan. Say so and stop. So does a change to one or two files with nothing left to decide: it is made directly and reviewed by `/crucible`, with no spec and no locked tests.
+Above the grid: **a one-sentence diff** needs no plan. Say so and stop. So does a change to one or two files with nothing left to decide: align says so and stops, and the change is made in an ordinary session and reviewed by `/crucible`, with no spec and no locked tests.
 
 ## Medium
 
@@ -30,7 +30,7 @@ A child fits one session when:
 - it is roughly 1–3 human-hours of work;
 - its diff is about 200 lines outside tests and fixtures.
 
-Estimate the last from the interface and the files Context names, and write it in the child's header line. It is a budget to aim at, set here because a pull request is too late to find out: `/crucible` reports the real figure against it and suggests a split when it runs well over, and never blocks on it.
+Estimate the last from the files the change will touch, correct it once the interface is approved, and write it in the child's header line. It is a budget to aim at, set here because a pull request is too late to find out: `/crucible` reports the real figure against it and suggests a split when it runs well over, and never blocks on it.
 
 Anything bigger is a parent. A parent's children are vertical: each one is observable alone, never a layer.
 
