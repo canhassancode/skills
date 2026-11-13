@@ -16,7 +16,7 @@ The planning lane's entrance: tier the ask, red-team it, agree a **Spec**, and â
 _Avoid_: grilling, interview, discovery, pass.
 
 **Tier**:
-Where an ask sits on two questions: does it fit one session, and does anyone know enough to spec it? Size decides **Parent** or **Child**; uncertainty decides whether to explore first. Above the grid, a one-sentence diff needs no plan. Home: `engineering/align/references/tiers.md`.
+Where an ask sits on two questions: does it fit one session, and does anyone know enough to spec it? Size decides **Parent** or **Child**; uncertainty decides whether to explore first. Above the grid, a one-sentence diff needs no plan, nor does a change to one or two files with nothing left to decide. Home: `engineering/align/references/tiers.md`.
 _Avoid_: complexity, t-shirt size.
 
 **Spike**:

@@ -30,7 +30,7 @@ For, despite the above: operators spend about 2 hours a day buying labels by han
 
 ## A round
 
-One scenario, one question, one recommendation. The fact it rests on sits under it.
+A technical choice: one scenario, one question, one recommendation. The fact it rests on sits under it.
 
 ```markdown
 **Buying twice**
@@ -42,6 +42,40 @@ Sam clicks Pay, the request times out, and they click again. Both requests reach
 ➡️ **No — return the first label and charge once.** ShipCo charges per label, and a duplicate costs £6.50 plus a void request.
 
 ↳ `src/checkout/pay.ts:41` retries on timeout with no idempotency key today.
+```
+
+## An open round
+
+What someone will see is the user's to say first. No recommendation, no options; the fact still sits under it.
+
+```markdown
+**A rate that has expired**
+
+Sam picks Royal Mail at £6.50, leaves the tab open over lunch, and clicks Pay an hour later. ShipCo no longer honours that price.
+
+❓ **What should Sam see?**
+
+↳ ShipCo rates expire after 30 minutes (`docs/shipco.md:18`); checkout doesn't check today.
+```
+
+An answer of "not sure, whatever you think" stays open: say who would know, here whoever owns checkout, and ask them.
+
+## Where each line came from
+
+Shown before anything is locked. Plain words, one line each, nothing to approve under the first two headings.
+
+```markdown
+**You said**
+- A valid rate buys a label and stores the tracking number on the order.
+- An expired rate asks Sam to pick a rate again and nothing is stored.
+
+**Checked**
+- Buying twice for the same order returns the first label and charges once. ShipCo answers a repeat with the first label (spike, 12 orders).
+
+**My call, needs your answer**
+- ShipCo being down is reported as unavailable after three tries. You haven't said how long Sam should wait; three tries is about 6 seconds.
+
+❓ **Is 6 seconds of waiting right when ShipCo is down, or should Sam see the message sooner?**
 ```
 
 ## A challenge

@@ -5,7 +5,7 @@ A spec is its ticket's body: a parent's on the parent ticket, a child's on its o
 ## Child
 
 ```markdown
-Parent: #40 · Branch: `feat/buy-a-label`, draft PR #43
+Parent: #40 · Branch: `feat/buy-a-label`, draft PR #43 · Size: ~140 lines outside tests
 
 ## Goal
 Buy a label for a chosen rate and store its tracking number on the order.
@@ -71,8 +71,8 @@ Returns, customs, multi-parcel shipments, a second carrier.
 
 ## Rules for each section
 
-- **Header line** (child only): the parent, then the branch and its draft PR. A child that touches more than one repo names each repo's branch there, and the merge order when one repo must merge first: ``Parent: #40 · Branch: api `feat/buy-a-label`, draft PR #43 · admin `feat/buy-a-label` · Merge order: admin, then api``.
-- **Behaviour**: one plain sentence per line, observable through the interface from outside, with no codes or numbering. On code, each line becomes a locked test title word for word, so editing one later means a relock; on prose or settings, crucible reviews the diff against it. An "always" or "never" line becomes a property.
+- **Header line** (child only): the parent, then the branch and its draft PR, then the size estimate from [tiers.md](tiers.md#size). A child that touches more than one repo names each repo's branch there, and the merge order when one repo must merge first: ``Parent: #40 · Branch: api `feat/buy-a-label`, draft PR #43 · admin `feat/buy-a-label` · Merge order: admin, then api``.
+- **Behaviour**: one plain sentence per line, observable through the interface from outside, with no codes or numbering. Each line stands on an answer in Decisions, given by the user or by whoever owns the question, or on a checked claim; a line that stands on neither is the agent's call and is settled before anything is locked. On code, each line becomes a locked test title word for word, so editing one later means a relock; on prose or settings, crucible reviews the diff against it. An "always" or "never" line becomes a property.
 - **Interface**: empty until step 5 approves it; `none — prose or settings` when the medium has none. A parent fixes shape, not signatures.
 - **Context**: the files, the existing pattern to copy and the merged siblings it needs. Name a pattern by its file, not by its name.
 - **Out of scope**: every area the conversation touched and left out, each with a reason if it isn't obvious.
