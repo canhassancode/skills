@@ -40,7 +40,22 @@ The user reads every message that asks for a yes, so each one carries one decisi
 | a parent spec | `ready-to-cut` | `/cut <ref>` |
 | a yes owed outside the room | `ready-to-propose` | `/propose <ref>` |
 | a question still open | `needs-alignment`, naming it | its route, then `/align <ref>` |
+| a round that ended before the close | `needs-alignment` | `/clear`, then `/align <ref>` |
 | no-go | `wontfix` | the reason, then stop |
+
+## Rounds
+
+A long session reasons worse than a fresh one, so a bigger or foggy ask is aligned in rounds, each in its own session:
+
+1. **Explore**: steps 1 and 2 and every route's answer, ending with the tier confirmed and the answers in Decisions.
+2. **Spec**: steps 3 and 4, ending with where each line came from settled and the spec in the ticket body.
+3. **Interface and tests**: steps 5 to 7.
+
+A known ask that fits one session runs straight through. Otherwise say at the tier which rounds this ask will take, and at the end of each: write what is settled into the ticket body, post the session comment ending in its [Resume line](EXAMPLES.md#a-session-comment), tell the user to `/clear` and run `/align <ref>`, and stop. Stop the same way mid-round once the conversation has run long or been compacted; never carry on past a compaction.
+
+A ticket whose last session comment ends in a Resume line starts at the round it names. Read the body and its Decisions, redo nothing above the line, and ask nothing they already settle.
+
+A child of a cut parent starts at round 3 once its drafted behaviour lines hold. One that needs round 2's questions means the parent spec was thin: say so in the session comment, so the count shows whether parents are being cut too early.
 
 ## Where it lives
 

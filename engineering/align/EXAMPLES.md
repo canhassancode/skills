@@ -205,3 +205,16 @@ Decisions
 
 Next: `/build #42`
 ```
+
+A round that stops before the close ends in a Resume line, and the next session starts from it:
+
+```markdown
+**Session 1: ShipCo integration, round 1 of 3 (explore)**
+
+Moved: tier confirmed as bigger and foggy; webhook signing spiked.
+
+Decisions
+- Q: Do ShipCo webhooks arrive signed? → A: Yes, HMAC-SHA256 (spike).
+
+**Resume**  round 2 (spec), first question: which of the four capabilities ship first — `/clear`, then `/align #40`
+```
