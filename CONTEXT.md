@@ -108,7 +108,7 @@ A tracker node. Its body is the **Spec**, a parent's or a child's, written by `/
 _Avoid_: issue, story.
 
 **Session comment**:
-The one comment each `/align`, `/cut` or `/build` session posts on its ticket, carrying only what moved. A build's ends with a Resume line when its window filled or a Verify step is still awaiting a ruling.
+The one comment each `/align`, `/cut` or `/build` session posts on its ticket, carrying only what moved. An align sitting that stops before the close ends with a Resume line naming the sitting the next session starts at. A build's ends with a Resume line when its window filled or a Verify step is still awaiting a ruling.
 _Avoid_: log, transcript, status update.
 
 **Proposal**:

@@ -27,11 +27,11 @@ The user reads every message that asks for a yes, so each one carries one decisi
 3. **Spec.** Grill until [references/spec.md](references/spec.md)'s template is full: a child spec if it fits one session, otherwise a parent spec. Write each settled answer into the ticket body's Decisions as a dated `Q → A` before you ask the next question, adding the section if the body has none: at the end of the body, or above `## Comments` where the tracker keeps one. The next question is one nothing settled yet: not in the parent's Decisions or Rules, nor in the body's Decisions. A question someone outside the room owns — a supplier's contact, a colleague, whoever a ticket names — is settled only by their answer: its Decisions line names who gave it, and until then it stays open and the session closes on that row of the table below.
    - **What someone will see is asked open.** A question about what a user, a caller or another system sees, or what is stored, is the scenario and the question alone, with no recommendation and no options, as [an open round](EXAMPLES.md#an-open-round) shows. Record the answer in the user's words. Recommend only on a technical choice nobody outside the code could notice, or once the user asks what you would do.
    - **"I don't know" is not a yes.** Nor is "not my area" or "go with your recommendation" on what someone will see. Name who would know and leave the question open for them, or send it to a route.
-   - **Your own calls are listed, never slipped in.** A call nobody outside the code could notice is drafted into the spec without a question. Any other line you wrote that no answer or checked claim stands behind is your call: step 6 lists it, or step 7 on a parent or on prose or settings, and nothing is locked while one stands.
+   - **Your own calls are listed, never slipped in.** A call nobody outside the code could notice is drafted into the spec without a question. Any other line you wrote that no answer or checked claim stands behind is your call. Step 3 ends by showing [where each line came from](EXAMPLES.md#where-each-line-came-from): every behaviour line under the user's or an owner's answer, a checked claim, or your call. Each call of yours is answered, sent to its owner or dropped before step 5, and one still standing closes the session on the open-question row below.
 4. **Domain.** Each new term and each ADR is its own yes.
 5. **Interface** (child on code only). Propose signatures with [codebase-design](../codebase-design/SKILL.md): the code, one caller and the error kinds, one interface at a time. On a yes, commit them as stubs that compile and throw: `feat: stub <capability> interface`.
-6. **Tests** (child on code only). First show [where each line came from](EXAMPLES.md#where-each-line-came-from): every behaviour line under the user's or an owner's answer, a checked claim, or your call. Each call of yours is answered, sent to its owner or dropped before anything is locked. Then write the spec into the ticket body, run `/tester` and show its report in its own order and plain words, its `Typecheck:` and `Gaps:` lines word for word. Every gap reaches the user in that same message, even when you then ask about one at a time. Any gap blocks the lock: an interface gap goes to step 5, a spec gap to step 3, and a green, stale-lock or typecheck gap to the user: for green, whether the line stays and what it should say; for a stale lock, removing it themselves (`! git rm <file>`) before the line is relocked; for a typecheck that couldn't run, usually installing dependencies and rerunning `/tester`. With no gaps, run [the validator](../tester/references/validator.md) and act on its report: at most two runs, then the user. With no blockers, commit `test: lock <capability> tests`; the user approved the spec and the interface, so don't ask about the test files.
-7. **Close.** Check every claim by [references/spec.md](references/spec.md)'s Claims rule. On a parent, or on prose or settings, show [where each line came from](EXAMPLES.md#where-each-line-came-from) here, and a call of yours still standing closes the session on the open-question row below. Then write the spec into the ticket body, keeping every Decisions line it already held, push the branch if there is one, open its draft pull request as [EXAMPLES.md](EXAMPLES.md) does (ready, for a prose or settings change applied here), post the session comment and set the label.
+6. **Tests** (child on code only). Write the spec into the ticket body, then run `/tester` and show its report in its own order and plain words, its `Typecheck:` and `Gaps:` lines word for word. Every gap reaches the user in that same message, even when you then ask about one at a time. Any gap blocks the lock: an interface gap goes to step 5, a spec gap to step 3, and a green, stale-lock or typecheck gap to the user: for green, whether the line stays and what it should say; for a stale lock, removing it themselves (`! git rm <file>`) before the line is relocked; for a typecheck that couldn't run, usually installing dependencies and rerunning `/tester`. With no gaps, run [the validator](../tester/references/validator.md) and act on its report: at most two runs, then the user. With no blockers, commit `test: lock <capability> tests`; the user approved the spec and the interface, so don't ask about the test files.
+7. **Close.** Check every claim by [references/spec.md](references/spec.md)'s Claims rule. Then write the spec into the ticket body, keeping every Decisions line it already held, push the branch if there is one, open its draft pull request as [EXAMPLES.md](EXAMPLES.md) does (ready, for a prose or settings change applied here), post the session comment and set the label.
 
 | Ends on | Label | Next |
 |---|---|---|
@@ -40,22 +40,22 @@ The user reads every message that asks for a yes, so each one carries one decisi
 | a parent spec | `ready-to-cut` | `/cut <ref>` |
 | a yes owed outside the room | `ready-to-propose` | `/propose <ref>` |
 | a question still open | `needs-alignment`, naming it | its route, then `/align <ref>` |
-| a round that ended before the close | `needs-alignment` | `/clear`, then `/align <ref>` |
+| a sitting that ended before the close | `needs-alignment` | `/clear`, then `/align <ref>` |
 | no-go | `wontfix` | the reason, then stop |
 
-## Rounds
+## Sittings
 
-A long session reasons worse than a fresh one, so a bigger or foggy ask is aligned in rounds, each in its own session:
+Most align sessions have run past 120k tokens of context ([tiers.md](references/tiers.md#evidence)). To keep each one small, a bigger or foggy ask is aligned in sittings, each in its own session:
 
-1. **Explore**: steps 1 and 2 and every route's answer, ending with the tier confirmed and the answers in Decisions.
+1. **Explore**: steps 1 and 2 and every route's answer, ending with the tier confirmed and the answers in Decisions. An ask that arrived as an idea gets its ticket here, so the next sitting has somewhere to read from.
 2. **Spec**: steps 3 and 4, ending with where each line came from settled and the spec in the ticket body.
-3. **Interface and tests**: steps 5 to 7.
+3. **Interface and tests**: steps 5 to 7, or step 7 alone on a parent or on prose or settings.
 
-A known ask that fits one session runs straight through. Otherwise say at the tier which rounds this ask will take, and at the end of each: write what is settled into the ticket body, post the session comment ending in its [Resume line](EXAMPLES.md#a-session-comment), tell the user to `/clear` and run `/align <ref>`, and stop. Stop the same way mid-round once the conversation has run long or been compacted; never carry on past a compaction.
+A known ask that fits one session runs straight through. Otherwise say at the tier which sittings this ask will take, and at the end of each: write what is settled into the ticket body, post the session comment ending in its [Resume line](EXAMPLES.md#a-session-comment), tell the user to `/clear` and run `/align <ref>`, and stop. Stop the same way mid-sitting once the conversation has been compacted or the user says it is getting long; never carry on past a compaction.
 
-A ticket whose last session comment ends in a Resume line starts at the round it names. Read the body and its Decisions, redo nothing above the line, and ask nothing they already settle.
+A ticket whose last session comment ends in a Resume line starts at the sitting it names. Read the body and its Decisions, redo nothing above the line, and ask nothing they already settle.
 
-A child of a cut parent starts at round 3 once its drafted behaviour lines hold. One that needs round 2's questions means the parent spec was thin: say so in the session comment, so the count shows whether parents are being cut too early.
+A child of a cut parent takes sittings 2 and 3 in one session: its first message drafts its lines, and sitting 2 is short when the parent settled them. One that needs questions beyond its own calls means the parent spec was thin: say so in the session comment, so the count shows whether parents are being cut too early.
 
 ## Where it lives
 
