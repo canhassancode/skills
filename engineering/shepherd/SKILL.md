@@ -49,13 +49,11 @@ gh pr view <n> --repo <owner>/<repo> --json number,title,body,url,reviewDecision
 
 ### 2. Wait for the round
 
-A round is open while the review bot is working: its 👀 means reviewing, and its 👍 on the pull request
-description (the first review) or on the trigger comment this run wrote (each re-review) means done. Ask
-for the next round only once the one before it has closed — never while a round runs, or the bot reports
-on a moving diff.
-
-After the done signal, read the summary comment and every thread, then triage (§3). No done signal within
-15 minutes sends an **information** escalation — one line saying the round has not closed.
+Watch each round in the background with `scripts/watch-round.sh <owner/repo> <n> [trigger-comment-id]`,
+never a loop of your own; its one line of output names what ended the watch. A conflict with the base
+starts no round until the base is merged in, and 15 minutes without a close sends an **information**
+escalation. Ask for the next round only once the one before it has closed, or the bot reports on a moving
+diff. After it closes, read the summary comment and every thread, then triage (§3).
 
 **Done when** the round is closed, and its summary and threads have been read.
 
