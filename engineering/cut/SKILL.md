@@ -33,4 +33,4 @@ Origin: Pocock's to-tickets (tracer-bullet slices, each sized to a single fresh 
 
 The parent wears no label after the cut, and stays open until its last child merges.
 
-Run `/cut <parent>` again when a build stops on a child that was cut too big, or when an align reshapes the plan. It compares the Children list with the open sub-issues and proposes the edits.
+Run `/cut <parent>` again when a build stops on a child that was cut too big, or when an align reshapes the plan. It compares the Children list with the parent's children and their edges, read and moved with the operations in `docs/agents/issue-tracker.md`, and proposes the edits.

@@ -13,7 +13,7 @@ Origin: Anthropic's long-running harness (one feature per session, proven end-to
 
 ## Steps
 
-1. **Read** the ticket. Its body is the spec: what to build, the acceptance criteria, the seams and the Verify steps. If its pull request carries a Resume line, start where that line says. Otherwise cut `feat/<slug>` from the base.
+1. **Read** the ticket. Its body is the spec: what to build, the acceptance criteria, the seams and the Verify steps. Check its open blockers with the tracker's operation in `docs/agents/issue-tracker.md`; an open one stops the build here, naming it. If its pull request carries a Resume line, start where that line says. Otherwise cut `feat/<slug>` from the base.
 2. **Fit the loop** from the repo, not from memory: typecheck, lint, the test command and the Verify start command, each run once. A missing service or credential stops the build before you write anything (step 7).
 3. **Look before writing.** A subagent searches the repo, its installed dependencies and the standard library for anything that already does part of the work. It returns each find with its `file:line` or API name. Use what it finds.
 4. **Build** with [tdd](../tdd/SKILL.md) at the spec's seams; they count as already agreed. Write each test by [good-vs-bad](../tdd/good-vs-bad.md), on the layer [layers](../tdd/layers.md) gives it. Start the app as soon as there is something to see, and look at it while you build. Typecheck and run the touched tests after each cycle. Commit on each real green.

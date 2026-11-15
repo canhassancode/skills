@@ -76,3 +76,9 @@ Run `gh issue view <number> --comments`.
 
 - **Each child** — a native sub-issue of the parent, in build order: `gh issue create --title "<child title>" --body-file - --parent <parent> --label ready-to-build --blocked-by <n>,<n>`, or `--label needs-alignment` for a child with an open question. The body's `Blocked by` line repeats the edges for a cold reader; the native edge is the live gate.
 - **The parent** — drops its label once every child exists: `gh issue edit <parent> --remove-label ready-to-cut`. Its spec's Children list becomes a checklist naming each child; it stays open until the last one merges.
+
+## Blockers and edges
+
+- **Open blockers**: `gh issue view <n> --json blockedBy --jq '[.blockedBy.nodes[] | select(.state == "OPEN") | .number]'`. An empty list means the ticket is takeable.
+- **A parent's children**: `gh issue view <parent> --json subIssues --jq '[.subIssues.nodes[] | {number, state, title}]'`.
+- **Move an edge**: `gh issue edit <n> --add-blocked-by <m>` / `--remove-blocked-by <m>`, and `--parent <p>` / `--remove-parent`.
