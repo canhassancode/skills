@@ -25,7 +25,7 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 | Skill | Why it diverges |
 |---|---|
 | `triage` | The Linear adapter and the markdown-ticket flow are local. |
-| `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. One question at a time and the challenge rule are local — upstream asks the whole frontier per round. |
+| `grilling` | There is no ambient capture path here; a grilling's output is the route it picks, not a vault write. The rounds follow upstream; the challenge rule and "never ask how the runtime behaves" are local. |
 | `diagnose` | Keeps the local name; upstream's rename to `diagnosing-bugs` is not taken. |
 | `tdd`, `domain-modeling`, `prototype`, `improve-codebase-architecture`, `codebase-design` | Local domain-doc conventions (`CONTEXT.md`, `docs/adr/`) and British English. |
 | `grill-me` | Local description and the second-brain sweep; the body is still upstream's one-line delegation. |
@@ -34,18 +34,18 @@ One why-line covers them: they are general-purpose and upstream maintains them b
 
 | Skill | Why |
 |---|---|
-| `align` | No upstream counterpart — the planning lane's entry: tier, red team, spec, interface and locked tests, using `grilling` and `domain-modeling` as its rules; owns the spec in the ticket body and the `needs-alignment` state (ADR-0005, ADR-0011, ADR-0012). |
+| `align` | No upstream counterpart — the planning lane's entry: tier, red team, grill in rounds and write the spec once from the conversation, using `grilling` and `domain-modeling` as its rules; runs across sessions on one session comment's Resume line; owns the spec in the ticket body and the `needs-alignment` state (ADR-0005, ADR-0012, ADR-0013). |
 | `handoff`, `receive` | Local is a two-sided pair using the Obsidian vault as cross-machine transport. Upstream's is a one-sided temp-dir doc with no reader. |
 | `propose` | No upstream counterpart — the planning lane's ask-someone-first destination: publishes the argued proposal, leaves the ticket `awaiting-decision`, routes on the answer (ADR-0006). |
 | `bootstrap` | Configures both lanes and five trackers; upstream's `setup-matt-pocock-skills` configures one. |
 | `commit`, `pr` | Local conventions and PR shape. |
 | `design-system` | No upstream counterpart. The System/Flavour split and the `DESIGN.md` artifact are local by construction. |
-| `cut` | No upstream counterpart — publishes a parent spec's children as sub-issues at `needs-alignment`, each a vertical capability with draft behaviour lines, checked against the parent's journeys by `align`'s own size rule (ADR-0006, ADR-0011). |
+| `cut` | No upstream counterpart — publishes a parent spec's children as sub-issues at `ready-to-build`, each a tracer-bullet vertical slice with its acceptance criteria, seams and Verify steps, sized for one fresh build session; `needs-alignment` only for a child with an open question (ADR-0006, ADR-0013). |
 | `spike` | No upstream counterpart — `align`'s run-it route: one question answered by throwaway code inside a timebox, reading production only through a read-only route and writing only with sandbox credentials, returning the answer and its evidence. |
-| `build` | No upstream counterpart — makes a child's locked tests green through sequential fresh builders, one commit per unit, vets with crucible, verifies on the running app and marks `align`'s draft pull request ready; stops on a wrong locked test instead of working around it; a prose or settings child takes the light route, one builder, one crucible review and one fix round (ADR-0011). |
-| `crucible` | No upstream counterpart — the only review policy: lock check, the correctness walk, `CLAUDE.md` rules, the consumer grep, the claims check, the size note and the baselines first, then on code diff-scoped mutation and the scratch-test prune list; `/build`, `/review` and `/shepherd` invoke it (ADR-0009, ADR-0011). |
+| `build` | No upstream counterpart — one writer per ticket: the session builds test-first at the spec's seams, proves each criterion on the running app through a read-only verifier, self-reviews, runs crucible at most twice and opens the pull request; stops on a criterion that can't hold instead of working around it; carries over sessions on a Resume line (ADR-0013). |
+| `retro` | Shares upstream's name and idea, not its body: reads a ticket's pipeline transcripts, checks each candidate before showing it, keeps a ledger of changes and their signals, and every added rule names what it removes (ADR-0013). Upstream's `retro` only proposes. |
+| `crucible` | No upstream counterpart — the only review policy: the spec check, the correctness walk and boundary probes, `CLAUDE.md` rules and the baselines, the consumer grep and the claims check, then diff-scoped mutation only when a fix carries no test; `/build`, `/review` and `/shepherd` invoke it (ADR-0013). |
 | `review` | No upstream counterpart — the PR-resolution, voice and posting layer around `/crucible` (the analysis engine it invokes); `code-review`'s four-axis body — upstream's two-axis review grown locally — is deprecated into crucible's baselines. |
-| `tester` | No upstream counterpart — writes the locked acceptance, property, contract and end-to-end tests from an approved spec and interface, before implementation; its references hold the test principles and its script the lock check; the edit hook lives in dotfiles. |
 | `shepherd` | No upstream counterpart — the stage after `build`: one open pull request through the review bot's rounds until every thread is settled or a decision is owed, crucible still the only gate; started in a fresh session on the pull request `build` hands back, or on any other. |
 | `personal/*` | No upstream counterpart. The Obsidian second brain is local by construction. |
 
@@ -63,7 +63,7 @@ Some upstream skills are installed directly from `mattpocock/skills` and are del
 
 **32 skill directories live in this library; 31 are registered.** The unregistered one is `in-progress/system-map`, parked on the experiment bench — not shipped, not deprecated. `deprecated/` residents are never registered and never counted.
 
-Of the 31 registered, **16 carry `disable-model-invocation: true` and 15 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
+Of the 31 registered, **17 carry `disable-model-invocation: true` and 14 do not**. The installed set (`~/.agents/skills`) runs ahead of this library: `teach` and `wait-what` come from `mattpocock/skills`, `watch` from `bradautomates/claude-video`, and Claude's own synced bundle sits under `synced/` — all installed direct and deliberately not vendored here.
 
 ## Deprecating a skill
 

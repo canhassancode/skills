@@ -40,6 +40,12 @@ Run `glab issue view <number> --comments`.
 
 `/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **Each child** — an issue labelled `needs-alignment`, in build order: `glab issue create --title "<child title>" --description "..." --label needs-alignment`. Where the tier has child work items, create it under the parent; otherwise it is top-level and the parent's checklist is the only link.
+- **Each child** — an issue labelled `ready-to-build` (`needs-alignment` for a child with an open question), in build order: `glab issue create --title "<child title>" --description "..." --label ready-to-build`. Where the tier has child work items, create it under the parent; otherwise it is top-level and the parent's checklist is the only link.
 - **Blocking edges** — GitLab's native blocking link, posted as a note on the child: `/blocked_by #<n>`. On the free tier, fall back to a `Blocked by: #<n>` line in the description.
 - **The parent** — drops its label once every child exists: `glab issue update <parent> --unlabel ready-to-cut`. Its spec's Children list becomes a checklist naming each child; it stays open until the last one merges.
+
+## Blockers and edges
+
+- **Open blockers**: `glab api projects/:fullpath/issues/<n>/links`, keeping each link whose `link_type` is `is_blocked_by` and whose `state` is `opened`. On the free tier, read the `Blocked by:` line and check each issue's state.
+- **A parent's children**: the parent's checklist, or its child work items where the tier has them.
+- **Move an edge**: `glab issue note <n> --message "/blocked_by #<m>"`, or `/unlink #<m>` to drop one.

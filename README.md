@@ -28,17 +28,17 @@ Skills are organised into folders by category. Each folder maps to a section bel
 
 ## `engineering/` — the core SDLC loop
 
-- [align](engineering/align/SKILL.md) — plan a change before it's built: tier it by size and uncertainty, send unknowns to spike, research or prototype, red-team the idea in a fresh context, grill a parent or child spec into the ticket body, asking what someone will see with no recommendation attached and listing its own calls for an answer before anything is locked, taking a bigger or foggy ask in sittings with a fresh session for each, then for a child approve its interface and lock its tests with `tester`
+- [align](engineering/align/SKILL.md) — plan a change before it's built: tier it by size and uncertainty, send unknowns to spike, research or prototype, red-team any boundary it touches in a fresh context, grill it in rounds, asking what someone will see with no recommendation attached, then write the parent or child spec once from the conversation into the ticket body on one yes; a big or foggy ask runs across sessions on a Resume line
 - [bootstrap](engineering/bootstrap/SKILL.md) — one-time per-repo setup for both lanes: the triage-graph `tracker:` preference and the planning lane's `docs/agents/*.md` config (GitHub/Linear/GitLab/local)
-- [build](engineering/build/SKILL.md) — make a child's locked tests green through fresh builder subagents, one unit and one commit at a time; vet with `crucible`, verify on the running app, and mark a pull request for each branch in the spec's header line ready once every Verify step is ticked or ruled by the operator — or stop and name the locked test that's wrong; a prose or settings child takes the light route, one builder, one crucible review and one fix round; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
+- [build](engineering/build/SKILL.md) — build one ready-to-build ticket in one session and one writer: find what already exists, build test-first at the spec's seams, prove each criterion on the running app through a fresh verifier, self-review against the coding rules, run `crucible` at most twice and hand back a pull request — or stop when a criterion can't hold as written; companion [EXAMPLES.md](engineering/build/EXAMPLES.md)
 - [codebase-design](engineering/codebase-design/SKILL.md) — deep-module design vocabulary, principles, and testability guidance (model-invocable; referenced by `tdd` and `improve-codebase-architecture`)
 - [commit](engineering/commit/SKILL.md) — create a git commit with conventional commit message format
-- [crucible](engineering/crucible/SKILL.md) — review a diff: lock check, code shaped to test inputs, a correctness walk, `CLAUDE.md` rules, the consumers of what changed, the facts the diff leans on and its size against the spec's estimate, then on code only, mutation on the changed lines and a prune list of scratch tests that catch nothing the locked tests miss; never edits the caller's tree or posts; companion [BASELINES.md](engineering/crucible/BASELINES.md)
-- [cut](engineering/cut/SKILL.md) — publish a parent spec's children as sub-issues, each a vertical capability with a goal and draft behaviour lines, checked against the parent's journeys, at `needs-alignment` so each is aligned just before it is built
+- [crucible](engineering/crucible/SKILL.md) — review a diff: each acceptance criterion against the spec, a correctness walk with probes of any boundary it touches, `CLAUDE.md` rules, the consumers of what changed and the claims against the diff, then mutation on the changed lines only when a fix carries no test; never edits the caller's tree or posts; companion [BASELINES.md](engineering/crucible/BASELINES.md)
+- [cut](engineering/cut/SKILL.md) — publish a parent spec's children as `ready-to-build` sub-issues, each a tracer-bullet vertical slice with its acceptance criteria, seams, Verify steps and blocking edges, sized for one fresh build session; `needs-alignment` only for a child with an open question
 - [design-system](engineering/design-system/SKILL.md) — interview a repo's brand knobs into a `DESIGN.md` and a token layer, then amend it as motifs are earned from prototypes; the invariant lives in [SYSTEM.md](engineering/design-system/SYSTEM.md), the flavour in the repo
 - [diagnose](engineering/diagnose/SKILL.md) — disciplined diagnosis loop for hard bugs and performance regressions (reproduce → minimise → hypothesise → instrument → fix → regression-test)
-- [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, prefer the user's own words, propose each CONTEXT.md term and ADR for a yes before writing it)
-- [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core behind `grill-me`: one question at a time, every answer challenged against the evidence
+- [domain-modeling](engineering/domain-modeling/SKILL.md) — build and maintain a project's domain model (model-invocable: challenge terms, sharpen language, stress-test with scenarios, prefer the user's own words, write each CONTEXT.md term as it settles and offer an ADR only when it earns one)
+- [grilling](engineering/grilling/SKILL.md) — reusable interview loop (model-invoked): the relentless-questioning core behind `grill-me`: the whole frontier asked in rounds, every answer challenged against the evidence
 - [handoff](engineering/handoff/SKILL.md) — compact the conversation into a handoff doc for a fresh session to pick up (written into the Obsidian vault's `Handoffs/` when present, else a tmp file)
 - [improve-codebase-architecture](engineering/improve-codebase-architecture/SKILL.md) — find deepening opportunities informed by CONTEXT.md and ADRs
 - [pr](engineering/pr/SKILL.md) — create a GitHub pull request with a structured summary
@@ -46,11 +46,11 @@ Skills are organised into folders by category. Each folder maps to a section bel
 - [prototype](engineering/prototype/SKILL.md) — build a throwaway prototype to answer a design question (logic or UI branch); model-invoked so `align`'s prototype route can reach it
 - [receive](engineering/receive/SKILL.md) — resume an agent handoff from `Handoffs/`, then delete it
 - [research](engineering/research/SKILL.md) — spin up a background agent to investigate a question against primary sources and write cited findings to a markdown file
+- [retro](engineering/retro/SKILL.md) — read a ticket's pipeline transcripts, measure where time and turns went, check earlier retro changes against their signals, and apply skill changes that replace as much as they add
 - [review](engineering/review/SKILL.md) — review a named GitHub PR in Hassan's voice: check the branch out locally, run `crucible` for the analysis, post inline comments after confirmation. With no argument it no longer self-reviews — that is `crucible` against a fixed point
-- [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds until every thread is settled, whatever the score: triage each thread, fix inside the spec through a fresh builder and `crucible`, reply with evidence, and ask before colleague review; started in a fresh session on the pull request `build` hands back, or on any other
+- [shepherd](engineering/shepherd/SKILL.md) — take one open pull request through the review bot's rounds until every thread is settled, whatever the score: triage each thread, fix inside the spec test-first through `crucible`, reply with evidence, and ask before colleague review; started in a fresh session on the pull request `build` hands back, or on any other
 - [spike](engineering/spike/SKILL.md) — answer one question about how something behaves by running the smallest throwaway code, inside a 15-minute timebox, reading production only through a read-only route and writing only with sandbox credentials, and return the answer with its command and output
 - [tdd](engineering/tdd/SKILL.md) — test-driven development with red-green-refactor loop
-- [tester](engineering/tester/SKILL.md) — write the locked tests from an approved spec and interface before implementation: behaviour-named acceptance tests, properties, contract suites and the odd journey, each proven red for the right reason; a validator then runs them against throwaway code before the lock
 - [triage](engineering/triage/SKILL.md) — queue work that arrived cold: classify it, name its route, write the placeholder body; `/triage sweep` groups a whole backlog into duplicates and families; turning it into a spec is `/align`'s
 
 ## `productivity/` — meta-skills for working with me and Claude
@@ -65,8 +65,8 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 - [ask](personal/ask/SKILL.md) — answer a question from the brain, routed by query shape: grep for a named fact, index-first for a conceptual one
 - [file](personal/file/SKILL.md) — file a personal document or self-fact into a domain folder or `Profile/`: OCR on intake, matter-as-unit with linked raws, supersede-don't-append fact hygiene; also drains the top item from `Inbox/`
 - [ingest](personal/ingest/SKILL.md) — process an article, video, or book chapter into the Library wiki; also drains the top item from `Inbox/`
-- [observe](personal/observe/SKILL.md) — append one timestamped observation to `Profile/observations.md`; called by nothing, drained by `retro`
-- [retro](personal/retro/SKILL.md) — drain the observations file one item at a time, each into a change made in the same sitting
+- [observe](personal/observe/SKILL.md) — append one timestamped observation to `Profile/observations.md`; called by nothing, drained by `drain`
+- [drain](personal/drain/SKILL.md) — drain the observations file one item at a time, each into a change made in the same sitting
 
 ## `in-progress/` — works in progress, not yet released
 
@@ -86,16 +86,17 @@ An Obsidian vault in two halves: **Library** for the world (external sources, ag
 - [morning-brief](deprecated/morning-brief/SKILL.md) — retired, not replaced; the daily Operating Loop and its `Journal/` are gone
 - [eod-summary](deprecated/eod-summary/SKILL.md) — retired, not replaced; same reason as `morning-brief`
 - [lint](deprecated/lint/SKILL.md) — retired, not replaced; the vault's surviving files are hand-written and don't generate hygiene debt
-- [implement](deprecated/implement/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which runs the ticket's contract as a gated loop of fresh-child units instead of one session's judgement
+- [implement](deprecated/implement/SKILL.md) — superseded by [build](engineering/build/SKILL.md), which proves each criterion on the running app and puts the diff through `crucible` instead of resting on one session's judgement
 - [code-review](deprecated/code-review/SKILL.md) — superseded by [crucible](engineering/crucible/SKILL.md), which carries its Standards, Structure and Design axes as baselines and is invoked by `build` and `review`
 - [wayfinder](deprecated/wayfinder/SKILL.md) — superseded by [align](engineering/align/SKILL.md): the pass's Unresolved list is the map, and each entry's Route is the ticket type
+- [tester](deprecated/tester/SKILL.md) — superseded by [build](engineering/build/SKILL.md) and [tdd](engineering/tdd/SKILL.md): tests are written test-first in the build loop, not locked ahead of it (ADR-0013)
 
 # My day-to-day
 
 The ones I reach for most:
 
 - `align` before any non-trivial change
-- **Planned work:** `align` — tier, red team, spec, interface, locked tests → `build` → `shepherd`. Bigger than a session: `align` a parent spec → `cut` its children → `align` and `build` each in turn. An unknown goes to `spike`, `research` or `prototype` and lands in the spec's Decisions; a yes owed outside the room goes through `propose` and back to `align`.
+- **Planned work:** `align` — tier, red team, grill, spec → `build` → `shepherd`. Bigger than a session: `align` a parent spec → `cut` its children → `build` each in turn. An unknown goes to `spike`, `research` or `prototype` and lands in the spec's Decisions; a yes owed outside the room goes through `propose` and back to `align`.
 - **New frontend repo:** `bootstrap` → `design-system` (knobs, tokens, empty motifs) → `prototype` the first screen → `design-system` again to distil the motifs → then the planned-work lane as normal.
 - **Inbound work (triage lane):** `triage` for bugs from users, drafts from collaborators, stale tickets → `diagnose` for a confined bug, `align` for the rest → `build`.
 - `diagnose` for anything broken; `crucible` for my own branch, `review` for posting on someone else's PR

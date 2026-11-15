@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 The planning lane's one way of asking. Most alignments settle into work; some need someone else's yes first, and `/propose` is how that question gets asked well.
 
-It reads the **spec** in the ticket's body, not a conversation. The goal, the behaviour lines, the decisions, the red team's verdict and the out-of-scope list are already the argument — the proposal's job is to retell it for a reader who was not in the room. Do NOT interview; synthesise.
+It reads the **spec** in the ticket's body, not a conversation. The goal, the acceptance criteria, the decisions, the red team's verdict and the out-of-scope list are already the argument — the proposal's job is to retell it for a reader who was not in the room. Do NOT interview; synthesise.
 
 A proposal is a request for a decision, not a build spec: a spec tells a builder *what to build*, a proposal persuades a decision-maker *what to do and why*.
 

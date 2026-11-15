@@ -8,11 +8,11 @@ A personal library of Claude Code skills that keep an engineer in the loop throu
 A named, invocable workflow defined by a `SKILL.md` file. Skills compose by **invocation** — one skill may invoke another via the Skill tool (e.g. `/build` invokes `/crucible`). **Inlining** (copy-pasting another skill's procedure into your own body) is forbidden. Invocation is a pointer; inlining is duplication that drifts.
 
 **Operator**:
-The human the lane serves: approves the spec and the interface, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each rule question a stopped fix loop raised before its pull request goes ready, merges, and retires skills. Not in a build's per-unit path — a fallback the run stops for; the one wait is those rulings, at hand-back.
+The human the lane serves: answers align's rounds and gives the one yes on the spec, supplies what a run cannot reach, rules on each Verify step a build couldn't tick and each item on a pull request's hand-back list, merges, and retires skills. Not in a build's path — a fallback the run stops for; the one wait is those rulings, at hand-back.
 _Avoid_: user, developer, owner.
 
 **Align**:
-The planning lane's entrance: tier the ask, red-team it, agree a **Spec**, and — for a **Child** — approve its interface and lock its tests, so the build has nothing left to decide. Every question follows `grilling`; facts come from subagents, never from the operator. One child per session; a build that stops on a locked test comes back here.
+The planning lane's entrance: tier the ask, red-team it, grill it in rounds and write the **Spec** once from the conversation, so the build has nothing left to decide. Every question follows `grilling`; facts come from subagents, never from the operator. A big or foggy ask runs across sessions, each carried on by a **Session comment**'s Resume line; a build that stops on a criterion that can't hold comes back here.
 _Avoid_: grilling, interview, discovery, pass.
 
 **Tier**:
@@ -28,60 +28,32 @@ A fresh subagent briefed to argue against the ask before the spec is written, re
 _Avoid_: review, critique.
 
 **Spec**:
-The plan for one capability, held as its **Ticket**'s body and never carrying status. Two shapes: a **Parent** and a **Child**. Settled questions live in its Decisions as dated `Q → A` lines. Supersedes the old *PRD* and the alignment body.
+The plan for one capability, held as its **Ticket**'s body and never carrying status. Two shapes: a **Parent** and a **Child**. The answers it rests on live in its Decisions, one line each. Supersedes the old *PRD* and the alignment body.
 _Avoid_: PRD, contract, requirements doc.
 
 **Parent**:
-A spec too big for one session: the Goal, Out of scope, the Shape every child builds into, the Rules every child follows, and the Children list. It carries no interface and no tests, has no branch, and its ticket wears `ready-to-cut` until `/cut` publishes the children.
+A spec too big for one session: the Goal, Out of scope, the Shape and seams every child builds into, the Rules every child follows, the Journeys and the Children list. It has no branch, and its ticket wears `ready-to-cut` until `/cut` publishes the children.
 _Avoid_: epic, container, project.
 
 **Child**:
-A spec that fits one session — one capability a user or caller could notice on its own, about six **Behaviour line**s, at most one public interface and one port. Carries Goal, Context, Interface, Behaviour, Out of scope, Done when, **Verify** and Decisions; its stubs and locked tests live on `feat/<capability>`. Vertical, never a layer.
+A spec that fits one fresh `/build` session — one tracer bullet a user or caller could notice on its own, with about six **Acceptance criteria**, tested at one seam. Carries What to build, Acceptance criteria, Seams, **Verify**, Out of scope and Decisions. Vertical, never a layer.
 _Avoid_: slice, story, task.
 
-**Behaviour line**:
-One sentence in a child's Behaviour section, saying what the capability does in a case that matters. Each becomes a **Locked test** titled with exactly that sentence.
-_Avoid_: acceptance criterion, scenario, requirement.
-
-**Locked test**:
-A test `/tester` writes from the approved spec and interface before any implementation, proven red for the right reason, run by the **Validator** and committed as `test: lock <capability> tests`. The file suffix is the lock — `.acceptance.`, `.properties.`, `.contract.`, or an `e2e/` directory. Read-only to everyone after that commit: a hook blocks edits as they happen, and the lock check fails the branch if one changed. An implementer who thinks one is wrong stops and says so.
-_Avoid_: witness, criterion, spec test.
-
-**Validator**:
-A fresh agent that, before the lock, writes throwaway code from the spec and interface and runs the tests against it, to show they can pass; its code is deleted and it never edits a test. Home: `engineering/tester/references/validator.md`.
-_Avoid_: verifier, which checks the running app after a build.
-
-**Stale lock**:
-An earlier **Locked test** that contradicts a new spec or interface line. `/tester` reports it as a gap with its file and line; only the operator removes it (`! git rm`) before the line is relocked.
-_Avoid_: outdated test, conflicting test.
-
-**Scratch test**:
-A test the implementer writes outside the locked files while building. Kept only if it kills a mutant the locked tests miss; otherwise it goes on **crucible**'s **Prune list**.
-_Avoid_: unit test — the layer is named by who owns it, not by its scope.
+**Acceptance criterion**:
+One plain sentence in a child's Acceptance criteria, observable from outside, saying what the capability does in a case that matters. `/build` writes a test for each, and crucible checks each against the diff. An "always" or "never" criterion becomes a property test.
+_Avoid_: behaviour line, scenario, requirement.
 
 **Verify**:
-A child spec's section agreeing, at `/align`, how to see the change working on the running app — the start command, the endpoint, the page. `/align` opens the draft pull request with each step as an unchecked box; `/build`'s **Verifier** runs them, and a step it can't tick waits for the operator's ruling before the pull request goes ready. `none — <why>` is allowed.
+A child spec's section saying how to see the change working on the running app — the start command with the credentials it needs, then each request or page and what it shows. `/build`'s **Verifier** runs the steps before the pull request opens; a step that can't run in session goes into the pull request as an unchecked box with its reason, and keeps it a draft. `none — <why>` is allowed.
 _Avoid_: QA, manual test, acceptance.
 
 **Cut**:
-`/cut` publishes a parent's Children list as sub-issues at `needs-alignment`, each with a goal line and draft behaviour lines drawn only from the parent, blocking edges set in build order. It decides nothing: a child the parent doesn't cover is a question, and each child is aligned just before it is built.
+`/cut` publishes a parent's Children list as sub-issues at `ready-to-build`, in build order, each a tracer bullet with its acceptance criteria, seams and Verify steps drawn only from the parent and sized for one fresh build session, with blocking edges set as each lands. It decides nothing: something the parent doesn't cover is a question, and a child with a genuinely open question goes to `needs-alignment` instead.
 _Avoid_: breakdown, split, slicing.
 
 **Build**:
-The act that makes a child's locked tests green: one branch, a sequential loop of **Unit**s, each in a fresh **Builder**, then **crucible** once over the branch, the **Verifier** on the running app, one fix round per behaviour line, and the pull request. The parent session — the **Delegator** — holds the spec, the unit list and the results, never a diff. One writer per checkout. Stops instead of working around a wrong locked test, an interface gap, missing access or a spec change. Succeeds `/implement`, now deprecated.
+The act that turns one ticket into a pull request, in one session with one writer: it fits the loop, has a subagent search for what already exists, builds test-first at the spec's seams, has the **Verifier** prove each criterion on the running app, self-reviews against the coding rules, then runs **crucible** at most twice — once over the branch, once over the fix commits. Subagents only read. Stops instead of working around missing access, a criterion that can't hold as written, or a fix that would change the spec. A ticket that fills its window carries over on a Resume line in the pull request. Succeeds `/implement`, now deprecated.
 _Avoid_: implement, execute, run.
-
-**Fit**:
-`/build`'s second step: typecheck, lint, the locked command, the full suite and the Verify start command, each run once at the base. A command the repo lacks is recorded as absent; a missing service or credential stops the run before it writes.
-_Avoid_: setup, onboarding, environment.
-
-**Unit**:
-A group of locked tests one fresh **Builder** turns green, ordered so each starts from the last one's green tree, committed once on green. A child needing more than a few units goes back to `/cut`.
-_Avoid_: layer, chunk, slice.
-
-**Builder**:
-One fresh subagent that builds one **Unit**, or one fix round — never a station that persists. It loops typecheck, lint, the locked tests and the full suite; follows `CLAUDE.md`; writes scratch tests where they help; never edits a locked file or shapes code to a test's inputs; and commits once, on green.
-_Avoid_: agent, worker — those are the transport, not the role.
 
 **Verifier**:
 A fresh subagent that runs a child's **Verify** steps against the running app without ever reading the code or the tests, reporting each step passed, failed or not run.
@@ -92,23 +64,19 @@ The **policy** that vets a diff before it goes anywhere: a build's branch, a she
 _Avoid_: the review seam — *seam* keeps its codebase-design sense — and code review, linting.
 
 **Finding**:
-One question **Review** asks, carrying the evidence that raised it. Its class is **behaviour**, **claim**, **rule** (a broken `CLAUDE.md` rule) or **test**; its route is **fix**, **spec-change** (acting would change a behaviour line, so `/align`), **product-call** (the operator's, with a safe default) or **suppressed** (the spec or a settled thread already decided it). A baseline smell is a note, never a finding.
+One question **Review** asks, carrying the evidence that raised it. Its class is **spec**, **behaviour**, **boundary**, **claim** or **rule** (a broken `CLAUDE.md` rule); its route is **fix**, **spec-change** (acting would change an acceptance criterion, so `/align`), **product-call** (the operator's, with a safe default) or **suppressed** (the spec or a settled thread already decided it). A baseline smell is a note, never a finding.
 _Avoid_: comment, defect, issue, severity.
 
 **Prune list**:
-Crucible's list of this diff's scratch tests that kill no mutant the locked tests and the kept tests miss. `/build` deletes them in one `test: prune scratch tests` commit. Locked tests and tests older than the diff are never on it.
+Crucible's list of the tests this diff added that kill no mutant the other tests miss, returned only when mutation runs. Tests older than the diff are never on it.
 _Avoid_: dead tests, cleanup.
 
-**Survivor**:
-A mutant on a changed line that no test kills — returned as a question about behaviour the spec may not name, never as a test to write.
-_Avoid_: gap, missing test.
-
 **Ticket**:
-A tracker node. Its body is the **Spec**, a parent's or a child's, written by `/align`. Its label is the work's state. The **frontier** is every ticket whose blockers are closed: the work takeable now.
+A tracker node. Its body is the **Spec**, a parent's or a child's, written by `/align` or `/cut`. Its label is the work's state. The **frontier** is every ticket whose blockers are closed: the work takeable now.
 _Avoid_: issue, story.
 
 **Session comment**:
-The one comment each `/align`, `/cut` or `/build` session posts on its ticket, carrying only what moved. An align sitting that stops before the close ends with a Resume line naming the sitting the next session starts at. A build's ends with a Resume line when its window filled or a Verify step is still awaiting a ruling.
+The one comment each `/align` or `/cut` session posts on its ticket, carrying only what moved. An align session that stops before the spec is written ends with a Resume line naming the open frontier the next session starts from. A build carries over on a Resume line in its pull request body instead.
 _Avoid_: log, transcript, status update.
 
 **Proposal**:
@@ -180,16 +148,17 @@ A skill that shares a name or an idea with upstream but not a body — or has no
 
 ## Relationships
 
-- The planning lane is `/align` → `/tester` (inside align) → `/build` → `/shepherd`, with `/cut` between align and build when the work is a **Parent**; prose and settings skip `/tester`, applied in `/align` or built by `/build`'s light route, and `/spike`, `/research` and `/prototype` as align's routes for unknowns. `/propose` is the branch that asks someone first. `/build`'s engine is `/crucible`; `/review` and `/shepherd` invoke the same policy (ADR-0009, ADR-0011).
-- **Labels carry the state, the spec carries the plan.** `needs-alignment` means the spec, interface or locked tests are still owed; `ready-to-cut` means a parent spec is agreed; `ready-to-build` means locked tests are committed, or a prose or settings spec is settled. Only `/align` sets `ready-to-build`.
+- The planning lane is `/align` → `/build` → `/shepherd`, with `/cut` between align and build when the work is a **Parent**, and `/spike`, `/research` and `/prototype` as align's routes for unknowns. A prose or settings ticket goes through `/build` without tdd. `/propose` is the branch that asks someone first. `/build`'s review is `/crucible`; `/review` and `/shepherd` invoke the same policy (ADR-0013).
+- **Labels carry the state, the spec carries the plan.** `needs-alignment` means the spec, or a question in it, is still owed; `ready-to-cut` means a parent spec is agreed; `ready-to-build` means a child spec is agreed. `/align` and `/cut` set `ready-to-build`.
 - Two lanes reach the takeable state: the **planning lane** (above) and the **inbound lane** (**triage** → placeholder, for work that arrived cold). One label set, two provenances; the inbound lane reaches no takeable state of its own — it queues into `needs-alignment`, and `/diagnose` leaves a ticket there too.
-- **Locked tests are the contract.** Green alone isn't done: crucible checks the lock and reviews the hunks, then on code mutates the changed lines and prunes scratch tests; the **Verifier** checks the running app; unchecked Verify boxes go to the operator.
-- **Children are vertical and planned just in time.** `/cut` publishes drafts; each child gets its interface and tests from its own `/align`, because a quarter of later slices in this library's trackers changed contract after a sibling merged. A child is never a parent of another child.
+- **The running app is the proof.** Green alone isn't done: the **Verifier** proves each criterion on the running app, and crucible checks each criterion against the diff, walks the hunks, and mutates the changed lines only when a fix carries no test; unchecked Verify boxes keep the pull request a draft.
+- **Children are vertical and cut ready to build.** `/cut` publishes each child with its acceptance criteria, seams and Verify steps, sized for one fresh build session; only a child with an open question goes back to `/align` first. A child is never a parent of another child.
 - A greenfield frontend runs `design-system` twice around a `/prototype`: pass one writes the **DESIGN.md** knobs and tokens with **Motif**s empty, the prototype discovers the flavour on the first real screen, pass two distils the winner into motifs. Discovery is finished when a new screen can be built without stopping to ask.
 - A skill's relationship to **upstream** — **Synced**, **Adapted**, **Forked** — governs how it is edited. See `## Upstream` in `CLAUDE.md`.
 
 ## Flagged ambiguities
 
-- **The contract pipeline** — the alignment body, **Pass**, **Verdict**, **Route** entries, **Slice comment**, **Destination**, **Readiness check** (`cut/READINESS.md`), **Scenario**, **Axis**, prose criteria with **witness**es, P0–P2 severities and the verified list → resolved: **removed** by ADR-0011. The oracle is now locked tests written from the spec before the code; a term from that list in a skill is drift to repoint.
+- **The contract pipeline** — the alignment body, **Pass**, **Verdict**, **Route** entries, **Slice comment**, **Destination**, **Readiness check** (`cut/READINESS.md`), **Scenario**, **Axis**, prose criteria with **witness**es, P0–P2 severities and the verified list → resolved: **removed** by ADR-0011. The oracle is now each acceptance criterion, tested in the build loop and proven on the running app (ADR-0013); a term from that list in a skill is drift to repoint.
+- **Locked tests** — `/tester`, the validator, the lock check, stale locks, interface stubs approved in align, units, the Delegator, fresh builders per unit, behaviour lines, scratch tests, survivors, fix-round tables and rule questions → resolved: **removed** by ADR-0013. A term from that list in a skill is drift to repoint.
 - **The ticketing lane shaped gauntlet-fitness** — ADR-0003, plus the **Edge**, **Gauntlet-fitness**, **Unfitness class**, **Grow-the-seam prep ticket**, **Ticket-lint** and **Stamper** terms → resolved: **removed**. `ticket-lint` no longer exists; ADR-0003 is superseded rather than deleted, and its premise is recorded there.
 - **The agent-takeable label was guaranteed by construction** — ADR-0002, plus the *triage-free planning lane* → resolved: **reversed**. `/align` creates the ticket before it is buildable, so `needs-alignment` is a real intermediate state. See ADR-0005.

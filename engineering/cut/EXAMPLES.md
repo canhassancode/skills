@@ -2,83 +2,49 @@
 
 The parent is #40, *ShipCo integration*, with its spec in its body.
 
-## A failed check
-
-```markdown
-❌ **Child 2, "Shipments table", is a layer.** Nothing a customer or caller sees changes when it merges; it only exists for "Buy a label".
-➡️ Fold it into "Buy a label", which is the first child to store a shipment. The Children list loses one line.
-
-❌ **No child completes journey 2** ("ShipCo reports delivery and the order shows delivered"). "Track a shipment" shows the tracking number but never reads a webhook.
-➡️ Add "Mark delivered" after "Track a shipment": a signed `delivered` webhook moves the order to delivered.
-```
-
 ## The set, before publishing
 
 ```markdown
 **ShipCo integration (#40) → 4 children, in build order**
 
-1. **Quote rates** — show delivery options and prices for a basket.
+1. **Quote rates**: show delivery options and prices for a basket.
    - A basket with a UK address shows ShipCo's rates, cheapest first.
    - An address ShipCo can't deliver to shows no rates and says why.
-   - ShipCo being down shows a retry message, not an empty list.
+   - Verify: /checkout with basket 7 lists ShipCo rates.
 
-2. **Buy a label** — buy a label for the chosen rate and store its tracking number on the order. Blocked by 1.
+2. **Buy a label**: buy a label for the chosen rate and store its tracking number on the order. Blocked by 1.
    - A valid rate buys a label and stores the tracking number on the order.
    - Buying twice for the same order returns the first label and charges once.
-   - An expired rate is reported as rate_expired and nothing is stored.
+   - Verify: POST /api/orders/123/label → 201; /orders/123 shows the tracking number.
 
-3. **Track a shipment** — the order page shows the tracking number and ShipCo's latest status. Blocked by 2.
-   - …
+3. **Track a shipment**: the order page shows the tracking number and ShipCo's latest status. Blocked by 2.
+4. **Mark delivered**: a signed delivered webhook moves the order to delivered. Blocked by 2.
 
-4. **Mark delivered** — a signed delivered webhook moves the order to delivered. Blocked by 2.
-   - …
+"Shipments table" was a layer, so it is folded into Buy a label, the first child to store a shipment.
 
-Behaviour lines are drafts; each child's `/align` settles them with its interface and tests.
-❓ Publish these four at `needs-alignment`?
-```
+❓ **Q1 · Granularity**: four children, each one build session. Right size?
+➡️ Yes.
 
-## A child's body
+❓ **Q2 · Edges**: 3 and 4 both wait only on 2, so they can be built in either order. Right?
+➡️ Yes.
 
-The first sections of a child spec; `/align <child>` fills the rest.
-
-```markdown
-Parent: #40 · Blocked by #41
-
-## Goal
-Buy a label for the chosen rate and store its tracking number on the order.
-
-## Behaviour
-Drafts: `/align` settles these before the build.
-- A valid rate buys a label and stores the tracking number on the order.
-- Buying twice for the same order returns the first label and charges once.
-- An expired rate is reported as rate_expired and nothing is stored.
+❓ **Q3 · Publish**: all four at `ready-to-build`?
+➡️ Yes.
 ```
 
 ## The parent's Children after the cut
 
-The rest of the parent's body is unchanged.
-
 ```markdown
 ## Children, in build order
-- [ ] #41 Quote rates — show delivery options and prices for a basket.
-- [ ] #42 Buy a label — buy a label for the chosen rate and store its tracking number on the order.
-- [ ] #43 Track a shipment — the order page shows the tracking number and ShipCo's latest status.
-- [ ] #44 Mark delivered — a signed delivered webhook moves the order to delivered.
-```
-
-## The session comment
-
-```markdown
-**Session 2 — cut**
-
-Moved: 4 children published at `needs-alignment` (#41–#44); "Shipments table" folded into Buy a label; "Mark delivered" added for journey 2; the Children list updated to match.
-
-Next: `/align #41`.
+- [ ] #41 Quote rates: show delivery options and prices for a basket.
+- [ ] #42 Buy a label: buy a label for the chosen rate and store its tracking number on the order.
+- [ ] #43 Track a shipment: the order page shows the tracking number and ShipCo's latest status.
+- [ ] #44 Mark delivered: a signed delivered webhook moves the order to delivered.
 ```
 
 ## A re-cut
 
 ```markdown
-**#42's align split it:** idempotency needs a stored key, which makes "Buy a label" eight behaviour lines.
-➡️ Split into "Buy a label" (#42, lines 1 and 3) and "Buy once per order" (new, line 2), blocked by #42; #43 and #44 now wait on the new child.
+**#42's build stopped after two sessions**: idempotency needs a stored key, which takes Buy a label past one session.
+➡️ Split it into Buy a label (#42, criteria 1 and 3) and Buy once per order (new, criterion 2, blocked by #42). #43 and #44 then wait on the new child.
 ```

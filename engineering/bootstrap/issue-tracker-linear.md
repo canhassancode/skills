@@ -38,9 +38,15 @@ The AI disclaimer defaults to **ON** on Linear (a shared team space, where AI au
 
 `/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **Each child** — a sub-issue of the parent, in build order: `save_issue` with the parent set and the `needs-alignment` label.
+- **Each child** — a sub-issue of the parent, in build order: `save_issue` with the parent set and the `ready-to-build` label, or `needs-alignment` for a child with an open question.
 - **Blocking edges** — Linear's native **blocking relation** is the live gate, set as each child lands; the body's `Blocked by` line repeats the identifiers for a cold reader.
 - **The parent** — drops `ready-to-cut` once every child exists: `save_issue` with the label removed. Its spec's Children list becomes a checklist naming each child's `CAR-###`; it stays open until the last child merges.
+
+## Blockers and edges
+
+- **Open blockers**: `get_issue` with its relations, keeping each `blockedBy` issue whose state is not completed or canceled. None left means the ticket is takeable.
+- **A parent's children**: `list_issues` filtered by the parent.
+- **Move an edge**: `save_issue` with the changed `blockedBy` or parent.
 
 ## Pull requests as a triage surface
 

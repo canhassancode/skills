@@ -1,42 +1,38 @@
 ---
 name: build
-description: Make a child ticket's locked tests green through fresh builder subagents, one unit and one commit at a time, then vet with crucible, verify on the running app and mark a pull request for each branch in the spec's header line ready — or stop and say which locked test is wrong. A prose or settings child takes the light route, with one builder, one crucible review and one fix round. Use when a child ticket is ready-to-build.
-argument-hint: <child-ticket-ref>
+description: Build one ready-to-build ticket in this session. Find what already exists, build test-first at the spec's seams, prove each criterion on the running app, self-review against the coding rules, then run crucible and hand back a pull request. Use when a ticket is ready-to-build.
+argument-hint: <ticket-ref>
 disable-model-invocation: true
 ---
 
 # Build
 
-Turn a child's locked failing tests green without touching them, prove the change on the running app, and hand back a pull request a human can check in minutes.
+Each ticket gets one session and one writer. This session writes the code itself. Subagents only read: the reuse search, the Verify run and the review. Each returns a few lines.
 
-Origin: TDFlow (tests the implementer can't edit: 94.3% with gold-validated tests, 68.0% with unvalidated LLM tests, 93.3% where every LLM test was valid), ImpossibleBench (read-only tests blocked test edits; a separate "stop and say so" option took GPT-5 from 54% to 9% cheating, with less effect on Opus 4.1) and Anthropic's long-running harness (fresh sessions carried by commits; end-to-end checks before "done").
-
-This session is the **Delegator**: it holds the spec, the unit list and the results, never a diff, so it stays small however big the child is. Every unit is a fresh subagent, one at a time; one writer per checkout. The briefs are in [references/briefs.md](references/briefs.md).
-
-A prose or settings child ([the medium](../align/references/tiers.md#medium)) takes the light route: no lock commit, no lock check and no locked tests. Step 1 reads the ticket and cuts `feat/<capability>` from the base, and steps 2–4 shrink to one light builder making the change, unless the spec splits it, and step 5 is one `/crucible` review over `<base>...HEAD` with one fix round for every acting finding, plus the verifier when the spec has `## Verify` steps. There is no `## Fix rounds` table; anything still open goes on the hand-back list. Steps 6 and 7 run as written, with step 7 opening one pull request for the `feat/<capability>` it cut, listing the behaviour lines without tests and no Fix rounds or Pruned sections, and naming merge as next, not `/shepherd`.
+Origin: Anthropic's long-running harness (one feature per session, proven end-to-end on the running app before it is called done, carried between sessions by git and a progress note) and Pocock's implement (the build holds no rules of its own; `tdd` and the review do). ADR-0013 has the local evidence.
 
 ## Steps
 
-1. **Read** the ticket, whose body is the spec, and the `test: lock` commit on `feat/<capability>`. Bring the branch up to date with the base — merge it in once the branch is pushed, never rebase — then run [the lock check](../tester/scripts/check-locked-tests.sh) and the locked tests: every one red for the reason tester reported. Anything green, or red for another reason, stops the build.
-2. **Fit** the loop from the repo, not memory: typecheck, lint, the locked command, the full suite and the spec's `## Verify` start command. Run each once at the base. A missing command is recorded as absent; a missing service or credential is a stop (step 6).
-3. **Plan units.** Group the locked tests into units a fresh child can turn green, ordered so each starts from the last one's green tree. A child that needs more than a few units goes back to `/cut`.
-4. **Build each unit** with a fresh builder. It commits once, on a real green, and hands back the commit and the command's output. Check that output yourself before the next unit.
-5. **Vet and verify**, both in fresh subagents and neither the builder:
-   - `/crucible` over `<lock-sha>...HEAD` with the ticket. Delete the scratch tests on its prune list in one commit, `test: prune scratch tests`.
-   - The verifier with the spec's `## Verify` steps only, never the diff or the tests.
+1. **Read** the ticket. Its body is the spec: what to build, the acceptance criteria, the seams and the Verify steps. Check its open blockers with the tracker's operation in `docs/agents/issue-tracker.md`; an open one stops the build here, naming it. If its pull request carries a Resume line, start where that line says. Otherwise cut `feat/<slug>` from the base.
+2. **Fit the loop** from the repo, not from memory: typecheck, lint, the test command and the Verify start command, each run once. A missing service or credential stops the build before you write anything (step 7).
+3. **Look before writing.** A subagent searches the repo, its installed dependencies and the standard library for anything that already does part of the work. It returns each find with its `file:line` or API name. Use what it finds.
+4. **Build** with [tdd](../tdd/SKILL.md) at the spec's seams; they count as already agreed. Write each test by [good-vs-bad](../tdd/good-vs-bad.md), on the layer [layers](../tdd/layers.md) gives it. Start the app as soon as there is something to see, and look at it while you build. Typecheck and run the touched tests after each cycle. Commit on each real green.
+5. **Prove it on the running app.** Once every criterion has a green test, a fresh subagent runs the spec's Verify steps with [the verifier brief](references/verifier.md). A failed step is a bug: write a test for it, fix it and rerun that step. A step that can't run in session goes into the pull request as an unchecked box with its reason.
+6. **Review.**
+   - Re-read your own diff against the Coding Standards and Code style in `~/.claude/CLAUDE.md`, the repo's `CLAUDE.md` and [BASELINES](../crucible/BASELINES.md). Look in particular for duplicate types, casts, comments, and code the reuse search could have replaced. Fix it and commit.
+   - Then run `/crucible <base>...HEAD <ticket>` in a fresh subagent. Fix each `fix` finding once, test first, then rerun any Verify step whose path the fix touched.
+   - Run crucible once more over the fix commits only, and never a third time. Anything still open, and any finding that would change the spec, goes on the pull request's hand-back list.
+7. **Stop instead of working around.** Stop for missing access, a criterion that can't hold as written, or a fix that would change the spec. Post what blocked you, with evidence, on the ticket. Missing access leaves it at `ready-to-build`; a spec problem moves it to `needs-alignment`.
+8. **Hand back.** Merge the base in, never rebase, and rerun the suite. Push and open the pull request as [EXAMPLES.md](EXAMPLES.md) shows: ready when every Verify step is ticked, a draft when any is unchecked. Drop `ready-to-build` and name `/shepherd <pr>` as next.
 
-   Each behaviour line gets one fix round, counted in the pull request's `## Fix rounds` table, which you read before any fix. A finding counts against its `caused by` fix's line; with no `caused by`, or one from a `none` round, it counts against its own `line`; a failed or changed verify step counts against the line it checks. A line with no round yet sends its acting findings and failed steps to one fix round in a fresh builder, which commits on top; log the row `| <line> | <sha> (<source>) | — |`, then re-run the lock check, the suite, the verifier's failed steps and crucible over the fix commit.
+A prose or settings ticket (a skill, docs, config) skips tdd. Step 4 is the change itself, and the rest runs as written.
 
-   A finding on a line that already has a round stops that line: no fix. Write the date and the finding in its Stopped cell, then put one rule question to the user: the finding, every survivor crucible raised on that line, and a single sentence that quotes the stopped line word for word and ends in a question mark. Survivors alone never stop a build. A finding that would change a behaviour line goes to the user the same way. Carry on with the other lines and units; a question still unanswered at hand-back goes in step 7's escalation.
+A ticket that spans repos gets one branch and one pull request per repo, in the merge order its spec names.
 
-   A ruling that leaves every behaviour line's wording unchanged is answered here: add it to the ticket's `## Decisions` as `- <date> Q: <the rule question> → A: <the ruling>` and carry on, with the ruling as spec, in this session — never `/align`. A ruling that rewrites a line sends the ticket to `/align` to relock that line (step 6).
+## Context
 
-   A finding with `line none` gets one fix round of its own, logged as `| none | <sha> (<source>) | — |`. Still open after it, it goes on the hand-back list (step 7) and stops nothing.
-6. **Stop instead of working around** — a locked test that looks wrong, an interface that can't satisfy a line, missing access, or a fix that would change the spec. Post the stop report from [EXAMPLES.md](EXAMPLES.md); a wrong test or interface moves the ticket to `needs-alignment`, missing access leaves it at `ready-to-build`.
-7. **Hand back** a pull request for each branch in the spec's header line, opening any `/align` didn't, and keep each a draft. Update each body in place as [EXAMPLES.md](EXAMPLES.md) does — behaviour lines with their tests, a ticked Verify box with its evidence for each step run, an unchecked box with the reason for each step not run in session, Decided limits, Fix rounds, what was pruned, and the header's merge order where it gives one. After a fix round, write the Summary and Decided limits again from the diff as it now stands; a sentence left over from an earlier round is what reviewers send back most. Then put every unchecked step and every unanswered rule question to the operator as one escalation, each step with why it wasn't run and the question it needs answered, and wait. Report the hand-back list in the same message — each open finding that stops nothing, with its `file:line` and evidence. A ruling goes under its step, which stays unchecked. Once every Verify step is ticked or ruled and every rule question answered, merge the base in again and re-run the lock check, the suite and any Verify step whose evidence is older than the last commit on its path; a conflict or a red is a `none` fix round. A question on the ticket still waiting on its owner keeps the pull request a draft and goes in the escalation. Then mark each pull request ready, drop `ready-to-build`, post the session comment, and name `/shepherd <pr>` as next.
-
-When this window fills, the green units are already committed: push, write the Resume line and stop. A session that ends with a step still awaiting a ruling stops the same way: the pull request stays a draft, the ticket stays `ready-to-build`, and the Resume line names the steps and stopped lines awaiting a ruling. A fresh `/build` reads the comment and starts where it left off — the next unit, or the ruling.
+A ticket that fits one session lands around 60–110k tokens. Past about 120k, or after a compaction, commit what is green, push, write a Resume line in the pull request body saying what is done and what is next, and stop. The next `/build <ticket>` starts from it. A ticket that needs a third session was cut too big: say so, and send it to `/cut <parent>`.
 
 ## Never
 
-Edit a locked file · give a behaviour line a second fix round without a ruling · run two writers in one checkout · read `.env`, `.mcp.json` or production credentials · mark a pull request ready with a failing locked test, a changed lock, an acting finding neither fixed, ruled nor on the hand-back list, an unchecked Verify step with no ruling, a base it hasn't merged, or a question on the ticket its owner hasn't answered · put criterion codes in commits or test names.
+Read `.env`, `.mcp.json` or production credentials · weaken or delete a test to get green · run two writers in one checkout · mark a pull request ready with a red suite, an unticked Verify step or an unmerged base.
