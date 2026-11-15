@@ -23,6 +23,6 @@ Read the file at the referenced path. The user will normally pass the path or th
 
 `/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **Each child** — `.scratch/<feature-slug>/issues/NN-<slug>.md`, in build order, with `Status: needs-alignment` and a `Parent: <parent file>` line near the top.
+- **Each child** — `.scratch/<feature-slug>/issues/NN-<slug>.md`, in build order, with `Status: ready-to-build` (`needs-alignment` for a child with an open question) and a `Parent: <parent file>` line near the top.
 - **Blocking edges** — a `Blocked by: NN, NN` line near the top of the child. A ticket is unblocked when every file it lists is `resolved`.
 - **The parent** — drops its `Status:` line once every child exists; its spec's Children list becomes a checklist naming each child file, and it stays open until the last one is `resolved`.

@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: superseded by ADR-0013
 ---
 
 # The build is a sequential fresh-child loop, and crucible is the only review policy

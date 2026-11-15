@@ -8,7 +8,7 @@ argument-hint: <pr-ref>
 
 The stage after **Build**. `/shepherd <pr-ref>` owns one pull request from open to ready to merge: it
 waits for the review bot's round to finish, triages every outside comment as a thread, and acts — fixed
-through a fresh builder and crucible, answered with evidence, put to the operator when a colleague wrote it,
+test-first and vetted by crucible, answered with evidence, put to the operator when a colleague wrote it,
 or escalated when it changes the spec. It never merges.
 
 **Outside review is input, never a second gate.** The bot's findings and colleagues' comments enter as
@@ -21,7 +21,7 @@ The operator starts it in a fresh session — on the pull request `/build` hands
 
 | input | what it is | who resolves it |
 | --- | --- | --- |
-| **the spec** | the linked ticket's body — goal, behaviour lines, out of scope, decisions — and its locked tests | the pull request's ticket |
+| **the spec** | the linked ticket's body — goal, acceptance criteria, out of scope, decisions | the pull request's ticket |
 | **the round** | the review bot's pass over the pull request, ended by §2's done signal | the review bot |
 | **crucible's notes** | an input case judged safe, with the line that makes it safe — what a reply quotes in §5 | crucible's vetting |
 
@@ -66,25 +66,21 @@ exactly one route:
 
 | the thread | the route |
 | --- | --- |
-| a finding inside the spec | a fix through a fresh builder and crucible — §4 |
-| a finding on a behaviour line that has had its fix round | a rule question, no fix — §4 |
+| a finding inside the spec | a fix in this session, vetted by crucible — §4 |
+| a finding still open after crucible's second pass | the hand-back list, no further fix — §4 |
 | a finding the spec already decides | an answer with the evidence — §5 |
 | a colleague's comment | a reply put to the operator — §6 |
-| a finding that changes the spec or a locked test | a decision escalation — §7 |
-
-Read the `## Fix rounds` table and name each finding's behaviour line (§4) before routing it: a finding on
-a line that has had its round takes the rule question whichever other row it fits.
+| a finding that changes the spec | a decision escalation — §7 |
 
 **Done when** every thread in the round carries one route.
 
 ### 4. Fix inside the spec
 
-A fix is a fresh builder carrying the finding in `/build`'s fix brief
-([briefs.md](../build/references/briefs.md#fix)), then `/crucible` over the fix's commits in a subagent of
-its own — never a parent edit in this session, and never the review bot's word as the gate. Locked files
-stay read-only; one commit, the lock check and the full suite green, and the re-review is asked for in a
+A fix is written in this session, test first with [tdd](../tdd/SKILL.md), then `/crucible` runs over the
+fix's commits in a subagent of its own — never the review bot's word as the gate. One commit and the full
+suite green, and the re-review is asked for in a
 trigger comment only after the vetting is green. A fix that changes what a `## Verify` step exercises
-re-runs that step through `/build`'s verifier brief and replaces its evidence in the pull request body
+re-runs that step through `/build`'s [verifier brief](../build/references/verifier.md) and replaces its evidence in the pull request body
 with the new commit's; a step it can't run is unticked and put to the operator. Every fix ends by writing
 the body's Summary and Decided limits again from the diff as it now stands, and crucible reads the body
 against the whole pull request's diff, `<base>...HEAD`, never the fix's commits alone: a body that still describes an earlier round is what colleagues send back most.
@@ -92,27 +88,12 @@ against the whole pull request's diff, `<base>...HEAD`, never the fix's commits 
 Each finding that needed code is tagged `alignment | crucible | style` — which stage should have caught
 it — and recorded in this run's one comment on the ticket.
 
-Each behaviour line gets one fix round across build and shepherd — `/build`'s rule
-([SKILL.md](../build/SKILL.md), step 5), counted in the pull request's `## Fix rounds` table, which you read
-before any fix. Name each finding's `line` and `caused by` as crucible does
-([SKILL.md](../crucible/SKILL.md#return)): the behaviour line it threatens, quoted from the spec, and the
-`fix:` commit whose hunk its `file:line` sits in or depends on, found with `git log -L` or `git blame`. A
-finding counts against its `caused by` fix's line; with no `caused by`, or one from a `none` round, it counts
-against its own `line`. A line with no round yet gets one: write its row `| <line> | <sha> (shepherd) | — |`
-once the fix commits.
+Crucible follows `/build`'s rule ([SKILL.md](../build/SKILL.md), step 6): fix each `fix` finding once,
+test first, then run crucible once more over those fix commits, and never a third time in the round. A
+finding still open after that goes on the pull request's `## Hand-back` list with its `file:line`, and stops
+nothing. A finding routed `spec-change` is §7's.
 
-A finding on a line that already has a round, whether build's or shepherd's, stops that line: no builder,
-no fix. Write the date and the finding in its Stopped cell, then put one rule question to the operator as
-a decision escalation: the finding, every survivor crucible raised on that line, and a single sentence
-that quotes the stopped line word for word and ends in a question mark. The question goes in this
-session's last message, answered or not. A ruling that leaves every behaviour line's wording unchanged is
-added to the ticket's `## Decisions` and the run carries on with it as spec; one that rewrites a line is
-§7's escalation, to `/align`.
-
-A finding with `line none` gets one fix round of its own, logged as `| none | <sha> (shepherd) | — |`.
-Still open after it, it goes to the operator as an information escalation and stops nothing.
-
-**Done when** the fix is committed, crucible has vetted it, its tag is recorded and its Fix rounds row is written — or the line is stopped and its rule question asked.
+**Done when** the fix is committed, crucible has vetted it and its tag is recorded — or the finding is on the hand-back list.
 
 ### 5. Answer with evidence
 
@@ -138,12 +119,12 @@ yes.
 
 ### 7. Escalate a spec change
 
-A finding that changes what the spec promises — a behaviour it never named, a locked test that looks wrong, a decision it settled the
+A finding that changes what the spec promises — a behaviour it never named, a decision it settled the
 other way, scope it excludes — is neither fixed nor answered here. It goes to the operator as a decision
 escalation, one line and one link, and the run keeps to the threads it can still close while that answer
 is owed.
 
-**Done when** the escalation is in session and no fix has touched the spec or a locked file.
+**Done when** the escalation is in session and no fix has touched the spec.
 
 ### 8. The stop rule
 
@@ -157,9 +138,9 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 ## Boundaries
 
-**Always** — read the spec before every fix · fix through a fresh builder and crucible · reply to the review bot with evidence · keep each fix inside the spec.
+**Always** — read the spec before every fix · fix test-first and through crucible · reply to the review bot with evidence · keep each fix inside the spec.
 **Ask first** — any reply to a colleague · requesting colleague review.
-**Never** — merge · give a behaviour line a second fix round without a ruling · post to a colleague without a yes · a fix without a fresh builder and crucible · edit a locked file.
+**Never** — merge · run crucible a third time on one round's fixes · post to a colleague without a yes · a fix without crucible · weaken or delete a test to get green.
 
 ## Related
 

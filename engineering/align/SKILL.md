@@ -1,66 +1,43 @@
 ---
 name: align
-description: Plan a change before it's built — tier it, red-team it, agree a spec, approve its interface and lock its tests. Use when the user brings a feature, ticket or idea to plan, or a child ticket comes back for its interface and tests.
+description: Plan a change before it's built. Tier it, grill it in rounds, red-team any boundary it touches, and write the spec once from the conversation. Runs across several sessions when the ask is big or foggy. Use when the user brings a feature, ticket or idea to plan, or a ticket is needs-alignment.
 argument-hint: <idea | ticket-ref>
 disable-model-invocation: true
 ---
 
 # Align
 
-Turn an ask into a spec, an approved interface and locked failing tests, so the build has nothing left to decide.
+Turn an ask into a spec the build can work from cold: what to build, acceptance criteria, seams and Verify steps.
 
-Origin: Shape Up's shaping (appetite, no-gos and rabbit holes settled before the bet) and Liu et al. 2026 (a reviewed plan helps; a poor plan does worse than none).
+Origin: Pocock's grill-with-docs → to-spec (grill in rounds, write the glossary as you go, then synthesise the spec without re-interviewing) and Shape Up's shaping (appetite, no-gos and rabbit holes settled before the bet).
 
-Every question follows [grilling](../grilling/SKILL.md), except that step 3's open questions carry no recommendation and are never asked as a check. Every term and ADR follows [domain-modeling](../domain-modeling/SKILL.md). Facts come from subagents, never from the user, and every claim about the world the change will run in follows [references/spec.md](references/spec.md)'s Claims rule. Never open `.env`, `.mcp.json` or other config holding credentials, not even to find a connection. Every reply follows [EXAMPLES.md](EXAMPLES.md).
-
-The user reads every message that asks for a yes, so each one carries one decision and one concrete example in about a hundred plain words. File names, identifiers and pipeline terms go under the `↳` line, never in the question.
+Questions follow [grilling](../grilling/SKILL.md), with each round shaped like [EXAMPLES.md](EXAMPLES.md#a-round). Terms and ADRs follow [domain-modeling](../domain-modeling/SKILL.md). Facts come from subagents, never from the user. Never open `.env`, `.mcp.json` or other config holding credentials.
 
 ## Steps
 
-1. **Tier.** Place the ask on [references/tiers.md](references/tiers.md) and confirm it. That same first message lists the read-only routes this session has to where the change will run — the production database, its logs, each live supplier, each sibling repo checked out beside this one — found in the session's tools and the repo's docs, and names each one missing. A missing route the spec will lean on is the user's to open now or to accept as `unchecked`; ask once, here, not when a claim first needs it.
-   - One-sentence diff: say so, name the diff and any risk in one line each, and stop. Propose nothing: no aliases, shims or follow-ups.
-   - One or two files with nothing left to decide: say so and stop, the same way. The change is made in an ordinary session and `/crucible` reviews it; align writes no spec and sets no label.
-   - Prose or settings ([the medium](references/tiers.md#medium)): steps 5 and 6 don't run. Once the spec is settled, the user picks: apply it here on their go, one commit at a time, then run the spec's `## Verify` steps here, run `/crucible` over the branch, give its acting findings one fix round and open the pull request ready, or, when nothing is committed, post the Verify evidence on the ticket and close it; or close at `ready-to-build` for build's light route.
-   - Foggy: send each unknown to `/spike`, `/research` or `/prototype`, one question each. Log each answer in Decisions, then re-tier.
-   - A child of a cut parent: read the parent spec and the child's body, then skip to step 3. The parent's Decisions and Rules and the body's Decisions are settled: never ask, re-derive or restate them. Check each against the code it touches. Code that breaks one today, or data showing it can't hold, goes back as [a challenge](EXAMPLES.md#a-challenge): the decision and its evidence's `file:line` in the same paragraph. Never change the decision silently. Your first message drafts every behaviour line the child needs to meet its goal and the parent's Rules and Journeys, then checks them against [references/tiers.md](references/tiers.md#size)'s size rule before any grilling question. Over it, that message proposes a split, its only question: the piece built first stays in this session, and the rest are listed with the command that publishes them, `/cut <parent-ref>`.
-2. **Red team.** Brief a fresh subagent with [references/red-team.md](references/red-team.md). Show its verdict — go, shrink or no-go — and the user decides.
-3. **Spec.** Grill until [references/spec.md](references/spec.md)'s template is full: a child spec if it fits one session, otherwise a parent spec. Write each settled answer into the ticket body's Decisions as a dated `Q → A` before you ask the next question, adding the section if the body has none: at the end of the body, or above `## Comments` where the tracker keeps one. The next question is one nothing settled yet: not in the parent's Decisions or Rules, nor in the body's Decisions. A question someone outside the room owns — a supplier's contact, a colleague, whoever a ticket names — is settled only by their answer: its Decisions line names who gave it, and until then it stays open and the session closes on that row of the table below.
-   - **What someone will see is asked open.** A question about what a user, a caller or another system sees, or what is stored, is the scenario and the question alone, with no recommendation and no options, as [an open round](EXAMPLES.md#an-open-round) shows. Record the answer in the user's words. Recommend only on a technical choice nobody outside the code could notice, or once the user asks what you would do.
-   - **"I don't know" is not a yes.** Nor is "not my area" or "go with your recommendation" on what someone will see. Name who would know and leave the question open for them, or send it to a route.
-   - **Your own calls are listed, never slipped in.** A call nobody outside the code could notice is drafted into the spec without a question. Any other line you wrote that no answer or checked claim stands behind is your call. Step 3 ends by showing [where each line came from](EXAMPLES.md#where-each-line-came-from): every behaviour line under the user's or an owner's answer, a checked claim, or your call. Each call of yours is answered, sent to its owner or dropped before step 5, and one still standing closes the session on the open-question row below.
-4. **Domain.** Each new term and each ADR is its own yes.
-5. **Interface** (child on code only). Propose signatures with [codebase-design](../codebase-design/SKILL.md): the code, one caller and the error kinds, one interface at a time. On a yes, commit them as stubs that compile and throw: `feat: stub <capability> interface`.
-6. **Tests** (child on code only). Write the spec into the ticket body, then run `/tester` and show its report in its own order and plain words, its `Typecheck:` and `Gaps:` lines word for word. Every gap reaches the user in that same message, even when you then ask about one at a time. Any gap blocks the lock: an interface gap goes to step 5, a spec gap to step 3, and a green, stale-lock or typecheck gap to the user: for green, whether the line stays and what it should say; for a stale lock, removing it themselves (`! git rm <file>`) before the line is relocked; for a typecheck that couldn't run, usually installing dependencies and rerunning `/tester`. With no gaps, run [the validator](../tester/references/validator.md) and act on its report: at most two runs, then the user. With no blockers, commit `test: lock <capability> tests`; the user approved the spec and the interface, so don't ask about the test files.
-7. **Close.** Check every claim by [references/spec.md](references/spec.md)'s Claims rule. Then write the spec into the ticket body, keeping every Decisions line it already held, push the branch if there is one, open its draft pull request as [EXAMPLES.md](EXAMPLES.md) does (ready, for a prose or settings change applied here), post the session comment and set the label.
+1. **Tier.** Place the ask on [references/tiers.md](references/tiers.md). Confirm it in the same message that lists the read-only routes this session has to where the change will run: the production database, its logs, each live supplier, each sibling repo checked out beside this one. Name any that are missing.
+   - **One-sentence diff, or one or two files with nothing to decide:** say so, name the risk in one line, and stop. The change is made in an ordinary session and `/crucible` reviews it.
+   - **Foggy:** send each unknown to [`/spike`](../spike/SKILL.md), [`/research`](../research/SKILL.md) or [`/prototype`](../prototype/SKILL.md), one question each, as a subagent. Carry on grilling around it.
+   - **A ticket at `needs-alignment` from a cut:** read the parent spec and the ticket. Settle only the open question its body names, then go to step 5.
+2. **Red team** with [references/red-team.md](references/red-team.md) in a fresh subagent. Show its verdict, and the user decides.
+3. **Grill** in rounds until the frontier is empty.
+   - **What someone will see is asked open.** A question about what a user, a caller or another system sees, or what gets stored, goes in its round as the scenario and the question alone, with no recommendation. Record the answer in the user's words. Recommend only on a technical choice nobody outside the code could notice.
+   - **"I don't know" is not a yes.** Nor is "go with your recommendation" on what someone will see. Name who would know, and leave that question open for them.
+   - **Seams.** Before the frontier closes, propose the fewest seams the criteria can be tested at, ideally one, preferring existing ones. Ask the seams as one question.
+4. **Domain.** Write each resolved term to `CONTEXT.md` as it settles, and say so in one line. Offer an ADR only when it passes domain-modeling's three tests.
+5. **Spec.** Write it once, from the conversation, in [references/spec.md](references/spec.md)'s shape: a child if it fits one fresh `/build` session, otherwise a parent. Below it, show [where each line came from](EXAMPLES.md#where-each-line-came-from): each criterion under the user's answer, a checked claim, or your call. Then put every call of yours, plus the yes on the whole spec, in one round.
+6. **Close.** Write the spec into the ticket body, post one session comment, and set the label.
 
 | Ends on | Label | Next |
 |---|---|---|
-| a child with locked tests, or a prose or settings child to build elsewhere | `ready-to-build` | `/build <ref>` |
-| a prose or settings change applied here | remove `needs-alignment`; its pull request closes the ticket | merge it |
-| a parent spec | `ready-to-cut` | `/cut <ref>` |
-| a yes owed outside the room | `ready-to-propose` | `/propose <ref>` |
-| a question still open | `needs-alignment`, naming it | its route, then `/align <ref>` |
-| a sitting that ended before the close | `needs-alignment` | `/clear`, then `/align <ref>` |
+| a child | `ready-to-build` | `/build <ref>` |
+| a parent | `ready-to-cut` | `/cut <ref>` |
+| a yes owed by someone outside the room | `ready-to-propose` | `/propose <ref>` |
+| a question still open, or a session that ended early | `needs-alignment` | its route, then `/align <ref>` |
 | no-go | `wontfix` | the reason, then stop |
 
-## Sittings
+## Across sessions
 
-Most align sessions have run past 120k tokens of context ([tiers.md](references/tiers.md#evidence)). To keep each one small, a bigger or foggy ask is aligned in sittings, each in its own session:
+A big or foggy ask can run across several sessions. Grilling, spikes and research fill a window fast. Stop at a natural break, after a compaction, or when the user says it is getting long. Post a session comment shaped like [EXAMPLES.md](EXAMPLES.md#a-session-comment): what was decided, what is still open on the frontier, and a Resume line. Then tell the user to `/clear` and run `/align <ref>`.
 
-1. **Explore**: steps 1 and 2 and every route's answer, ending with the tier confirmed and the answers in Decisions. An ask that arrived as an idea gets its ticket here, so the next sitting has somewhere to read from.
-2. **Spec**: steps 3 and 4, ending with where each line came from settled and the spec in the ticket body.
-3. **Interface and tests**: steps 5 to 7, or step 7 alone on a parent or on prose or settings.
-
-A known ask that fits one session runs straight through. Otherwise say at the tier which sittings this ask will take, and at the end of each: write what is settled into the ticket body, post the session comment ending in its [Resume line](EXAMPLES.md#a-session-comment), tell the user to `/clear` and run `/align <ref>`, and stop. Stop the same way mid-sitting once the conversation has been compacted or the user says it is getting long; never carry on past a compaction.
-
-A ticket whose last session comment ends in a Resume line starts at the sitting it names. Read the body and its Decisions, redo nothing above the line, and ask nothing they already settle.
-
-A child of a cut parent takes sittings 2 and 3 in one session: its first message drafts its lines, and sitting 2 is short when the parent settled them. One that needs questions beyond its own calls means the parent spec was thin: say so in the session comment, so the count shows whether parents are being cut too early.
-
-## Where it lives
-
-- **Spec**: the ticket body, on the parent's ticket for a parent and on its own ticket for a child. It replaces whatever the body held, except Decisions: each answer lands there as it is settled, and every rewrite keeps the lines already there. Status never goes in it; the label holds that.
-- **Code** (child on code only): the stubs and locked tests on `feat/<capability>`; a prose or settings change applied here commits on `feat/<capability>` too, and one built elsewhere gets its branch from `/build`. The code child's branch is opened as a draft pull request that links the ticket. Its body is build's pull request filled in with what align knows: the goal, each behaviour line red at the lock, every Verify step as an unchecked box and the decided limits. Build updates it in place. A child spanning repos names each repo's branch and the merge order in its header line, by [references/spec.md](references/spec.md). A parent has no branch.
-- **Session comment**: one per session, carrying only what moved.
-
-One child per session; the next starts fresh. A build that stops on a locked test comes back here: the spec changes first, the user removes the stale test, and step 6 runs for the changed lines only.
+A ticket whose last session comment ends in a Resume line starts from it. Read the body and the comments, ask nothing they already settle, and carry on from the open frontier. The spec is still written once, in the session where the frontier empties.

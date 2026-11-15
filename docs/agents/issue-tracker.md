@@ -30,12 +30,12 @@ declare -A canonical=(
   [bug]="d73a4a:Something is broken"
   [enhancement]="a2eeef:New feature or improvement"
   [needs-triage]="fbca04:Maintainer needs to evaluate"
-  [needs-alignment]="5319e7:Planning lane: the spec, interface or locked tests are still owed"
+  [needs-alignment]="5319e7:Planning lane: the spec, or a question in it, is still owed"
   [needs-info]="d4c5f9:Waiting on reporter"
   [ready-to-propose]="d876e3:Planning lane: a formal proposal is owed"
   [awaiting-decision]="bfd4f2:Planning lane: the proposal is out"
   [ready-to-cut]="0052cc:Planning lane: the parent spec is agreed; its children are owed"
-  [ready-to-build]="2cbe4e:Locked tests or a settled prose or settings spec; takeable now"
+  [ready-to-build]="2cbe4e:A settled child spec; takeable now"
   [wontfix]="cccccc:Will not be actioned"
 )
 for label in "${!canonical[@]}"; do
@@ -74,5 +74,5 @@ Run `gh issue view <number> --comments`.
 
 `/cut` publishes a parent spec's children. The semantics live in the skill; these are the operations.
 
-- **Each child** — a native sub-issue of the parent, in build order: `gh issue create --title "<child title>" --body-file - --parent <parent> --label needs-alignment --blocked-by <n>,<n>`. The body's `Blocked by` line repeats the edges for a cold reader; the native edge is the live gate.
+- **Each child** — a native sub-issue of the parent, in build order: `gh issue create --title "<child title>" --body-file - --parent <parent> --label ready-to-build --blocked-by <n>,<n>`, or `--label needs-alignment` for a child with an open question. The body's `Blocked by` line repeats the edges for a cold reader; the native edge is the live gate.
 - **The parent** — drops its label once every child exists: `gh issue edit <parent> --remove-label ready-to-cut`. Its spec's Children list becomes a checklist naming each child; it stays open until the last one merges.

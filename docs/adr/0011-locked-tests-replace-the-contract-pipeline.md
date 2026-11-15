@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: superseded by ADR-0013
 ---
 
 # Locked tests replace the contract pipeline

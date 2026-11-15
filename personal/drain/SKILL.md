@@ -1,10 +1,10 @@
 ---
-name: retro
-description: Drain Profile/observations.md in the vault — read the observations back, take them one at a time, and turn each into a change made in the same sitting. Use when the user runs /retro.
+name: drain
+description: Drain Profile/observations.md in the vault — read the observations back, take them one at a time, and turn each into a change made in the same sitting. Use when the user runs /drain.
 disable-model-invocation: true
 ---
 
-# Retro
+# Drain
 
 **The vault root.** Resolve it once, before anything else: `VAULT_ROOT` from the environment, defaulting to `~/Obsidian` when unset (`echo "${VAULT_ROOT:-$HOME/Obsidian}"`). Every vault path below is built from `$VAULT_ROOT`, as shorthand: shell state does not persist between commands, so substitute the resolved path it printed into every command and file path, never the bare `$VAULT_ROOT`. If that directory does not exist, stop and say so — never create a vault.
 
@@ -31,7 +31,7 @@ These are illustrations, not a lookup table. A table would ossify the routes; th
 
 ## The invariant
 
-**`/retro` cannot end with an item still in the file.** Every observation ends the sitting as a change, a filed exception, or a deletion. "I'll deal with it next time" is not an exit — it is how the file stopped draining in the first place.
+**`/drain` cannot end with an item still in the file.** Every observation ends the sitting as a change, a filed exception, or a deletion. "I'll deal with it next time" is not an exit — it is how the file stopped draining in the first place.
 
 ## Multi-repo by construction
 

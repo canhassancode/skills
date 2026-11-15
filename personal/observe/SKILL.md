@@ -29,7 +29,7 @@ No skill calls `/observe` on exit. There is no spine. It fires when Hassan runs 
 
 ## The file drains
 
-`observations.md` is a queue, not a journal. `/retro` reads it, routes each item to a change, and deletes it. An observation still sitting there is not filed — it is undrained. If the file only grows, the answer is to run `/retro`, not to give the file more structure.
+`observations.md` is a queue, not a journal. `/drain` reads it, routes each item to a change, and deletes it. An observation still sitting there is not filed — it is undrained. If the file only grows, the answer is to run `/drain`, not to give the file more structure.
 
 ## Confidentiality
 

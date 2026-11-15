@@ -78,9 +78,9 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
      need one;
    - **settled threads** — the published threads and Hassan's pending drafts, so
      nothing already answered is raised again.
-   The procedure is crucible's, not this skill's: the lock check, the diff
-   mutation, the walk, the rules and the consumer grep are never re-derived
-   here. It returns the Lock, Mutation, Prune and Survivors lines, the findings
+   The procedure is crucible's, not this skill's: the spec check, the walk, the
+   rules, the consumer grep, the claims check and any mutation are never
+   re-derived here. It returns the Spec, Mutation and Prune lines, the findings
    **and** the notes.
 5. **Draft & decide — independently.** Turn `/crucible`'s findings into a
    review body + inline comments in Hassan's voice ([VOICE.md](VOICE.md)), each
@@ -88,9 +88,9 @@ title,headRefOid,baseRefOid,body,files,number,headRefName,baseRefName`.
    those findings alone. Hassan's pending draft comments do **not** feed this
    decision — the skill reaches its conclusion blind to them, so the two can be
    compared honestly.
-   Survivors and the prune list become questions and suggestions, never blockers.
+   The prune list becomes questions and suggestions, never blockers.
    - **No finding routed `fix`, `spec-change` or `product-call`** → `APPROVE`,
-     citing the Lock and Mutation lines; without a spec, say which steps did
+     citing the Spec and Mutation lines; without a spec, say which steps did
      not run.
    - **Anything worth flagging** → `COMMENT`. Never `REQUEST_CHANGES`.
 6. **Reconcile & confirm.** Present, side by side: the skill's verdict + its new

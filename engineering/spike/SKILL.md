@@ -18,6 +18,9 @@ Origin: XP's spike solution ("expect to throw it away"; its goal is reducing a t
 - **A sample when the question is about every case**: what forms a field takes, how often a state occurs, whether something always holds. One case can't answer it. Read a bounded sample from where the change will run, at most 500 records, and give the count with the answer: `158 of 405`.
 - **Scratch only.** Work in `$TMPDIR/spike-<slug>` or a throwaway worktree. Never touch the feature branch, never commit, delete it after.
 - **Production is read, never written.** Reach it only through a read-only route the session's tools or the repo's docs name: a read-only database MCP, a log query, a supplier call that only reads. A database read asks for a count before rows, caps rows with a `LIMIT`, and runs `explain_query` before `execute_sql` where the route offers both. Anything that writes uses sandbox credentials from the environment. Never read secrets from `.env`, `.mcp.json` or config files. Missing access is an answer: `needs access: <what>`.
+- **A boundary question lists what can cross it.** "Can the sandbox reach X?" becomes "what outside the sandbox can it reach?" List every candidate first (sockets, buses, files, hosts), then probe a sample of the riskiest and report the count tried.
+- **Probe the mechanism, never an agent.** Drive the sandbox, guard or API directly with its CLI or library. An agent asked to attack something can refuse, and then the run proves nothing.
+- **Another platform is a paste-ready command.** When the question needs a platform this machine isn't, answer `unchecked: <platform>` and give one self-contained command the user can paste there. Don't walk them through copying files across.
 - **Run, don't read.** The evidence is a command and its output. Docs are `/research`'s; a shape the user must see is `/prototype`'s.
 
 ## Return

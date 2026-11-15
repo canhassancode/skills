@@ -130,11 +130,11 @@ Required before declaring done:
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns
-- [ ] `/crucible <base>...<head>` has vetted the PR, and the regression test is the one that kills the mutant on the fixed line
-- [ ] Crucible's findings are fixed and its prune list deleted, then `gh pr ready` marks the pull request ready for review
+- [ ] `/crucible <base>...<head>` has vetted the PR
+- [ ] Crucible's findings are fixed, then `gh pr ready` marks the pull request ready for review
 
 **If the diagnosis ends without a fix** there is no commit and no PR to carry the finding. Post it as a comment on the ticket instead: the winning hypothesis, the loop you built (the command, verbatim), and what you ruled out. The next session starts from the loop rather than rebuilding it.
 
-**Then label the ticket `needs-alignment`.** That comment is the handover: `/align` starts from the loop, writes the child spec and locks the regression test before anything is built. A diagnosis never stamps `ready-to-build`, because a code fix's `ready-to-build` means locked tests are committed.
+**Then label the ticket `needs-alignment`.** That comment is the handover: `/align` starts from the loop and writes the child spec, with the regression as an acceptance criterion, before anything is built. A diagnosis never stamps `ready-to-build`, because a code fix's `ready-to-build` means a settled child spec.
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-codebase-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.

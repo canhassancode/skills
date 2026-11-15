@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Triage
 
-Queue inbound work. Triage **classifies and routes**: it writes no spec, runs no `/align`, and stamps no state a builder can take. Turning a placeholder into a spec and locked tests is `/align`'s.
+Queue inbound work. Triage **classifies and routes**: it writes no spec, runs no `/align`, and stamps no state a builder can take. Turning a placeholder into a spec is `/align`'s.
 
 A ticket wearing `ready-to-propose`, `awaiting-decision`, `ready-to-cut` or `ready-to-build` is planning work, not inbound — leave it alone. `needs-alignment` is the one state the two lanes share: triage queues into it, and `/align` is what clears it. A body already linking a spec is planning work whatever it wears — say so and stop, rather than re-queuing it.
 

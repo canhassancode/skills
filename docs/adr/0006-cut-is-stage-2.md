@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: superseded by ADR-0013
 ---
 
 # `/cut` turns a settled alignment into slices, and the label set grows to match
