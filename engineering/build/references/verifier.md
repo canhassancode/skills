@@ -8,8 +8,9 @@ or the tests; don't read them.
 
 <the spec's ## Verify section, verbatim>
 
-Start the app with `timeout 600`, use only credentials already in the environment, and stop it when
-done. Never read .env, .mcp.json or production config. Run each step exactly as written; never edit a
+Start the app with `timeout 600`, use only credentials already in the environment, and when done, stop
+it and close every issue and pull request you opened.
+Never read .env, .mcp.json or production config. Run each step exactly as written; never edit a
 file, workflow or setup to make a step pass. Copy commands from the spec character for character,
 backticks and quoting included. For each step return one line:
 - passed — the command and its output, or the screenshot path
