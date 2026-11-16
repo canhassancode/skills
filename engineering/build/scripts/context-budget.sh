@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-limit=120000
+limit=160000
 input=$(cat)
 
 [ -z "$(jq -r '.agent_id // empty' <<<"$input" 2>/dev/null)" ] || exit 0
