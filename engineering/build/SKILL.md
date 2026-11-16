@@ -3,6 +3,11 @@ name: build
 description: Build one ready-to-build ticket in this session. Find what already exists, build test-first at the spec's seams, prove each criterion on the running app, self-review against the coding rules, then run crucible and hand back a pull request. Use when a ticket is ready-to-build.
 argument-hint: <ticket-ref>
 disable-model-invocation: true
+hooks:
+  PostToolUse:
+    - hooks:
+        - type: command
+          command: '"$HOME/.agents/skills/build/scripts/context-budget.sh"'
 ---
 
 # Build
@@ -31,7 +36,7 @@ A ticket that spans repos gets one branch and one pull request per repo, in the 
 
 ## Context
 
-After a compaction, commit what is green, push, write a Resume line in the pull request body saying what is done and what is next, and stop. The next `/build <ticket>` starts from it. A ticket that needs a third session was cut too big: say so, and send it to `/cut <parent>`.
+When the context-budget hook fires, commit what is green, push, write a Resume line in the pull request body saying what is done and what is next, and stop. The next `/build <ticket>` starts from it. A ticket that needs a third session was cut too big: say so, and send it to `/cut <parent>`.
 
 ## Never
 
