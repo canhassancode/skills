@@ -65,7 +65,6 @@ exactly one route:
 | the thread | the route |
 | --- | --- |
 | a finding inside the spec | a fix in this session, vetted by crucible — §4 |
-| a finding still open after crucible's second pass | the hand-back list, no further fix — §4 |
 | a finding the spec already decides | an answer with the evidence — §5 |
 | a colleague's comment | a reply put to the operator — §6 |
 | a finding that changes the spec | a decision escalation — §7 |
@@ -88,10 +87,9 @@ it — and recorded in this run's one comment on the ticket.
 
 Crucible follows `/build`'s rule ([SKILL.md](../build/SKILL.md), step 6): fix each `fix` finding once,
 test first, then run crucible once more over those fix commits, and never a third time in the round. A
-finding still open after that goes on the pull request's `## Hand-back` list with its `file:line`, and stops
-nothing. A finding routed `spec-change` is §7's.
+`fix` finding from that second pass is fixed test-first too, and the bot's re-review vets it. A finding routed `spec-change` is §7's.
 
-**Done when** the fix is committed, crucible has vetted it and its tag is recorded — or the finding is on the hand-back list.
+**Done when** the fix is committed, crucible or the bot's re-review has vetted it and its tag is recorded.
 
 ### 5. Answer with evidence
 
@@ -138,7 +136,7 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 **Always** — read the spec before every fix · fix test-first and through crucible · reply to the review bot with evidence · keep each fix inside the spec.
 **Ask first** — any reply to a colleague · requesting colleague review.
-**Never** — merge · run crucible a third time on one round's fixes · post to a colleague without a yes · a fix without crucible · weaken or delete a test to get green.
+**Never** — merge · run crucible a third time on one round's fixes · post to a colleague without a yes · a fix vetted by neither crucible nor the bot · weaken or delete a test to get green.
 
 ## Related
 

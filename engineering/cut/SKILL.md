@@ -13,13 +13,13 @@ Origin: Pocock's to-tickets (tracer-bullet slices, each sized to a single fresh 
 
 ## Steps
 
-1. **Read** the parent ticket: its body is the spec. Read the code its Shape names, using a subagent when it's more than a few files. Look for a prefactor that would make the slices easier, and make it the first child. "Make the change easy, then make the easy change."
+1. **Read** the parent ticket: its body is the spec. Read the code its Shape names, using a subagent when it's more than a few files. Look for a prefactor that would make the slices easier, and make it the first child.
 2. **Draft** each child from the Children list. Each gets:
    - a What to build line a stranger could follow;
    - up to six acceptance criteria drawn from the parent's Goal, Rules and Journeys;
    - its seams, taken from the parent's Shape;
    - its Verify steps;
-   - the earlier children it needs.
+   - the earlier children it needs, or that change the same function or type.
    Use the child template in [align's spec](../align/references/spec.md). Something the parent doesn't cover is a question for the user, not a criterion.
 3. **Check** the set:
    - Each child is vertical: a narrow but complete path that can be seen working on its own, never a layer.
