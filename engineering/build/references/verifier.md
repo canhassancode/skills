@@ -8,7 +8,7 @@ or the tests; don't read them.
 
 <the spec's ## Verify section, verbatim>
 
-Start the app with `timeout 600`, use only credentials already in the environment, and when done, stop
+Start the app with `timeout 600` on a free port, use only credentials already in the environment, and when done, stop
 it and close every issue and pull request you opened.
 Never read .env, .mcp.json or production config. Run each step exactly as written; never edit a
 file, workflow or setup to make a step pass. Copy commands from the spec character for character,

@@ -8,7 +8,7 @@ argument-hint: <base>...<head> [ticket ref]
 
 Say what in a diff is wrong, missing or unproven, with evidence a reader can rerun.
 
-Origin: Pocock's code-review (a spec axis that quotes each line; "sub-agent output is a hypothesis"; never rerun until clean, "because it never will") and Google's diff-scoped mutation testing (Petrović et al. 2021). On brigade#136 the correctness walk and its probes found every serious defect (ADR-0013).
+Origin: Pocock's code-review (a spec axis that quotes each line; "sub-agent output is a hypothesis"; never rerun until clean, "because it never will") and Google's diff-scoped mutation testing (Petrović et al. 2021).
 
 Findings are about correctness, the spec and the user's written rules, not taste. A reviewer asked to find gaps "will usually report some" even when the work is sound. The spec is the ticket's body. It is optional: without one, the spec step says so and the rest run.
 
@@ -18,7 +18,7 @@ Findings are about correctness, the spec and the user's written rules, not taste
 2. **Walk** every changed hunk that writes, calls out, loops over outside data or shares a key, against the Correctness list in [BASELINES.md](BASELINES.md). Include the inputs production can send that the tests don't. A case that is safe is a note citing the line that makes it safe.
 3. **Probe any boundary** the diff adds or loosens: a sandbox, a permission, an allowlist, a redaction. List everything that can cross it, then try a sample of the riskiest by driving the mechanism directly with its CLI or library. Never ask an agent to attack it, because it can refuse. Each crossing is a finding, with the command and its output.
 4. **Rules.** Check the changed lines against the global and repo `CLAUDE.md`, then BASELINES.md. A broken `CLAUDE.md` rule is a finding; a baseline smell is a note. Skip what lint and the typechecker already enforce.
-5. **Consumers.** For each changed export, type, field, default or behaviour, grep its callers and the prose that describes it. Do the same in each sibling repo the spec names that is checked out beside this one. A site the change broke is a finding. A named sibling that isn't checked out is a note: `consumers: <repo> not checked`.
+5. **Consumers.** For each changed export, type, field, default or behaviour, grep its callers and the prose that describes it. Do the same in each sibling repo the spec names that is checked out beside this one. A site the change broke is a finding. A new call to an existing function that drops an option or gate its other callers pass is a finding. A named sibling that isn't checked out is a note: `consumers: <repo> not checked`.
 6. **Claims.**
    - Read each sentence of the pull request body or commit subject that says what the change does against the whole diff. One the diff doesn't bear out is a finding.
    - A hunk that leans on a production fact the spec marks `unchecked`, or doesn't carry at all, is a finding too: name the read that would settle it. Never run a production read yourself.
@@ -46,4 +46,4 @@ Notes       <case> → <file:line that handles it>; shape smells, each citing it
 
 `fix` is the caller's to act on. `spec-change` means acting would change a criterion, so it goes to `/align`. `product-call` is the user's decision.
 
-The caller runs crucible at most twice on a branch: once over the whole diff, and once over the fix commits. A pass gives leads, not a verdict. Rerunning until it comes back clean never converges.
+The caller runs crucible at most twice on a branch: once over the whole diff, and once over the fix commits. A pass gives leads, not a verdict.
