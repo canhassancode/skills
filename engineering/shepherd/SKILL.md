@@ -134,7 +134,7 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 ## Boundaries
 
-**Always** — read the spec before every fix · fix test-first and through crucible · reply to the review bot with evidence · keep each fix inside the spec.
+**Always** — read the spec before every fix · fix test-first, vetted by crucible or the bot · reply to the review bot with evidence · keep each fix inside the spec.
 **Ask first** — any reply to a colleague · requesting colleague review.
 **Never** — merge · run crucible a third time on one round's fixes · post to a colleague without a yes · a fix vetted by neither crucible nor the bot · weaken or delete a test to get green.
 
