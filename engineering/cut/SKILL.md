@@ -24,13 +24,13 @@ Origin: Pocock's to-tickets (tracer-bullet slices, each sized to a single fresh 
 3. **Check** the set:
    - Each child is vertical: a narrow but complete path that can be seen working on its own, never a layer.
    - Each fits one fresh `/build` session: about six criteria, one seam, and a few files. Wiring that needs a real process proved goes in the same child as the code that needs it.
-   - Together the children walk every journey, and the last one completes them.
+   - Together the children walk every journey, and the last one completes them. The child that should move the parent's Done measure runs it in Verify.
    - A wide refactor, one mechanical change across many call sites, is cut as expand, then migrate in batches, then contract.
    For each child that fails a check, propose the fix (fold, split or reorder) with its reason. A wrong Goal, Shape or Rules sends the parent back to `/align`.
 4. **Show** the set as [EXAMPLES.md](EXAMPLES.md) does, in one message, with its questions in one round: granularity, blocking edges, and anything to fold or split. Nothing is created before a yes.
 5. **Publish** in build order. Each child becomes a sub-issue at `ready-to-build`, with its blocking edges set as it lands. A child with a genuinely open question goes to `needs-alignment` instead, and its question goes in the body. The operations are in the repo's `docs/agents/issue-tracker.md`.
 6. **Close.** Rewrite the parent's Children list as a checklist of the published children, keeping the rest of its body. Drop `ready-to-cut`, post one session comment, and name `/build <first child>` as next.
 
-The parent wears no label after the cut, and stays open until its last child merges.
+The parent stays open until its last child merges.
 
-Run `/cut <parent>` again when a build stops on a child that was cut too big, or when an align reshapes the plan. It compares the Children list with the parent's children and their edges, read and moved with the operations in `docs/agents/issue-tracker.md`, and proposes the edits.
+Run `/cut <parent>` again when a build stops on a child that was cut too big, or when an align reshapes the plan. It compares the Children list with the parent's children and their edges, and proposes the edits.

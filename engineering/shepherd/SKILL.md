@@ -117,16 +117,16 @@ yes.
 
 A finding that changes what the spec promises — a behaviour it never named, a decision it settled the
 other way, scope it excludes — is neither fixed nor answered here. It goes to the operator as a decision
-escalation, one line and one link, and the run keeps to the threads it can still close while that answer
-is owed.
+escalation, asked with the run's other decisions in one [grilling](../grilling/SKILL.md) round. Answers go
+into the spec's Decisions, and the run keeps to the threads it can still close while that answer is owed.
 
 **Done when** the escalation is in session and no fix has touched the spec.
 
 ### 8. The stop rule
 
-The run is done when a round closes with every thread fixed or answered, whatever the score. The operator is then asked before any colleague review request — one action escalation that gives the score as it stands. Nothing is requested until they answer, and a repository that requests code owners when a pull request goes ready does so on its own; asking for anyone else waits on the operator.
+The run is done when a round closes with every thread fixed or answered, whatever the score. The operator is then asked before any colleague review request — one action escalation that gives the score as it stands. A repository that requests code owners when a pull request goes ready does so on its own; asking for anyone else waits on the operator.
 
-No re-review is asked for to lift a score when no thread is open: the bot gives its top score to pull requests colleagues go on to block, so the score proves nothing a settled thread doesn't. Two re-reviews are the cap; threads still open after them go to the operator as a decision escalation and the run stops.
+No re-review is asked for to lift a score when no thread is open: the bot gives its top score to pull requests colleagues go on to block, so the score proves nothing a settled thread doesn't. Two re-reviews are the cap for each review that sent fixes, the bot's or a colleague's; threads still open after them go to the operator as a decision escalation and the run stops.
 
 The finished pull request is the operator's to merge; this run never merges it.
 
@@ -142,4 +142,3 @@ The finished pull request is the operator's to merge; this run never merges it.
 
 - `/build` — the stage before this one; its hand-back names the pull request to start this run on.
 - `/crucible` — the only gate each fix passes.
-- `/align` — where a spec change goes once the operator has answered the escalation.

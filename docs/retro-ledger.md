@@ -13,3 +13,8 @@
 | 2026-11-18 | work run | crucible's Consumers step flags a new call to an existing function that drops an option or gate its other callers pass | next reviewer finds no dropped flag or option on a reused client |
 | 2026-11-18 | work run | dotfiles `guard.sh` lets curl writes to localhost run unprompted (outside this repo) | next build's local Verify queries raise no curl prompt |
 | 2026-11-18 | work run | workspace docs name which local database the dev server's Verify runs use (outside this repo) | next Verify run in that workspace: no operator turn correcting which database to use |
+| 2026-11-19 | work run | cut step 3: the child that should move the parent's Done measure runs it in Verify | next cut of a parent with a Done measure: a child's Verify carries it, and no operator turn asks whether the metric was tested |
+| 2026-11-19 | work run | shepherd §7 asks spec-change escalations in one grilling round, answers going into the spec's Decisions; the `/align` hand-off line is gone | next shepherd run with a spec change: the operator runs no `/align` to settle it |
+| 2026-11-19 | work run | shepherd's two-re-review cap counts per review that sent fixes, the bot's or a colleague's | next shepherd that fixes a colleague's review asks the bot to re-review those fixes without an operator turn prompting it |
+| 2026-11-19 | work run | dotfiles `worktree-include.sh` PostToolUse hook copies `.worktreeinclude` files into worktrees made with `git worktree add` (outside this repo) | next runs: no operator turn copying `.env` into a worktree |
+| 2026-11-19 | work run | workspace docs say how Verify mints a local API key (outside this repo) | next Verify that needs a key mints it with no operator turn |
