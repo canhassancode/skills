@@ -7,7 +7,7 @@ The ticket is #42, *Buy a label*, a child of #40 *ShipCo integration*.
 ```markdown
 ## Summary
 
-Buy a ShipCo label for the chosen rate and store its tracking number on the order. Closes #42.
+Before, orders had no label; now the chosen rate buys one and stores its tracking number. Closes #42.
 
 ## Acceptance criteria
 
