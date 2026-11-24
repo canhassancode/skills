@@ -34,7 +34,7 @@ Origin: Pocock's retro (read the session's own logs, then improve navigation, ch
    - the change, and where it lands;
    - what it removes;
    - the signal that would show it worked.
-8. **Apply** each accepted change in this sitting. Skills are edited in this library's source repo, never in the installed copies. Report the words removed as well as the words added, and append one ledger row per change: `| <date> | <ticket> | <change> | <signal> |`. Create the ledger file on its first row.
+8. **Apply** each accepted change in this sitting. Skills are edited in this library's source repo, never in the installed copies. Report the words removed as well as the words added, and append one ledger row per change: `| <date> | <ticket, or `work run` for a work ticket> | <change> | <signal> |`. Create the ledger file on its first row.
 
 ## Never
 
