@@ -18,3 +18,5 @@
 | 2026-11-19 | work run | shepherd's two-re-review cap counts per review that sent fixes, the bot's or a colleague's | next shepherd that fixes a colleague's review asks the bot to re-review those fixes without an operator turn prompting it |
 | 2026-11-19 | work run | dotfiles `worktree-include.sh` PostToolUse hook copies `.worktreeinclude` files into worktrees made with `git worktree add` (outside this repo) | next runs: no operator turn copying `.env` into a worktree |
 | 2026-11-19 | work run | workspace docs say how Verify mints a local API key (outside this repo) | next Verify that needs a key mints it with no operator turn |
+| 2026-11-24 | work run | build EXAMPLES Summary leads with before and now, so the hand-back states the uplift | next build hand-back: no operator turn asking what the ticket achieved or whether there is an uplift |
+| 2026-11-24 | work run | dotfiles gitconfig `branch.autoSetupMerge = false`: branches cut from `origin/main` no longer track it, so bare `git push` opens their own branch (outside this repo) | next build: no guard.sh "push landing on main/master" block |
