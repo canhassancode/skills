@@ -29,7 +29,7 @@ Two shapes belong to this skill, and everywhere it writes them they take the sam
 
 - **escalation** — `decision | action | information`, one line, one link. The level says how soon the
   operator needs to look: **decision** for a choice only they can make, **action** for a yes before
-  something outward happens, **information** when nothing is asked. The session is its sink.
+  something outward happens, **information** when nothing is asked.
 - **finding tag** — `alignment | crucible | style`, one per finding that needed code, recorded in this
   run's one comment on the ticket. It splits the measure by the stage that should have caught the finding.
 
@@ -116,11 +116,12 @@ yes.
 ### 7. Escalate a spec change
 
 A finding that changes what the spec promises — a behaviour it never named, a decision it settled the
-other way, scope it excludes — is neither fixed nor answered here. It goes to the operator as a decision
-escalation, asked with the run's other decisions in one [grilling](../grilling/SKILL.md) round. Answers go
-into the spec's Decisions, and the run keeps to the threads it can still close while that answer is owed.
+other way, scope it excludes — is not fixed here. It goes on the ticket as a comment
+`/align` can settle, with options and a recommendation, and its escalation links it, asked with
+the run's other decisions in one [grilling](../grilling/SKILL.md) round. Answers go into the spec's
+Decisions, and the run keeps to threads it can still close.
 
-**Done when** the escalation is in session and no fix has touched the spec.
+**Done when** the comment is on the ticket and no fix has touched the spec.
 
 ### 8. The stop rule
 

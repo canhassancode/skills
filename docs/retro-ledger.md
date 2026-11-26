@@ -20,3 +20,8 @@
 | 2026-11-19 | work run | workspace docs say how Verify mints a local API key (outside this repo) | next Verify that needs a key mints it with no operator turn |
 | 2026-11-24 | work run | build EXAMPLES Summary leads with before and now, so the hand-back states the uplift | next build hand-back: no operator turn asking what the ticket achieved or whether there is an uplift |
 | 2026-11-24 | work run | dotfiles gitconfig `branch.autoSetupMerge = false`: branches cut from `origin/main` no longer track it, so bare `git push` opens their own branch (outside this repo) | next build: no guard.sh "push landing on main/master" block |
+| 2026-11-26 | work run | crucible's Consumers step flags a new caller or writer that skips a check its siblings apply, replacing the dropped-option-or-gate sentence | next review bot raises no thread that an existing path already runs the check the new one skips |
+| 2026-11-26 | work run | cut's blocking edges link children that edit the same file, replacing "the same function or type" | next cut: no blocking edge added by hand after publish because two children overlapped in code |
+| 2026-11-26 | work run | align asks what someone will see with its options and a recommendation, replacing the asked-open rule | next align: no operator turn asks for options or a recommendation |
+| 2026-11-26 | work run | shepherd §7 posts a spec change on the ticket as a comment `/align` can settle, and the escalation links it | next shepherd spec change: no operator turn asking what the escalation means or where to re-align from |
+| 2026-11-26 | work run | workspace docs say how a Verify run mints its own admin login token (outside this repo) | next Verify needing an admin login runs logged in, with no operator turn granting the token |

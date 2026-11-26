@@ -21,8 +21,7 @@ Questions follow [grilling](../grilling/SKILL.md), with each round shaped like [
    - **A ticket at `needs-alignment` from a cut:** read the parent spec and the ticket. Settle only the open question its body names, then go to step 5.
 2. **Red team** with [references/red-team.md](references/red-team.md) in a fresh subagent. Show its verdict, and the user decides.
 3. **Grill** in rounds until the frontier is empty.
-   - **What someone will see is asked open.** A question about what a user, a caller or another system sees, or what gets stored, goes in its round as the scenario and the question alone, with no recommendation. Record the answer in the user's words. Recommend only on a technical choice nobody outside the code could notice.
-   - **"I don't know" is not a yes.** Nor is "go with your recommendation" on what someone will see. Name who would know, and leave that question open for them.
+   - **What someone will see** — what a user, a caller or another system sees, or what gets stored — is asked as the scenario, its options and your recommendation. Record the answer in the user's words. "I don't know" is not a yes: name who would know, and leave that question open for them.
    - **Seams.** Before the frontier closes, propose the fewest seams the criteria can be tested at, ideally one, preferring existing ones. Ask the seams as one question.
 4. **Domain.** Write each resolved term to `CONTEXT.md` as it settles, and say so in one line. Offer an ADR only when it passes domain-modeling's three tests.
 5. **Spec.** Write it once, from the conversation, in [references/spec.md](references/spec.md)'s shape: a child if it fits one fresh `/build` session, otherwise a parent. Below it, show [where each line came from](EXAMPLES.md#where-each-line-came-from): each criterion under the user's answer, a checked claim, or your call. Then put every call of yours, plus the yes on the whole spec, in one round.

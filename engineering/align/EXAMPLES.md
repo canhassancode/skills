@@ -17,7 +17,7 @@ Routes: read-only Postgres MCP ✓, ShipCo sandbox key ✓, production logs ✗ 
 
 ## A round
 
-The whole frontier at once. A question about what someone will see carries no recommendation.
+The whole frontier at once, each question with its options and a recommendation.
 
 ```markdown
 ❓ **Q1 · Buying twice**: Sam clicks Pay, the request times out, and they click again. Both requests reach checkout for the same order and rate. Should the second request buy a second label?
@@ -28,6 +28,8 @@ The whole frontier at once. A question about what someone will see carries no re
 
 ❓ **Q2 · A rate that has expired**: Sam picks Royal Mail at £6.50, leaves the tab open over lunch, and clicks Pay an hour later. ShipCo rates expire after 30 minutes (`docs/shipco.md:18`). What should Sam see?
 
+➡️ Ask Sam to pick a rate again, and buy nothing. The other option, buying at the new rate, charges Sam a price they never saw.
+
 ---
 
 ❓ **Q3 · Seams**: test everything through `createShipping`, with ShipCo faked at the `Carrier` port, the way `src/payments/payments.test.ts` does payments. One seam?
@@ -35,7 +37,7 @@ The whole frontier at once. A question about what someone will see carries no re
 ➡️ Yes. It is the one place checkout calls, so every criterion is visible there.
 ```
 
-An answer of "not sure, whatever you think" to Q2 stays open. Say who would know (here, whoever owns checkout) and ask them.
+An answer of "not sure" to Q2 stays open. Say who would know (here, whoever owns checkout) and ask them.
 
 ## A challenge
 
